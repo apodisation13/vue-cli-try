@@ -4,8 +4,9 @@
  
   <table class='field'>
     <tr v-for="i in 4" :key="i">
-      <td v-for="j in 3" :key="j" @click="enemy_id((i-1) * 3 + (j-1))">
-        {{ field[(i-1) * 3 + (j-1)].hp }} <br> {{ field[(i-1) * 3 + (j-1)].dmg }}
+      <td v-for="j in 3" :key="j" @click="exec_damage_ai_card((i-1) * 3 + (j-1))">
+        <a hidden> {{ index = (i-1) * 3 + (j-1)}}</a>
+        {{ field[index].hp }} <br> {{ field[index].dmg }}
       </td>
     </tr>
   </table>
@@ -22,7 +23,7 @@
     <button @click="player_move">ХОД ИГРОКА</button>
   </a>
   <a v-if="!player_move_bool && !beginning">
-    <button>ХОД КОМПА</button>
+    <button @click="exec_ai_move">ХОД КОМПА</button>
   </a>
 </div>
 <br>
@@ -44,9 +45,13 @@
 
 
 <script>
+
 import { FIELD, HEALTH } from './constants'
 import { place_enemies, enemy_id } from './place_enemies'
 import { HAND, draw_hand } from './draw_hand'
+import { damage_ai_card } from './player_move'
+import { ai_move } from './ai_move'
+
 
 export default {
   data() {
@@ -57,12 +62,12 @@ export default {
       beginning: true,  // статус начала игры - только для кнопки начало
       player_move_bool: true,  // true - ходит игрок, false - комп
       player_cards_active: false,
-      ai_card_active: false,
+      ai_cards_active: false,
+      player_card_number: null  // номер карты игрока в руке
     }
   },
   methods: {
-    enemy_id,
-
+  
     start_game() {
       this.field = place_enemies(this.field)  // рандомно расставит игроков
       this.hand = draw_hand(this.hand)  // рандомно вытянет карты в руку игрока
@@ -70,15 +75,44 @@ export default {
     },
     
     player_move() {
+      alert('ход игрока, выберете карту')
       this.player_cards_active = true
     },
 
     chose_player_card(id) {
       if (this.player_cards_active) {
-      alert('УРОН ' + this.hand[id].dmg + '  заряды ' + this.hand[id].charges)
-      this.ai_cards_active = true  // только теперь можно тыкать на карты противника
+        this.player_card_number = id  // запомнить номер карты игрока
+        alert('УРОН ' + this.hand[id].dmg + '  заряды ' + this.hand[id].charges)
+        this.ai_cards_active = true  // только теперь можно тыкать на карты противника
       }
     },
+
+    exec_damage_ai_card(id) { 
+      // id - номер клетки поля!
+      if (this.ai_cards_active && this.field[id]) {
+        let params = damage_ai_card(
+          id, 
+          this.field, 
+          this.hand, 
+          this.player_card_number
+          )
+        this.field = params[0]
+        this.hand = params[1]
+        this.player_card_number = params[2]
+
+        this.player_card_number = null
+        this.ai_cards_active = false
+        this.player_cards_active = false
+        this.player_move_bool = false
+      }
+    },
+
+    exec_ai_move() {
+      let params = ai_move(this.field, this.health)
+      this.field = params[0]
+      this.health = params[1]
+      this.player_move_bool = true
+    }
 
   }
 }
