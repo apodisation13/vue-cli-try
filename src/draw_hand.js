@@ -28,11 +28,10 @@ function random_hand_draw(i) {
 function draw_hand(hand) {
     for (let i = 0; i < hand_size; i++) {
         random_hand_draw(i)  // вытянули рандомом hand_size карт
-        hand[i] = HAND[i]
+        hand[i] = HAND[i]    
     }
-    return hand
+    // return [hand, DECK]  // теперь не нужен этот ретерн???
 }
 
 
-
-export { HAND, draw_hand }
+export { HAND, draw_hand, DECK }
