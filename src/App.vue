@@ -1,4 +1,5 @@
 <template>
+<!-- try -->
 
 <button class="btn_start" v-if="beginning" @click="start_game">НАЧАТЬ</button>
 
