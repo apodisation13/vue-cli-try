@@ -14,11 +14,12 @@
 />   
 </popup-comp> -->
 
+
 <div class='deck_and_grave'>
   <div class='deck'>Колода
     <button class="btn_deck" @contextmenu.prevent> 
         {{ deck_length }}
-        <deck-grave :array='deck'/>
+      <deck-grave :array='deck'/>
     </button>
   </div>
   <div class='grave'>Сброс
@@ -34,17 +35,10 @@
 </template>
 
 <script>
-// import PopupComp from './PopupComp'
-// import HandComp from '@/components/HandComp' 
-import DeckGrave from './DeckGrave'
 
 
 export default {
-  components: {
-    // PopupComp,
-    // HandComp,
-    DeckGrave
-  },
+  name: 'deck-comp',
   data() {
     return {
       // visible: false  // для v-model?
@@ -78,7 +72,6 @@ export default {
 
   },
   
-
 }
 
 </script>

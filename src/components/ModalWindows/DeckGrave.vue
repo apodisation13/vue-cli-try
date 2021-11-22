@@ -1,12 +1,9 @@
 <template>
 
-<div class="field_view" v-if="flag">
-  <h2> Жизни карты - {{ fieldindex.hp }} </h2><br>
-  <h2> Урон карты - {{ fieldindex.dmg }} </h2><br>
-  <p>ОПИСАНИЕ</p>
-
+<div class="modal_window" v-if="flag">
+ <hand-comp :hand='array' />
  </div>
- <div @mouseup.right="flag = true" @mouseleave="flag = false" v-if='fieldindex'>
+ <div @mouseup.right="flag = true" @mouseleave="flag = false">
     <p class='field_view__content'>о</p>
  </div>
  
@@ -14,11 +11,17 @@
 </template>
 
 <script>
+
 export default {
+  name: 'deck-grave',
   props: {
-    fieldindex: {  // объект противника по индексу поля
+    array: {  // массив объектов - или колода или кладбище
       required: true,
     },
+    // deck: {
+    //   required: true,
+    //   type: Array
+    // },
   },
   data() {
     return {
@@ -32,17 +35,16 @@ export default {
 
 <style scoped>
 
-.field_view {
-  background: pink;
-  width: 400px;
-  height: 300px;
+.modal_window {
+  background-color: limegreen;
+  width: 1000px;
+  height: 400px;
   border-radius: 12px;
   text-align: center;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 15pt;
 
 }
 

@@ -3,6 +3,7 @@
 <div class="card_view" v-if="flag">
     <h2> Урон карты - {{ handindex.dmg }} </h2><br>
     <h2> Заряды карты - {{ handindex.charges }} </h2><br>
+    <h2> Тип абилки - {{ handindex.ability }} </h2><br>
     <p>ОПИСАНИЕ</p>
 
  </div>
@@ -15,6 +16,7 @@
 
 <script>
 export default {
+  name: 'card-modal',
   props: {
     handindex: {  // объект карты по индексу
       required: true,
@@ -42,7 +44,7 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 15pt;
+  font-size: 8pt;
 
 }
 

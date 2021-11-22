@@ -24,13 +24,10 @@
 </template>
 
 <script>
-import CardModal from './CardModal'
+
 
 export default {
-  components: {
-    CardModal,
-
-  },
+  name: 'hand-comp',
   props: {
     hand: {
       required: true,

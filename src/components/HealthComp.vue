@@ -16,6 +16,7 @@
 <script>
 
 export default {
+  name: 'health-comp',
   props: {
     health: {
       required: true,

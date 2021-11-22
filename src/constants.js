@@ -1,17 +1,20 @@
 class Enemy {
-    constructor(hp, dmg) {
-      this.hp = hp;
-      this.dmg = dmg;
-    }
+  constructor(hp, dmg) {
+    this.hp = hp;
+    this.dmg = dmg;
   }
+}
   
   
 class Player {
-constructor(dmg, charges, category) {
+  constructor(dmg, charges, category, hp, ability = {'damage-one': dmg}) {  // {type: value} {one: 43}
     this.dmg = dmg;
     this.charges = charges;
-    this.category = category
-}
+    this.category = category;
+    this.hp = hp;
+
+    this.ability = ability;
+  }
 }
 
 

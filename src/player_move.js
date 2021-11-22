@@ -7,6 +7,10 @@ function damage_ai_card(id, field, hand, card_number, grave) {
     // alert('попали в функцию дамага компа')
     let i = id
 
+    // if (Object.keys(hand[card_number]).ability[0] == 'heal') {
+    //     alert('Ы')
+    // }
+
     alert('ЖИЗНИ ' + field[i].hp + '  дамаг ' + field[i].dmg + ' до урона')
     field[i].hp -= hand[card_number].dmg  // нанесли урон и-тому элементу от конкретной карты
     hand[card_number].charges -= 1  // вычитаем 1 заряд у карты игрока

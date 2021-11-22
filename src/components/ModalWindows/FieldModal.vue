@@ -1,9 +1,12 @@
 <template>
 
-<div class="modal_window" v-if="flag">
- <hand-comp :hand='array' />
+<div class="field_view" v-if="flag">
+  <h2> Жизни карты - {{ fieldindex.hp }} </h2><br>
+  <h2> Урон карты - {{ fieldindex.dmg }} </h2><br>
+  <p>ОПИСАНИЕ</p>
+
  </div>
- <div @mouseup.right="flag = true" @mouseleave="flag = false">
+ <div @mouseup.right="flag = true" @mouseleave="flag = false" v-if='fieldindex'>
     <p class='field_view__content'>о</p>
  </div>
  
@@ -11,20 +14,12 @@
 </template>
 
 <script>
-import HandComp from './HandComp'
-
 export default {
-  components: {
-    HandComp
-  },
+  name: 'field-modal',
   props: {
-    array: {  // массив объектов - или колода или кладбище
+    fieldindex: {  // объект противника по индексу поля
       required: true,
     },
-    // deck: {
-    //   required: true,
-    //   type: Array
-    // },
   },
   data() {
     return {
@@ -38,16 +33,17 @@ export default {
 
 <style scoped>
 
-.modal_window {
-  background-color: limegreen;
-  width: 1000px;
-  height: 400px;
+.field_view {
+  background: pink;
+  width: 400px;
+  height: 300px;
   border-radius: 12px;
   text-align: center;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  font-size: 15pt;
 
 }
 
