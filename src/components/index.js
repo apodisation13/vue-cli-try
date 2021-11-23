@@ -7,8 +7,6 @@ import DeckGrave from '@/components/ModalWindows/DeckGrave'
 import CardModal from '@/components/ModalWindows/CardModal'
 import RedrawModal from '@/components/ModalWindows/RedrawModal'
 
-import MenuBar from '@/pages/MenuBar'
-
 
 export default [
     HealthComp,
@@ -20,5 +18,4 @@ export default [
     CardModal,
     RedrawModal,
 
-    MenuBar,
 ]

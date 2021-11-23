@@ -9,11 +9,15 @@
 </template>
 
 <script>
-import MenuBar from './pages/MenuBar.vue'
-  export default {
-  components: { MenuBar },
-    
-  }
+
+import MenuBar from './components/MenuBar'
+
+export default {
+components: { 
+  MenuBar, 
+  },
+}
+
 </script>
 
 <style>
