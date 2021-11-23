@@ -1,3 +1,5 @@
+// import store from '@/store'  // вызов стора здесь!!!!!!!!!
+
 let GRAVE = []  // карты, у которых осталось 0 зарядов, попадают в кладбище
 
 
@@ -19,6 +21,7 @@ function damage_ai_card(id, field, hand, card_number, grave) {
     // если враг убит, убираем его с поля
     if (field[i].hp <= 0) {
         field[i] = ''
+        // store.commit('incr_like')  // доступ к функциям СТОРА!!!
 
     }
 

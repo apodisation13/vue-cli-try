@@ -3,6 +3,12 @@
 
 <button class="btn_start" v-if="beginning" @click="start_game">НАЧАТЬ</button>
 
+<redraw-modal v-if="redraw" 
+:deck='deck' 
+:hand='hand' 
+@redraw_finished='redraw_finished'
+/>
+
 <table class='field'>
   <tr v-for="i in 4" :key="i">
     <td v-for="j in 3" :key="j" 
@@ -54,17 +60,17 @@ v-bind:hand='hand'
 <script>
 
 // import { HEALTH } from './constants'
-import { place_enemies, } from '@/place_enemies'
-import { draw_hand, DECK, deck_health } from '@/draw_hand'
-import { damage_ai_card, GRAVE } from '@/player_move'
-import { ai_move } from '@/ai_move'
+import { place_enemies, } from '@/logic/place_enemies'
+import { draw_hand, DECK, deck_health } from '@/logic/draw_hand'
+import { damage_ai_card, GRAVE } from '@/logic/player_move'
+import { ai_move } from '@/logic/ai_move'
 
 export default {
   data() {
     return {
       health: deck_health,
       field: ['', '', '', '', '', '', '', '', '', '', '', ''],
-      hand: ['', '', '', '', ''],
+      hand: ['', '', '', '', '', ''],
       deck: DECK,  // остаток сколько карт осталось в колоде
       grave: GRAVE,  // кладбище карт у которых 0 зарядов
       beginning: true,  // статус начала игры - только для кнопки начало
@@ -72,16 +78,25 @@ export default {
       player_cards_active: false,
       ai_cards_active: false,
       player_card_number: null,  // номер карты игрока в руке
-     
+      redraw: false,  // фдаг для изначального дро
+
     }
   },
   methods: {
     draw_one_card() {  // тестовая функция - вытягивает в руку рандомную карту из деки
-      let random = Math.floor(Math.random() * DECK.length);
+      let random = Math.floor(Math.random() * this.deck.length);
       this.hand.push(this.deck[random])
       this.deck.splice(random, 1)  // удалить этот 0й элемент
     },
+    redraw_finished(dict) { // пришедший параметр из ЭМИТА этого компонента
+      // alert(dict)
+      this.hand = dict.hand
+      this.deck = dict.deck
+    },
+
     start_game() {
+      this.redraw = true
+
       place_enemies(this.field)  // рандомно расставит врагов
       draw_hand(this.hand)  // вытянет руку, остальное оставит в деке, ИЗМЕНЯЕТ DECK!!!
 

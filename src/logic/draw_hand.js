@@ -1,8 +1,8 @@
 import {Player } from "./constants";
 
 
-let HAND = ['', '', '', '', '']  // заготовка руки игрока
-// 0 1 2 3 4
+let HAND = ['', '', '', '', '', '', ]  // заготовка руки игрока
+// 0 1 2 3 4 5
 const hand_size = HAND.length  // длина руки, пусть пока 5
 
 let card1 = new Player(5, 1, 'bronze', 5)
@@ -15,7 +15,13 @@ let card7 = new Player(10, 2, 'gold', 7)
 let card8 = new Player(6, 3, 'silver', 6)
 let card9 = new Player(2, 2, 'bronze', 14)
 let card10 = new Player(6, 1, 'bronze', 4)
-let DECK = [card1, card2, card3, card4, card5, card6, card7, card8, card9, card10]
+let card11 = new Player(9, 1, 'silver', 5, {'heal': 10} )
+let card12 = new Player(6, 1, 'gold', 17, {'heal': 50})
+let DECK = [
+    card1, card2, card3, card4, card5, 
+    card6, card7, card8, card9, card10,
+    card11, card12
+]
 
 
 function calc_deck_health(deck) {

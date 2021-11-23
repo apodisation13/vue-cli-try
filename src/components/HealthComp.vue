@@ -1,5 +1,7 @@
 <template>
 
+{{ $store.state.likes }} {{ $store.state.dislikes }} 
+ <button @click="$store.commit('incr_like')">+likes</button>
 <br>
 <div>ЖИЗНИ ИГРОКА --  {{ health }}, Аптечек -- {{ health_kits_number }} 
 
@@ -35,6 +37,9 @@ export default {
       if (this.health_kits_number && this.player_cards_active) {
         this.health_kits_number -= 1
         this.$emit('use_health_kit')  // как бы название на что подписаться
+        // this.$store.getters['incr_likes']
+        this.$store.commit('incr_like')
+        
       }
     },
   },

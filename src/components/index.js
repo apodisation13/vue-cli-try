@@ -5,6 +5,7 @@ import HandComp from '@/components/HandComp'
 import FieldModal from '@/components/ModalWindows/FieldModal'
 import DeckGrave from '@/components/ModalWindows/DeckGrave'
 import CardModal from '@/components/ModalWindows/CardModal'
+import RedrawModal from '@/components/ModalWindows/RedrawModal'
 
 import MenuBar from '@/pages/MenuBar'
 
@@ -17,6 +18,7 @@ export default [
     FieldModal,
     DeckGrave,
     CardModal,
+    RedrawModal,
 
     MenuBar,
 ]
