@@ -1,4 +1,8 @@
-function ai_move(field, health) {
+import store from '@/store' // stote.state OR store.commit
+import { check_health } from '@/logic/service'
+
+
+function ai_move(field) {
   alert('ход компа')
   
   for (let i = 11; i >= 0; i--) {
@@ -6,7 +10,7 @@ function ai_move(field, health) {
 
       // ДЛЯ ВРАГОВ КОТОРЫЕ СТОЯТ ВНИЗУ
       if (i >= 9) {
-        health -= field[i].dmg
+        store.commit('change_health', -field[i].dmg)
         alert('враг внизу нанёс урон')
       }
 
@@ -15,7 +19,7 @@ function ai_move(field, health) {
 
         // ЕСЛИ У ВРАГА ЕСТЬ ВРАГ ПОД НИМ ВНИЗУ
         if (field[i+3]) {
-          health -= field[i].dmg
+          store.commit('change_health', -field[i].dmg)
           alert('враг нанёс урон, потому что ему некуда ходить')
         }
 
@@ -28,9 +32,14 @@ function ai_move(field, health) {
 
       }
 
+      if (check_health(store.state.health)) {
+        alert('ВЫ ПРОИГРАЛИ')
+        return
+      }
+
     }
   }
-  return [field, health]
+  // return field
 }
 
 export { ai_move }

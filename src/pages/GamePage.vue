@@ -23,11 +23,8 @@
   </tr>
 </table>
 
-<health-comp 
-v-bind:health="health" 
-v-bind:player_cards_active="player_cards_active" 
-@use_health_kit="use_health_kit"
-/>
+
+<health-comp :player_cards_active="player_cards_active" />
 
 
 <div>
@@ -62,7 +59,6 @@ v-bind:hand='hand'
 
 <script>
 
-// import { HEALTH } from './constants'
 import { place_enemies, } from '@/logic/place_enemies'
 import { draw_hand, calc_deck_health } from '@/logic/draw_hand'
 import { damage_ai_card, GRAVE } from '@/logic/player_move'
@@ -71,7 +67,6 @@ import { ai_move } from '@/logic/ai_move'
 export default {
   data() {
     return {
-      // health: this.$store.state.health,
       field: ['', '', '', '', '', '', '', '', '', '', '', ''],
       hand: ['', '', '', '', '', ''],
       deck: this.$store.state.current_deck,  // остаток сколько карт осталось в колоде
@@ -134,14 +129,8 @@ export default {
     },
 
     exec_ai_move() {
-      let params = ai_move(this.field, this.health)
-      this.field = params[0]
-      this.health = params[1]  // TODO: вот здесь пока непонятно почему оно нужно
+      ai_move(this.field)
       this.player_move_bool = true
-    },
-
-    use_health_kit() {
-      this.health += 20
     },
 
   }

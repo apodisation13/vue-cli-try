@@ -4,7 +4,7 @@
  <button @click="$store.commit('incr_like')">+likes</button>
 
 <br>
-<div>ЖИЗНИ ИГРОКА --  {{ health }}, Аптечек -- {{ health_kits_number }} 
+<div>ЖИЗНИ ИГРОКА --  {{ $store.state.health }}, Аптечек -- {{ health_kits_number }} 
 
 <button @click="use_health_kit"
 class="health_kit"
@@ -21,23 +21,24 @@ class="health_kit"
 export default {
   name: 'health-comp',
   props: {
-    health: {
-      required: true,
-    },
     player_cards_active: {
       required: true
     }
   },
   data() {
     return {
-      health_kits_number: 3,
+      health_kits_number: 3,  // запас аптечек
+      health_kit_bonus: 20,  //  бонус от одной аптечки
     }
   },
   methods: {
     use_health_kit() {
       if (this.health_kits_number && this.player_cards_active) {
         this.health_kits_number -= 1
-        this.$emit('use_health_kit')  // как бы название на что подписаться
+
+        this.$store.commit('change_health', this.health_kit_bonus)
+
+        // this.$emit('use_health_kit')  // как бы название на что подписаться
         
         // this.$store.getters['incr_likes']  // тренировка
         this.$store.commit('incr_like')
