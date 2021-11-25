@@ -2,15 +2,16 @@
 
 {{ $store.state.likes }} {{ $store.state.dislikes }} 
  <button @click="$store.commit('incr_like')">+likes</button>
+
 <br>
 <div>ЖИЗНИ ИГРОКА --  {{ health }}, Аптечек -- {{ health_kits_number }} 
 
-<a v-if="health_kits_number">
-  <button class='use_health_kit_have' v-on:click='use_health_kit'>Использовать аптечку</button>
-</a>
-<a v-else>
-  <button class='use_health_kit_donthave' v-on:click='use_health_kit'>Использовать аптечку</button>
-</a>
+<button @click="use_health_kit"
+class="health_kit"
+:style="[health_kits_number ? {'backgroundColor': 'green'} : {'backgroundColor': 'red'}]"
+>
+  Использовать аптечку</button>
+
 </div>
 
 </template>
@@ -37,7 +38,8 @@ export default {
       if (this.health_kits_number && this.player_cards_active) {
         this.health_kits_number -= 1
         this.$emit('use_health_kit')  // как бы название на что подписаться
-        // this.$store.getters['incr_likes']
+        
+        // this.$store.getters['incr_likes']  // тренировка
         this.$store.commit('incr_like')
         
       }
@@ -51,6 +53,11 @@ export default {
 </script>
 
 <style scoped>
+
+.health_kit {
+  width: 170px;
+  height: 40px;
+}
 
 .use_health_kit_have {
   width: 170px;

@@ -1,24 +1,35 @@
 <template>
 
-<div class="hand" v-for="(card, index) in hand" :key='card'>
+<!-- <div class="hand" v-for="(card, index) in hand" :key='card'>
   <p v-if="card.category==='bronze'" @click="chose_player_card(index)">
-    <button @contextmenu.prevent class="bronze_hand_card">
+    <button @contextmenu.prevent class="bronze_hand_card"
+    @mouseup.right="flag = true" @mouseleave="flag = false">
+      <card-modal :handindex='hand[index]' :flag='flag' />
       {{ card.dmg }}<br>{{ card.charges }} 
-      <card-modal :handindex='hand[index]' />
     </button>
-  </p>
-  <p v-if="card.category==='silver'" @click="chose_player_card(index)">
-    <button @contextmenu.prevent class="silver_hand_card">
-      {{ card.dmg }}<br>{{ card.charges }} 
-      <card-modal :handindex='hand[index]' />
-    </button>
-  </p>
-  <p v-if="card.category==='gold'" @click="chose_player_card(index)">
-    <button @contextmenu.prevent class="gold_hand_card">
-      {{ card.dmg }}<br>{{ card.charges }} 
-      <card-modal :handindex='hand[index]' />
-    </button>
-  </p>
+  </p> -->
+
+  <div class="hand" v-for="(card, index) in hand" :key='card'>
+   
+    <div v-if="card"
+    @contextmenu.prevent 
+   
+    class="hand_card"
+    :style="[
+      card.category == 'bronze' ? {'backgroundColor': 'lightyellow'} :
+      card.category == 'silver' ? {'backgroundColor': 'silver'} :
+      card.category == 'gold' ? {'backgroundColor': 'gold'} :
+      {}]"
+    @click="chose_player_card(index)">
+      
+      <p v-if="hp_needed">Жизни {{ card.hp }}</p> 
+      
+      {{ card.dmg }}<br>{{ card.charges }}<br>
+      
+      <card-modal :card='card' />
+    
+    </div>
+  
 </div>  
 
 </template>
@@ -33,6 +44,10 @@ export default {
       required: true,
       type: Array
     },
+    hp_needed: {  // hp только для декбилдера, для игры не нужно оно
+      type: Boolean,
+      default: false
+    },
   },
   methods: {
     chose_player_card(id) {
@@ -42,7 +57,8 @@ export default {
   },
   data() {
     return {
-      index: null  // данные для передачи наверх
+      index: null,  // данные для передачи наверх
+      flag: false
     }
   },
   emits: [
@@ -59,22 +75,11 @@ export default {
     margin: 3px;  /*отступ между картами*/
 }
 
-.bronze_hand_card {
+.hand_card {
     width: 100px;
     height: 150px;
-    background: lightyellow;
-}
-
-.silver_hand_card {
-    width: 100px;
-    height: 150px;
-    background: silver;
-}
-
-.gold_hand_card {
-    width: 100px;
-    height: 150px;
-    background: gold;
+    border: solid 1px black;
+    border-radius: 5px;
 }
 
 </style>

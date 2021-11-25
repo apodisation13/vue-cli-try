@@ -18,10 +18,6 @@ export default {
     array: {  // массив объектов - или колода или кладбище
       required: true,
     },
-    // deck: {
-    //   required: true,
-    //   type: Array
-    // },
   },
   data() {
     return {

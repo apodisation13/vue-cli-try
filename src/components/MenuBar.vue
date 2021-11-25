@@ -7,6 +7,7 @@
       <button class="menu_button" @click="$router.push('/')">Главная</button>
       <button class="menu_button" @click="$router.push('/game')">Игра</button>
       <button class="menu_button" @click="$router.push('/about')">О нас</button>
+      <button class="menu_button" @click="$router.push('/deckbuild')">Деки</button>
     </div>
 
 </div>

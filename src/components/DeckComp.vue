@@ -71,6 +71,9 @@ export default {
     },
 
   },
+  mutations: {
+
+  }
   
 }
 

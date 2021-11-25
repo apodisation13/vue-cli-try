@@ -12,10 +12,12 @@
 <table class='field'>
   <tr v-for="i in 4" :key="i">
     <td v-for="j in 3" :key="j" 
-    @click="exec_damage_ai_card((i-1) * 3 + (j-1))" @contextmenu.prevent
-    >
+    @click="exec_damage_ai_card((i-1) * 3 + (j-1))" 
+    @contextmenu.prevent>
+
       <a hidden> {{ index = (i-1) * 3 + (j-1)}}</a>
       {{ field[index].hp }} <br> {{ field[index].dmg }}
+      
       <field-modal :fieldindex='field[index]'/>
     </td>
   </tr>
@@ -47,6 +49,7 @@ v-bind:grave_length="grave.length"
 />
 
 <hand-comp 
+v-if="!redraw"
 v-bind:hand='hand'
 @chose_player_card='chose_player_card' 
 />
@@ -61,17 +64,17 @@ v-bind:hand='hand'
 
 // import { HEALTH } from './constants'
 import { place_enemies, } from '@/logic/place_enemies'
-import { draw_hand, DECK, deck_health } from '@/logic/draw_hand'
+import { draw_hand, calc_deck_health } from '@/logic/draw_hand'
 import { damage_ai_card, GRAVE } from '@/logic/player_move'
 import { ai_move } from '@/logic/ai_move'
 
 export default {
   data() {
     return {
-      health: deck_health,
+      // health: this.$store.state.health,
       field: ['', '', '', '', '', '', '', '', '', '', '', ''],
       hand: ['', '', '', '', '', ''],
-      deck: DECK,  // остаток сколько карт осталось в колоде
+      deck: this.$store.state.current_deck,  // остаток сколько карт осталось в колоде
       grave: GRAVE,  // кладбище карт у которых 0 зарядов
       beginning: true,  // статус начала игры - только для кнопки начало
       player_move_bool: true,  // true - ходит игрок, false - комп
@@ -88,17 +91,19 @@ export default {
       this.hand.push(this.deck[random])
       this.deck.splice(random, 1)  // удалить этот 0й элемент
     },
+
     redraw_finished(dict) { // пришедший параметр из ЭМИТА этого компонента
       // alert(dict)
       this.hand = dict.hand
       this.deck = dict.deck
+      this.redraw = false  // закончили редро
     },
 
     start_game() {
       this.redraw = true
 
       place_enemies(this.field)  // рандомно расставит врагов
-      draw_hand(this.hand)  // вытянет руку, остальное оставит в деке, ИЗМЕНЯЕТ DECK!!!
+      draw_hand(this.hand, this.deck)  // вытянет руку, остальное оставит в деке
 
       this.beginning = false  // убрать кнопку начало после её нажатия
     },
