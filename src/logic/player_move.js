@@ -30,11 +30,11 @@ function damage_ai_card(id, field, hand, card_number, grave) {
 
     // убираем карту игрока, если в ней не осталось зарядов
     if (hand[card_number].charges === 0) {
-        GRAVE.push(hand[card_number])  // поместили карту в кладбище
+        grave.push(hand[card_number])  // поместили карту в кладбище
         hand[card_number] = ''
     }
 
     return [field, hand, card_number, grave]
 }
 
-export { damage_ai_card, GRAVE }
+export { damage_ai_card }

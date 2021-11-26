@@ -56,8 +56,8 @@ v-bind:hand='hand'
 <script>
 
 import { place_enemies, } from '@/logic/place_enemies'
-import { draw_hand, base_deck } from '@/logic/draw_hand'
-import { damage_ai_card, GRAVE } from '@/logic/player_move'
+import { draw_hand, } from '@/logic/draw_hand'
+import { damage_ai_card,  } from '@/logic/player_move'
 import { ai_move } from '@/logic/ai_move'
 
 export default {
@@ -66,7 +66,7 @@ export default {
       field: ['', '', '', '', '', '', '', '', '', '', '', ''],
       hand: ['', '', '', '', '', ''],
       deck: this.$store.state.current_deck,  // остаток сколько карт осталось в колоде
-      grave: GRAVE,  // кладбище карт у которых 0 зарядов
+      grave: [],  // кладбище карт у которых 0 зарядов
       beginning: true,  // статус начала игры - только для кнопки начало
       player_move_bool: true,  // true - ходит игрок, false - комп
       player_cards_active: false,
