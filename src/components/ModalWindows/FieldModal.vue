@@ -1,33 +1,24 @@
 <template>
-
 <div class="field_view" v-if="flag">
-  <h2> Жизни карты - {{ fieldindex.hp }} </h2><br>
-  <h2> Урон карты - {{ fieldindex.dmg }} </h2><br>
+  <h2> Жизни карты - {{ enemy.hp }} </h2><br>
+  <h2> Урон карты - {{ enemy.dmg }} </h2><br>
   <p>ОПИСАНИЕ</p>
-
  </div>
- <div @mouseup.right="flag = true" @mouseleave="flag = false" v-if='fieldindex'>
-    <p class='field_view__content'>о</p>
- </div>
- 
-
 </template>
 
 <script>
 export default {
   name: 'field-modal',
   props: {
-    fieldindex: {  // объект противника по индексу поля
+    enemy: {  // объект противника по индексу поля
       required: true,
+      type: Object
     },
-  },
-  data() {
-    return {
-      flag : false
+    flag: {
+      required: true,
+      type: Boolean
     }
-    
   },
-  
 }
 </script>
 

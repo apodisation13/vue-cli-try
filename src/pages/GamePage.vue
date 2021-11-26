@@ -11,17 +11,15 @@
 
 <table class='field'>
   <tr v-for="i in 4" :key="i">
-    <td v-for="j in 3" :key="j" 
-    @click="exec_damage_ai_card((i-1) * 3 + (j-1))" 
+    <td v-for="j in 3" :key="j"
+    @click.right="index=get_index(i,j), flag=true" @mouseleave="flag=false"
+    @click="exec_damage_ai_card(get_index(i,j))" 
     @contextmenu.prevent>
-
-      <a hidden> {{ index = (i-1) * 3 + (j-1)}}</a>
-      {{ field[index].hp }} <br> {{ field[index].dmg }}
-      
-      <field-modal :fieldindex='field[index]'/>
+      {{ field[get_index(i,j)].hp }} <br> {{ field[get_index(i,j)].dmg }}
     </td>
   </tr>
 </table>
+<field-modal v-if="field[index]" :enemy='field[index]' :flag='flag'/>
 
 
 <health-comp :player_cards_active="player_cards_active" />
@@ -39,10 +37,8 @@
 
 
 <deck-comp 
-v-bind:deck='deck' 
-v-bind:deck_length="deck.length"
-v-bind:grave='grave' 
-v-bind:grave_length="grave.length"  
+:deck='deck' 
+:grave='grave' 
 />
 
 <hand-comp 
@@ -60,7 +56,7 @@ v-bind:hand='hand'
 <script>
 
 import { place_enemies, } from '@/logic/place_enemies'
-import { draw_hand, calc_deck_health } from '@/logic/draw_hand'
+import { draw_hand, base_deck } from '@/logic/draw_hand'
 import { damage_ai_card, GRAVE } from '@/logic/player_move'
 import { ai_move } from '@/logic/ai_move'
 
@@ -77,10 +73,14 @@ export default {
       ai_cards_active: false,
       player_card_number: null,  // номер карты игрока в руке
       redraw: false,  // фдаг для изначального дро
-
+      index: null,  // для индекса клетки поли
+      flag: 0,  // для отображения всплывающего окна клетки поля
     }
   },
   methods: {
+    get_index(i, j) {  // фукнция для поля, вернуть номер элемента поля
+      return (i-1) * 3 + (j-1)
+    },
     draw_one_card() {  // тестовая функция - вытягивает в руку рандомную карту из деки
       let random = Math.floor(Math.random() * this.deck.length);
       this.hand.push(this.deck[random])

@@ -1,11 +1,11 @@
 import { createStore } from "vuex"
 
-
 const store = createStore({
     state: {
         likes: 1,
         dislikes: 7,
         current_deck: [],  // дека выбранная для игры
+        // current_deck: base_deck,  // дека выбранная для игры
         health: 0    
     },
     getters: {  // вот пока непонятно зачем это  this.$store.getters['название']

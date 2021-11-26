@@ -1,4 +1,5 @@
 <template>
+  
   <div class="card_pool_view">
     <hand-comp :hand='deck' :hp_needed=true
     @chose_player_card='chose_player_card' />
@@ -23,7 +24,7 @@
 </template>
 
 <script>
-import { DECK, } from '@/logic/draw_hand'
+import { DECK,  } from '@/logic/draw_hand'
 
 export default {
   data() {
@@ -51,7 +52,7 @@ export default {
         alert('сохранили')
       }
       else {alert('в деке должно быть минимум 10 карт')}
-    }
+    },
   }
 }
 </script>

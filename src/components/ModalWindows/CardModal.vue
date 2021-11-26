@@ -3,7 +3,7 @@
 <div class="card_view" v-if="flag">
   <div class='card_view__content'>
     <div class='data'>
-      {{ index }}
+      
     <h2> Урон карты - {{ card.dmg }} </h2><br>
     <h2> Заряды карты - {{ card.charges }} </h2><br>
     <h2> Тип абилки - {{ card.ability }} </h2><br>

@@ -18,13 +18,13 @@
 <div class='deck_and_grave'>
   <div class='deck'>Колода
     <button class="btn_deck" @contextmenu.prevent> 
-        {{ deck_length }}
+        {{ deck.length }}
       <deck-grave :array='deck'/>
     </button>
   </div>
   <div class='grave'>Сброс
     <button class="btn_grave" @contextmenu.prevent> 
-      {{ grave_length }}
+      {{ grave.length }}
       <deck-grave :array='grave'/>
     </button>
   </div>
@@ -59,22 +59,11 @@ export default {
       required: true,
       type: Array
     },
-    deck_length: {
-      type: Number    
-    },
     grave: {
       required: true,
       type: Array
     },
-    grave_length: {
-      type: Number
-    },
-
   },
-  mutations: {
-
-  }
-  
 }
 
 </script>
