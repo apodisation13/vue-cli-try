@@ -1,5 +1,4 @@
 <template>
-<!-- try -->
 
 <button class="btn_start" v-if="beginning" @click="start_game">НАЧАТЬ</button>
 
@@ -12,14 +11,15 @@
 <table class='field'>
   <tr v-for="i in 4" :key="i">
     <td v-for="j in 3" :key="j"
-    @click.right="index=get_index(i,j), flag=true" @mouseleave="flag=false"
-    @click="exec_damage_ai_card(get_index(i,j))" 
-    @contextmenu.prevent>
+      @click.right="index=get_index(i,j), show_enemy_modal=true" 
+      @mouseleave="show_enemy_modal=false"
+      @click="exec_damage_ai_card(get_index(i,j))" 
+      @contextmenu.prevent>
       {{ field[get_index(i,j)].hp }} <br> {{ field[get_index(i,j)].dmg }}
     </td>
   </tr>
 </table>
-<field-modal v-if="field[index]" :enemy='field[index]' :flag='flag'/>
+<field-modal v-if="field[index]" :enemy='field[index]' :flag='show_enemy_modal'/>
 
 
 <health-comp :player_cards_active="player_cards_active" />
@@ -74,13 +74,14 @@ export default {
       player_card_number: null,  // номер карты игрока в руке
       redraw: false,  // фдаг для изначального дро
       index: null,  // для индекса клетки поли
-      flag: 0,  // для отображения всплывающего окна клетки поля
+      show_enemy_modal: 0,  // для отображения всплывающего окна клетки поля
     }
   },
   methods: {
     get_index(i, j) {  // фукнция для поля, вернуть номер элемента поля
       return (i-1) * 3 + (j-1)
     },
+
     draw_one_card() {  // тестовая функция - вытягивает в руку рандомную карту из деки
       let random = Math.floor(Math.random() * this.deck.length);
       this.hand.push(this.deck[random])

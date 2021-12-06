@@ -14,4 +14,5 @@ function check_health(health) {
     return false
 }
 
-export {check_win, check_health}
+
+export {check_win, check_health, }

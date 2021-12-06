@@ -1,41 +1,29 @@
 <template>
-
-<div class="card_view" v-if="flag">
+<div class="card_view" v-if="show_card_modal">
   <div class='card_view__content'>
     <div class='data'>
-      
-    <h2> Урон карты - {{ card.dmg }} </h2><br>
-    <h2> Заряды карты - {{ card.charges }} </h2><br>
-    <h2> Тип абилки - {{ card.ability }} </h2><br>
-    <p>ОПИСАНИЕ</p>
+      <h2> Урон карты - {{ card.dmg }} </h2><br>
+      <h2> Заряды карты - {{ card.charges }} </h2><br>
+      <h2> Тип абилки - {{ card.ability }} </h2><br>
+      <p>ОПИСАНИЕ</p>
     </div>
   </div>
 </div>
-<div @mouseup.right="flag = true" @mouseleave="flag = false" class="smth">
-  o
-</div>
- 
-
 </template>
 
 <script>
 export default {
   name: 'card-modal',
   props: {
-    // flag: {
-    //   // required: true
-    // },
+    show_card_modal: {
+      required: true,
+      type: Boolean
+    },
     card: {
-      required: true
+      required: true,
+      type: Object
     }
   },
-  data() {
-    return {
-      flag : false
-    }
-    
-  },
-  
 }
 </script>
 

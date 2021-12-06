@@ -1,8 +1,5 @@
-// import store from '@/store'  // вызов стора здесь!!!!!!!!!
+import store from '@/store'  // вызов стора здесь!!!!!!!!!
 import { check_win } from "./service"
-
-
-let GRAVE = []  // карты, у которых осталось 0 зарядов, попадают в кладбище
 
 
 function damage_ai_card(id, field, hand, card_number, grave) {
@@ -11,23 +8,38 @@ function damage_ai_card(id, field, hand, card_number, grave) {
     // alert('попали в функцию дамага компа')
     let i = id
 
-    // if (Object.keys(hand[card_number]).ability[0] == 'heal') {
-    //     alert('Ы')
-    // }
-
     alert('ЖИЗНИ ' + field[i].hp + '  дамаг ' + field[i].dmg + ' до урона')
     field[i].hp -= hand[card_number].dmg  // нанесли урон и-тому элементу от конкретной карты
     hand[card_number].charges -= 1  // вычитаем 1 заряд у карты игрока
     alert('ЖИЗНИ ' + field[i].hp + '  дамаг ' + field[i].dmg + ' после урона')
 
-    // если враг убит, убираем его с поля
-    if (field[i].hp <= 0) {
-        field[i] = ''
-        // store.commit('incr_like')  // доступ к функциям СТОРА!!!
-        
-        // if (check_win(field)) {alert('ВЫ ВЫИГРАЛИ, ПОЗДРАВЛЯЮ!')}
+    if ('heal' in hand[card_number].ability) {
+        alert(Object.keys(hand[card_number].ability))
+        store.commit('change_health', hand[card_number].ability.heal)
     }
 
+    if ('damage_all' in hand[card_number].ability) {
+       field.forEach(enemy => {
+        if (enemy) {
+            if (enemy == field[i]) {
+                return
+            }   
+            enemy.hp -= hand[card_number].dmg
+           }
+       });
+       alert('ЫЫЫ')
+    }
+
+
+    // если враг убит, убираем его с поля
+    // проверять надо всех врагов, потому что есть абилки на всех
+    for (let index = 0; index < field.length; index++) {
+        if (field[index].hp <= 0) {
+            field[index] = ''
+        }
+        
+    }
+   
     // убираем карту игрока, если в ней не осталось зарядов
     if (hand[card_number].charges === 0) {
         grave.push(hand[card_number])  // поместили карту в кладбище

@@ -3,13 +3,15 @@
 Страница о нас <br>
 ЗДЕСЬ Я ТРЕНИРУЮСЬ
 
-<!-- <button @click="get">КНОПКА</button> -->
-<!-- <a v-once>{{ get() }}</a>
+<button @click="get">КНОПКА</button>
+<a v-once>{{ get() }}</a>
 <div v-for="item in results" :key="item.id">
-  {{ item.id }} {{ item.item_name }} {{ item.description }} 
+  {{ item.id }} 
+  {{ item.item_name }}
+  {{ item.description }} 
   <img :src="item.image" alt="" width="150" height="170">
 </div>
-<button @click="sort">sort</button> -->
+<button @click="sort">sort</button>
 
 {{ $store.state.current_deck.length }} ДЛИНА ДЕКИ
 
@@ -44,7 +46,7 @@ export default {
   },
   methods: {
     get() {
-      let url = 'http://127.0.0.1:8000/api/v1/itemsjson/'
+      let url = 'https://dev.netomerch.tk/api/v1/categories/'
       fetch(url) 
         .then((response) => response.json()) 
         .then((result) => {

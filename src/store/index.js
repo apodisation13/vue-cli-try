@@ -1,32 +1,42 @@
 import { createStore } from "vuex"
+import { dict_base_deck } from '@/logic/constants'
+
+// ИНСТРУКЦИЯ:
+// в шаблонах $store. state, getters['name'], commit('name', чё) для мутаций
+// в .vue - this.$store. и то же самое
+// в .js - ИМПОРТ store отсюда, и тогда store.  а дальше то же
+
+
 
 const store = createStore({
     state: {
-        likes: 1,
-        dislikes: 7,
         current_deck: [],  // дека выбранная для игры
-        // current_deck: base_deck,  // дека выбранная для игры
-        health: 0    
+        health: 0,
+        
+        // список словарей dict = {'deck_name': ..., 'deck': ...,  'deck_health': ...}
+        decks: [dict_base_deck, ],  // базовая дека всегда доступна 
+
     },
-    getters: {  // вот пока непонятно зачем это  this.$store.getters['название']
-        incr_likes: state => {
-            return state.likes += 5
-        }
+
+    getters: {  // вот пока непонятно зачем это
     },
-    mutations: {  // this.$store.commit('название'), а в шаблоне без this
-        incr_like(state) {
-            state.likes += 10
-            state.dislikes -= 1
-        },
+
+    mutations: { 
         set_current_deck(state, deck) {  // сохранить в деку массив
             state.current_deck = deck
         },
-        change_health(state, param) {
+        change_health(state, param) {  // изменяем здоровье
             state.health += param
+        },
+        set_health(state, param) {  // устанавливаем здоровье
+            state.health = param
+        },
+        append_into_decks(state, deck) {  // добавить деку в память сохранённых дек
+            state.decks.push(deck)
         }
     },
-    actions: {  // тоже хз чё это
 
+    actions: {  // тоже хз чё это
     }
 })
 

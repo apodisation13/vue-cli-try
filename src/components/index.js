@@ -7,7 +7,6 @@ import DeckGrave from '@/components/ModalWindows/DeckGrave'
 import CardModal from '@/components/ModalWindows/CardModal'
 import RedrawModal from '@/components/ModalWindows/RedrawModal'
 
-
 export default [
     HealthComp,
     DeckComp,
