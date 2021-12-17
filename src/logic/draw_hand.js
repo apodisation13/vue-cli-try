@@ -15,7 +15,7 @@ function draw_hand(hand, deck) {
         deck.splice(random, 1)  // убираем из деки эту карту по её индексу random 
     }
     
-    store.commit('set_current_deck', deck)
+    // store.commit('set_current_deck', deck)
     // alert(store.state.current_deck.length + 'длина деки вышла')
     // return [hand, DECK]  // теперь не нужен этот ретерн???
 }

@@ -8,14 +8,12 @@
     @click="$router.push('/')">Главная</button>
     <button class="menu_button" style="backgroundColor: green;"
     @click="$router.push('/game')">Игра</button>
+    <button class="menu_button"
+    @click="$router.push('/levelselect')">Уровни</button>
     <button class="menu_button" 
     @click="$router.push('/deckbuild')">ДекБилдер</button>
     <button class="menu_button"
-    @click="$router.push('/xo')">XO</button>
-    <button class="menu_button"
     @click="$router.push('/about')">О нас</button>
-    <button class="menu_button"
-    @click="$router.push('/try')">Трай</button>
   </div>
 
 </div>

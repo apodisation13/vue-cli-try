@@ -3,8 +3,8 @@ import MainPage from '@/pages/MainPage'
 import GamePage from '@/pages/GamePage'
 import AboutPage from '@/pages/AboutPage'
 import DeckbuildPage from '@/pages/DeckbuildPage'
-import XoPage from '@/pages/XoPage'
-import TryPage from '@/pages/TryPage'
+import LevelPage from '@/pages/LevelPage'
+
 
 const routes = [
     {
@@ -24,12 +24,8 @@ const routes = [
         component: DeckbuildPage
     },
     {
-        path: '/xo',
-        component: XoPage
-    },
-    {
-        path: '/try',
-        component: TryPage
+        path: '/levelselect',
+        component: LevelPage
     },
     
 ]

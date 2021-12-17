@@ -65,7 +65,7 @@ export default {
     return {
       field: ['', '', '', '', '', '', '', '', '', '', '', ''],
       hand: ['', '', '', '', '', ''],
-      deck: this.$store.state.current_deck,  // остаток сколько карт осталось в колоде
+      deck: this.$store.state.current_deck.slice(),  // остаток сколько карт осталось в колоде
       grave: [],  // кладбище карт у которых 0 зарядов
       beginning: true,  // статус начала игры - только для кнопки начало
       player_move_bool: true,  // true - ходит игрок, false - комп
