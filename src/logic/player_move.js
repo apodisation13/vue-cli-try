@@ -9,25 +9,26 @@ function damage_ai_card(id, field, hand, card_number, grave) {
     let i = id
 
     alert('ЖИЗНИ ' + field[i].hp + '  дамаг ' + field[i].dmg + ' до урона')
-    field[i].hp -= hand[card_number].dmg  // нанесли урон и-тому элементу от конкретной карты
+    field[i].hp -= hand[card_number].damage  // нанесли урон и-тому элементу от конкретной карты
     hand[card_number].charges -= 1  // вычитаем 1 заряд у карты игрока
     alert('ЖИЗНИ ' + field[i].hp + '  дамаг ' + field[i].dmg + ' после урона')
 
-    if ('heal' in hand[card_number].ability) {
-        alert(Object.keys(hand[card_number].ability))
-        store.commit('change_health', hand[card_number].ability.heal)
+    if (hand[card_number].ability == 'heal') {
+        // alert(Object.keys(hand[card_number].ability))
+        store.commit('change_health', hand[card_number].heal)
+        alert(`лечение на ${hand[card_number].heal}`)
     }
 
-    if ('damage_all' in hand[card_number].ability) {
+    if (hand[card_number].ability == 'damage-all') {
        field.forEach(enemy => {
         if (enemy) {
             if (enemy == field[i]) {
                 return
             }   
-            enemy.hp -= hand[card_number].dmg
+            enemy.hp -= hand[card_number].damage
            }
        });
-       alert('ЫЫЫ')
+       alert('УРОН ВСЕМ!')
     }
 
 

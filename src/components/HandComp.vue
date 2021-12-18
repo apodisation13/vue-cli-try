@@ -9,18 +9,21 @@
     
     class="hand_card"
     :style="[
-      card.category == 'bronze' ? {'backgroundColor': 'lightyellow'} :
-      card.category == 'silver' ? {'backgroundColor': 'silver'} :
-      card.category == 'gold' ? {'backgroundColor': 'gold'} :
+      card.color == 'Bronze' ? {'backgroundColor': 'lightyellow'} :
+      card.color == 'Silver' ? {'backgroundColor': 'silver'} :
+      card.color == 'Gold' ? {'backgroundColor': 'gold'} :
       {}]"
     >
       
       <p v-if="hp_needed">Жизни {{ card.hp }}</p> 
       
-      {{ card.dmg }}<br>{{ card.charges }}<br>
+      <p v-if="card.type == 'Special'">sp</p>  
+
+
+      {{ card.damage }}<br>{{ card.charges }}<br>
       
-      <p v-if="card.ability.heal">Лечение {{ card.ability.heal }}</p>
-      <p v-if="card.ability.damage_all">УРОН!</p>  
+      <p v-if="card.ability == 'heal'">Лечение {{ card.heal }}</p>
+      <p v-if="card.ability == 'damage-all'">УРОН!</p>  
       
       <!-- <card-modal :card='card' /> -->
 

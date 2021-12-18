@@ -4,6 +4,7 @@
   <deck-selection />
 </div>
 
+<a v-once>{{ get() }}</a>
 <div class="card_pool_view">
   <hand-comp :hand='pool' :hp_needed=true
   @chose_player_card='append_into_deck_in_progress' />
@@ -29,7 +30,6 @@ deck_is_progress.length < number_of_cards_in_deck ?
 </template>
 
 <script>
-import { POOL,  } from '@/logic/constants'
 import DeckSelection from '@/components/DeckSelection'
 
 export default {
@@ -38,7 +38,7 @@ export default {
   },
   data() {
     return {
-      pool: POOL,
+      pool: [],
       deck_is_progress: [],
       number_of_cards_in_deck: 10,  // Определяет количество карт в деке
       number: 1,  // для сохранения деки имя1, имя2, имя3 итп
@@ -46,6 +46,15 @@ export default {
    }
   },
   methods: {
+    get() {
+      let url = 'http://127.0.0.1:8000/api/v1/cards/'
+      fetch(url) 
+        .then((response) => response.json()) 
+        .then((result) => {
+          this.pool = result
+        });
+    },
+
     append_into_deck_in_progress(index) {
       if (
         !this.deck_is_progress.includes(this.pool[index]) 
