@@ -1,5 +1,5 @@
 import { createStore } from "vuex"
-import { dict_base_deck } from '@/logic/constants'
+
 
 // ИНСТРУКЦИЯ:
 // в шаблонах $store. state, getters['name'], commit('name', чё) для мутаций
@@ -12,10 +12,7 @@ const store = createStore({
     state: {
         current_deck: [],  // дека выбранная для игры
         health: 0,
-        
-        // список словарей dict = {'deck_name': ..., 'deck': ...,  'deck_health': ...}
-        decks: [dict_base_deck, ],  // базовая дека всегда доступна 
-
+        level: 0,  // номер уровня игры
     },
 
     getters: {  // вот пока непонятно зачем это
@@ -31,9 +28,9 @@ const store = createStore({
         set_health(state, param) {  // устанавливаем здоровье
             state.health = param
         },
-        append_into_decks(state, deck) {  // добавить деку в память сохранённых дек
-            state.decks.push(deck)
-        }
+        set_level(state, level) {  // установить номер уровня
+            state.level = level
+        },
     },
 
     actions: {  // тоже хз чё это

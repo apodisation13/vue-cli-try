@@ -1,12 +1,16 @@
 <template>
 ЩЁЛКНИТЕ НА ИКОНКУ ДЕКИ ДЛЯ ЕЁ ВЫБОРА
 
+<!-- загружаем из БД список дек -->
+<a v-once>{{ get_decks() }}</a>
+
+
 <div class="decks_pool_view">
   <div class="deck-view"  v-for="(deck, index) in deck_pool" :key='deck'
   @click="select_deck(index)">
     <div class="deck" >
-      {{ deck.deck_name }} <br>
-      Жизни деки -- {{ deck.deck_health }}
+      {{ deck.name }} <br>
+      Жизни деки -- {{ deck.health }}
     </div>
   </div>
 </div>
@@ -14,7 +18,7 @@
 <div class="selected_deck" >
   <div v-if="is_selected">
     ВЫБРАННАЯ ДЕКА - <br>
-  {{ deck_pool[selected_deck].deck_name }} <br>
+  {{ deck_pool[selected_deck].name }} <br>
   {{ $store.state.health }} <br>
   </div>
 </div>
@@ -26,20 +30,29 @@
 export default {
   data() {
     return {
-      deck_pool: this.$store.state.decks,
+      deck_pool: [],
       selected_deck: 0,  // индекс выбранной деки
       is_selected: false,  // что хоть что-то выбрано
-      once_flag: false,  // флаг чтобы 1 раз добавить только базовую деку
     }
   },
   methods: {
+    get_decks() {
+      let url = 'http://127.0.0.1:8000/api/v1/decks/'
+      fetch(url) 
+        .then((response) => response.json()) 
+        .then((result) => {
+          this.deck_pool = result
+        });
+    },
+
     select_deck(id) {
       alert(id)
       this.selected_deck = id
       this.is_selected = true
-      this.$store.commit('set_current_deck', this.deck_pool[this.selected_deck].deck)
-      this.$store.commit('set_health', this.deck_pool[this.selected_deck].deck_health)
+      this.$store.commit('set_current_deck', this.deck_pool[this.selected_deck].cards)
+      this.$store.commit('set_health', this.deck_pool[this.selected_deck].health)
     },
+    
   }
 
 }

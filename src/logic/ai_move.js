@@ -1,7 +1,6 @@
 import store from '@/store' // stote.state OR store.commit
 import { check_health } from '@/logic/service'
 
-
 function ai_move(field) {
   alert('ход компа')
   

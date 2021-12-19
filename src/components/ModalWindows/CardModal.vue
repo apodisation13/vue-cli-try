@@ -2,10 +2,11 @@
 <div class="card_view" v-if="show_card_modal">
   <div class='card_view__content'>
     <div class='data'>
-      <h2> Урон карты - {{ card.dmg }} </h2><br>
+      <p>ОПИСАНИЕ</p>
+      <h2> Урон карты - {{ card.damage }} </h2><br>
       <h2> Заряды карты - {{ card.charges }} </h2><br>
       <h2> Тип абилки - {{ card.ability }} </h2><br>
-      <p>ОПИСАНИЕ</p>
+      <h3 v-if="card.type == 'Special'">sp</h3><br>
     </div>
   </div>
 </div>

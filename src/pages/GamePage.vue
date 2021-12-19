@@ -8,14 +8,28 @@
 @redraw_finished='redraw_finished'
 />
 
+<p v-if="!beginning">
+  {{ levels[this.$store.state.level][1].length }}
+</p>
+
 <table class='field'>
   <tr v-for="i in 4" :key="i">
     <td v-for="j in 3" :key="j"
       @click.right="index=get_index(i,j), show_enemy_modal=true" 
       @mouseleave="show_enemy_modal=false"
       @click="exec_damage_ai_card(get_index(i,j))" 
-      @contextmenu.prevent>
-      {{ field[get_index(i,j)].hp }} <br> {{ field[get_index(i,j)].dmg }}
+      @contextmenu.prevent
+      >
+
+      <div class="enemy" :style="[
+        field[get_index(i,j)].color == 'Silver' ? {'backgroundColor': 'silver'} :
+        field[get_index(i,j)].color == 'Gold' ? {'backgroundColor': 'gold'} :
+      {}]"
+      >
+        {{ field[get_index(i,j)].hp }} <br> 
+        {{ field[get_index(i,j)].dmg }}
+      </div>
+      
     </td>
   </tr>
 </table>
@@ -55,7 +69,7 @@ v-bind:hand='hand'
 
 <script>
 
-import { place_enemies, } from '@/logic/place_enemies'
+import { place_enemies, levels, appear_new_enemy } from '@/logic/place_enemies'
 import { draw_hand, } from '@/logic/draw_hand'
 import { damage_ai_card,  } from '@/logic/player_move'
 import { ai_move } from '@/logic/ai_move'
@@ -63,6 +77,7 @@ import { ai_move } from '@/logic/ai_move'
 export default {
   data() {
     return {
+      levels: levels,
       field: ['', '', '', '', '', '', '', '', '', '', '', ''],
       hand: ['', '', '', '', '', ''],
       deck: this.$store.state.current_deck.slice(),  // остаток сколько карт осталось в колоде
@@ -98,7 +113,7 @@ export default {
     start_game() {
       this.redraw = true
 
-      place_enemies(this.field)  // рандомно расставит врагов
+      place_enemies(this.field, this.levels[this.$store.state.level][1])  // рандомно расставит врагов
       draw_hand(this.hand, this.deck)  // вытянет руку, остальное оставит в деке
 
       this.beginning = false  // убрать кнопку начало после её нажатия
@@ -112,7 +127,7 @@ export default {
     chose_player_card(id) {
       if (this.player_cards_active) {
         this.player_card_number = id  // запомнить номер карты игрока
-        alert('УРОН ' + this.hand[id].dmg + '  заряды ' + this.hand[id].charges)
+        alert('УРОН ' + this.hand[id].damage + '  заряды ' + this.hand[id].charges)
         this.ai_cards_active = true  // только теперь можно тыкать на карты противника
       }
     },
@@ -131,6 +146,7 @@ export default {
 
     exec_ai_move() {
       ai_move(this.field)
+      appear_new_enemy(this.field, this.levels[this.$store.state.level][1] )
       this.player_move_bool = true
     },
 
@@ -151,6 +167,13 @@ th, td {
   width: 170px;
   height: 130px;
   text-align: center;
+}
+
+.enemy {
+  width: 130px;
+  height: 110px;
+  align-self: center;
+  align-content: center;
 }
 
 .btn_start {
