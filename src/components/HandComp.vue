@@ -8,21 +8,34 @@
     @click="chose_player_card(index)"
     
     class="hand_card"
-    :style="[
-      card.color == 'Bronze' ? {'backgroundColor': 'lightyellow'} :
-      card.color == 'Silver' ? {'backgroundColor': 'silver'} :
-      card.color == 'Gold' ? {'backgroundColor': 'gold'} :
-      {}]"
+    :style="['hand_card', 
+      (
+        card.faction == 'Soldiers' ? {'border': 'solid 4px blue'} :
+        card.faction == 'Monsters' ? {'border': 'solid 4px red'} :
+        card.faction == 'Animals' ? {'border': 'solid 4px green'} :
+        {}
+      ),
+      (
+        card.color == 'Bronze' ? {'backgroundColor': 'lightyellow'} :
+        card.color == 'Silver' ? {'backgroundColor': 'silver'} :
+        card.color == 'Gold' ? {'backgroundColor': 'gold'} :
+        {}
+      )
+      ]"
+
     >
+    <!-- card.color == 'Bronze' ? {'backgroundColor': 'lightyellow'} :
+      card.color == 'Silver' ? {'backgroundColor': 'silver'} :
+      card.color == 'Gold' ? {'backgroundColor': 'gold'} : -->
       
-      <p v-if="hp_needed">Жизни {{ card.hp }}</p> 
+      <p v-if="hp_needed">&hearts;{{ card.hp }}</p> 
       
-      <p v-if="card.type == 'Special'">sp</p>  
+      <p v-if="card.type == 'Special'">&starf;</p>  
 
 
-      {{ card.damage }}<br>{{ card.charges }}<br>
+      &dagger;{{ card.damage }}<br>{{ card.charges }}<br>
       
-      <p v-if="card.ability == 'heal'">Лечение {{ card.heal }}</p>
+      <p v-if="card.ability == 'heal'">+&hearts;{{ card.heal }}</p>
       <p v-if="card.ability == 'damage-all'">УРОН!</p>  
       
       <!-- <card-modal :card='card' /> -->
@@ -82,7 +95,7 @@ export default {
 .hand_card {
     width: 100px;
     height: 150px;
-    border: solid 1px black;
+    /* border: solid 2px black; */
     border-radius: 5px;
     text-align: center;
     vertical-align: middle;

@@ -4,7 +4,7 @@
 ЗДЕСЬ Я ТРЕНИРУЮСЬ
 
 <!-- <button @click="get">КНОПКА</button> -->
-<a v-once>{{ get() }}</a>
+<!-- <a v-once>{{ get() }}</a>
 <div v-for="card in results" :key="card.id">
   {{ card.color }}
   {{ card.type }}
@@ -13,15 +13,15 @@
   {{ card.charges }}
   {{ card.hp }}
   {{ card.heal }} 
-</div>
+</div> -->
 
-<button @click="post()">post</button>
+<button @click="delete_func()">del</button>
 
 </div>
 </template>
 
 <script>
-import { try_post } from '@/logic/requests'
+import { try_post, try_delete } from '@/logic/requests'
 
 export default {
   data() {
@@ -46,6 +46,10 @@ export default {
       let url = 'http://127.0.0.1:8000/api/v1/try/'
       try_post(data, url)
     },
+    delete_func() {
+      let url = 'http://127.0.0.1:8000/api/v1/decks/39/'
+      try_delete(url)
+    }
       
       
   }    

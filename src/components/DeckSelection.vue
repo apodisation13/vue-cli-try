@@ -1,5 +1,5 @@
 <template>
-ЩЁЛКНИТЕ НА ИКОНКУ ДЕКИ ДЛЯ ЕЁ ВЫБОРА
+ДВАЖДЫ ЩЁЛКНИТЕ ЛКМ на деку для её выбора
 
 <!-- загружаем из БД список дек -->
 <a v-once>{{ get_decks() }}</a>
@@ -7,13 +7,19 @@
 
 <div class="decks_pool_view">
   <div class="deck-view"  v-for="(deck, index) in deck_pool" :key='deck'
-  @click="select_deck(index)">
+  @dblclick="select_deck(index)"
+  @click.right="delete_deck(index)" @contextmenu.prevent 
+  >
     <div class="deck" >
       {{ deck.name }} <br>
       Жизни деки -- {{ deck.health }}
     </div>
   </div>
 </div>
+<yesno-modal :visible='show_yesno' 
+@confirm='confirm_delete'
+@cancel='cancel_delete'
+/>
 
 <div class="selected_deck" >
   <div v-if="is_selected">
@@ -26,6 +32,7 @@
 </template>
 
 <script>
+import { try_delete } from '@/logic/requests'
 
 export default {
   data() {
@@ -33,6 +40,8 @@ export default {
       deck_pool: [],
       selected_deck: 0,  // индекс выбранной деки
       is_selected: false,  // что хоть что-то выбрано
+      show_yesno: false,  // показать да\нет для удаления деки
+      index: 0,  // индекс выбранной для удаления деки
     }
   },
   methods: {
@@ -51,6 +60,22 @@ export default {
       this.is_selected = true
       this.$store.commit('set_current_deck', this.deck_pool[this.selected_deck].cards)
       this.$store.commit('set_health', this.deck_pool[this.selected_deck].health)
+    },
+
+    delete_deck(id) {
+      this.index = id  // записали номер нажатой кнопки
+      this.show_yesno = true
+    },
+
+    confirm_delete(flag) {
+      this.show_yesno = flag
+      let id = this.deck_pool[this.index].id  // id деки из базы по индексу
+      let url = `http://127.0.0.1:8000/api/v1/decks/${id}/`
+      try_delete(url)
+      this.get_decks()  // заново делаем запрос на список дек
+    },
+    cancel_delete(flag) {
+      this.show_yesno = flag
     },
     
   }

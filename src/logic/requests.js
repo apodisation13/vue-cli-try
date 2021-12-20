@@ -13,4 +13,14 @@ function try_post(body, url) {
         })
 }
 
-export { try_post }
+function try_delete(url){
+    fetch(url, {
+      method: 'DELETE'
+    }).then(() => {
+       alert('успешно удалили деку');
+    }).catch(err => {
+        alert(err)
+    });
+}
+
+export { try_post, try_delete }

@@ -21,13 +21,14 @@
       @contextmenu.prevent
       >
 
-      <div class="enemy" :style="[
+      <div class="enemy" v-if="field[get_index(i,j)]"
+      :style="[
         field[get_index(i,j)].color == 'Silver' ? {'backgroundColor': 'silver'} :
         field[get_index(i,j)].color == 'Gold' ? {'backgroundColor': 'gold'} :
       {}]"
       >
-        {{ field[get_index(i,j)].hp }} <br> 
-        {{ field[get_index(i,j)].dmg }}
+        &hearts;{{ field[get_index(i,j)].hp }} <br> 
+        &dagger;{{ field[get_index(i,j)].dmg }}
       </div>
       
     </td>
