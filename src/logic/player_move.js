@@ -44,7 +44,8 @@ function damage_ai_card(id, field, hand, card_number, grave) {
     // убираем карту игрока, если в ней не осталось зарядов
     if (hand[card_number].charges === 0) {
         grave.push(hand[card_number])  // поместили карту в кладбище
-        hand[card_number] = ''
+        // hand[card_number] = ''
+        hand.splice(card_number, 1)
     }
 
     return [field, hand, card_number, grave]

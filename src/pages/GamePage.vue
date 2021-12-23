@@ -47,6 +47,11 @@
   <a v-if="!player_move_bool && !beginning">
     <button @click="exec_ai_move">ХОД КОМПА</button>
   </a>
+  <br>
+  <a v-if="player_move_bool && !beginning">
+    <button @click="player_move_bool = false">пас</button>
+  </a>
+
 
 <br>
 
@@ -63,7 +68,13 @@ v-bind:hand='hand'
 />
 
 <br>
-<button class="btn_start" @click="draw_one_card">дро</button>
+<button class="btn_start"
+v-if="player_cards_active && player_move_bool 
+&& !beginning 
+&& hand.length < 6 && deck.length != 0"
+@click="draw_one_card">
+дро
+</button>
 
 </div>
 </template>
@@ -80,7 +91,7 @@ export default {
     return {
       levels: levels,
       field: ['', '', '', '', '', '', '', '', '', '', '', ''],
-      hand: ['', '', '', '', '', ''],
+      hand: [],
       deck: this.$store.state.current_deck.slice(),  // остаток сколько карт осталось в колоде
       grave: [],  // кладбище карт у которых 0 зарядов
       beginning: true,  // статус начала игры - только для кнопки начало
@@ -102,6 +113,7 @@ export default {
       let random = Math.floor(Math.random() * this.deck.length);
       this.hand.push(this.deck[random])
       this.deck.splice(random, 1)  // удалить этот 0й элемент
+      this.player_move_bool = false
     },
 
     redraw_finished(dict) { // пришедший параметр из ЭМИТА этого компонента

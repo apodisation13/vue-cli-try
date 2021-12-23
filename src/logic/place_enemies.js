@@ -35,9 +35,9 @@ let levels = [
 
 function place_enemies(field, enemy_list) {
     // срез - максимальное количество стартовых врагов
-    let max_starting_enemies = 5  
-    alert(enemy_list.length)
-    let aa = enemy_list.length
+    // let max_starting_enemies = 5  
+    // alert(enemy_list.length)
+    // let aa = enemy_list.length
     
     for (let i = 0; i < enemy_list.length; i++) {
         let random = Math.floor(Math.random() * 9)  
