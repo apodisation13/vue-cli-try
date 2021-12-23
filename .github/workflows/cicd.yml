@@ -3,7 +3,7 @@ name: ci-cd
 on:
   push:
     branches:
-      - master 
+      - [ master, dev ] 
 
 env:
   REGISTRY: ghcr.io
