@@ -10,3 +10,5 @@ services:
     restart: unless-stopped
     # networks:
     #   - proxy
+    ports:
+      - "8080:8080"

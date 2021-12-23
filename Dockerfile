@@ -1,7 +1,7 @@
 FROM node:16-alpine
 
 # устанавливаем простой HTTP-сервер для статики
-RUN npm install -g http-server
+# RUN npm install -g http-server
 
 # делаем каталог 'app' текущим рабочим каталогом
 WORKDIR /app
@@ -19,8 +19,8 @@ COPY . .
 RUN npm run build
 
 EXPOSE 8080
-CMD [ "http-server", "dist" ]
-# CMD [ "npm", "run", "serve" ]
+# CMD [ "http-server", "dist" ]
+CMD [ "npm", "run", "serve" ]
 
 
 # этап production (production-stage)
