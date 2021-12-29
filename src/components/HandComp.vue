@@ -24,9 +24,7 @@
       ]"
 
     >
-    <!-- card.color == 'Bronze' ? {'backgroundColor': 'lightyellow'} :
-      card.color == 'Silver' ? {'backgroundColor': 'silver'} :
-      card.color == 'Gold' ? {'backgroundColor': 'gold'} : -->
+    
       
       <p v-if="hp_needed">&hearts;{{ card.hp }}</p> 
       
@@ -37,8 +35,6 @@
       
       <p v-if="card.ability == 'heal'">+&hearts;{{ card.heal }}</p>
       <p v-if="card.ability == 'damage-all'">УРОН!</p>  
-      
-      <!-- <card-modal :card='card' /> -->
 
   </div>
 </div> 

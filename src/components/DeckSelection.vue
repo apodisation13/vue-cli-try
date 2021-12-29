@@ -9,6 +9,7 @@
   <div class="deck-view"  v-for="(deck, index) in deck_pool" :key='deck'
   @dblclick="select_deck(index)"
   @click.right="delete_deck(index)" @contextmenu.prevent 
+  @click="show_deck(index)"
   >
     <div class="deck" >
       {{ deck.name }} <br>
@@ -33,6 +34,7 @@
 
 <script>
 import { try_delete } from '@/logic/requests'
+import axios from "axios"
 
 export default {
   data() {
@@ -47,11 +49,10 @@ export default {
   methods: {
     get_decks() {
       let url = 'http://127.0.0.1:8000/api/v1/decks/'
-      fetch(url) 
-        .then((response) => response.json()) 
-        .then((result) => {
-          this.deck_pool = result
-        });
+      axios.get(url)
+      .then(response => {
+        this.deck_pool = response.data
+      })
     },
 
     select_deck(id) {
@@ -77,8 +78,14 @@ export default {
     cancel_delete(flag) {
       this.show_yesno = flag
     },
+
+    show_deck(index) {
+      this.$emit('show_deck', this.deck_pool[index])
+    },
     
-  }
+  },
+
+  emits: ["show_deck", ]
 
 }
 </script>

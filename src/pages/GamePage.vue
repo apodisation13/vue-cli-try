@@ -36,7 +36,6 @@
 </table>
 <field-modal v-if="field[index]" :enemy='field[index]' :flag='show_enemy_modal'/>
 
-
 <health-comp :player_cards_active="player_cards_active" />
 
 
@@ -163,7 +162,12 @@ export default {
       this.player_move_bool = true
     },
 
-  }
+  },
+  // computed: {  ПОПРОБОВАТЬ ЭТО!!!
+  //   fn() {
+  //     r
+  //   }
+  // },
 }
 
 </script>
