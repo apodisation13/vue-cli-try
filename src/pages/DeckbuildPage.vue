@@ -40,16 +40,14 @@
 
 
 <div class="total">
-<div class="leader" v-if="leader_selected">
-  <leader-comp :leader=[filtered_leaders[leader_index]] />
+<div v-if="leader_selected">
+  <leader-comp :leader=deck_leader />
 </div>
 <div class="deck_build_view">
 <hand-comp :hand='deck_is_progress' :hp_needed=true
 @chose_player_card='delete_from_deck_in_progress' />
 </div>
 </div>
-
-
 
 Лидер: {{ leader_selected }} <br>
 Размер деки: {{ deck_is_progress.length }}/{{ number_of_cards_in_deck }} <br>
@@ -91,6 +89,7 @@ export default {
       faction_selected: false,  // выбрана ли фракция
       leader_selected: false,  // выбран лидер или нет
       leader_index: null,  // индекс выбранного лидера
+      deck_leader: null,
    }
   },
   methods: {
@@ -173,8 +172,10 @@ export default {
       this.deck_is_progress = deck.cards
       this.health = deck.health
       this.leader_selected = true
-      this.leader_index = 0
-      this.filtered_leaders[0] = deck.leader
+      // this.leader_index = 0
+      // this.filtered_leaders[0] = deck.leader
+      this.deck_leader = deck.leader
+
     },
 
     new_deck() {

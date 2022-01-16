@@ -24,12 +24,10 @@
       ]"
 
     >
-    
       
       <p v-if="hp_needed">&hearts;{{ card.hp }}</p> 
       
       <p v-if="card.type == 'Special'">&starf;</p>  
-
 
       &dagger;{{ card.damage }}<br>{{ card.charges }}<br>
       
@@ -39,7 +37,11 @@
   </div>
 </div> 
 
-<card-modal v-if="hand[i]" :card='hand[i]' :show_card_modal='show_card_modal' />
+<card-modal 
+v-if="hand[i]" 
+:card='hand[i]' 
+:show_card_modal='show_card_modal'
+/>
 
 </template>
 

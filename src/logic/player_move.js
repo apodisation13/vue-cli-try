@@ -8,10 +8,10 @@ function damage_ai_card(id, field, hand, card_number, grave) {
     // alert('попали в функцию дамага компа')
     let i = id
 
-    alert('ЖИЗНИ ' + field[i].hp + '  дамаг ' + field[i].dmg + ' до урона')
+    alert('ЖИЗНИ ' + field[i].hp + ' до урона')
     field[i].hp -= hand[card_number].damage  // нанесли урон и-тому элементу от конкретной карты
     hand[card_number].charges -= 1  // вычитаем 1 заряд у карты игрока
-    alert('ЖИЗНИ ' + field[i].hp + '  дамаг ' + field[i].dmg + ' после урона')
+    alert('ЖИЗНИ ' + field[i].hp + ' после урона')
 
     if (hand[card_number].ability == 'heal') {
         // alert(Object.keys(hand[card_number].ability))
@@ -22,7 +22,7 @@ function damage_ai_card(id, field, hand, card_number, grave) {
     if (hand[card_number].ability == 'damage-all') {
        field.forEach(enemy => {
         if (enemy) {
-            if (enemy == field[i]) {
+            if (enemy == field[i]) {  // FIXME: вот это чё?????
                 return
             }   
             enemy.hp -= hand[card_number].damage
@@ -51,4 +51,37 @@ function damage_ai_card(id, field, hand, card_number, grave) {
     return [field, hand, card_number, grave]
 }
 
-export { damage_ai_card }
+
+// ХОД ЛИДЕРОМ!
+function leader_move(leader, i, field) {
+    // i - номер клетки поля
+    // leader - объект лидера целиком
+    
+    if (leader.ability == "damage-one") {
+        alert('ЖИЗНИ ' + field[i].hp + ' до урона')
+        field[i].hp -= leader.damage
+        leader.charges -= 1
+        alert('ЖИЗНИ ' + field[i].hp + ' после урона')
+    }
+
+    else if (leader.ability == "damage-all") {
+        field.forEach(enemy => {
+            if (enemy) {
+                enemy.hp -= leader.damage
+               }
+           });
+        leader.charges -= 1
+        alert('УРОН ВСЕМ от лидера!')
+    }
+
+    // если враг убит, убираем его с поля
+    // проверять надо всех врагов, потому что есть абилки на всех
+    for (let index = 0; index < field.length; index++) {
+        if (field[index].hp <= 0) {
+            field[index] = ''
+        }
+        
+    }
+}
+
+export { damage_ai_card, leader_move }

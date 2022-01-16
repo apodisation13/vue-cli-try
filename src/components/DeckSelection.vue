@@ -61,6 +61,8 @@ export default {
       this.is_selected = true
       this.$store.commit('set_current_deck', this.deck_pool[this.selected_deck].cards)
       this.$store.commit('set_health', this.deck_pool[this.selected_deck].health)
+      this.$store.commit('set_leader', this.deck_pool[this.selected_deck].leader)
+      // alert(this.deck_pool[this.selected_deck].leader.name)
     },
 
     delete_deck(id) {
