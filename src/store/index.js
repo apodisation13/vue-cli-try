@@ -13,6 +13,7 @@ const store = createStore({
         current_deck: [],  // дека выбранная для игры
         health: 0,
         level: 0,  // номер уровня игры
+        leader: null
     },
 
     getters: {  // вот пока непонятно зачем это
@@ -31,6 +32,9 @@ const store = createStore({
         set_level(state, level) {  // установить номер уровня
             state.level = level
         },
+        set_leader(state, leader) {  // установить лидера деки
+            state.leader = leader
+        }
     },
 
     actions: {  // тоже хз чё это

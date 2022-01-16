@@ -3,6 +3,8 @@
 Страница о нас <br>
 ЗДЕСЬ Я ТРЕНИРУЮСЬ
 
+<!-- <img :src="require('@/assets/images/'+ '1.jpg')" alt=""> -->
+
 <!-- <button @click="get">КНОПКА</button> -->
 <!-- <a v-once>{{ get() }}</a>
 <div v-for="card in results" :key="card.id">

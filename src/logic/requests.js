@@ -1,3 +1,6 @@
+import axios from "axios";
+
+
 function try_post(body, url) {
     
     fetch(url, {
@@ -23,4 +26,12 @@ function try_delete(url){
     });
 }
 
-export { try_post, try_delete }
+
+async function get(url) {
+    const response = await axios.get(url)
+    alert(response.data)
+    return response.data
+}
+
+
+export { try_post, try_delete, get }

@@ -40,16 +40,29 @@
 <health-comp :player_cards_active="player_cards_active" />
 
 
-<div>
-  <a v-if="player_move_bool && !beginning">
-    <button @click="player_move">ХОД ИГРОКА</button>
-  </a>
-  <a v-if="!player_move_bool && !beginning">
-    <button @click="exec_ai_move">ХОД КОМПА</button>
-  </a>
-
+<a v-if="!player_move_bool && !beginning">
+  <button @click="exec_ai_move">ХОД КОМПА</button>
+</a>
+<br>
+<a v-show="player_move_bool && !beginning">
+  <button @click="exec_ai_move">пас</button>
+</a>
 <br>
 
+<button class="btn_start"
+v-show="can_draw"
+@click="draw_one_card">
+дро
+</button>
+<br>
+
+<div class="hand">
+
+<leader-comp
+v-if="leader" 
+:leader='leader'
+@exec_leader="exec_leader"
+/>
 
 <deck-comp 
 :deck='deck' 
@@ -58,21 +71,19 @@
 
 <hand-comp 
 v-if="!redraw"
-v-bind:hand='hand'
+:hand='hand'
 @chose_player_card='chose_player_card' 
 />
 
-<br>
-<button class="btn_start" @click="draw_one_card">дро</button>
-
 </div>
+
 </template>
 
 <script>
 
 import { place_enemies, levels, appear_new_enemy } from '@/logic/place_enemies'
 import { draw_hand, } from '@/logic/draw_hand'
-import { damage_ai_card,  } from '@/logic/player_move'
+import { damage_ai_card, leader_move } from '@/logic/player_move'
 import { ai_move } from '@/logic/ai_move'
 
 export default {
@@ -80,28 +91,46 @@ export default {
     return {
       levels: levels,
       field: ['', '', '', '', '', '', '', '', '', '', '', ''],
-      hand: ['', '', '', '', '', ''],
+      hand: [],
       deck: this.$store.state.current_deck.slice(),  // остаток сколько карт осталось в колоде
+      leader: this.$store.state.leader,
+      leader_active: false, // активен ли лидер
       grave: [],  // кладбище карт у которых 0 зарядов
       beginning: true,  // статус начала игры - только для кнопки начало
       player_move_bool: true,  // true - ходит игрок, false - комп
-      player_cards_active: false,
+      player_cards_active: true,
       ai_cards_active: false,
       player_card_number: null,  // номер карты игрока в руке
       redraw: false,  // фдаг для изначального дро
       index: null,  // для индекса клетки поли
       show_enemy_modal: 0,  // для отображения всплывающего окна клетки поля
-    }
+      can_draw: false,  // возможность вытянуть карту
+      }
   },
   methods: {
     get_index(i, j) {  // фукнция для поля, вернуть номер элемента поля
       return (i-1) * 3 + (j-1)
     },
 
-    draw_one_card() {  // тестовая функция - вытягивает в руку рандомную карту из деки
+    // возможно ли сделать draw, каждый раз по нажатию ход игрока
+    calc_can_draw() {
+      if (
+        this.player_cards_active 
+        && this.player_move_bool 
+        && this.hand.length < 6 
+        && this.deck.length != 0 ) {
+          this.can_draw = true
+        }
+    },
+
+    // вытягивает в руку рандомную карту из деки, если рука не полна
+    draw_one_card() {  
       let random = Math.floor(Math.random() * this.deck.length);
       this.hand.push(this.deck[random])
       this.deck.splice(random, 1)  // удалить этот 0й элемент
+      this.player_move_bool = false
+      this.player_cards_active = false
+      this.can_draw = false
     },
 
     redraw_finished(dict) { // пришедший параметр из ЭМИТА этого компонента
@@ -120,9 +149,19 @@ export default {
       this.beginning = false  // убрать кнопку начало после её нажатия
     },
     
+    // нажатие кнопки ход игрока
     player_move() {
       alert('ход игрока, выберете карту')
+      // this.calc_can_draw()  // можем ли сделать draw
       this.player_cards_active = true
+    },
+
+    exec_leader() {
+      // по нажатию на лидера
+      if (this.leader.charges > 0 && this.player_move_bool) {
+        this.leader_active = true
+        alert(this.leader.charges + ' заряды лидера')
+      }
     },
 
     chose_player_card(id) {
@@ -130,28 +169,55 @@ export default {
         this.player_card_number = id  // запомнить номер карты игрока
         alert('УРОН ' + this.hand[id].damage + '  заряды ' + this.hand[id].charges)
         this.ai_cards_active = true  // только теперь можно тыкать на карты противника
+        this.leader_active = false // а лидер теперь неактивен
       }
     },
 
     exec_damage_ai_card(id) { 
       // id - номер клетки поля!
+      // если ткнули ранее на карту игрока, а потом на поле, ходим
       if (this.ai_cards_active && this.field[id]) {
         damage_ai_card(id, this.field, this.hand, this.player_card_number, this.grave)
 
         this.player_card_number = null
         this.ai_cards_active = false
         this.player_cards_active = false
-        this.player_move_bool = false
+
+        if (this.leader.charges == 0) {
+          this.player_move_bool = false
+        }
+        
       }
+
+      // если выбран лидер и ткнули на поле, урон наносит лидер
+      if (this.leader_active && this.field[id]) {
+        leader_move(this.leader, id, this.field)
+        this.leader_active = false  // снова неактивен, тыкай на него опять
+
+        if (this.leader.charges == 0) {
+          this.player_move_bool = false
+        }
+      }
+    
+    this.can_draw = false  // если хотя бы раз сюда попали, то дро нельзя
+
     },
 
     exec_ai_move() {
       ai_move(this.field)
       appear_new_enemy(this.field, this.levels[this.$store.state.level][1] )
+      
       this.player_move_bool = true
+      this.player_cards_active = true
+      this.calc_can_draw()  // можем ли сделать draw
     },
 
-  }
+  },
+  // computed: {  ПОПРОБОВАТЬ ЭТО!!!
+  //   fn() {
+  //     r
+  //   }
+  // },
 }
 
 </script>
@@ -185,6 +251,12 @@ th, td {
 .btn_field {
   width: 70px;
   height: 100px
+}
+
+.hand {
+    display: flex;  /*элементы в ряд*/
+    float: left;
+    margin: 3px;  /*отступ между картами*/
 }
 
 </style>
