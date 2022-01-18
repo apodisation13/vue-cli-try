@@ -92,8 +92,8 @@ export default {
       levels: levels,
       field: ['', '', '', '', '', '', '', '', '', '', '', ''],
       hand: [],
-      deck: this.$store.state.current_deck.slice(),  // остаток сколько карт осталось в колоде
-      leader: this.$store.state.leader,
+      deck: JSON.parse(JSON.stringify(this.$store.state.current_deck)),  // остаток сколько карт осталось в колоде
+      leader: JSON.parse(JSON.stringify(this.$store.state.leader)),
       leader_active: false, // активен ли лидер
       grave: [],  // кладбище карт у которых 0 зарядов
       beginning: true,  // статус начала игры - только для кнопки начало
@@ -200,7 +200,6 @@ export default {
       }
     
     this.can_draw = false  // если хотя бы раз сюда попали, то дро нельзя
-
     },
 
     exec_ai_move() {
