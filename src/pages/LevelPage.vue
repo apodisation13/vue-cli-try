@@ -1,5 +1,5 @@
 <template>
-<div>
+
 ВЫБЕРИТЕ УРОВЕНЬ <br><br>
 
 <div class="levels" v-for="level, index in level_list" :key="level">
@@ -14,8 +14,10 @@
   </button>
 </div>
 
+<select-deck />
 
-</div>
+
+
 </template>
 
 <script>
