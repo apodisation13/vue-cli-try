@@ -16,9 +16,22 @@
 import MenuBar from './components/MenuBar'
 
 export default {
-components: { 
-  MenuBar, 
+  components: { 
+    MenuBar, 
   },
+  
+  mounted() {  // вот так можно вызвать Экшен прям по загрузке сайта
+    // this.$store.dispatch('set_try')
+    this.$store.dispatch('get_data')
+  },
+
+  // created() { 
+  //   this.$store.dispatch('get_data')
+  // },
+
+  // beforeRouteEnter (to, from, next) {
+  //   this.$store.dispatch('get_data')
+  // }
 }
 
 </script>
@@ -29,6 +42,7 @@ components: {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* font-family: Arial, Helvetica, sans-serif; единый на всё */
 }
 
 .app {

@@ -227,6 +227,8 @@ export default {
 .field {
   border: 1px solid black;
   font-size: 20pt;
+  width: 100%;
+  /* height: 60%; */
 }
 th, td {
   background-color: #96D4D4;
@@ -256,6 +258,7 @@ th, td {
     display: flex;  /*элементы в ряд*/
     float: left;
     margin: 3px;  /*отступ между картами*/
+    /* width: 100%; */
 }
 
 </style>
