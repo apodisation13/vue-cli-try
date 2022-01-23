@@ -87,7 +87,8 @@ v-if="show_deck"
 }
 
 .decks_pool_view {
-  width: 800px;
+  /* width: 800px; */
+  width: 99%;
   height: 220px;
   border: solid 1px black;
   margin: 10px;
