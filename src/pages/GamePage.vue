@@ -40,21 +40,21 @@
 <health-comp :player_cards_active="player_cards_active" />
 
 
-<a v-if="!player_move_bool && !beginning">
-  <button @click="exec_ai_move">ХОД КОМПА</button>
-</a>
-<br>
-<a v-show="player_move_bool && !beginning">
-  <button @click="exec_ai_move">пас</button>
-</a>
+<button v-show="!player_move_bool && !beginning"
+@click="exec_ai_move">ХОД КОМПА</button>
+
+<button class="btn_pass" v-show="player_move_bool && !beginning"
+@click="exec_ai_move">Пас</button>
+<button class="btn_draw" v-show="can_draw"
+@click="draw_one_card">ДРО</button>
 <br>
 
-<button class="btn_start"
-v-show="can_draw"
-@click="draw_one_card">
-дро
-</button>
-<br>
+
+<div class="deck_and_grave">
+<deck-comp :deck='deck' />
+<grave-comp :grave='grave' />
+</div>
+
 
 <div class="hand">
 
@@ -62,11 +62,6 @@ v-show="can_draw"
 v-if="leader" 
 :leader='leader'
 @exec_leader="exec_leader"
-/>
-
-<deck-comp 
-:deck='deck' 
-:grave='grave' 
 />
 
 <hand-comp 
@@ -227,7 +222,8 @@ export default {
 .field {
   border: 1px solid black;
   font-size: 20pt;
-  width: 100%;
+  /* width: 100%; */
+  width: 500px;
   /* height: 60%; */
 }
 th, td {
@@ -257,6 +253,35 @@ th, td {
 .hand {
     display: flex;  /*элементы в ряд*/
     float: left;
+    margin: 3px;  /*отступ между картами*/
+    /* width: 100%; */
+}
+
+.deck_and_grave {
+    display: flex;  /*элементы в ряд*/
+    /* float: left; */
+    margin: 3px;  /*отступ между картами*/
+    /* width: 100%; */
+}
+
+.btn_pass {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  background-color: crimson;
+}
+
+.btn_draw {
+  margin: 10px;
+  width: 150px;
+  height: 50px;
+  background-color: yellow;
+  border-radius: 20px;
+}
+
+.action_buttons {
+    display: flex;  /*элементы в ряд*/
+    /* float: left; */
     margin: 3px;  /*отступ между картами*/
     /* width: 100%; */
 }
