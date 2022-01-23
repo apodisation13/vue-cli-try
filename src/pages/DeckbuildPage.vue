@@ -1,12 +1,5 @@
 <template>
 
-<div class="deck_selection">
-  <select-deck 
-  @emit_state_deck_index="show_deck"
-  />
-</div>
-
-
 <!-- база карт -->
 <div class="card_pool_view">
   <hand-comp :hand='pool' :hp_needed=true
@@ -14,7 +7,7 @@
 </div>
 
 <!-- список всех лидеров из базы -->
-<div class="deck_build_view">
+<div class="leader_pool_view">
   <hand-comp :hand='leaders'
   @chose_player_card='chose_leader' />
 </div>
@@ -60,6 +53,15 @@ deck_is_progress.length < number_of_cards_in_deck || !leader_selected ?
 ]">
   СОХРАНИТЬ ДЕКУ
 </button>
+
+
+<!-- выбор деки для редакирования и просмотра -->
+<!-- <div class="deck_selection"> -->
+  <select-deck 
+  @emit_state_deck_index="show_deck"
+  />
+<!-- </div> -->
+
 
 </template>
 
@@ -160,7 +162,7 @@ export default {
           leader_id: this.leaders[this.leader_index].id
         }
 
-        let url = 'http://127.0.0.1:8000/api/v1/decks/'
+        let url = 'http://194.67.109.190:82/api/v1/decks/'
         try_post(body, url)
 
         this.number += 1  // +1 для следующего имени деки
@@ -173,7 +175,7 @@ export default {
         alert('сохранили деку')
 
         // this.$refs.deckselection.get_decks()  // обновляем деки после сохран
-        let decks = 'http://127.0.0.1:8000/api/v1/decks/'
+        let decks = 'http://194.67.109.190:82/api/v1/decks/'
         get(decks, 'get_decks')
       }
 
@@ -196,58 +198,74 @@ export default {
 
 <style scoped>
 .card_pool_view {
-  width: 800px;
+  /* width: 800px; */
+  width: 99%;
   height: 330px;
   border: solid 1px black;
-  margin: 10px;
+  margin: 3px;
   overflow: scroll;
 }
 
-.deck_in_progress { 
-  /* два дива в один ряд! */
-  margin: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-}
-
-.deck_build_view {
-  width: 800px;
+.leader_pool_view {
+  width: 99%;
   height: 180px;
   border: solid 1px black;
-  margin: 10px;
+  margin: 3px;
   overflow: scroll;
-}
-
-.leader {
-  width: 130px;
-  height: 190px;
-  border: dashed 1px black;
-  margin: 10px;
-}
-
-.btn_save_deck {
-  width: 100px;
-  height: 50px;
-}
-
-.deck_selection {
-  width: 700px;
-  height: 560px;
-  border: solid 1px black;
-  overflow: scroll;
-  position: absolute;
-  top: 80px;
-  right: 20px;
 }
 
 .new_deck {
-  margin: 10px;
+  margin: 3px;
+  margin-top: 10px;
 }
 
 .factions {
   display: inline;
   margin: 10px;
+}
+
+.deck_in_progress { 
+  /* два дива в один ряд! */
+  margin: 3px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.leader {
+  /* width: 130px; */
+  width: 10%;
+  height: 190px;
+  border: dashed 1px black;
+  margin: 3px;
+}
+
+.deck_build_view {
+  width: 89%;
+  height: 180px;
+  border: solid 1px black;
+  margin: 3px;
+  overflow: scroll;
+}
+
+.btn_save_deck {
+  /* width: 100px; */
+  width: 15%;
+  height: 50px;
+}
+
+.deck_selection {
+  /* width: 700px; */
+  width: 99%;
+  height: 560px;
+  border: solid 1px black;
+  overflow: scroll;
+  position: absolute;
+  margin: 3px;
+  margin-top: 10px;
+  /* top: 80px;
+  right: 20px; */
 }
 
 </style>

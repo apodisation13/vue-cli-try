@@ -83,16 +83,21 @@ const store = createStore({
 
     actions: {  // вызывает мутацию, выполняясь через store.dispatch('название')
         get_data() {
-            let factions = 'http://127.0.0.1:8000/api/v1/factions/'
+            // let factions = 'http://127.0.0.1:8000/api/v1/factions/'
+            // let leaders = 'http://127.0.0.1:8000/api/v1/leaders/'
+            // let cards = 'http://127.0.0.1:8000/api/v1/cards/'
+            // let decks = 'http://127.0.0.1:8000/api/v1/decks/'           
+            
+            let factions = 'http://194.67.109.190:82/api/v1/factions/'
+            let leaders = 'http://194.67.109.190:82/api/v1/leaders/'
+            let cards = 'http://194.67.109.190:82/api/v1/cards/'
+            let decks = 'http://194.67.109.190:82/api/v1/decks/'  
+            
             get(factions, 'get_factions')
-            let leaders = 'http://127.0.0.1:8000/api/v1/leaders/'
             get(leaders, 'get_leaders')
-            let cards = 'http://127.0.0.1:8000/api/v1/cards/'
             get(cards, 'get_cards')
-            let decks = 'http://127.0.0.1:8000/api/v1/decks/'
             get(decks, 'get_decks')   
             
-        
             // commit('set_try', 10)
         }
     }
