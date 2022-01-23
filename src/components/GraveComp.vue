@@ -1,20 +1,20 @@
 <template>
-<div class='deck'>Колода
-  <button class="btn_deck" @click="flag=true"> 
-      {{ deck.length }}
+<div class='grave'>Сброс
+  <button class="btn_grave" @click="flag=true"> 
+    {{ grave.length }}
   </button>
-   <div class="modal_window" v-if="flag">
+  <div class="modal_window" v-if="flag">
     <button @click="flag=false">Закрыть</button><br>
-    <hand-comp :hand='deck'/> 
+    <hand-comp :hand='grave'/> 
   </div>
 </div>
 </template>
 
 <script>
   export default {
-    name: 'deck-comp',
+    name: 'grave-comp',
     props: {
-      deck: {
+      grave: {
         required: true,
         type: Array
       },
@@ -24,24 +24,21 @@
         flag: false,
       }
     },
-    methods: {
-      
-    }  
   }
 </script>
 
 <style scoped>
-.deck {
+.grave {
     width: 100px;
     height: 75px;
     display: inline-block;
     text-align: center;
 }
 
-.btn_deck {
+.btn_grave {
     width: 100px;
     height: 35px;
-    background: lightgreen;
+    background: orangered;
 }
 
 .modal_window {
