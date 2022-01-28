@@ -81,7 +81,8 @@ const store = createStore({
 
     },
 
-    actions: {  // вызывает мутацию, выполняясь через store.dispatch('название')
+    // вызывает мутацию, выполняясь через store.dispatch('название')
+    actions: {  
         get_data() {
             // let factions = 'http://127.0.0.1:8000/api/v1/factions/'
             // let leaders = 'http://127.0.0.1:8000/api/v1/leaders/'
@@ -99,6 +100,12 @@ const store = createStore({
             get(decks, 'get_decks')   
             
             // commit('set_try', 10)
+        },
+
+        set_deck_in_play({commit}, {decks, i}) {
+            commit('set_current_deck', decks[i].cards)
+            commit('set_health', decks[i].health)
+            commit('set_leader', decks[i].leader)
         }
     }
 })

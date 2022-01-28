@@ -1,10 +1,11 @@
 <template>
-
+<p v-once>
+  {{ set_default_deck() }}
+</p>
 ВЫБЕРИТЕ УРОВЕНЬ <br><br>
 
 <div class="levels" v-for="level, index in level_list" :key="level">
-  <button 
-  class="level_btn"
+  <button class="level_btn"
   @click="get_level_id(index)"
   >
 
@@ -15,8 +16,6 @@
 </div>
 
 <select-deck />
-
-
 
 </template>
 
@@ -35,6 +34,13 @@ export default {
     get_level_id(index) {
       alert(index)
       this.$store.commit("set_level", index)
+    },
+
+    set_default_deck() {
+      this.$store.dispatch(
+        "set_deck_in_play", 
+        {decks: this.$store.state.decks, i: 0}
+      )  
     }
   },
 

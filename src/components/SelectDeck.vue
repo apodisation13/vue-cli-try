@@ -61,9 +61,14 @@ v-if="show_deck"
       select_deck(i) {
         this.selected_deck = i
         this.is_selected = true
-        this.$store.commit('set_current_deck', this.$store.state.decks[this.selected_deck].cards)
-        this.$store.commit('set_health', this.$store.state.decks[this.selected_deck].health)
-        this.$store.commit('set_leader', this.$store.state.decks[this.selected_deck].leader)
+        // this.$store.commit('set_current_deck', this.$store.state.decks[this.selected_deck].cards)
+        // this.$store.commit('set_health', this.$store.state.decks[this.selected_deck].health)
+        // this.$store.commit('set_leader', this.$store.state.decks[this.selected_deck].leader)
+        this.$store.dispatch(
+        "set_deck_in_play", 
+        {decks: this.$store.state.decks, i: this.selected_deck}
+      )  
+      
       },
 
       emit_state_deck_index(index) {

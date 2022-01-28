@@ -8,6 +8,7 @@
 @redraw_finished='redraw_finished'
 />
 
+<!-- показать количество врагов, которое на уровне -->
 <p v-if="!beginning">
   {{ levels[this.$store.state.level][1].length }}
 </p>
@@ -29,12 +30,12 @@
       >
         &hearts;{{ field[get_index(i,j)].hp }} <br> 
         &dagger;{{ field[get_index(i,j)].dmg }}
-      </div>
-      
-    </td>
-  </tr>
+      </div></td></tr>
 </table>
-<field-modal v-if="field[index]" :enemy='field[index]' :flag='show_enemy_modal'/>
+<field-modal v-if="field[index]" 
+:enemy='field[index]' 
+:flag='show_enemy_modal'
+/>
 
 
 <health-comp :player_cards_active="player_cards_active" />
@@ -103,7 +104,8 @@ export default {
       }
   },
   methods: {
-    get_index(i, j) {  // фукнция для поля, вернуть номер элемента поля
+    // фукнция для поля, вернуть номер элемента поля
+    get_index(i, j) {  
       return (i-1) * 3 + (j-1)
     },
 
@@ -194,7 +196,7 @@ export default {
         }
       }
     
-    this.can_draw = false  // если хотя бы раз сюда попали, то дро нельзя
+      this.can_draw = false  // если хотя бы раз сюда попали, то дро нельзя
     },
 
     exec_ai_move() {
