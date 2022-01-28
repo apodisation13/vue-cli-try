@@ -5,7 +5,7 @@ class Enemy {
       this.color = color;
     }
 }
-    
+
 
 let enemy1 = new Enemy(8, 20)
 let enemy2 = new Enemy(3, 7)
@@ -19,7 +19,7 @@ let enemy9 = new Enemy(9, 9, "Silver")
 let enemy10 = new Enemy(24, 6, "Silver")
 let enemy11 = new Enemy(18, 16, "Gold")
 
-let level0 = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy8]
+let level0 = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7]
 let level1 = [enemy1, enemy2, enemy3, enemy7, enemy8, enemy9]
 let level2 = [enemy8, enemy9, enemy10, enemy11, enemy6, enemy7]
 let level3 = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy8,

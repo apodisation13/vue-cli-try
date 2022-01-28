@@ -6,19 +6,20 @@
 <br><br><br><br> -->
 <!-- <img :src="require('@/assets/images/'+ '1.jpg')" alt=""> -->
 
-<div class="x">
+<!-- <div class="x"> -->
   <!-- <span>sss</span>  -->
-</div>
+<!-- </div> -->
 
 
-<!-- <div v-for="el in 3" :key="el" class="hand" @click="c(el)">
+<div v-for="el in 3" :key="el" class="hand" @click="c(el)">
 <div class='card'>
+  <div class="typee"><span2>&starf;</span2></div>
   <div class="diamond2"><span2>&dagger;8</span2></div>
   <div class="circle"><span2>&#9850;</span2></div>
   <div class="charges"><span2>3</span2></div>
   <div class="hp"><span>&hearts;12</span></div>   
 </div>
-</div> -->
+</div>
 
 
 
@@ -64,6 +65,14 @@ export default {
   height: 150px;
   border: solid 3px gold;
   margin: 1px;
+  position: absolute;
+}
+
+.typee {
+  width: 20%;
+  height: 20%;
+  left: 1%;
+  top: 1%; 
   position: absolute;
 }
 
