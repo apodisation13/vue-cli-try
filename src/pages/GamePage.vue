@@ -174,7 +174,11 @@ export default {
       // id - номер клетки поля!
       // если ткнули ранее на карту игрока, а потом на поле, ходим
       if (this.ai_cards_active && this.field[id]) {
-        damage_ai_card(id, this.field, this.hand, this.player_card_number, this.grave)
+        damage_ai_card(
+          id, this.field, this.hand, 
+          this.player_card_number, this.grave, 
+          this.levels[this.$store.state.level][1]
+        )
 
         this.player_card_number = null
         this.ai_cards_active = false
@@ -188,7 +192,7 @@ export default {
 
       // если выбран лидер и ткнули на поле, урон наносит лидер
       if (this.leader_active && this.field[id]) {
-        leader_move(this.leader, id, this.field)
+        leader_move(this.leader, id, this.field, this.levels[this.$store.state.level][1])
         this.leader_active = false  // снова неактивен, тыкай на него опять
 
         if (this.leader.charges == 0) {
