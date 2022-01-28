@@ -1,14 +1,18 @@
 <template>
-  <div class='redraw_modal_window' v-if='visible'>
+<div class='redraw_modal_window' v-if='visible'>
  
- <button class="close_button" @click="close_self">ПРИНЯТЬ</button><br>
+ <button class="close_button" @click="close_self">ПРИНЯТЬ</button>
+ <br>
  
  <hand-comp :hand='hand_current' 
  @chose_player_card='chose_player_card' 
  />
+
+<span>
+  <h1>Изменить карту можно ещё {{ redraws }} раз</h1><br>
+  <h2>В колоде осталось ещё {{ deck_current.length }} карт</h2>
+</span>
  
- <h1>Изменить карту можно ещё {{ redraws }} раз</h1><br>
- <h2>В колоде осталось ещё {{ deck_current.length }} карт</h2>
  </div>
 </template>
 
@@ -63,6 +67,7 @@ export default {
 </script>
 
 <style scoped>
+
 .redraw_modal_window {
   background-color: limegreen;
   width: 1000px;
@@ -74,12 +79,6 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
 
-}
-
-.field_view__content {
-  width: 70px;
-  height: 30px;
-  font-size: 2pt;
 }
 
 .close_button {

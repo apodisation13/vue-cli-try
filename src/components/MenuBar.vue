@@ -35,11 +35,6 @@ export default {
   padding: 0 15px;
 }
 
-/* .menu_buttons {
-  margin-left: auto ;
-} */
-
-
 .menu_button {
   width: 100px;
   height: 50px;

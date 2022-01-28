@@ -1,79 +1,146 @@
 <template>
-<div>
-Страница о нас <br>
+
+<!-- Страница о нас <br>
 ЗДЕСЬ Я ТРЕНИРУЮСЬ
 
-<!-- <button @click="get">КНОПКА</button> -->
-<!-- <a v-once>{{ get() }}</a>
-<div v-for="card in results" :key="card.id">
-  {{ card.color }}
-  {{ card.type }}
-  {{ card.ability }}
-  {{ card.damage }}
-  {{ card.charges }}
-  {{ card.hp }}
-  {{ card.heal }} 
+<br><br><br><br> -->
+<!-- <img :src="require('@/assets/images/'+ '1.jpg')" alt=""> -->
+
+<div class="x">
+  <!-- <span>sss</span>  -->
+</div>
+
+
+<!-- <div v-for="el in 3" :key="el" class="hand" @click="c(el)">
+<div class='card'>
+  <div class="diamond2"><span2>&dagger;8</span2></div>
+  <div class="circle"><span2>&#9850;</span2></div>
+  <div class="charges"><span2>3</span2></div>
+  <div class="hp"><span>&hearts;12</span></div>   
+</div>
 </div> -->
 
-<button @click="delete_func()">del</button>
 
-</div>
+
 </template>
 
 <script>
-import { try_post, try_delete } from '@/logic/requests'
+
 
 export default {
   data() {
     return {
-      results: null,
-      flag: false
+      
     }
   },
   methods: {
-    get() {
-      let url = 'http://127.0.0.1:8000/api/v1/cards/'
-      fetch(url) 
-        .then((response) => response.json()) 
-        .then((result) => {
-          this.results = result
-        });
-    },
-    post() {
-      let data = {
-        name: "sssssss"
+      c(el) {
+        alert(el)
       }
-      let url = 'http://127.0.0.1:8000/api/v1/try/'
-      try_post(data, url)
-    },
-    delete_func() {
-      let url = 'http://127.0.0.1:8000/api/v1/decks/39/'
-      try_delete(url)
-    }
-      
-      
   }    
 }
 </script>
 
 <style scoped>
-.btn {
-  width: 100px;
-  height: 100px;
+.x {
+  width: 20%;
+  /* height: 100%; */
+  height: 50%;
+  overflow: hidden;
+  max-height: 100%;
+  /* overflow: auto; */
+  border: solid orchid 3px;
+  /* position: relative; */
+  position: absolute;
+ }
+
+.hand {
+    display: inline-block;  /*элементы в ряд*/
+    margin: 60px;  /*отступ между картами*/
 }
 
-.modal {
-  background: rgb(100, 6, 143);
-  width: 400px;
-  height: 300px;
-  border-radius: 12px;
-  text-align: center;
-  position: fixed;
+.card {
+  width: 100px;
+  height: 150px;
+  border: solid 3px gold;
+  margin: 1px;
+  position: absolute;
+}
+
+.charges {
+  width: 20%;
+  height: 20%;
+  /* border: solid green; */
+  background-color: hotpink;
+  position: absolute;
+  bottom: 2%;
+  right: 5%;
+}
+
+span {
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 8pt;
-
+  color: green;
+  font-size: 10pt;
 }
+
+span2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+  font-size: 14pt;
+}
+
+.hp {
+  width: 30%;
+  height: 20%;
+  /* border: solid green; */
+  background-color: red;
+  position: absolute;
+  bottom: 2%;
+  left: 5%;
+}
+
+
+.diamond2 {
+  position: relative;
+  height: 40px;
+  width: 40px;
+  /* line-height: 60px; */
+  text-align: center;
+  margin: -10px 50px;
+  top: 10%;
+  right: 10%;
+}
+.diamond2:before {
+  position: absolute;
+  content: '';
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  transform: rotateX(45deg) rotateZ(45deg);
+  /* box-shadow: 0px 0px 12px red; */
+  background-color: purple;
+  border: solid 2px yellow;
+}
+
+.circle {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: orange;
+  border-radius: 50%;
+  margin: 30px 60px;
+}
+
+
+
+
+
 
 </style>
