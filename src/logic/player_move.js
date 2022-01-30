@@ -2,7 +2,7 @@ import store from '@/store'  // вызов стора здесь!!!!!!!!!
 import { check_win } from "./service"
 
 
-function damage_ai_card(id, field, hand, card_number, grave) {
+function damage_ai_card(id, field, hand, card_number, grave, enemy_list) {
      // сюда заходим если там есть враг
     
     // alert('попали в функцию дамага компа')
@@ -47,15 +47,22 @@ function damage_ai_card(id, field, hand, card_number, grave) {
         // hand[card_number] = ''
         hand.splice(card_number, 1)
     }
+    
+    if (enemy_list.length == 0) {
+        if (check_win(field)) {
+            return
+        }    
+    }
 
     return [field, hand, card_number, grave]
 }
 
 
 // ХОД ЛИДЕРОМ!
-function leader_move(leader, i, field) {
+function leader_move(leader, i, field, enemy_list) {
     // i - номер клетки поля
     // leader - объект лидера целиком
+    // enemy_list - враги которые ещё должны появиться
     
     if (leader.ability == "damage-one") {
         alert('ЖИЗНИ ' + field[i].hp + ' до урона')
@@ -81,6 +88,12 @@ function leader_move(leader, i, field) {
             field[index] = ''
         }
         
+    }
+
+    if (enemy_list.length == 0) {
+        if (check_win(field)) {
+            return
+        }    
     }
 }
 

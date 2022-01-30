@@ -1,5 +1,5 @@
 import store from '@/store' // stote.state OR store.commit
-import { check_health } from '@/logic/service'
+import { check_lose } from '@/logic/service'
 
 function ai_move(field) {
   alert('ход компа')
@@ -31,8 +31,7 @@ function ai_move(field) {
 
       }
 
-      if (check_health(store.state.health)) {
-        alert('ВЫ ПРОИГРАЛИ')
+      if (check_lose(store.state.health)) {
         return
       }
 
