@@ -204,6 +204,7 @@ export default {
   border: solid 1px black;
   margin: 3px;
   overflow: scroll;
+  position: relative;
 }
 
 .leader_pool_view {

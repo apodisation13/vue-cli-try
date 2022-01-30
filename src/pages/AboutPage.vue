@@ -1,5 +1,13 @@
 <template>
 
+<!-- (
+        card.faction == 'Soldiers' ? {'backgroundColor': 'blue'} :
+        card.faction == 'Monsters' ? {'backgroundColor': 'red'} :
+        card.faction == 'Animals' ? {'backgroundColor': 'green'} :
+        {}
+      )]" -->
+
+
 <!-- Страница о нас <br>
 ЗДЕСЬ Я ТРЕНИРУЮСЬ
 
@@ -14,7 +22,7 @@
 <div v-for="el in 3" :key="el" class="hand" @click="c(el)">
 <div class='card'>
   <div class="typee"><span2>&starf;</span2></div>
-  <div class="diamond2"><span2>&dagger;8</span2></div>
+  <div class="diamond3"><span3>&dagger;8</span3></div>
   <div class="circle"><span2>&#9850;</span2></div>
   <div class="charges"><span2>3</span2></div>
   <div class="hp"><span>&hearts;12</span></div>   
@@ -63,7 +71,7 @@ export default {
 .card {
   width: 100px;
   height: 150px;
-  border: solid 3px gold;
+  border: solid 3px lightsalmon;
   margin: 1px;
   position: absolute;
 }
@@ -125,18 +133,29 @@ span2 {
   top: 10%;
   right: 10%;
 }
-.diamond2:before {
-  position: absolute;
-  content: '';
-  top: 0px;
-  left: 0px;
-  height: 100%;
-  width: 100%;
+.diamond3 {
+  position: relative;
+  margin: -10px 50px;
+  top: 10%;
+  right: 5%;
+  height: 40px;
+  width: 40px;
   transform: rotateX(45deg) rotateZ(45deg);
   /* box-shadow: 0px 0px 12px red; */
   background-color: purple;
   border: solid 2px yellow;
 }
+
+span3 {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 15%;
+  right: 15%;
+  color: black;
+  font-size: 17pt;
+  transform:  rotateZ(-45deg);
+}
+
 
 .circle {
   position: absolute;
