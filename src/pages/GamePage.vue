@@ -56,6 +56,10 @@
 <grave-comp :grave='grave' />
 </div>
 
+<resurrect-modal v-show="show_deck_modal_by_abilities"
+:grave='grave' 
+@chosen_card='confirm_card_from_grave'
+/>
 
 <div class="hand">
 
@@ -101,7 +105,8 @@ export default {
       index: null,  // для индекса клетки поли
       show_enemy_modal: 0,  // для отображения всплывающего окна клетки поля
       can_draw: false,  // возможность вытянуть карту
-      }
+      show_deck_modal_by_abilities: false,
+    }
   },
   methods: {
     // фукнция для поля, вернуть номер элемента поля
@@ -174,6 +179,10 @@ export default {
       // id - номер клетки поля!
       // если ткнули ранее на карту игрока, а потом на поле, ходим
       if (this.ai_cards_active && this.field[id]) {
+        
+        // особие абилки, которые требуют открытия окон
+        this.special_case_abilities()
+        
         damage_ai_card(
           id, this.field, this.hand, 
           this.player_card_number, this.grave, 
@@ -212,7 +221,25 @@ export default {
       this.calc_can_draw()  // можем ли сделать draw
     },
 
+    // особые абилки, которые требуют каких-либо окон
+    special_case_abilities() {
+      if (this.hand[this.player_card_number].ability == 'resurrect') {
+          // откр окно с grave, приходит confirm_card_from_grave()
+          this.show_deck_modal_by_abilities = true
+          
+        }
+    },
+
+    confirm_card_from_grave(dict) {
+      this.show_deck_modal_by_abilities = false
+      dict.card.charges = 1
+      this.hand.push(dict.card)
+      this.grave.splice(dict.i, 1)
+    },
+
   },
+
+
   // computed: {  ПОПРОБОВАТЬ ЭТО!!!
   //   fn() {
   //     r

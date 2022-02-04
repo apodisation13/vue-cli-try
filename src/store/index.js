@@ -8,16 +8,6 @@ import { get } from '@/logic/requests'
 // в .js - ИМПОРТ store отсюда, и тогда store.  а дальше то же
 
 
-// let factions = 'http://127.0.0.1:8000/api/v1/factions/'
-// get(factions, 'get_factions')
-// let leaders = 'http://127.0.0.1:8000/api/v1/leaders/'
-// get(leaders, 'get_leaders')
-// let cards = 'http://127.0.0.1:8000/api/v1/cards/'
-// get(cards, 'get_cards')
-// let decks = 'http://127.0.0.1:8000/api/v1/decks/'
-// get(decks, 'get_decks')
-
-
 const store = createStore({
     state: {
         current_deck: [],  // дека выбранная для игры
