@@ -10,6 +10,7 @@ import FieldModal from '@/components/ModalWindows/FieldModal'
 import CardModal from '@/components/ModalWindows/CardModal'
 import RedrawModal from '@/components/ModalWindows/RedrawModal'
 import YesnoModal from '@/components/ModalWindows/YesnoModal'
+import ResurrectModal from '@/components/ModalWindows/ResurrectModal'
 
 
 export default [
@@ -25,5 +26,6 @@ export default [
     CardModal,
     RedrawModal,
     YesnoModal,
+    ResurrectModal,
     
 ]

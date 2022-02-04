@@ -5,7 +5,7 @@
   </button>
    <div class="modal_window" v-if="flag">
     <button @click="flag=false">Закрыть</button><br>
-    <hand-comp :hand='deck'/> 
+    <hand-comp :hand='deck'/>
   </div>
 </div>
 </template>

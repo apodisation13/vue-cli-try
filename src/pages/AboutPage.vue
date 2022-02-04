@@ -12,7 +12,7 @@
 ЗДЕСЬ Я ТРЕНИРУЮСЬ
 
 <br><br><br><br> -->
-<!-- <img :src="require('@/assets/images/'+ '1.jpg')" alt=""> -->
+<!-- <img :src="require('@/assets/'+ '1.jpg')" alt=""> -->
 
 <!-- <div class="x"> -->
   <!-- <span>sss</span>  -->
@@ -20,12 +20,18 @@
 
 
 <div v-for="el in 3" :key="el" class="hand" @click="c(el)">
+
+
 <div class='card'>
-  <div class="typee"><span2>&starf;</span2></div>
-  <div class="diamond3"><span3>&dagger;8</span3></div>
-  <div class="circle"><span2>&#9850;</span2></div>
-  <div class="charges"><span2>3</span2></div>
-  <div class="hp"><span>&hearts;12</span></div>   
+  <!-- <img class="img" :src="require('@/assets/'+ '2.jpg')"> -->
+  <div class="box">
+    <div class="typee"><span2>&starf;</span2></div>
+    <div class="diamond3"><span3>&dagger;8</span3></div>
+    <div class="circle"><span2>&#9850;</span2></div>
+    <div class="charges"><span2>3</span2></div>
+    <div class="hp"><span>&hearts;12</span></div> 
+  </div>
+    
 </div>
 </div>
 
@@ -71,8 +77,17 @@ export default {
 .card {
   width: 100px;
   height: 150px;
-  border: solid 3px lightsalmon;
-  margin: 1px;
+  border: solid 3px gold;
+  /* margin: 0px; */
+  position: absolute;
+}
+
+.img {
+  width: 94px;
+  height: 144px;
+  top: 50%; 
+  left: 50%;
+  transform: translate(-50%, -50%);
   position: absolute;
 }
 
@@ -133,11 +148,12 @@ span2 {
   top: 10%;
   right: 10%;
 }
+
 .diamond3 {
-  position: relative;
-  margin: -10px 50px;
-  top: 10%;
-  right: 5%;
+  position: absolute;
+  /* margin: -10px 50px; */
+  top: 0;
+  right: 8%;
   height: 40px;
   width: 40px;
   transform: rotateX(45deg) rotateZ(45deg);
@@ -163,7 +179,15 @@ span3 {
   height: 30px;
   background: orange;
   border-radius: 50%;
-  margin: 30px 60px;
+  /* margin: 30px 60px; */
+  top: 30%;
+  right: 3%;
+}
+
+.box {
+  
+  margin: -150px;
+  
 }
 
 

@@ -72,6 +72,7 @@ v-if="show_deck"
       },
 
       emit_state_deck_index(index) {
+        this.select_deck(index)  // ВРЕМЕННЫЙ КОСТЫЛЬ ДЛЯ МОБИЛКИ
         this.$emit('emit_state_deck_index', index)
       },
     },

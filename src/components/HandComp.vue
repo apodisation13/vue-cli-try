@@ -14,6 +14,10 @@
         card.color == 'Gold' ? {'border': 'solid 5px gold'} :
         {}]"
     >
+    
+    <img class="img" :src="card.image" v-if="card.image">
+    <div class="box">
+      
       <div class="typee" v-if="card.type == 'Special'">
         <span>&starf;</span>
       </div>
@@ -43,7 +47,8 @@
       <div class="hp" v-if="hp_needed">
         <span :style="{'font-size': '11pt'}">&hearts;{{ card.hp }}</span>
       </div>  
-  
+    
+    </div>
   </div>
 </div> 
 
@@ -108,6 +113,19 @@ export default {
     border: solid 2px black;
 }
 
+.box { 
+  margin: -150px;
+}
+
+.img {
+  width: 94px;
+  height: 144px;
+  top: 50%; 
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
 .typee {
   width: 20%;
   height: 20%;
@@ -153,14 +171,16 @@ span {
   height: 40px;
   background: orange;
   border-radius: 50%;
-  margin: 30px 50px;
+  /* margin: 30px 50px; */
+  top: 30%;
+  right: 3%;
 }
 
 .diamond3 {
-  position: relative;
-  margin: -10px 50px;
-  top: 10%;
-  right: 5%;
+  position: absolute;
+  /* margin: -10px 50px; */
+  top: 0;
+  right: 8%;
   height: 40px;
   width: 40px;
   transform: rotateX(45deg) rotateZ(45deg);
