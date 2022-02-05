@@ -1,12 +1,6 @@
 <template>
 
-<button class="btn_start" v-if="beginning" @click="start_game">НАЧАТЬ</button>
-
-<redraw-modal v-if="redraw" 
-:deck='deck' 
-:hand='hand' 
-@redraw_finished='redraw_finished'
-/>
+<start-game v-if="beginning" @start_game='start_game'/>
 
 <!-- показать количество врагов, которое на уровне -->
 <p v-if="!beginning">
@@ -81,22 +75,27 @@ v-if="!redraw"
 
 <script>
 
-import { place_enemies, levels, appear_new_enemy } from '@/logic/place_enemies'
-import { draw_hand, } from '@/logic/draw_hand'
+import { levels, appear_new_enemy } from '@/logic/place_enemies'
 import { damage_ai_card, leader_move } from '@/logic/player_move'
 import { ai_move } from '@/logic/ai_move'
+import StartGame from '@/components/StartGame'
 
 export default {
+  components: {
+    StartGame,
+  },
   data() {
     return {
+      beginning: true,  // статус начала игры - только для кнопки начало
+      
       levels: levels,
-      field: ['', '', '', '', '', '', '', '', '', '', '', ''],
+      field: [],
       hand: [],
-      deck: JSON.parse(JSON.stringify(this.$store.state.current_deck)),  // остаток сколько карт осталось в колоде
+      deck: [],  // остаток сколько карт осталось в колоде
       leader: JSON.parse(JSON.stringify(this.$store.state.leader)),
       leader_active: false, // активен ли лидер
       grave: [],  // кладбище карт у которых 0 зарядов
-      beginning: true,  // статус начала игры - только для кнопки начало
+      
       player_move_bool: true,  // true - ходит игрок, false - комп
       player_cards_active: true,
       ai_cards_active: false,
@@ -112,6 +111,14 @@ export default {
     // фукнция для поля, вернуть номер элемента поля
     get_index(i, j) {  
       return (i-1) * 3 + (j-1)
+    },
+    
+    // эмит из компонента: расставить врагов, дро руки, редро
+    start_game(dict) {
+      this.hand = dict.hand
+      this.deck = dict.deck
+      this.field = dict.field
+      this.beginning = false  // убираем кнопку с экрана после этого
     },
 
     // возможно ли сделать draw, каждый раз по нажатию ход игрока
@@ -142,14 +149,14 @@ export default {
       this.redraw = false  // закончили редро
     },
 
-    start_game() {
-      this.redraw = true
+    // start_game() {
+    //   this.redraw = true
 
-      place_enemies(this.field, this.levels[this.$store.state.level][1])  // рандомно расставит врагов
-      draw_hand(this.hand, this.deck)  // вытянет руку, остальное оставит в деке
+    //   place_enemies(this.field, this.levels[this.$store.state.level][1])  // рандомно расставит врагов
+    //   draw_hand(this.hand, this.deck)  // вытянет руку, остальное оставит в деке
 
-      this.beginning = false  // убрать кнопку начало после её нажатия
-    },
+    //   this.beginning = false  // убрать кнопку начало после её нажатия
+    // },
     
     // нажатие кнопки ход игрока
     player_move() {

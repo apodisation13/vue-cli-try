@@ -1,7 +1,6 @@
 import { createStore } from "vuex"
 import { get } from '@/logic/requests'
 
-
 // ИНСТРУКЦИЯ:
 // в шаблонах $store. state, getters['name'], commit('name', чё) для мутаций
 // в .vue - this.$store. и то же самое
