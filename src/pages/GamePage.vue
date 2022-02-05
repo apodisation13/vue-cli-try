@@ -23,17 +23,14 @@
 />
 
 <div class="hand">
-
-<leader-comp v-if="leader" 
-:leader='leader'
-@exec_leader="chose_leader"
-/>
-
-<hand-comp v-if="!beginning"
-:hand='hand'
-@chose_player_card='chose_player_card' 
-/>
-
+  <leader-comp v-if="leader" 
+  :leader='leader'
+  @exec_leader="chose_leader"
+  />
+  <hand-comp v-if="!beginning"
+  :hand='hand'
+  @chose_player_card='chose_player_card' 
+  />
 </div>
 
 </template>
@@ -153,8 +150,7 @@ export default {
     special_case_abilities() {
       if (this.hand[this.player_card_number].ability == 'resurrect') {
           // откр окно с grave, приходит confirm_card_from_grave()
-          this.show_deck_modal_by_abilities = true
-          
+          this.show_deck_modal_by_abilities = true 
         }
     },
 
@@ -169,7 +165,6 @@ export default {
     calc_can_draw() {
       if (
         this.player_cards_active 
-        && this.player_move_bool 
         && this.hand.length < 6 
         && this.deck.length != 0 ) {
           this.can_draw = true
