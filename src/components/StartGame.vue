@@ -12,7 +12,7 @@
 
 <script>
 
-import { place_enemies, levels } from '@/logic/place_enemies'
+import { place_enemies } from '@/logic/place_enemies'
 import { draw_hand } from '@/logic/draw_hand'
   
   export default {
@@ -23,13 +23,12 @@ import { draw_hand } from '@/logic/draw_hand'
         hand: [],
         deck: JSON.parse(JSON.stringify(this.$store.state.current_deck)),
         field: ['','','','','','','','','','','',''],
-        levels: levels,
       }
     },
     methods: {
       // начало игры: расставить врагов, вытянуть карты в руку, открыть redraw-modal
       start_game() {
-        place_enemies(this.field, this.levels[this.$store.state.level][1])  // рандомно расставит врагов
+        place_enemies(this.field, this.$store.state.levels[this.$store.state.level][1])  // рандомно расставит врагов
         draw_hand(this.hand, this.deck)  // вытянет руку, остальное оставит в деке
 
         this.redraw = true

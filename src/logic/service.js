@@ -1,15 +1,15 @@
 import router from '@/router/router';
 
-// проверка выигрыша - если есть хотя бы 1 враг, return false
-function check_win(field) {
-    
+// проверка выигрыша - если осталось 0 врагов и на поле никого
+function check_win(field, enemy_list) {
+    if (enemy_list.length != 0) return
+
     for (let i = 0; i < field.length; i++) {
-        if (field[i]) {return false}            
+        if (field[i]) return            
     }
     
     alert('ВЫ ВЫИГРАЛИ!!!')
     router.push('/')
-    return true;
 }
 
 // функция проверки жизней, проигрыша
