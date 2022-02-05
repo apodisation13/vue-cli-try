@@ -1,12 +1,8 @@
 import store from '@/store'  // вызов стора здесь!!!!!!!!!
-import { check_win } from "./service"
 
 
-function damage_ai_card(id, field, hand, card_number, grave, enemy_list) {
-     // сюда заходим если там есть враг
-    
-    // alert('попали в функцию дамага компа')
-    let i = id
+// сюда заходим если там есть враг
+function damage_ai_card(i, field, hand, card_number, grave) {
 
     alert('ЖИЗНИ ' + field[i].hp + ' до урона')
     field[i].hp -= hand[card_number].damage  // нанесли урон и-тому элементу от конкретной карты
@@ -27,42 +23,32 @@ function damage_ai_card(id, field, hand, card_number, grave, enemy_list) {
             }   
             enemy.hp -= hand[card_number].damage
            }
-       });
+       })
        alert('УРОН ВСЕМ!')
     }
-
 
     // если враг убит, убираем его с поля
     // проверять надо всех врагов, потому что есть абилки на всех
     for (let index = 0; index < field.length; index++) {
         if (field[index].hp <= 0) {
             field[index] = ''
-        }
-        
+        }   
     }
    
     // убираем карту игрока, если в ней не осталось зарядов
     if (hand[card_number].charges === 0) {
         grave.push(hand[card_number])  // поместили карту в кладбище
-        // hand[card_number] = ''
         hand.splice(card_number, 1)
     }
-    
-    if (enemy_list.length == 0) {
-        if (check_win(field)) {
-            return
-        }    
-    }
 
-    return [field, hand, card_number, grave]
+    // return [field, hand, card_number, grave]
 }
 
 
 // ХОД ЛИДЕРОМ!
-function leader_move(leader, i, field, enemy_list) {
+function leader_move(leader, i, field) {
     // i - номер клетки поля
     // leader - объект лидера целиком
-    // enemy_list - враги которые ещё должны появиться
     
     if (leader.ability == "damage-one") {
         alert('ЖИЗНИ ' + field[i].hp + ' до урона')
@@ -86,15 +72,9 @@ function leader_move(leader, i, field, enemy_list) {
     for (let index = 0; index < field.length; index++) {
         if (field[index].hp <= 0) {
             field[index] = ''
-        }
-        
+        }  
     }
 
-    if (enemy_list.length == 0) {
-        if (check_win(field)) {
-            return
-        }    
-    }
 }
 
 export { damage_ai_card, leader_move }

@@ -1,18 +1,17 @@
 <template>
 <div class='redraw_modal_window' v-if='visible'>
  
- <button class="close_button" @click="close_self">ПРИНЯТЬ</button>
- <br>
+  <button class="close_button" @click="close_self">ПРИНЯТЬ</button>
+  <br>
  
- <hand-comp :hand='hand_current' 
- @chose_player_card='chose_player_card' 
- />
+  <hand-comp :hand='hand_current' 
+  @chose_player_card='chose_player_card' 
+  />
+  <br>
 
-<span>
   <h1>Изменить карту можно ещё {{ redraws }} раз</h1><br>
   <h2>В колоде осталось ещё {{ deck_current.length }} карт</h2>
-</span>
- 
+
  </div>
 </template>
 
@@ -44,12 +43,15 @@ export default {
       this.visible = false
       
       this.redraw_array.forEach(element => {
-      this.deck_current.push(element)  // вернуть в деку карты
+        this.deck_current.push(element)  // вернуть в деку карты
       })
 
-      this.$emit('redraw_finished', {'deck': this.deck_current, 'hand': this.hand_current})
-      
+      this.$emit(
+        'redraw_finished', 
+        {'deck': this.deck_current, 'hand': this.hand_current}
+      ) 
     },
+
     chose_player_card(id) {
       this.redraws -= 1
       
@@ -70,15 +72,14 @@ export default {
 
 .redraw_modal_window {
   background-color: limegreen;
-  width: 1000px;
-  height: 400px;
+  width: 70%;
+  height: 50%;
   border-radius: 12px;
   text-align: center;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
 }
 
 .close_button {
