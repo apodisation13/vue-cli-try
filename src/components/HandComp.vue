@@ -2,17 +2,11 @@
 
 <div class="hand" v-for="(card, index) in hand" :key='card'>
 
-  <div v-if="card"
-    @click.right="i=index, show_card_modal=true" @mouseleave="show_card_modal=false"
+  <div v-if="card" 
     @contextmenu.prevent 
+    @click.right="i=index, show_card_modal=true" @mouseleave="show_card_modal=false"
     @click="chose_player_card(index)"
-    
-    class="hand_card"
-    :style="[
-        card.color == 'Bronze' ? {'border': 'solid 3px lightsalmon'} :
-        card.color == 'Silver' ? {'border': 'solid 4px silver'} :
-        card.color == 'Gold' ? {'border': 'solid 5px gold'} :
-        {}]"
+    class="hand_card" :style="border(card)"
     >
     
     <img class="img" :src="card.image" v-if="card.image">
@@ -22,14 +16,7 @@
         <span>&starf;</span>
       </div>
       
-      <div class="diamond3" 
-      :style="['diamond3', (
-        card.faction == 'Soldiers' ? {'backgroundColor': 'blue'} :
-        card.faction == 'Monsters' ? {'backgroundColor': 'red'} :
-        card.faction == 'Animals' ? {'backgroundColor': 'green'} :
-        {})
-      ]"
-      >
+      <div class="diamond3" :style="background_color(card)">
         <span3>&dagger;{{ card.damage }}</span3>
       </div>
       
@@ -75,21 +62,29 @@ export default {
       default: false
     },
   },
-  methods: {
-    get_index(i) {
-      return i
-    },
-    chose_player_card(id) {
-      // alert(id)
-      this.i = id
-      this.$emit('chose_player_card', this.i)  // передаём this.index по эмиту 
-    }, 
-  },
   data() {
     return {
       i: null,  // данные для передачи наверх
       show_card_modal: false,
     }
+  },
+  methods: {
+    chose_player_card(id) {
+      this.i = id
+      this.$emit('chose_player_card', this.i)  // передаём this.index по эмиту 
+    },
+    border(card) {
+      if (card.color == 'Bronze') return {'border': 'solid 3px lightsalmon'}
+      else if (card.color == 'Silver') return {'border': 'solid 4px silver'}
+      else if (card.color == 'Gold') return {'border': 'solid 5px gold'}
+      else return {}
+    }, 
+    background_color(card) {
+      if (card.faction == 'Soldiers') return {'backgroundColor': 'blue'}
+      else if (card.faction == 'Monsters') return {'backgroundColor': 'red'}
+      else if (card.faction == 'Animals') return {'backgroundColor': 'green'}
+      else return {}
+    },
   },
   emits: [
     'chose_player_card', 
