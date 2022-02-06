@@ -6,7 +6,7 @@
 class="health_kit"
 :style="[health_kits_number ? {'backgroundColor': 'green'} : {'backgroundColor': 'red'}]"
 >
-  Использовать аптечку</button>
+  heal</button>
 
 </div>
 
@@ -48,8 +48,8 @@ export default {
 <style scoped>
 
 .health_kit {
-  width: 170px;
-  height: 40px;
+  width: 100px;
+  height: 35px;
 }
 
 </style>

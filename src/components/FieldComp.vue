@@ -64,8 +64,8 @@
 .field {
   border: 1px solid black;
   font-size: 20pt;
-  /* width: 100%; */
-  width: 500px;
+  width: 90%;
+  /* width: 500px; */
   /* height: 60%; */
 }
 th, td {

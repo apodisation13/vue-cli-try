@@ -43,7 +43,7 @@
 
 .modal_window {
   background-color: limegreen;
-  width: 1000px;
+  width: 80%;
   height: 400px;
   border-radius: 12px;
   text-align: center;
