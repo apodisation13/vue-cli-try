@@ -52,7 +52,7 @@
 
 
 .leader {
-  width: 120px;
+  width: 15%;
   height: 180px;
   border: solid 1px black;
   margin: 3px;

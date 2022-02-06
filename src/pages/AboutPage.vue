@@ -1,13 +1,5 @@
 <template>
 
-<!-- (
-        card.faction == 'Soldiers' ? {'backgroundColor': 'blue'} :
-        card.faction == 'Monsters' ? {'backgroundColor': 'red'} :
-        card.faction == 'Animals' ? {'backgroundColor': 'green'} :
-        {}
-      )]" -->
-
-
 <!-- Страница о нас <br>
 ЗДЕСЬ Я ТРЕНИРУЮСЬ
 
@@ -19,11 +11,11 @@
 <!-- </div> -->
 
 
-<div v-for="el in 3" :key="el" class="hand" @click="c(el)">
+<!-- <div v-for="el in 3" :key="el" class="hand" @click="c(el)">
 
 
 <div class='card'>
-  <!-- <img class="img" :src="require('@/assets/'+ '2.jpg')"> -->
+  <img class="img" :src="require('@/assets/'+ '2.jpg')">
   <div class="box">
     <div class="typee"><span2>&starf;</span2></div>
     <div class="diamond3"><span3>&dagger;8</span3></div>
@@ -33,9 +25,14 @@
   </div>
     
 </div>
+</div> -->
+
+<div class="divvv">
+sss
 </div>
-
-
+<div class="divvv2">
+sss2
+</div>
 
 </template>
 
@@ -188,6 +185,29 @@ span3 {
   
   margin: -150px;
   
+}
+
+html, body {
+  height: 100%;
+}
+
+.divvv {
+  width: 80%;
+  height: 30%;
+  max-height: max-content;
+  border: solid 2px red;
+  /* margin-top: 30%; */
+  /* position: sticky; */
+  position: absolute;
+}
+.divvv2 {
+  width: 70%;
+  height: 30%;
+  max-height: max-content;
+  border: solid 2px green;
+  margin-top: 15%;
+  /* position: sticky; */
+  position: absolute;
 }
 
 

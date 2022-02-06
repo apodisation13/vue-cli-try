@@ -97,7 +97,7 @@ export default {
 /*класс кннопка карта игрока*/
 .hand {
     display: inline-block;  /*элементы в ряд*/
-    margin: 2px 100px 160px 20px;
+    margin: 2px 95px 160px 10px;
 }
 
 .hand_card {

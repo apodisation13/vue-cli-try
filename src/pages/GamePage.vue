@@ -2,19 +2,17 @@
 
 <start-game v-if="beginning" @start_game='start_game'/>
 
-<remaining-enemies v-if="!beginning" />
-
 <field-comp :field='field' @exec_damage_ai_card='exec_damage_ai_card' />
 
 <health-comp :player_cards_active="player_cards_active" />
 
-<div class="deck_and_grave">
-<button class="btn_pass"
-@click="exec_ai_move">Пас</button>
-<deck-comp :deck='deck' />
-<grave-comp :grave='grave' />
-<button class="btn_draw" v-show="can_draw"
-@click="draw_one_card">ДРО</button>
+<div class="active_buttons">
+  <button class="btn_pass" @click="exec_ai_move">Пас</button>
+  <deck-comp :deck='deck' />
+  <grave-comp :grave='grave' />
+  <remaining-enemies v-if="!beginning" />
+  <button class="btn_draw" v-show="can_draw" 
+  @click="draw_one_card">ДРО</button>
 </div>
 
 <resurrect-modal v-show="show_deck_modal_by_abilities"
@@ -185,16 +183,16 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 
 .hand {
     display: flex;  /*элементы в ряд*/
     float: left;
     margin: 3px;  /*отступ между картами*/
-    /* width: 100%; */
+    width: 90%;
 }
 
-.deck_and_grave {
+.active_buttons {
     display: flex;  /*элементы в ряд*/
     /* float: left; */
     margin: 3px;  /*отступ между картами*/
@@ -214,13 +212,6 @@ export default {
   height: 50px;
   background-color: yellow;
   border-radius: 20px;
-}
-
-.action_buttons {
-    display: flex;  /*элементы в ряд*/
-    /* float: left; */
-    margin: 3px;  /*отступ между картами*/
-    /* width: 100%; */
 }
 
 </style>

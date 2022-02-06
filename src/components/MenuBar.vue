@@ -28,6 +28,7 @@ export default {
 <style>
 
 .menu {
+  width: 100%;
   height: 70px;
   background-color: indigo;
   display: flex;
