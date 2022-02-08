@@ -1,9 +1,7 @@
 <template>
 
 <!-- Страница о нас <br>
-ЗДЕСЬ Я ТРЕНИРУЮСЬ
-
-<br><br><br><br> -->
+ЗДЕСЬ Я ТРЕНИРУЮС -->
 <!-- <img :src="require('@/assets/'+ '1.jpg')" alt=""> -->
 
 <!-- <div class="x"> -->
@@ -27,11 +25,20 @@
 </div>
 </div> -->
 
-<div class="divvv">
+<!-- <div class="divvv">
 sss
 </div>
 <div class="divvv2">
 sss2
+</div> -->
+
+
+<!-- <div v-for="el in list" :key="el">
+  {{ setTimeout(2000) }} {{ el }}
+</div> -->
+
+<div v-for="i in 4" :key="i">
+  <button>{{ l }}</button>
 </div>
 
 </template>
@@ -42,14 +49,28 @@ sss2
 export default {
   data() {
     return {
-      
+      list: [1,2,3,4],
+      l: []
     }
   },
   methods: {
-      c(el) {
-        alert(el)
-      }
-  }    
+    append() {
+      const it = this.list[Symbol.iterator]();
+      const int = setInterval(() => {
+        const next = it.next();
+        if (!next.done) { 
+          this.l.push(next.value); // concatenate word to the string
+        } 
+        else {
+          clearInterval(int); // when done - clear interval
+          alert('stop')
+        }
+      }, 2000)
+    }
+  },
+  // mounted() {
+  //   this.append()
+  // }    
 }
 </script>
 

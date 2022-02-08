@@ -1,10 +1,7 @@
 <template>
-<p v-once>
-  {{ set_default_deck() }}
-</p>
 ВЫБЕРИТЕ УРОВЕНЬ <br><br>
 
-<div class="levels" v-for="level, index in level_list" :key="level">
+<div class="levels" v-for="level, index in $store.state.levels" :key="level">
   <button class="level_btn"
   @click="get_level_id(index)"
   >
@@ -21,12 +18,12 @@
 
 <script>
 
-import { levels } from '@/logic/place_enemies'
+// import { levels } from '@/logic/place_enemies'
 
 export default {
   data() {
     return {
-      level_list: levels,
+      // level_list: this.$store.state.levels,
       
     }
   },
@@ -43,6 +40,10 @@ export default {
       )  
     }
   },
+
+  mounted() {
+    this.set_default_deck()
+  }
 
 }
 </script>
