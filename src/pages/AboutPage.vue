@@ -4,7 +4,7 @@
 ЗДЕСЬ Я ТРЕНИРУЮС -->
 <!-- <img :src="require('@/assets/'+ '1.jpg')" alt=""> -->
 
-
+<!-- <div class="s"> -->
 <div v-for="(el, i) in list" :key="i" class="hand" >
   <div :class="{'card_selected': i === active}">
 <div class='card'  @click="c(i)">
@@ -18,6 +18,7 @@
 </div> 
 </div>  
 </div>
+<!-- </div> -->
 
 <!-- <div class="divvv">
 sss
@@ -55,7 +56,7 @@ export default {
   },
   methods: {
     c(el) {
-      alert(el)
+      // alert(el)
       this.active = el
     }
   },
@@ -75,10 +76,14 @@ export default {
   /* position: relative; */
   position: absolute;
  }
+/* .s {
+  width: 40%;
+  height: 150px;
+} */
 
 .hand {
-    display: inline-block;  /*элементы в ряд*/
-    margin: 60px;  /*отступ между картами*/
+  display: inline-block;  /*элементы в ряд*/
+  margin: 3%;  /*отступ между картами*/
 }
 
 .card {

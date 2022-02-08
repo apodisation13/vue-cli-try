@@ -70,7 +70,7 @@
 }
 th, td {
   background-color: #96D4D4;
-  width: 170px;
+  width: 30%;
   height: 130px;
   text-align: center;
 }
