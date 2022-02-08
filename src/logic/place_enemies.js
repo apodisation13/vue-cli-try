@@ -1,3 +1,8 @@
+import { useToast } from 'vue-toastification'
+
+const toast = useToast()
+
+
 function place_enemies(field, enemy_list) {
     
     for (let i = 0; i < 3; i++) {
@@ -21,6 +26,7 @@ function appear_new_enemy(field, enemy_list) {
         field[random] = enemy_list[random2]  // появляется враг
         enemy_list.splice(random2, 1)  // удаляется из списка врагов
         // alert('Враг появился')
+        toast.info('враг появился')
     }  
 }
 

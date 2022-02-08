@@ -1,9 +1,9 @@
 <template>
 ВЫБЕРИТЕ УРОВЕНЬ <br><br>
 
-<div class="levels" v-for="level, index in levels" :key="level">
-  <button class="level_btn"
-  @click="get_level_id(index)"
+<div class="levels" v-for="(level, index) in levels" :key="index">
+  <button class="level_btn" :class="{'level_btn_selected': index === selected}"
+  @click="set_level(index)"
   >
 
   <!-- Отображать название уровня  -->
@@ -19,11 +19,15 @@
 </template>
 
 <script>
-
+import { useToast } from "vue-toastification";
 export default {
+  setup() {
+    const toast = useToast()
+    return { toast }
+  },
   data() {
     return {
-      
+      selected: undefined,
     }
   },
   computed: {
@@ -32,8 +36,10 @@ export default {
     }
   },
   methods: {
-    get_level_id(index) {
+    set_level(index) {
+      this.toast.success(`Выбран уровень ${index + 1}! `, {timeout: 1000})
       this.$store.commit("set_level", index)
+      this.selected = index
     },
 
     set_default_deck() {
@@ -43,10 +49,9 @@ export default {
       )  
     },
   },
-
   mounted() {
     this.set_default_deck()
-  }
+  },
 
 }
 </script>
@@ -61,6 +66,12 @@ export default {
 .level_btn {
   width: 150px;
   height: 150px;
+}
+
+.level_btn_selected {
+  width: 150px;
+  height: 150px;
+  background-color: green;
 }
 
 </style>
