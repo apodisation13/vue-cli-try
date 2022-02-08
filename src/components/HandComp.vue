@@ -1,7 +1,7 @@
 <template>
 
-<div class="hand" v-for="(card, index) in hand" :key='card'>
-
+<div class="hand" v-for="(card, index) in hand" :key='index'>
+<!-- <div :class="{'card_selected': index === i}"> -->
   <div v-if="card" 
     @contextmenu.prevent 
     @click.right="i=index, show_card_modal=true" @mouseleave="show_card_modal=false"
@@ -37,7 +37,8 @@
     
     </div>
   </div>
-</div> 
+<!-- </div>  -->
+</div>
 
 <card-modal 
 v-if="hand[i]" 
@@ -96,17 +97,24 @@ export default {
 
 /*класс кннопка карта игрока*/
 .hand {
-    display: inline-block;  /*элементы в ряд*/
-    margin: 2px 95px 160px 10px;
+  display: inline-block;  /*элементы в ряд*/
+  margin: 2px 95px 160px 10px;
 }
 
 .hand_card {
-    width: 100px;
-    height: 150px;
-    border-radius: 5px;
-    position: absolute;
-    border: solid 2px black;
+  width: 100px;
+  height: 150px;
+  border-radius: 5px;
+  position: absolute;
+  border: solid 2px black;
 }
+
+/* .card_selected {
+  width: 106px;
+  height: 156px;
+  border: solid 2px black;
+  position: absolute;
+} */
 
 .box { 
   margin: -150px;

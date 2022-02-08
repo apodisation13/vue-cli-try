@@ -2,6 +2,7 @@
 <div class="field_view" v-if="flag">
   <h2> Жизни карты - {{ enemy.hp }} </h2><br>
   <h2> Урон карты - {{ enemy.dmg }} </h2><br>
+  <h2> Ходит - {{ enemy.move }} </h2><br>
   <p>ОПИСАНИЕ</p>
  </div>
 </template>

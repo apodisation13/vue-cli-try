@@ -1,38 +1,45 @@
 <template>
 
 <!-- Страница о нас <br>
-ЗДЕСЬ Я ТРЕНИРУЮСЬ
-
-<br><br><br><br> -->
+ЗДЕСЬ Я ТРЕНИРУЮС -->
 <!-- <img :src="require('@/assets/'+ '1.jpg')" alt=""> -->
 
-<!-- <div class="x"> -->
-  <!-- <span>sss</span>  -->
+<!-- <div class="s"> -->
+<div v-for="(el, i) in list" :key="i" class="hand" >
+  <div :class="{'card_selected': i === active}">
+<div class='card'  @click="c(i)">
+  <div class="box">
+    <div class="typee"><span class="span2">&starf;</span></div>
+    <div class="diamond3"><span3>&dagger;8</span3></div>
+    <div class="circle"><span class="span2">&#9850;</span></div>
+    <div class="charges"><span class="span2">3</span></div>
+    <div class="hp"><span>&hearts;12</span></div> 
+  </div>   
+</div> 
+</div>  
+</div>
 <!-- </div> -->
 
-
-<!-- <div v-for="el in 3" :key="el" class="hand" @click="c(el)">
-
-
-<div class='card'>
-  <img class="img" :src="require('@/assets/'+ '2.jpg')">
-  <div class="box">
-    <div class="typee"><span2>&starf;</span2></div>
-    <div class="diamond3"><span3>&dagger;8</span3></div>
-    <div class="circle"><span2>&#9850;</span2></div>
-    <div class="charges"><span2>3</span2></div>
-    <div class="hp"><span>&hearts;12</span></div> 
-  </div>
-    
-</div>
-</div> -->
-
-<div class="divvv">
+<!-- <div class="divvv">
 sss
 </div>
 <div class="divvv2">
 sss2
-</div>
+</div> -->
+
+
+<!-- <div v-for="el in list" :key="el">
+  {{ setTimeout(2000) }} {{ el }}
+</div> -->
+
+<!-- <div v-for="i in 4" :key="i">
+  <button>{{ l }}</button>
+</div> -->
+<!-- <div v-for="(value, index) in list" :key="index">
+  <div class="card" 
+  :class="{'active-class': index === active}"
+  @click="active=index"></div>
+</div> -->
 
 </template>
 
@@ -42,14 +49,18 @@ sss2
 export default {
   data() {
     return {
-      
+      list: [1,2,3,4],
+      l: [],
+      active: undefined
     }
   },
   methods: {
-      c(el) {
-        alert(el)
-      }
-  }    
+    c(el) {
+      // alert(el)
+      this.active = el
+    }
+  },
+     
 }
 </script>
 
@@ -65,10 +76,14 @@ export default {
   /* position: relative; */
   position: absolute;
  }
+/* .s {
+  width: 40%;
+  height: 150px;
+} */
 
 .hand {
-    display: inline-block;  /*элементы в ряд*/
-    margin: 60px;  /*отступ между картами*/
+  display: inline-block;  /*элементы в ряд*/
+  margin: 3%;  /*отступ между картами*/
 }
 
 .card {
@@ -77,6 +92,21 @@ export default {
   border: solid 3px gold;
   /* margin: 0px; */
   position: absolute;
+}
+
+.card_selected {
+  width: 106px;
+  height: 156px;
+  border: solid 2px black;
+  position: absolute;
+}
+
+.active-class {
+   width: 100px;
+  height: 150px;
+  border: solid 3px red;
+  /* margin: 0px; */
+  /* position: absolute; */
 }
 
 .img {

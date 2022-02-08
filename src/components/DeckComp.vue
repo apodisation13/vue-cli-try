@@ -1,7 +1,7 @@
 <template>
 <div class='deck'>Колода
   <button class="btn_deck" @click="flag=true"> 
-      {{ deck.length }}
+      {{ deck_len }}
   </button>
    <div class="modal_window" v-if="flag">
     <button @click="flag=false">Закрыть</button><br>
@@ -24,9 +24,9 @@
         flag: false,
       }
     },
-    methods: {
-      
-    }  
+    computed: {
+      deck_len() {return this.deck.length}
+    } 
   }
 </script>
 

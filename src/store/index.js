@@ -1,6 +1,6 @@
 import { createStore } from "vuex"
 import { get } from '@/logic/requests'
-import { levels } from '@/logic/place_enemies'
+import { levels } from '@/logic/enemies'
 
 // ИНСТРУКЦИЯ:
 // в шаблонах $store. state, getters['name'], commit('name', чё) для мутаций
@@ -10,6 +10,8 @@ import { levels } from '@/logic/place_enemies'
 
 const store = createStore({
     state: {
+        cards_in_deck: 10,  // СКОЛЬКО В ДЕКЕ ДОЛЖНО БЫТЬ КАРТ
+        
         current_deck: [],  // дека выбранная для игры
         health: 0,
         leader: null,
@@ -74,22 +76,26 @@ const store = createStore({
 
     // вызывает мутацию, выполняясь через store.dispatch('название')
     actions: {  
-        get_data() {
+        async get_data({commit}) {
             // let factions = 'http://127.0.0.1:8000/api/v1/factions/'
             // let leaders = 'http://127.0.0.1:8000/api/v1/leaders/'
             // let cards = 'http://127.0.0.1:8000/api/v1/cards/'
             // let decks = 'http://127.0.0.1:8000/api/v1/decks/'           
+            // get(factions, 'get_factions')
+            // get(leaders, 'get_leaders')
+            // get(cards, 'get_cards')
+            // get(decks, 'get_decks')
             
             let factions = 'http://194.67.109.190:82/api/v1/factions/'
             let leaders = 'http://194.67.109.190:82/api/v1/leaders/'
             let cards = 'http://194.67.109.190:82/api/v1/cards/'
             let decks = 'http://194.67.109.190:82/api/v1/decks/'  
             
-            get(factions, 'get_factions')
-            get(leaders, 'get_leaders')
-            get(cards, 'get_cards')
-            get(decks, 'get_decks')   
-            
+            get(factions).then((result) => commit('get_factions', result))
+            get(leaders).then((result) => commit('get_leaders', result))
+            get(cards).then((result) => commit('get_cards', result))
+            get(decks).then((result) => commit('get_decks', result))
+
             // commit('set_try', 10)
         },
 
