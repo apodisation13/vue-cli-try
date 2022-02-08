@@ -15,10 +15,8 @@
 
 <!-- новая дека + фракции из стора -->
 <div class="new_deck">
-  <button class="btn_save_deck"
-  @click="new_deck()">
-  new deck
-  </button>
+  <button class="btn_save_deck" @click="new_deck()">
+  new deck</button>
   <div class="factions"
     v-for="faction in $store.state.factions" :key="faction">
       <button class="btn_save_deck"
@@ -42,25 +40,19 @@
 </div>
 
 Лидер: {{ leader_selected }} <br>
-Размер деки: {{ deck_is_progress.length }}/{{ number_of_cards_in_deck }} <br>
+Размер деки: {{ deck_is_progress.length }}/{{ $store.state.cards_in_deck }} <br>
 Жизни деки: {{ health }} <br>
 
-<button class="btn_save_deck" @click="save_deck"
-:style="[
-deck_is_progress.length < number_of_cards_in_deck || !leader_selected ? 
-{'backgroundColor': 'red'} : 
-{'backgroundColor': 'green'}
-]">
-  СОХРАНИТЬ ДЕКУ
+<button class="btn_save_deck" :style="save_btn_style"
+@click="save_deck">
+СОХРАНИТЬ ДЕКУ
 </button>
 
 
 <!-- выбор деки для редакирования и просмотра -->
-<!-- <div class="deck_selection"> -->
-  <select-deck 
-  @emit_state_deck_index="show_deck"
-  />
-<!-- </div> -->
+<select-deck 
+@emit_state_deck_index="show_deck"
+/>
 
 
 </template>
@@ -72,13 +64,9 @@ import { try_post, get } from '@/logic/requests'
 
 export default {
   data() {
-    return {
-      // САМЫЙ ГЛАВНЫЙ ПАРАМЕТР - РАЗМЕР ДЕКИ!!!!!!!!!!!!!!
-      number_of_cards_in_deck: 10,  // Определяет количество карт в деке
+    return {       
+      faction: '',
 
-      pool: this.$store.getters.all_cards,  // список все карт
-      leaders: this.$store.getters.all_leaders,  // список всех лидеров       
-      
       deck_is_progress: [],  // колода в процессе - целиком объкты
       leader_in_progress: null,  // лидер в процессе
       health: 0,  // жизни текущей деки
@@ -90,66 +78,62 @@ export default {
       leader_selected: false,  // выбран лидер или нет
       leader_index: null,  // индекс выбранного лидера
       
-    
     }
   },
 
   methods: {
     // фильтр карт и лидеров по фракции по нажатию на кнопку фракции
     filtering(faction) {
-      this.pool = this.$store.getters.filtered_cards(faction)
-      this.leaders = this.$store.getters.filtered_leaders(faction)
+      this.faction = faction
       this.faction_selected = true  // чтобы можно было добавить лидера, онли выбрав фракцию
     },
 
     // новая дека, обнуляем фильтры и сбрасываем все добавления
     new_deck() {
-      this.pool = this.$store.getters.all_cards
-      this.leaders = this.$store.getters.all_leaders
-     
+      this.faction = ''
       this.deck_is_progress = []
       this.health = 0
       this.leader_selected = false
+      this.faction_selected = false
       this.leader_index = null      
     },
 
     // добавляем карты в колоду из базы карт
-    append_into_deck_in_progress(index) {
+    append_into_deck_in_progress(i) {
       if ( // если карты там УЖЕ нету
-        !this.deck_is_progress.includes(this.pool[index]) 
-        && this.deck_is_progress.length < this.number_of_cards_in_deck
+        !this.deck_is_progress.includes(this.pool[i]) 
+        && this.deck_is_progress.length < this.$store.state.cards_in_deck
         && this.faction_selected
         ) 
         {
-          this.deck_is_progress.push(this.pool[index])
-          this.deck_body.push({"card": this.pool[index].id})  
-          this.health = this.health + this.pool[index].hp
+          this.deck_is_progress.push(this.pool[i])
+          this.deck_body.push({"card": this.pool[i].id})  
+          this.health = this.health + this.pool[i].hp
       }
       else {alert('нельзя карту добавить ещё раз или карт больше 10')}
     },
 
     // выбираем лидера для деки
-    chose_leader(id) {
+    chose_leader(i) {
       if (this.faction_selected) {
-        alert(id)
         this.leader_selected = true
-        this.leader_index = id
-        this.leader_in_progress = this.leaders[id]
+        this.leader_index = i
+        this.leader_in_progress = this.leaders[i]
       }
       else alert('выберете фракцию!')
       
     },
 
     // удалить из деки в процессе по нажатию ЛКМ
-    delete_from_deck_in_progress(id) {
-      this.health -= this.deck_is_progress[id].hp
-      this.deck_is_progress.splice(id, 1)
-      this.deck_body.splice(id, 1)
+    delete_from_deck_in_progress(i) {
+      this.health -= this.deck_is_progress[i].hp
+      this.deck_is_progress.splice(i, 1)
+      this.deck_body.splice(i, 1)
     },
 
     save_deck() {
       if (  // карт ровно 10 и лидер выбран
-        this.deck_is_progress.length == this.number_of_cards_in_deck 
+        this.deck_is_progress.length == this.$store.state.cards_in_deck 
         && this.leader_selected
       ) 
       {
@@ -167,11 +151,7 @@ export default {
 
         this.number += 1  // +1 для следующего имени деки
         
-        this.deck_is_progress = []  // убрать всё из поля сборки деки
-        this.health = 0
-        this.leader_selected = false
-        this.leader_index = null
-        this.faction_selected = false
+        this.new_deck()  // всё обнуляем!
         alert('сохранили деку')
 
         // this.$refs.deckselection.get_decks()  // обновляем деки после сохран
@@ -188,10 +168,26 @@ export default {
       this.leader_in_progress = this.$store.state.decks[index].leader
       this.leader_selected = true
     },
-
-  
     
   },
+
+  computed: {
+    pool() {
+      if (!this.faction) return this.$store.getters.all_cards
+      else return this.$store.getters.filtered_cards(this.faction)
+    },
+    leaders() {
+      if (!this.faction) return this.$store.getters.all_leaders
+      else return this.$store.getters.filtered_leaders(this.faction)
+    },
+    save_btn_style() {
+      if (this.deck_is_progress.length < this.number_of_cards_in_deck 
+          || !this.leader_selected) { 
+        return {'backgroundColor': 'red'}
+      }
+      else return {'backgroundColor': 'green'}
+    },
+  }
 
 }
 </script>
@@ -254,19 +250,6 @@ export default {
   /* width: 100px; */
   width: 15%;
   height: 50px;
-}
-
-.deck_selection {
-  /* width: 700px; */
-  width: 99%;
-  height: 560px;
-  border: solid 1px black;
-  overflow: scroll;
-  position: absolute;
-  margin: 3px;
-  margin-top: 10px;
-  /* top: 80px;
-  right: 20px; */
 }
 
 </style>

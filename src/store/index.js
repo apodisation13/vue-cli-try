@@ -10,6 +10,8 @@ import { levels } from '@/logic/enemies'
 
 const store = createStore({
     state: {
+        cards_in_deck: 10,  // СКОЛЬКО В ДЕКЕ ДОЛЖНО БЫТЬ КАРТ
+        
         current_deck: [],  // дека выбранная для игры
         health: 0,
         leader: null,
