@@ -4,14 +4,8 @@
 ЗДЕСЬ Я ТРЕНИРУЮС -->
 <!-- <img :src="require('@/assets/'+ '1.jpg')" alt=""> -->
 
-<!-- <div class="x"> -->
-  <!-- <span>sss</span>  -->
-<!-- </div> -->
-
 
 <!-- <div v-for="el in 3" :key="el" class="hand" @click="c(el)">
-
-
 <div class='card'>
   <img class="img" :src="require('@/assets/'+ '2.jpg')">
   <div class="box">
@@ -20,8 +14,7 @@
     <div class="circle"><span2>&#9850;</span2></div>
     <div class="charges"><span2>3</span2></div>
     <div class="hp"><span>&hearts;12</span></div> 
-  </div>
-    
+  </div>   
 </div>
 </div> -->
 
@@ -54,23 +47,9 @@ export default {
     }
   },
   methods: {
-    append() {
-      const it = this.list[Symbol.iterator]();
-      const int = setInterval(() => {
-        const next = it.next();
-        if (!next.done) { 
-          this.l.push(next.value); // concatenate word to the string
-        } 
-        else {
-          clearInterval(int); // when done - clear interval
-          alert('stop')
-        }
-      }, 2000)
-    }
+    
   },
-  // mounted() {
-  //   this.append()
-  // }    
+     
 }
 </script>
 

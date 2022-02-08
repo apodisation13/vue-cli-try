@@ -15,7 +15,7 @@
   @click="draw_one_card">ДРО</button>
 </div>
 
-<resurrect-modal v-show="show_deck_modal_by_abilities"
+<resurrect-modal v-if="show_deck_modal_by_abilities"
 :grave='grave' 
 @chosen_card='confirm_card_from_grave'
 />

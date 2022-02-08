@@ -2,7 +2,6 @@
 <div class="selected_deck" >
   <div v-if="$store.state.current_deck.length > 0">
     ВЫБРАННАЯ ДЕКА - <br>
-    <!-- Название {{ $store.state. }} <br> -->
     Жизни {{ $store.state.health }} <br>
     Лидер {{ $store.state.leader.name }}
   </div>
