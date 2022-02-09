@@ -66,18 +66,21 @@
   font-size: 20pt;
   width: 90%;
   /* width: 500px; */
-  /* height: 60%; */
+  height: 60%;
+  /* margin-top: 2.5%; */
+  position: absolute;
 }
 th, td {
   background-color: #96D4D4;
   width: 30%;
-  height: 130px;
+  /* height: 130px; */
+  height: 15%;
   text-align: center;
 }
 
 .enemy {
-  width: 130px;
-  height: 110px;
+  width: 90%;
+  height: 90%;
   align-self: center;
   align-content: center;
 }
