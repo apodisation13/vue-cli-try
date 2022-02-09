@@ -67,12 +67,15 @@
   width: 90%;
   /* width: 500px; */
   /* height: 60%; */
+  /* background-image: url('../assets/grass.jpg'); */
+  background-image: url('../assets/brick.jpg');
 }
 th, td {
-  background-color: #96D4D4;
+  /* background-color: #96D4D4; */
   width: 30%;
   height: 130px;
   text-align: center;
+  border: solid 2px black;
 }
 
 .enemy {
@@ -80,5 +83,6 @@ th, td {
   height: 110px;
   align-self: center;
   align-content: center;
+  color: white;
 }
 </style>

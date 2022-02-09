@@ -1,4 +1,5 @@
 <template>
+<!-- <img :src="require('@/assets/'+ 'grass.jpg')" alt=""> -->
 
 <!-- Страница о нас <br>
 ЗДЕСЬ Я ТРЕНИРУЮС -->
@@ -20,6 +21,7 @@
 </div>
 <!-- </div> -->
 
+
 <!-- <div class="divvv">
 sss
 </div>
@@ -27,10 +29,6 @@ sss
 sss2
 </div> -->
 
-
-<!-- <div v-for="el in list" :key="el">
-  {{ setTimeout(2000) }} {{ el }}
-</div> -->
 
 <!-- <div v-for="i in 4" :key="i">
   <button>{{ l }}</button>
@@ -57,6 +55,7 @@ export default {
   methods: {
     c(el) {
       // alert(el)
+      alert(window.innerHeight)
       this.active = el
     }
   },
@@ -81,9 +80,14 @@ export default {
   height: 150px;
 } */
 
+/* body {
+  background-image: require('@/assets/'+ 'grass.jpg');
+} */
+
 .hand {
   display: inline-block;  /*элементы в ряд*/
-  margin: 3%;  /*отступ между картами*/
+  margin: 60px;  /*отступ между картами*/
+  background-image: url('../assets/brick.jpg');
 }
 
 .card {
@@ -102,7 +106,7 @@ export default {
 }
 
 .active-class {
-   width: 100px;
+  width: 100px;
   height: 150px;
   border: solid 3px red;
   /* margin: 0px; */
@@ -219,6 +223,7 @@ span3 {
 
 html, body {
   height: 100%;
+  background: url('~@/assets/brick.jpg');
 }
 
 .divvv {
@@ -229,6 +234,7 @@ html, body {
   /* margin-top: 30%; */
   /* position: sticky; */
   position: absolute;
+  background-image: url('~@/assets/brick.jpg');
 }
 .divvv2 {
   width: 70%;

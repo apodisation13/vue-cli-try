@@ -48,4 +48,8 @@ export default {
 .app {
   padding: 0;
 }
+
+body {
+  background-image: url('~@/assets/grass.jpg');
+}
 </style>
