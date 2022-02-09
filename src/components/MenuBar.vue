@@ -29,19 +29,16 @@ export default {
 
 .menu {
   width: 100%;
-  height: 5%;
-  /* position: absolute; */
+  height: 70px;
   background-color: indigo;
   display: flex;
   align-items: center;  /* вот эта хрень отвечает за то, чтобы посередине были элементы */  
   padding: 0 15px;
-  /* margin-bottom: 5%; */
 }
 
 .menu_button {
   width: 100px;
-  /* height: 50px; */
-  height: 90%;
+  height: 50px;
   font-size: 12pt;
   margin-left: 20px;
 }

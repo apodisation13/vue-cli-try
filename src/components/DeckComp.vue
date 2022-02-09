@@ -1,13 +1,13 @@
 <template>
-<!-- <div class='deck'>Колода -->
+<div class='deck'>Колода
   <button class="btn_deck" @click="flag=true"> 
-      Колода {{ deck_len }}
+      {{ deck_len }}
   </button>
    <div class="modal_window" v-if="flag">
     <button @click="flag=false">Закрыть</button><br>
     <hand-comp :hand='deck'/>
   </div>
-<!-- </div> -->
+</div>
 </template>
 
 <script>
@@ -40,7 +40,7 @@
 
 .btn_deck {
     width: 100px;
-    height: 90%;
+    height: 35px;
     background: lightgreen;
 }
 
@@ -54,7 +54,6 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 9999;
 
 }
 </style>
