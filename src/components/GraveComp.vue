@@ -1,13 +1,13 @@
 <template>
-<div class='grave'>Сброс
+<!-- <div class='grave'>Сброс -->
   <button class="btn_grave" @click="flag=true"> 
-    {{ grave_len }}
+    Сброс {{ grave_len }}
   </button>
   <div class="modal_window" v-if="flag">
     <button @click="flag=false">Закрыть</button><br>
     <hand-comp :hand='grave'/> 
   </div>
-</div>
+<!-- </div> -->
 </template>
 
 <script>
@@ -40,7 +40,7 @@
 
 .btn_grave {
     width: 100px;
-    height: 35px;
+    height: 90%;
     background: orangered;
 }
 
@@ -54,6 +54,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 9999;
 
 }
 </style>

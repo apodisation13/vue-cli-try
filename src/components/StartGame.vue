@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="start_game">
     <button class="btn_start" @click="start_game">НАЧАТЬ</button>
 
     <redraw-modal v-if="redraw" 
@@ -50,8 +50,17 @@ import { draw_hand } from '@/logic/draw_hand'
 </script>
 
 <style scoped>
+.start_game {
+  width: 9%;
+  height: 5%;
+  border: solid 2px red;
+  position: absolute;
+  /* top: 1%; */
+  right: 1%;
+}
+
 .btn_start {
-  width: 160px;
-  height: 30px;
+  width: 98%;
+  height: 98%;
 }
 </style>

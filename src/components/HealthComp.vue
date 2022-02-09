@@ -1,6 +1,7 @@
 <template>
 
-<div>ЖИЗНИ ИГРОКА --  {{ $store.state.health }}, Аптечек -- {{ health_kits_number }} 
+<div class="health">
+  ЖИЗНИ ИГРОКА --  {{ $store.state.health }}, Аптечек -- {{ health_kits_number }} 
 
 <button @click="use_health_kit"
 class="health_kit"
@@ -47,9 +48,18 @@ export default {
 
 <style scoped>
 
+.health {
+  width: 90%;
+  height: 5%;
+  border: solid 2px blue;
+  margin-top: 29%;
+  position: absolute;
+}
+
 .health_kit {
-  width: 100px;
-  height: 35px;
+  width: 20%;
+  height: 100%;
+  font-size: 9pt;
 }
 
 </style>
