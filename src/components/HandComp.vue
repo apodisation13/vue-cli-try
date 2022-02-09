@@ -98,12 +98,12 @@ export default {
 /*класс кннопка карта игрока*/
 .hand {
   display: inline-block;  /*элементы в ряд*/
-  margin: 2px 15% 25% 10px;
+  margin: 2px 95px 160px 10px;
 }
 
 .hand_card {
-  width: 15%;
-  height: 98%;
+  width: 100px;
+  height: 150px;
   border-radius: 5px;
   position: absolute;
   border: solid 2px black;
@@ -121,8 +121,8 @@ export default {
 }
 
 .img {
-  width: 100%;
-  height: 100%;
+  width: 94px;
+  height: 144px;
   top: 50%; 
   left: 50%;
   transform: translate(-50%, -50%);

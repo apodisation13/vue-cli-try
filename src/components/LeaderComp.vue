@@ -53,7 +53,7 @@
 
 .leader {
   width: 15%;
-  height: 98%;
+  height: 180px;
   border: solid 1px black;
   margin: 3px;
   text-align: center;

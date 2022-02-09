@@ -189,11 +189,7 @@ export default {
     display: flex;  /*элементы в ряд*/
     float: left;
     margin: 3px;  /*отступ между картами*/
-    width: 99%;
-    height: 20%;
-    position: absolute;
-    margin-top: 35.8%;
-    border: solid 1px orange;
+    width: 90%;
 }
 
 .active_buttons {
@@ -201,24 +197,19 @@ export default {
     /* float: left; */
     margin: 3px;  /*отступ между картами*/
     /* width: 100%; */
-    position: absolute;
-    margin-top: 31.5%;
-    height: 8%;
-    width: 90%;
-    border: solid 2px yellow;
 }
 
 .btn_pass {
-  width: 10%;
-  height: 95%;
-  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
   background-color: crimson;
 }
 
 .btn_draw {
-  /* margin: 10px; */
-  width: 30%;
-  height: 90%;
+  margin: 10px;
+  width: 150px;
+  height: 50px;
   background-color: yellow;
   border-radius: 20px;
 }

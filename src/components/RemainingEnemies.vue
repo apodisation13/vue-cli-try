@@ -1,10 +1,10 @@
 <template>
   <!-- показать количество врагов, которое осталось на уровне -->
-<!-- <div class='remaining_enemies'>Враги -->
+<div class='remaining_enemies'>Враги
   <button class="btn_enemies"> 
-    Враги {{ $store.state.levels[$store.state.level][1].length }}
+    {{ $store.state.levels[$store.state.level][1].length }}
   </button>
-<!-- </div> -->
+</div>
   
 </template>
 
@@ -24,7 +24,7 @@
 
 .btn_enemies {
     width: 100px;
-    height: 90%;
+    height: 35px;
     background: grey;
 }
 </style>

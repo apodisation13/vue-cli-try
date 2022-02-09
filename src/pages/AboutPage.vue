@@ -4,8 +4,8 @@
 ЗДЕСЬ Я ТРЕНИРУЮС -->
 <!-- <img :src="require('@/assets/'+ '1.jpg')" alt=""> -->
 
-
-<!-- <div v-for="(el, i) in list" :key="i" class="hand">
+<!-- <div class="s"> -->
+<div v-for="(el, i) in list" :key="i" class="hand" >
   <div :class="{'card_selected': i === active}">
 <div class='card'  @click="c(i)">
   <div class="box">
@@ -17,31 +17,19 @@
   </div>   
 </div> 
 </div>  
+</div>
+<!-- </div> -->
+
+<!-- <div class="divvv">
+sss
+</div>
+<div class="divvv2">
+sss2
 </div> -->
 
 
-<div class="divvv">sss
- </div>
-<div class="divvv2">
- <div class="hand" v-for="i in 20" :key="i">
-  <div :class="{'card_selected': i === active}">
-<div class='card'  @click="c(i)">
-  <div class="box">
-    <div class="typee"><span class="span2">&starf;</span></div>
-    <div class="diamond3"><span3>&dagger;8</span3></div>
-    <div class="circle"><span class="span2">&#9850;</span></div>
-    <div class="charges"><span class="span2">3</span></div>
-    <div class="hp"><span>&hearts;12</span></div> 
-  </div>   
-</div> 
-</div>  
-  </div>
-</div>
-<button class='b' @click="v=true">Click</button>
-<yesno-modal :visible='v' />
-
-<!-- <div class="s" v-on:onDrag="handle">
-  sss
+<!-- <div v-for="el in list" :key="el">
+  {{ setTimeout(2000) }} {{ el }}
 </div> -->
 
 <!-- <div v-for="i in 4" :key="i">
@@ -63,22 +51,15 @@ export default {
     return {
       list: [1,2,3,4],
       l: [],
-      active: undefined,
-      v: false
+      active: undefined
     }
   },
   methods: {
     c(el) {
       // alert(el)
       this.active = el
-    },
-    size() {
-      // alert(window.innerHeight)
-    },
+    }
   },
-  mounted() {
-    this.size()
-  }
      
 }
 </script>
@@ -95,16 +76,14 @@ export default {
   /* position: relative; */
   position: absolute;
  }
-.s {
+/* .s {
   width: 40%;
   height: 150px;
-  border: solid 2px black;
-}
+} */
 
 .hand {
   display: inline-block;  /*элементы в ряд*/
-  /* margin: 60px; */
-  margin: 2px 95px 160px 10px;
+  margin: 3%;  /*отступ между картами*/
 }
 
 .card {
@@ -245,30 +224,22 @@ html, body {
 .divvv {
   width: 80%;
   height: 30%;
-  /* max-height: max-content; */
+  max-height: max-content;
   border: solid 2px red;
   /* margin-top: 30%; */
   /* position: sticky; */
   position: absolute;
-  overflow: scroll;
 }
 .divvv2 {
   width: 70%;
   height: 30%;
-  /* max-height: max-content; */
+  max-height: max-content;
   border: solid 2px green;
   margin-top: 15%;
   /* position: sticky; */
   position: absolute;
-  overflow: scroll;
 }
-.b {
-  width: 10%;
-  height: 10%;
-  border: solid 2px green;
-  margin-top: 35%;
-  position: absolute;
-}
+
 
 
 
