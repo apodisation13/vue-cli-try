@@ -8,6 +8,7 @@ import GraveComp from '@/components/GraveComp'
 import StartGame from '@/components/StartGame'
 import RemainingEnemies from '@/components/RemainingEnemies'
 import FieldComp from '@/components/FieldComp'
+import EnemyComp from '@/components/EnemyComp'
 
 import FieldModal from '@/components/ModalWindows/FieldModal'
 import CardModal from '@/components/ModalWindows/CardModal'
@@ -27,6 +28,7 @@ export default [
     StartGame,
     RemainingEnemies,
     FieldComp,
+    EnemyComp,
     
     FieldModal,
     CardModal,

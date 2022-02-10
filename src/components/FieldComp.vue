@@ -7,13 +7,9 @@
       @click="exec_damage_ai_card(get_index(i,j))" 
       @contextmenu.prevent
     >
-
-      <div class="enemy" v-if="field[get_index(i,j)]"
-      :style="background_color(field[get_index(i,j)])"
-      >
-        &hearts;{{ field[get_index(i,j)].hp }} <br> 
-        &dagger;{{ field[get_index(i,j)].dmg }}
-      </div>
+      <enemy-comp 
+      :enemy='field[get_index(i,j)]'
+      />
     </td>
   </tr>
 </table>
@@ -44,11 +40,6 @@
       get_index(i, j) {  // расчёт индекса клетки поля
         return (i-1) * 3 + (j-1)
       },
-      background_color(f) {
-        if (f.color == 'Silver') return {'backgroundColor': 'silver'}
-        else if (f.color == 'Gold') return {'backgroundColor': 'gold'}
-        else return {}
-      },
       exec_damage_ai_card(i) {  // эмиттим номер (индекс) клетки поля
         this.$emit('exec_damage_ai_card', i)
       },
@@ -64,25 +55,21 @@
 .field {
   border: 1px solid black;
   font-size: 20pt;
-  width: 90%;
+  width: 80%;
   /* width: 500px; */
   /* height: 60%; */
   /* background-image: url('../assets/grass.jpg'); */
-  background-image: url('../assets/brick.jpg');
+  /* background-image: url('../assets/brick.jpg'); */
 }
 th, td {
   /* background-color: #96D4D4; */
-  width: 30%;
-  height: 130px;
+  width: 33%;
+  height: 300px;
+  /* height: 130px; */
   text-align: center;
+  vertical-align: middle;
   border: solid 2px black;
 }
 
-.enemy {
-  width: 130px;
-  height: 110px;
-  align-self: center;
-  align-content: center;
-  color: white;
-}
+
 </style>

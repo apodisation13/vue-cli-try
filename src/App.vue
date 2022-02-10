@@ -49,7 +49,7 @@ export default {
   padding: 0;
 }
 
-body {
+/* body {
   background-image: url('~@/assets/grass.jpg');
-}
+} */
 </style>
