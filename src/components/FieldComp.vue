@@ -64,8 +64,8 @@
 th, td {
   /* background-color: #96D4D4; */
   width: 33%;
-  height: 300px;
-  /* height: 130px; */
+  /* height: 300px; */
+  height: 130px;
   text-align: center;
   vertical-align: middle;
   border: solid 2px black;
