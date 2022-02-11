@@ -6,10 +6,9 @@
   @click="set_level(index)"
   >
 
-  <!-- Отображать название уровня  -->
-  {{ level[0] }} <br>
-  <!-- Отображать количество врагов  -->
-  Врагов - {{ level[1].length }}
+  {{ level.name }} <br>
+  {{ level.difficulty }} <br>
+  Врагов - {{ level.enemies.length }}
   
   </button>
 </div>
@@ -32,13 +31,13 @@ export default {
   },
   computed: {
     levels() {
-      return this.$store.state.levels
+      return this.$store.state.levels_api
     }
   },
   methods: {
     set_level(index) {
       this.toast.success(`Выбран уровень ${index + 1}! `, {timeout: 1000})
-      this.$store.commit("set_level", index)
+      this.$store.commit("set_level", this.levels[index])
       this.selected = index
     },
 

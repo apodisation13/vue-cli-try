@@ -23,7 +23,7 @@ const store = createStore({
         leaders: [],
         cards: [],
         decks: [],
-
+        levels_api: [],
     },
 
     getters: {  
@@ -71,6 +71,9 @@ const store = createStore({
         get_decks(state, result) {  // гет запрос на сохранённые колоды
             state.decks = result
         },
+        get_levels(state, result) {
+            state.levels_api = result
+        }
 
     },
 
@@ -89,12 +92,14 @@ const store = createStore({
             let factions = 'http://194.67.109.190:82/api/v1/factions/'
             let leaders = 'http://194.67.109.190:82/api/v1/leaders/'
             let cards = 'http://194.67.109.190:82/api/v1/cards/'
-            let decks = 'http://194.67.109.190:82/api/v1/decks/'  
+            let decks = 'http://194.67.109.190:82/api/v1/decks/' 
+            let levels = 'http://194.67.109.190:82/api/v1/levels/' 
             
             get(factions).then((result) => commit('get_factions', result))
             get(leaders).then((result) => commit('get_leaders', result))
             get(cards).then((result) => commit('get_cards', result))
             get(decks).then((result) => commit('get_decks', result))
+            get(levels).then((result) => commit('get_levels', result))
 
             // commit('set_try', 10)
         },

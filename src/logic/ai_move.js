@@ -6,7 +6,7 @@ const toast = useToast()
 
 
 function stand_still(field, i) {
-  store.commit('change_health', -field[i].dmg)
+  store.commit('change_health', -field[i].damage)
   // alert('враг стоит и долбит тебя))')
   toast.error('враг стоит и долбит тебя))')
   check_lose(store.state.health)
@@ -17,7 +17,7 @@ function random_move(field, i, status) {
   if (!status) {
     let random = Math.floor(Math.random() * field.length)
     if (field[random]) {
-      store.commit('change_health', -field[i].dmg)
+      store.commit('change_health', -field[i].damage)
       // alert('враг хотел прыгнуть туда где уже есть враг и нанёс урон')
       toast.error('враг хотел прыгнуть туда где уже есть враг и нанёс урон')
       check_lose(store.state.health)
@@ -36,7 +36,7 @@ function random_move(field, i, status) {
 function down_move(field, i) {
   // враги которые уже стоят внизу
   if (i >= 9) {
-    store.commit('change_health', -field[i].dmg)
+    store.commit('change_health', -field[i].damage)
     // alert('враг внизу нанёс урон')
     toast.error('враг внизу нанёс урон')
   }
@@ -44,7 +44,7 @@ function down_move(field, i) {
   else {
     // ЕСЛИ У ВРАГА ЕСТЬ ВРАГ ПОД НИМ ВНИЗУ
     if (field[i+3]) {
-      store.commit('change_health', -field[i].dmg)
+      store.commit('change_health', -field[i].damage)
       // alert('враг нанёс урон, потому что ему некуда ходить')
       toast.error('враг нанёс урон, потому что ему некуда ходить')
     }
@@ -70,13 +70,13 @@ function ai_move(field) {
   for (let i = 11; i >= 0; i--) {
     if (field[i]) {
 
-      if (field[i].move === "Stand-still") {
+      if (field[i].move === "stand") {
         stand_still(field, i)
       }
-      else if (field[i].move === "Random") {
+      else if (field[i].move === "random") {
         already_randomly_jumped = random_move(field, i, already_randomly_jumped )
       }
-      else if (field[i].move === "Down") { 
+      else if (field[i].move === "down") { 
         down_move(field, i)
       }
     

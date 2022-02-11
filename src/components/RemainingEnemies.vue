@@ -2,7 +2,8 @@
   <!-- показать количество врагов, которое осталось на уровне -->
 <div class='remaining_enemies'>Враги
   <button class="btn_enemies"> 
-    {{ $store.state.levels[$store.state.level][1].length }}
+    <!-- {{ $store.state.levels[$store.state.level][1].length }} -->
+    {{ enemies.length }}
   </button>
 </div>
   
@@ -11,6 +12,12 @@
 <script>
   export default {
     name: "remaining-enemies",
+    props: {
+      enemies: {
+        required: true,
+        type: Array
+      }
+    },
   }
 </script>
 

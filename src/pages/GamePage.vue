@@ -10,7 +10,7 @@
   <button class="btn_pass" @click="exec_ai_move">Пас</button>
   <deck-comp :deck='deck' />
   <grave-comp :grave='grave' />
-  <remaining-enemies v-if="!beginning" />
+  <remaining-enemies v-if="!beginning" :enemies='this.enemies'/>
   <button class="btn_draw" v-show="can_draw" 
   @click="draw_one_card">ДРО</button>
 </div>
@@ -50,6 +50,7 @@ export default {
       hand: [],
       leader: JSON.parse(JSON.stringify(this.$store.state.leader)),
       grave: [],  // кладбище карт у которых 0 зарядов
+      enemies: [],  // враги, копия из стора, приходит из start_game
             
       player_cards_active: true,  // активны ли карты игрока
       leader_active: false, // активен ли лидер
@@ -66,6 +67,7 @@ export default {
       this.hand = dict.hand
       this.deck = dict.deck
       this.field = dict.field
+      this.enemies = dict.enemies
       this.beginning = false  // убираем кнопку с экрана после этого
     },
 
@@ -105,10 +107,7 @@ export default {
         )
 
         // проверяем там, что врагов не осталось, поле и количество врагов
-        check_win(  
-          this.field, 
-          this.$store.state.levels[this.$store.state.level][1] 
-        )  
+        check_win(this.field, this.enemies)  
 
         this.player_card_number = null
         this.ai_cards_active = false
@@ -126,24 +125,18 @@ export default {
         this.leader_active = false  // снова неактивен, тыкай на него опять
       
         // проверяем там, что врагов не осталось, поле и количество врагов
-        check_win(  
-          this.field, 
-          this.$store.state.levels[this.$store.state.level][1] 
-        )  
+        check_win(this.field, this.level)  
       }
     },
 
     exec_ai_move() {
       ai_move(this.field)
-      appear_new_enemy(
-        this.field, 
-        this.$store.state.levels[this.$store.state.level][1] 
-      )  
+      appear_new_enemy(this.field, this.enemies)  
       
       this.player_cards_active = true
-      this.can_draw = calc_can_draw(
+      this.can_draw = calc_can_draw(  // можем ли сделать draw
         this.player_cards_active, this.hand, this.deck
-      )  // можем ли сделать draw
+      )  
     },
 
     // особые абилки, которые требуют каких-либо окон
