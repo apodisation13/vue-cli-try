@@ -48,8 +48,8 @@
 <style scoped>
 .enemy {
   width: 70%;
-  height: 270px;
-  /* height: 110px; */
+  /* height: 270px; */
+  height: 110px;
   margin: auto;
   /* color: white; */
   border-radius: 5px;

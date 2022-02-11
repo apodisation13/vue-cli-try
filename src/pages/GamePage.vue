@@ -38,7 +38,7 @@
 import { appear_new_enemy } from '@/logic/place_enemies'
 import { damage_ai_card, leader_move } from '@/logic/player_move'
 import { ai_move } from '@/logic/ai_move'
-import { check_win } from "@/logic/service"
+import { check_win, calc_can_draw } from "@/logic/service"
 
 export default {
   data() {
@@ -141,7 +141,9 @@ export default {
       )  
       
       this.player_cards_active = true
-      this.calc_can_draw()  // можем ли сделать draw
+      this.can_draw = calc_can_draw(
+        this.player_cards_active, this.hand, this.deck
+      )  // можем ли сделать draw
     },
 
     // особые абилки, которые требуют каких-либо окон
@@ -157,16 +159,6 @@ export default {
       dict.card.charges = 1
       this.hand.push(dict.card)
       this.grave.splice(dict.i, 1)
-    },
-
-    // возможно ли сделать draw, каждый раз по нажатию ход игрока
-    calc_can_draw() {
-      if (
-        this.player_cards_active 
-        && this.hand.length < 6 
-        && this.deck.length != 0 ) {
-          this.can_draw = true
-        }
     },
 
     // вытягивает в руку рандомную карту из деки, если рука не полна

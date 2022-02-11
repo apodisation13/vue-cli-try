@@ -22,5 +22,13 @@ function check_lose(health) {
     return false
 }
 
+// можем ли вытянуть карту, если ход игрока, рука меньше 6 и колода не 0
+function calc_can_draw(player_cards_active, hand, deck) {
+    if (player_cards_active && hand.length < 6 && deck.length != 0 ) {
+        return true
+        }
+    return false
+  }
 
-export {check_win, check_lose, }
+
+export {check_win, check_lose, calc_can_draw }

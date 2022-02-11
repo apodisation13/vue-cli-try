@@ -24,11 +24,13 @@ let e8 = new Enemy({hp: 42, dmg: 5, color: "Gold"})
 let e9 = new Enemy({hp: 9, dmg: 9, color: "Silver"})
 let e10 = new Enemy({hp: 24, dmg: 6, color: "Silver"})
 let e11 = new Enemy({hp: 18, dmg: 16, color: "Gold"})
+let e12 = new Enemy({hp: 7, dmg: 7, move: "Random", color: "Silver"})
+let e13 = new Enemy({hp: 11, dmg: 8, move: "Stand-still", color: "Gold"})
 
 let level1 = [e1, e2, e3, e4, e5, e6, e7]
 let level2 = [e1, e2, e3, e7, e8, e9]
-let level3 = [e8, e9, e10, e11, e6, e7]
-let level4 = [e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11]
+let level3 = [e8, e9, e10, e11, e6, e7, e12, e13]
+let level4 = [e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12, e13]
 
 
 let levels = [
