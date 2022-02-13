@@ -21,7 +21,7 @@ function try_post(body, url) {
         body: JSON.stringify(body)
     })
         .then(response => response.json())
-        .then(result => {
+        .then(() => {
             alert('Успешно')
         })
 }

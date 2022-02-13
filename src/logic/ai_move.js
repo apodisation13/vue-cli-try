@@ -57,9 +57,7 @@ function down_move(field, i) {
     }
   }
 
-  if (check_lose(store.state.health)) {
-    return
-  }
+  check_lose(store.state.health)
 }
 
 

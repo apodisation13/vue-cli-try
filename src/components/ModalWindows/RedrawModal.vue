@@ -60,7 +60,7 @@ export default {
       this.hand_current.splice(id, 1, this.deck_current[random])  // обновить
       this.deck_current.splice(random, 1)  // удалить этот i-й элемент
       
-      if (this.redraws == 0) {
+      if (this.redraws === 0) {
         this.close_self()
       }
     }

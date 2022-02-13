@@ -36,9 +36,9 @@
     },
     methods: {
       border(e) {
-        if (e.color == 'Bronze') return {'border': 'solid 3px lightsalmon'}
-        else if (e.color == 'Silver') return {'border': 'solid 4px silver'}
-        else if (e.color == 'Gold') return {'border': 'solid 5px gold'}
+        if (e.color === 'Bronze') return {'border': 'solid 3px lightsalmon'}
+        else if (e.color === 'Silver') return {'border': 'solid 4px silver'}
+        else if (e.color === 'Gold') return {'border': 'solid 5px gold'}
         else return {}
     }, 
     },

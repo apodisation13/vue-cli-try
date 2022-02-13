@@ -141,7 +141,7 @@ export default {
 
     // особые абилки, которые требуют каких-либо окон
     special_case_abilities() {
-      if (this.hand[this.player_card_number].ability == 'resurrect') {
+      if (this.hand[this.player_card_number].ability === 'resurrect') {
           // откр окно с grave, приходит confirm_card_from_grave()
           this.show_deck_modal_by_abilities = true 
         }

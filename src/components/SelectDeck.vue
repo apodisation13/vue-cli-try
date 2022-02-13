@@ -10,22 +10,15 @@
 <div class="decks_pool_view">
 ДВАЖДЫ ЩЁЛКНИТЕ ЛКМ на деку для её выбора <br>
   
-  <div class="deck-view"
-  :style="[
-        deck.leader.faction == 'Soldiers' ? {'backgroundColor': 'blue'} :
-        deck.leader.faction == 'Monsters' ? {'backgroundColor': 'red'} :
-        deck.leader.faction == 'Animals' ? {'backgroundColor': 'green'} :
-        {}    
-      ]"  
-  v-for="(deck, index) in $store.state.decks" :key='deck'
+  <div class="deck-view" :style="background_color(deck)"  
+  v-for="(deck, index) in decks" :key='deck'
   @dblclick="select_deck(index)"
   @click="emit_state_deck_index(index)"
-  @click.right="selected_deck=index, show_deck=true" 
+  @click.right="selected_deck=index; show_deck=true"
   @mouseleave="show_deck=false"
   @contextmenu.prevent 
   >
     <div class="deck">
-      
       {{ deck.name }} <br>
       Жизни -- {{ deck.health }} <br><br>
       Лидер: <br>
@@ -35,8 +28,7 @@
   </div>
 </div>
 
-<hand-comp 
-v-if="show_deck"
+<hand-comp v-if="show_deck"
 :hand='$store.state.decks[selected_deck].cards'
 />
 
@@ -55,14 +47,18 @@ v-if="show_deck"
     },
 
     methods: {
+      background_color(deck) {
+        if (deck.leader.faction === 'Soldiers') return {'backgroundColor': 'blue'}
+        else if (deck.leader.faction === 'Monsters') return {'backgroundColor': 'red'}
+        else if (deck.leader.faction === 'Animals') return {'backgroundColor': 'green'}
+        else return {}    
+      },
 
       // осуществить выбор деки для игры дважды ЛКМ
       select_deck(i) {
         this.selected_deck = i
         this.is_selected = true
-        // this.$store.commit('set_current_deck', this.$store.state.decks[this.selected_deck].cards)
-        // this.$store.commit('set_health', this.$store.state.decks[this.selected_deck].health)
-        // this.$store.commit('set_leader', this.$store.state.decks[this.selected_deck].leader)
+        
         this.$store.dispatch(
         "set_deck_in_play", 
         {decks: this.$store.state.decks, i: this.selected_deck}
@@ -78,7 +74,13 @@ v-if="show_deck"
 
     emits: [
       'emit_state_deck_index',
-    ]
+    ],
+
+    computed: {
+      decks() {
+        return this.$store.state.decks
+      }
+    }
   }
 </script>
 

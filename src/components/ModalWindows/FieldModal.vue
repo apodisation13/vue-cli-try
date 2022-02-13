@@ -39,10 +39,4 @@ export default {
 
 }
 
-.field_view__content {
-  width: 70px;
-  height: 30px;
-  font-size: 2pt;
-}
-
 </style>
