@@ -6,7 +6,7 @@
 <!-- <img :src="require('@/assets/'+ '1.jpg')" alt=""> -->
 
 <!-- <div class="s"> -->
-<div v-for="(el, i) in list" :key="i" class="hand" >
+<!-- <div v-for="(el, i) in list" :key="i" class="hand" >
   <div :class="{'card_selected': i === active}">
 <div class='card'  @click="c(i)">
   <div class="box">
@@ -18,7 +18,7 @@
   </div>   
 </div> 
 </div>  
-</div>
+</div> -->
 <!-- </div> -->
 
 
@@ -39,6 +39,58 @@ sss2
   @click="active=index"></div>
 </div> -->
 
+
+
+  <div class="field">
+    <table class="table">
+      <tr>
+        <td><div class="enemy">1</div></td>
+        <td>2</td>
+        <td>3</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>5</td>
+        <td><div class="enemy">1</div></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td><div class="enemy">1</div></td>
+        <td>9</td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td><div class="enemy">1</div></td>
+        <td>12</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="right-panel">
+    <div class="enemy-leader">
+      SS1
+    </div>
+    <div class="enemy-leader">
+      SS2
+    </div>
+    <div class="enemy-leader">
+      <button class="pass-btn">Пас</button>
+    </div>
+    <div class="enemy-leader">
+      SS4
+    </div>
+  </div>
+
+
+
+<div class="hand">
+  <div class='card' v-for="el in list" :key="el">
+    <div class="diamond3">
+      <span3>&dagger;{{ el * 5 }}</span3> 
+    </div>
+  </div>
+</div>
+
 </template>
 
 <script>
@@ -47,7 +99,7 @@ sss2
 export default {
   data() {
     return {
-      list: [1,2,3,4],
+      list: [1,2,3,4,5,6],
       l: [],
       active: undefined
     }
@@ -55,7 +107,8 @@ export default {
   methods: {
     c(el) {
       // alert(el)
-      alert(window.innerHeight)
+      alert(window.screen.height)
+      alert(window.screen.width)
       this.active = el
     }
   },
@@ -64,6 +117,108 @@ export default {
 </script>
 
 <style scoped>
+
+.field {
+  display: inline;
+  float: left;
+  border: 1px solid red;
+  font-size: 20pt;
+  width: 75%;
+  height: 74vh;
+  overflow: hidden;
+}
+
+.table {
+  table-layout:fixed;
+  width: 100%;
+}
+
+table tr, td {
+  /* width: 50%; */
+  height: 18vh;
+  border: solid 1px black;
+  overflow: hidden;
+}
+
+.enemy {
+  width: 98%;
+  height: 17vh;
+  border: solid 1px green
+}
+
+.right-panel {
+  display: inline;
+  float: right;
+  width: 23%;
+  height: 74vh;
+  border: solid 1px orange;
+}
+
+.hand {
+  width: 98%;
+  height: 22vh;
+  border: solid 1px blue;
+  clear: both;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.enemy-leader {
+  height: 18vh;
+  width: 98%;
+  border: solid 1px blue;
+  margin-bottom: 2px;
+  margin-top: 2px;
+}
+
+.pass-btn {
+  width: 11vh;
+  height: 11vh;
+  background: orange;
+  border-radius: 50%;
+  top: 50%; 
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: relative;
+}
+
+.card {
+  width: 26%;
+  height: 20vh;
+  border: solid 3px gold;
+  display: inline-block;
+  margin-right: 1px;
+  position: relative;
+}
+
+.diamond3 {
+  position: relative;
+  top: 1%;
+  left: 60%;
+  height: 5vh;
+  width: 5vh;
+  transform: rotateX(45deg) rotateZ(45deg);
+  background-color: purple;
+  border: solid 2px yellow;
+}
+
+span3 {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 25%;
+  right: 15%;
+  color: black;
+  font-size: 10pt;
+  transform:  rotateZ(-45deg);
+}
+
+
+
+
+
+
+
+
 .x {
   width: 20%;
   /* height: 100%; */
@@ -84,19 +239,19 @@ export default {
   background-image: require('@/assets/'+ 'grass.jpg');
 } */
 
-.hand {
-  display: inline-block;  /*элементы в ряд*/
-  margin: 60px;  /*отступ между картами*/
+/* .hand {
+  display: inline-block; 
+  margin: 60px;  
   background-image: url('../assets/brick.jpg');
-}
+} */
 
-.card {
+/* .card {
   width: 100px;
   height: 150px;
   border: solid 3px gold;
-  /* margin: 0px; */
+  margin: 0px;
   position: absolute;
-}
+} */
 
 .card_selected {
   width: 106px;
@@ -180,7 +335,7 @@ span2 {
   right: 10%;
 }
 
-.diamond3 {
+.diamond3asda {
   position: absolute;
   /* margin: -10px 50px; */
   top: 0;
@@ -193,15 +348,15 @@ span2 {
   border: solid 2px yellow;
 }
 
-span3 {
+/* span3 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 15%;
   right: 15%;
   color: black;
-  font-size: 17pt;
+  font-size: 10pt;
   transform:  rotateZ(-45deg);
-}
+} */
 
 
 .circle {
@@ -216,15 +371,13 @@ span3 {
 }
 
 .box {
-  
   margin: -150px;
-  
 }
 
-html, body {
+/* html, body {
   height: 100%;
   background: url('~@/assets/brick.jpg');
-}
+} */
 
 .divvv {
   width: 80%;
