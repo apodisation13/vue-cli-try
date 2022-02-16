@@ -1,6 +1,6 @@
 import { createStore } from "vuex"
 import { get } from '@/logic/requests'
-import { levels } from '@/logic/enemies'
+// import { levels } from '@/logic/enemies'
 
 // ИНСТРУКЦИЯ:
 // в шаблонах $store. state, getters['name'], commit('name', чё) для мутаций
@@ -13,17 +13,16 @@ const store = createStore({
         cards_in_deck: 10,  // СКОЛЬКО В ДЕКЕ ДОЛЖНО БЫТЬ КАРТ
         
         current_deck: [],  // дека выбранная для игры
-        health: 0,
+        health: 0,  // жизни деки
         leader: null,
         
-        levels: levels,  // все уровни
+        levels: [],  // все уровни, из запроса
         level: 0,  // номер уровня игры, выбирается на странице LevelPage
         
         factions: [],
         leaders: [],
         cards: [],
         decks: [],
-        levels_api: [],
     },
 
     getters: {  
@@ -72,7 +71,7 @@ const store = createStore({
             state.decks = result
         },
         get_levels(state, result) {  // гет запрос уровни (а в них враги)
-            state.levels_api = result
+            state.levels = result
         }
 
     },

@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     levels() {
-      return this.$store.state.levels_api
+      return this.$store.state.levels
     }
   },
   methods: {
