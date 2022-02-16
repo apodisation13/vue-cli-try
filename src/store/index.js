@@ -1,6 +1,6 @@
 import { createStore } from "vuex"
 import { get } from '@/logic/requests'
-import { levels } from '@/logic/enemies'
+// import { levels } from '@/logic/enemies'
 
 // ИНСТРУКЦИЯ:
 // в шаблонах $store. state, getters['name'], commit('name', чё) для мутаций
@@ -13,17 +13,16 @@ const store = createStore({
         cards_in_deck: 10,  // СКОЛЬКО В ДЕКЕ ДОЛЖНО БЫТЬ КАРТ
         
         current_deck: [],  // дека выбранная для игры
-        health: 0,
+        health: 0,  // жизни деки
         leader: null,
         
-        levels: levels,  // все уровни
+        levels: [],  // все уровни, из запроса
         level: 0,  // номер уровня игры, выбирается на странице LevelPage
         
         factions: [],
         leaders: [],
         cards: [],
         decks: [],
-
     },
 
     getters: {  
@@ -34,10 +33,10 @@ const store = createStore({
             return state.leaders
         },
         filtered_cards: (state) => (fac) => {
-            return state.cards.filter(f => f.faction==fac.name)
+            return state.cards.filter(f => f.faction===fac.name)
         },
         filtered_leaders: (state) => (fac) => {
-            return state.leaders.filter(f => f.faction==fac.name)
+            return state.leaders.filter(f => f.faction===fac.name)
         },
     
     },
@@ -71,6 +70,9 @@ const store = createStore({
         get_decks(state, result) {  // гет запрос на сохранённые колоды
             state.decks = result
         },
+        get_levels(state, result) {  // гет запрос уровни (а в них враги)
+            state.levels = result
+        }
 
     },
 
@@ -80,21 +82,20 @@ const store = createStore({
             // let factions = 'http://127.0.0.1:8000/api/v1/factions/'
             // let leaders = 'http://127.0.0.1:8000/api/v1/leaders/'
             // let cards = 'http://127.0.0.1:8000/api/v1/cards/'
-            // let decks = 'http://127.0.0.1:8000/api/v1/decks/'           
-            // get(factions, 'get_factions')
-            // get(leaders, 'get_leaders')
-            // get(cards, 'get_cards')
-            // get(decks, 'get_decks')
+            // let decks = 'http://127.0.0.1:8000/api/v1/decks/' 
+            // let levels = 'http://127.0.0.1:8000/api/v1/levels/'          
             
             let factions = 'http://194.67.109.190:82/api/v1/factions/'
             let leaders = 'http://194.67.109.190:82/api/v1/leaders/'
             let cards = 'http://194.67.109.190:82/api/v1/cards/'
-            let decks = 'http://194.67.109.190:82/api/v1/decks/'  
+            let decks = 'http://194.67.109.190:82/api/v1/decks/' 
+            let levels = 'http://194.67.109.190:82/api/v1/levels/' 
             
             get(factions).then((result) => commit('get_factions', result))
             get(leaders).then((result) => commit('get_leaders', result))
             get(cards).then((result) => commit('get_cards', result))
             get(decks).then((result) => commit('get_decks', result))
+            get(levels).then((result) => commit('get_levels', result))
 
             // commit('set_try', 10)
         },

@@ -4,15 +4,15 @@
 <!-- <div :class="{'card_selected': index === i}"> -->
   <div v-if="card" 
     @contextmenu.prevent 
-    @click.right="i=index, show_card_modal=true" @mouseleave="show_card_modal=false"
+    @click.right="i=index; show_card_modal=true" @mouseleave="show_card_modal=false"
     @click="chose_player_card(index)"
     class="hand_card" :style="border(card)"
     >
     
-    <img class="img" :src="card.image" v-if="card.image">
+    <img class="img" :src="card.image" v-if="card.image" alt="">
     <div class="box">
       
-      <div class="typee" v-if="card.type == 'Special'">
+      <div class="typee" v-if="card.type === 'Special'">
         <span>&starf;</span>
       </div>
       
@@ -20,10 +20,10 @@
         <span3>&dagger;{{ card.damage }}</span3>
       </div>
       
-      <div class="circle" v-if="card.ability == 'damage-all'">
+      <div class="circle" v-if="card.ability === 'damage-all'">
         <span>&#9850;</span>
       </div>
-      <div class="circle" v-if="card.ability == 'heal'">
+      <div class="circle" v-if="card.ability === 'heal'">
         <span :style="{'font-size': '10pt'}">+&hearts;{{ card.heal }}</span>
       </div>
       
@@ -75,29 +75,29 @@ export default {
       this.$emit('chose_player_card', this.i)  // передаём this.index по эмиту 
     },
     border(card) {
-      if (card.color == 'Bronze') return {'border': 'solid 3px lightsalmon'}
-      else if (card.color == 'Silver') return {'border': 'solid 4px silver'}
-      else if (card.color == 'Gold') return {'border': 'solid 5px gold'}
+      if (card.color === 'Bronze') return {'border': 'solid 3px lightsalmon'}
+      else if (card.color === 'Silver') return {'border': 'solid 4px silver'}
+      else if (card.color === 'Gold') return {'border': 'solid 5px gold'}
       else return {}
     }, 
     background_color(card) {
-      if (card.faction == 'Soldiers') {
-        if (card.color == 'Bronze') return {'backgroundColor': 'blue'}
-        else if (card.color == 'Silver') return {'backgroundColor': 'blue', 'border': 'solid 2px silver'}
-        else if (card.color == 'Gold') return {'backgroundColor': 'blue', 'border': 'solid 2px gold'}
+      if (card.faction === 'Soldiers') {
+        if (card.color === 'Bronze') return {'backgroundColor': 'blue'}
+        else if (card.color === 'Silver') return {'backgroundColor': 'blue', 'border': 'solid 2px silver'}
+        else if (card.color === 'Gold') return {'backgroundColor': 'blue', 'border': 'solid 2px gold'}
         else return {'backgroundColor': 'blue'}  
       } 
             
-      else if (card.faction == 'Monsters') {
-        if (card.color == 'Bronze') return {'backgroundColor': 'red'}
-        else if (card.color == 'Silver') return {'backgroundColor': 'red', 'border': 'solid 2px silver'}
-        else if (card.color == 'Gold') return {'backgroundColor': 'red', 'border': 'solid 2px gold'}
+      else if (card.faction === 'Monsters') {
+        if (card.color === 'Bronze') return {'backgroundColor': 'red'}
+        else if (card.color === 'Silver') return {'backgroundColor': 'red', 'border': 'solid 2px silver'}
+        else if (card.color === 'Gold') return {'backgroundColor': 'red', 'border': 'solid 2px gold'}
         else return {'backgroundColor': 'red'}  
       }
-      else if (card.faction == 'Animals') {
-        if (card.color == 'Bronze') return {'backgroundColor': 'green'}
-        else if (card.color == 'Silver') return {'backgroundColor': 'green', 'border': 'solid 2px silver'}
-        else if (card.color == 'Gold') return {'backgroundColor': 'green', 'border': 'solid 2px gold'}
+      else if (card.faction === 'Animals') {
+        if (card.color === 'Bronze') return {'backgroundColor': 'green'}
+        else if (card.color === 'Silver') return {'backgroundColor': 'green', 'border': 'solid 2px silver'}
+        else if (card.color === 'Gold') return {'backgroundColor': 'green', 'border': 'solid 2px gold'}
         else return {'backgroundColor': 'green'}  
       }
       

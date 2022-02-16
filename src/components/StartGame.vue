@@ -23,12 +23,13 @@ import { draw_hand } from '@/logic/draw_hand'
         hand: [],
         deck: JSON.parse(JSON.stringify(this.$store.state.current_deck)),
         field: ['','','','','','','','','','','',''],
+        enemies: JSON.parse(JSON.stringify(this.$store.state.level.enemies)),
       }
     },
     methods: {
       // начало игры: расставить врагов, вытянуть карты в руку, открыть redraw-modal
       start_game() {
-        place_enemies(this.field, this.$store.state.levels[this.$store.state.level][1])  // рандомно расставит врагов
+        place_enemies(this.field, this.enemies)  // рандомно расставит врагов
         draw_hand(this.hand, this.deck)  // вытянет руку, остальное оставит в деке
 
         this.redraw = true
@@ -40,7 +41,12 @@ import { draw_hand } from '@/logic/draw_hand'
         this.deck = dict.deck
         this.redraw = false  // закончили редро
 
-        this.$emit('start_game', {hand: this.hand, deck: this.deck, field: this.field})
+        this.$emit('start_game', {
+          hand: this.hand, 
+          deck: this.deck, 
+          field: this.field,
+          enemies: this.enemies,
+        })
       },
     },
     emits: [

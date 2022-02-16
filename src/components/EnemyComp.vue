@@ -5,19 +5,19 @@
       >
       <!-- &dagger;{{ enemy.dmg }} -->
       <div class="diamond3">
-        <span>&dagger;{{ enemy.dmg }}</span>
+        <span>&dagger;{{ enemy.damage }}</span>
       </div>
       <div class="hp">
         &hearts;{{ enemy.hp }}
       </div>
       
-      <div class="circle" v-if="enemy.move==='Down'">
+      <div class="circle" v-if="enemy.move==='down'">
         &#8595;
       </div>  
-      <div class="circle" v-else-if="enemy.move==='Stand-still'">
+      <div class="circle" v-else-if="enemy.move==='stand'">
         &#9737;  
       </div>
-      <div class="circle" v-else-if="enemy.move==='Random'">
+      <div class="circle" v-else-if="enemy.move==='random'">
         &#9736;  
       </div>
 
@@ -36,9 +36,9 @@
     },
     methods: {
       border(e) {
-        if (e.color == 'Bronze') return {'border': 'solid 3px lightsalmon'}
-        else if (e.color == 'Silver') return {'border': 'solid 4px silver'}
-        else if (e.color == 'Gold') return {'border': 'solid 5px gold'}
+        if (e.color === 'Bronze') return {'border': 'solid 3px lightsalmon'}
+        else if (e.color === 'Silver') return {'border': 'solid 4px silver'}
+        else if (e.color === 'Gold') return {'border': 'solid 5px gold'}
         else return {}
     }, 
     },

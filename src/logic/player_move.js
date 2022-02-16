@@ -52,12 +52,12 @@ function damage_ai_card(i, field, hand, card_number, grave) {
         damage_one(field[i], hand[card_number])
     }
 
-    else if (hand[card_number].ability == 'heal') {
+    else if (hand[card_number].ability === 'heal') {
         damage_one(field[i], hand[card_number])
         heal(hand[card_number])
     }
 
-    else if (hand[card_number].ability == 'damage-all') {
+    else if (hand[card_number].ability === 'damage-all') {
        damage_all(field, hand[card_number])
     }
 
@@ -79,7 +79,7 @@ function leader_move(leader, i, field) {
         damage_one(field[i], leader)
     }
 
-    else if (leader.ability == "damage-all") {
+    else if (leader.ability === "damage-all") {
         damage_all(field, leader)
     }
 

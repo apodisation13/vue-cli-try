@@ -7,7 +7,7 @@ import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
 
-var app = createApp(App)
+const app = createApp(App);
 
 
 components.forEach(component => {

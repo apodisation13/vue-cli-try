@@ -133,7 +133,7 @@ export default {
 
     save_deck() {
       if (  // карт ровно 10 и лидер выбран
-        this.deck_is_progress.length == this.$store.state.cards_in_deck 
+        this.deck_is_progress.length === this.$store.state.cards_in_deck
         && this.leader_selected
       ) 
       {
@@ -181,7 +181,7 @@ export default {
       else return this.$store.getters.filtered_leaders(this.faction)
     },
     save_btn_style() {
-      if (this.deck_is_progress.length < this.number_of_cards_in_deck 
+      if (this.deck_is_progress.length < this.$store.state.cards_in_deck
           || !this.leader_selected) { 
         return {'backgroundColor': 'red'}
       }
