@@ -2,6 +2,7 @@
 <div class="field_view" v-if="flag">
   <h2> Жизни карты - {{ enemy.hp }} </h2><br>
   <h2> Урон карты - {{ enemy.dmg }} </h2><br>
+  <h2> Ходит - {{ enemy.move }} </h2><br>
   <p>ОПИСАНИЕ</p>
  </div>
 </template>
@@ -36,12 +37,6 @@ export default {
   transform: translate(-50%, -50%);
   font-size: 15pt;
 
-}
-
-.field_view__content {
-  width: 70px;
-  height: 30px;
-  font-size: 2pt;
 }
 
 </style>

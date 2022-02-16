@@ -1,7 +1,7 @@
 <template>
 <div class='grave'>Сброс
   <button class="btn_grave" @click="flag=true"> 
-    {{ grave.length }}
+    {{ grave_len }}
   </button>
   <div class="modal_window" v-if="flag">
     <button @click="flag=false">Закрыть</button><br>
@@ -24,6 +24,9 @@
         flag: false,
       }
     },
+    computed: {
+      grave_len() {return this.grave.length}
+    } 
   }
 </script>
 
@@ -43,7 +46,7 @@
 
 .modal_window {
   background-color: limegreen;
-  width: 1000px;
+  width: 80%;
   height: 400px;
   border-radius: 12px;
   text-align: center;
@@ -51,6 +54,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 9999;
 
 }
 </style>

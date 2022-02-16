@@ -1,11 +1,11 @@
 <template>
 <div class='deck'>Колода
   <button class="btn_deck" @click="flag=true"> 
-      {{ deck.length }}
+      {{ deck_len }}
   </button>
    <div class="modal_window" v-if="flag">
     <button @click="flag=false">Закрыть</button><br>
-    <hand-comp :hand='deck'/> 
+    <hand-comp :hand='deck'/>
   </div>
 </div>
 </template>
@@ -24,9 +24,9 @@
         flag: false,
       }
     },
-    methods: {
-      
-    }  
+    computed: {
+      deck_len() {return this.deck.length}
+    } 
   }
 </script>
 
@@ -46,7 +46,7 @@
 
 .modal_window {
   background-color: limegreen;
-  width: 1000px;
+  width: 80%;
   height: 400px;
   border-radius: 12px;
   text-align: center;
@@ -54,6 +54,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 9999;
 
 }
 </style>

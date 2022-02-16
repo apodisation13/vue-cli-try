@@ -1,54 +1,72 @@
 import store from '@/store'  // вызов стора здесь!!!!!!!!!
-import { check_win } from "./service"
+import { useToast } from 'vue-toastification'
+
+const toast = useToast()
 
 
-function damage_ai_card(id, field, hand, card_number, grave) {
-     // сюда заходим если там есть враг
-    
-    // alert('попали в функцию дамага компа')
-    let i = id
+function heal(card) {
+    store.commit('change_health', card.heal)
+    toast.success(`лечение на ${card.heal}`)
+}
 
-    alert('ЖИЗНИ ' + field[i].hp + ' до урона')
-    field[i].hp -= hand[card_number].damage  // нанесли урон и-тому элементу от конкретной карты
-    hand[card_number].charges -= 1  // вычитаем 1 заряд у карты игрока
-    alert('ЖИЗНИ ' + field[i].hp + ' после урона')
+function damage_one(enemy, card) {
+    enemy.hp -= card.damage  // нанесли урон и-тому элементу от конкретной карты
+    card.charges -= 1  // вычитаем 1 заряд у карты игрока
+    toast.info('ЖИЗНИ ' + enemy.hp + ' после урона')
+}
 
-    if (hand[card_number].ability == 'heal') {
-        // alert(Object.keys(hand[card_number].ability))
-        store.commit('change_health', hand[card_number].heal)
-        alert(`лечение на ${hand[card_number].heal}`)
-    }
-
-    if (hand[card_number].ability == 'damage-all') {
-       field.forEach(enemy => {
+function damage_all(field, card) {
+    field.forEach(enemy => {
         if (enemy) {
-            if (enemy == field[i]) {  // FIXME: вот это чё?????
-                return
-            }   
-            enemy.hp -= hand[card_number].damage
+            enemy.hp -= card.damage
            }
-       });
-       alert('УРОН ВСЕМ!')
+       })
+    card.charges -= 1
+    toast.warning('УРОН ВСЕМ!')
+}
+
+function remove_dead_enemies(field) {
+    for (let i = 0; i < field.length; i++) {
+        if (field[i].hp <= 0) {
+            field[i] = ''
+        }   
+    }
+}
+
+function remove_dead_card(hand, card_number, grave) {
+    if (hand[card_number].charges === 0) {
+        grave.push(hand[card_number])  // поместили карту в кладбище
+        hand.splice(card_number, 1)
+    }
+}
+
+
+// сюда заходим если там есть враг
+function damage_ai_card(i, field, hand, card_number, grave) {
+
+    if (hand[card_number].ability === 'damage-one') {
+        damage_one(field[i], hand[card_number])
     }
 
+    else if (hand[card_number].ability === 'resurrect') {
+        damage_one(field[i], hand[card_number])
+    }
+
+    else if (hand[card_number].ability === 'heal') {
+        damage_one(field[i], hand[card_number])
+        heal(hand[card_number])
+    }
+
+    else if (hand[card_number].ability === 'damage-all') {
+       damage_all(field, hand[card_number])
+    }
 
     // если враг убит, убираем его с поля
     // проверять надо всех врагов, потому что есть абилки на всех
-    for (let index = 0; index < field.length; index++) {
-        if (field[index].hp <= 0) {
-            field[index] = ''
-        }
-        
-    }
+    remove_dead_enemies(field)
    
     // убираем карту игрока, если в ней не осталось зарядов
-    if (hand[card_number].charges === 0) {
-        grave.push(hand[card_number])  // поместили карту в кладбище
-        // hand[card_number] = ''
-        hand.splice(card_number, 1)
-    }
-
-    return [field, hand, card_number, grave]
+    remove_dead_card(hand, card_number, grave)
 }
 
 
@@ -57,31 +75,18 @@ function leader_move(leader, i, field) {
     // i - номер клетки поля
     // leader - объект лидера целиком
     
-    if (leader.ability == "damage-one") {
-        alert('ЖИЗНИ ' + field[i].hp + ' до урона')
-        field[i].hp -= leader.damage
-        leader.charges -= 1
-        alert('ЖИЗНИ ' + field[i].hp + ' после урона')
+    if (leader.ability === "damage-one") {
+        damage_one(field[i], leader)
     }
 
-    else if (leader.ability == "damage-all") {
-        field.forEach(enemy => {
-            if (enemy) {
-                enemy.hp -= leader.damage
-               }
-           });
-        leader.charges -= 1
-        alert('УРОН ВСЕМ от лидера!')
+    else if (leader.ability === "damage-all") {
+        damage_all(field, leader)
     }
 
     // если враг убит, убираем его с поля
     // проверять надо всех врагов, потому что есть абилки на всех
-    for (let index = 0; index < field.length; index++) {
-        if (field[index].hp <= 0) {
-            field[index] = ''
-        }
-        
-    }
+    remove_dead_enemies(field)
+
 }
 
 export { damage_ai_card, leader_move }

@@ -6,7 +6,7 @@
       <h2> Урон карты - {{ card.damage }} </h2><br>
       <h2> Заряды карты - {{ card.charges }} </h2><br>
       <h2> Тип абилки - {{ card.ability }} </h2><br>
-      <h3 v-if="card.type == 'Special'">sp</h3><br>
+      <h3 v-if="card.type === 'Special'">sp</h3><br>
     </div>
   </div>
 </div>
@@ -55,13 +55,6 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   
-}
-
-.smth {
-  width: 30px;
-  height: 50px;
-  font-size: 2pt;
-  text-align: center;
 }
 
 /* ВОПРОС ВОТ ТУТ */

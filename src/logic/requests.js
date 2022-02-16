@@ -1,14 +1,14 @@
 import axios from "axios";
-import store from "@/store";
+// import store from "@/store";
 
 
-// гет запрос с добавлением в стор!
-function get(url, commit_name) {
-    axios.get(url)
-      .then(function (response) {
-        store.commit(commit_name, response.data)
-      })
-}
+// КОРЯВО!
+// function get(url, commit_name) {
+//     axios.get(url)
+//       .then(function (response) {
+//         store.commit(commit_name, response.data)
+//       })
+// }
 
 
 function try_post(body, url) {
@@ -21,7 +21,7 @@ function try_post(body, url) {
         body: JSON.stringify(body)
     })
         .then(response => response.json())
-        .then(result => {
+        .then(() => {
             alert('Успешно')
         })
 }
@@ -37,12 +37,10 @@ function try_delete(url){
 }
 
 
-// не использую пока
-// async function get2(url) {
-//     let response = await axios.get(url)
-//     alert(response.data[0].name)
-//     return response.data
-// }
+async function get(url) {
+    let response = await axios.get(url)
+    return response.data
+}
 
 
-export { get, try_post, try_delete,  }
+export { try_post, try_delete, get }
