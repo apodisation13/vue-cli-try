@@ -44,7 +44,28 @@ sss2
   <div class="field">
     <table class="table">
       <tr>
-        <td><div class="enemy">1</div></td>
+        <td>
+          <div class="enemy">
+          
+        <img class="img" :src="require('@/assets/'+ '14.jpg')" alt="">
+        <div class="diamond3">
+          <span3>&dagger;4</span3> 
+        </div>
+        <div class="circle">
+          <span>+&hearts;2</span>
+        </div>
+        <div class="charges">
+          <span>2</span>
+        </div>
+        <div class="hp">
+          <span>&hearts;12</span>
+        </div>
+        <div class="typee">
+          <span>&starf;</span>
+        </div>
+          
+          </div>
+        </td>
         <td>2</td>
         <td>3</td>
       </tr>
@@ -60,33 +81,104 @@ sss2
       </tr>
       <tr>
         <td>10</td>
-        <td><div class="enemy">1</div></td>
+        <td>
+          <img class="img" :src="require('@/assets/'+ '14.jpg')" alt="">
+        <div class="diamond3">
+          <span3>&dagger;4</span3> 
+        </div>
+        <div class="circle">
+          <span>+&hearts;2</span>
+        </div>
+        <div class="charges">
+          <span>2</span>
+        </div>
+        <div class="hp">
+          <span>&hearts;12</span>
+        </div>
+        <div class="typee">
+          <span>&starf;</span>
+        </div>
+        </td>
         <td>12</td>
       </tr>
     </table>
   </div>
 
   <div class="right-panel">
+    
     <div class="enemy-leader">
-      SS1
+      
+        <img class="img" :src="require('@/assets/'+ '4.jpg')" alt="">
+        <div class="diamond3">
+          <span3>&dagger;4</span3> 
+        </div>
+        <div class="circle">
+          <span>+&hearts;2</span>
+        </div>
+        <div class="charges">
+          <span>2</span>
+        </div>
+        <div class="hp">
+          <span>&hearts;12</span>
+        </div>
+        <div class="typee">
+          <span>&starf;</span>
+        </div>
     </div>
-    <div class="enemy-leader">
-      SS2
+    
+    
+    <div class="buttons">
+      <button class="single-btn">КлВр</button>
+      <button class="single-btn">Вр</button>
+
+      <button class="single-btn">Колода</button>
+      <button class="single-btn">Клад</button>
     </div>
-    <div class="enemy-leader">
+    
+    <div class="div-pass-btn">
       <button class="pass-btn">Пас</button>
     </div>
+    
     <div class="enemy-leader">
-      SS4
+      <img class="img" :src="require('@/assets/'+ '50.jpg')" alt="">
+        <div class="diamond3">
+          <span3>&dagger;4</span3> 
+        </div>
+        <div class="circle">
+          <span>+&hearts;2</span>
+        </div>
+        <div class="charges">
+          <span>2</span>
+        </div>
+        <div class="hp">
+          <span>&hearts;12</span>
+        </div>
+        <div class="typee">
+          <span>&starf;</span>
+        </div>
     </div>
+  
   </div>
 
 
 
 <div class="hand">
   <div class='card' v-for="el in list" :key="el">
+    <img class="img" :src="require('@/assets/'+ '2.jpg')" alt="">
     <div class="diamond3">
       <span3>&dagger;{{ el * 5 }}</span3> 
+    </div>
+    <div class="circle">
+      <span>+&hearts;{{ el * 4 }}</span>
+    </div>
+    <div class="charges">
+      <span>{{ el }}</span>
+    </div>
+    <div class="hp">
+      <span>&hearts;{{ el }}</span>
+    </div>
+    <div class="typee">
+      <span>&starf;</span>
     </div>
   </div>
 </div>
@@ -138,20 +230,23 @@ table tr, td {
   height: 18vh;
   border: solid 1px black;
   overflow: hidden;
+  position: relative;
 }
 
 .enemy {
   width: 98%;
   height: 17vh;
-  border: solid 1px green
+  border: solid 1px green;
+  position: relative;
 }
 
 .right-panel {
   display: inline;
   float: right;
-  width: 23%;
+  width: 24.5%;
   height: 74vh;
   border: solid 1px orange;
+  position: relative;
 }
 
 .hand {
@@ -169,6 +264,17 @@ table tr, td {
   border: solid 1px blue;
   margin-bottom: 2px;
   margin-top: 2px;
+  position: relative;
+}
+
+
+.div-pass-btn {
+  height: 12vh;
+  width: 98%;
+  border: solid 1px blue;
+  margin-bottom: 2px;
+  margin-top: 2px;
+  position: relative;
 }
 
 .pass-btn {
@@ -176,11 +282,33 @@ table tr, td {
   height: 11vh;
   background: orange;
   border-radius: 50%;
+  border-color: fuchsia;
   top: 50%; 
   left: 50%;
   transform: translate(-50%, -50%);
   position: relative;
 }
+
+
+.buttons {
+  height: 24vh;
+  width: 98%;
+  border: solid 1px blue;
+  margin-bottom: 2px;
+  margin-top: 2px;
+  position: relative;
+}
+
+
+.single-btn {
+  height: 20%;
+  width: 98%;
+  border: solid 1px yellow;
+  margin-bottom: 2px;
+  margin-top: 2px;
+  position: relative;
+}
+
 
 .card {
   width: 26%;
@@ -192,9 +320,11 @@ table tr, td {
 }
 
 .diamond3 {
-  position: relative;
+  position: absolute;
   top: 1%;
-  left: 60%;
+  /* left: 60%; */
+  right: 6%;
+  /* right: 1vmax; */
   height: 5vh;
   width: 5vh;
   transform: rotateX(45deg) rotateZ(45deg);
@@ -212,6 +342,63 @@ span3 {
   transform:  rotateZ(-45deg);
 }
 
+
+.circle {
+  position: absolute;
+  width: 34%;
+  height: 4vh;
+  background: gray;
+  border-radius: 50%;
+  top: 30%;
+  right: 3%;
+}
+
+span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 8pt;
+}
+
+.charges {
+  width: 20%;
+  height: 20%;
+  background-color: hotpink;
+  position: absolute;
+  bottom: 2%;
+  right: 2%;
+  border-radius: 20%;
+}
+
+.hp {
+  width: 30%;
+  height: 20%;
+  background-color: green;
+  position: absolute;
+  bottom: 2%;
+  left: 2%;
+  border-radius: 20%;
+}
+
+.typee {
+  width: 10%;
+  height: 10%;
+  left: 1%;
+  top: 1%; 
+  position: absolute;
+}
+
+.img {
+  /* width: 94px;
+  height: 144px; */
+  width: 99%;
+  height: 99%;
+  top: 50%; 
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
 
 
 
@@ -268,41 +455,6 @@ span3 {
   /* position: absolute; */
 }
 
-.img {
-  width: 94px;
-  height: 144px;
-  top: 50%; 
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
-}
-
-.typee {
-  width: 20%;
-  height: 20%;
-  left: 1%;
-  top: 1%; 
-  position: absolute;
-}
-
-.charges {
-  width: 20%;
-  height: 20%;
-  /* border: solid green; */
-  background-color: hotpink;
-  position: absolute;
-  bottom: 2%;
-  right: 5%;
-}
-
-span {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: green;
-  font-size: 10pt;
-}
 
 span2 {
   position: absolute;
@@ -311,16 +463,6 @@ span2 {
   transform: translate(-50%, -50%);
   color: black;
   font-size: 14pt;
-}
-
-.hp {
-  width: 30%;
-  height: 20%;
-  /* border: solid green; */
-  background-color: red;
-  position: absolute;
-  bottom: 2%;
-  left: 5%;
 }
 
 
@@ -348,27 +490,6 @@ span2 {
   border: solid 2px yellow;
 }
 
-/* span3 {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 15%;
-  right: 15%;
-  color: black;
-  font-size: 10pt;
-  transform:  rotateZ(-45deg);
-} */
-
-
-.circle {
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  background: orange;
-  border-radius: 50%;
-  /* margin: 30px 60px; */
-  top: 30%;
-  right: 3%;
-}
 
 .box {
   margin: -150px;
