@@ -126,18 +126,26 @@ sss2
         </div>
     </div>
     
-    
-    <div class="buttons">
+    <div class="div-pass-btn">
       <button class="single-btn">КлВр</button>
       <button class="single-btn">Вр</button>
-
+    </div>
+    <div class="div-pass-btn">
+      <button class="pass-btn">Пас</button>
+    </div>
+    <div class="div-pass-btn">
       <button class="single-btn">Колода</button>
       <button class="single-btn">Клад</button>
+    </div>
+    <!-- <div class="buttons">
+      
+
+      
     </div>
     
     <div class="div-pass-btn">
       <button class="pass-btn">Пас</button>
-    </div>
+    </div> -->
     
     <div class="enemy-leader">
       <img class="img" :src="require('@/assets/'+ '50.jpg')" alt="">
