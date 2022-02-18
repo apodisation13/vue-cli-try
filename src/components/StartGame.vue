@@ -24,8 +24,8 @@ import { draw_hand } from '@/logic/draw_hand'
         redraw: false,
         hand: [],
         field: ['','','','','','','','','','','',''],
-        // deck: JSON.parse(JSON.stringify(this.$store.state.current_deck)),
-        // enemies: JSON.parse(JSON.stringify(this.$store.state.level.enemies)),
+        deck: JSON.parse(JSON.stringify(this.$store.state.current_deck)),
+        enemies: JSON.parse(JSON.stringify(this.$store.state.level.enemies)),
       }
     },
     methods: {
@@ -55,12 +55,12 @@ import { draw_hand } from '@/logic/draw_hand'
       'start_game'
     ],
     computed: {
-      deck() {
-        return JSON.parse(JSON.stringify(this.$store.state.current_deck))
-      },
-      enemies() {
-        return JSON.parse(JSON.stringify(this.$store.state.level.enemies))
-      },
+      // deck() {
+      //   return JSON.parse(JSON.stringify(this.$store.state.current_deck))
+      // },
+      // enemies() {
+      //   return JSON.parse(JSON.stringify(this.$store.state.level.enemies))
+      // },
     }
   }
 </script>
