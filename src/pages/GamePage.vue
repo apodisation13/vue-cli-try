@@ -1,6 +1,10 @@
 <template>
 
-<start-game v-if="beginning" @start_game='start_game'/>
+<div v-if="beginning">
+  <start-game @start_game='start_game'/>
+</div>
+
+<div v-else>
 
 <field-comp :field='field' @exec_damage_ai_card='exec_damage_ai_card' />
 
@@ -30,7 +34,7 @@
   @chose_player_card='chose_player_card' 
   />
 </div>
-
+</div>
 </template>
 
 <script>

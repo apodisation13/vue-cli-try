@@ -49,7 +49,7 @@ export default {
     },
   },
   mounted() {
-    this.set_default_deck()
+    // this.set_default_deck()
   },
 
 }

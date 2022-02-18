@@ -126,9 +126,12 @@ sss2
         </div>
     </div>
     
-    <div class="div-pass-btn">
-      <button class="single-btn">КлВр</button>
-      <button class="single-btn">Вр</button>
+    <div class="div-pass-btn2">
+      <button class="single-btn2">КлВр</button>
+      <button class="single-btn2">Вр</button>
+    </div>
+    <div class="div-draw">
+      <button class="single-btn2">ДРО</button>
     </div>
     <div class="div-pass-btn">
       <button class="pass-btn">Пас</button>
@@ -259,7 +262,7 @@ table tr, td {
 
 .hand {
   width: 98%;
-  height: 20.5vh;
+  height: 21vh;
   /* border: solid 1px blue; */
   clear: both;
   overflow: auto;
@@ -306,6 +309,14 @@ table tr, td {
   position: relative;
 }
 
+.div-draw {
+  height: 4.3vh;
+  width: 98%;
+  border: solid 1px red;
+  margin-bottom: 1%;
+  margin-top: 1%;
+  position: relative;
+}
 
 .single-btn {
   height: 20%;
