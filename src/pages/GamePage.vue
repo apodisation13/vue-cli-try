@@ -4,35 +4,49 @@
   <start-game @start_game='start_game'/>
 </div>
 
+<!-- дальше идём только после нажатия кнопки начало -->
 <div v-else>
 
-
+<!-- поле с врагами -->
 <field-comp 
 :field='field' 
 @exec_damage_ai_card='exec_damage_ai_card'
 />
 
+<!-- правая часть экрана -->
 <div class="right-panel">
 
+<!-- лидер врага -->
 <enemy-leader />
 
+<!-- колода оставшихся врагов и кладбище врагов -->
 <div class="div-two-buttons">
  <remaining-enemies :enemies='enemies' />
  <enemies-grave />
 </div>
 
+<!-- возможность вытянуть карту, дро -->
 <div class="draw">
   <draw-comp v-show="can_draw"
   @click="draw_one_card"
   />
 </div>
 
+<!-- чисто кнопка пас -->
 <pass-comp @click="exec_ai_move" />
 
+<!-- кнопки кладбища и колоды -->
 <div class="div-two-buttons">
   <grave-comp :grave='grave' />
   <deck-comp :deck='deck' />
 </div>
+
+<!-- лидер игрока -->
+<leader-comp 
+:leader='leader'
+@exec_leader="chose_leader"
+/>
+
 
 
 </div>
@@ -45,20 +59,7 @@
 
 
 <!-- <health-comp :player_cards_active="player_cards_active" /> -->
-
-<!-- <div class="active_buttons">
-  <button class="btn_pass" @click="exec_ai_move">Пас</button>
-  <deck-comp :deck='deck' />
-  <grave-comp :grave='grave' />
-  <remaining-enemies v-if="!beginning" :enemies='this.enemies'/>
-  <button class="btn_draw" v-show="can_draw" 
-  @click="draw_one_card">ДРО</button>
-</div> -->
  
- <!-- <leader-comp v-if="leader" 
-  :leader='leader'
-  @exec_leader="chose_leader"
-  /> -->
 
 
 <resurrect-modal v-if="show_deck_modal_by_abilities"
