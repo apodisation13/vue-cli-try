@@ -27,47 +27,23 @@
 </template>
 
 <script>
-  export default {
-    name: 'enemy-comp',
-    props: {
-      enemy: {
-        required: true,
-      },
+import { border, background_color } from '@/logic/border_styles'
+export default {
+  name: 'enemy-comp',
+  props: {
+    enemy: {
+      required: true,
     },
-    methods: {
-      border(e) {
-        if (e.color === 'Bronze') return {'border': 'solid 1px lightsalmon'}
-        else if (e.color === 'Silver') return {'border': 'solid 3px silver'}
-        else if (e.color === 'Gold') return {'border': 'solid 3px gold'}
-        else return {}
-      }, 
-
-      background_color(e) {
-        if (e.faction === 'Soldiers') {
-          if (e.color === 'Bronze') return {'backgroundColor': 'blue'}
-          else if (e.color === 'Silver') return {'backgroundColor': 'blue', 'border': 'solid 2px silver'}
-          else if (e.color === 'Gold') return {'backgroundColor': 'blue', 'border': 'solid 2px gold'}
-          else return {'backgroundColor': 'blue'}  
-        } 
-            
-        else if (e.faction === 'Monsters') {
-          if (e.color === 'Bronze') return {'backgroundColor': 'red'}
-          else if (e.color === 'Silver') return {'backgroundColor': 'red', 'border': 'solid 2px silver'}
-          else if (e.color === 'Gold') return {'backgroundColor': 'red', 'border': 'solid 2px gold'}
-          else return {'backgroundColor': 'red'}  
-        }
-
-        else if (e.faction === 'Animals') {
-          if (e.color === 'Bronze') return {'backgroundColor': 'green'}
-          else if (e.color === 'Silver') return {'backgroundColor': 'green', 'border': 'solid 2px silver'}
-          else if (e.color === 'Gold') return {'backgroundColor': 'green', 'border': 'solid 2px gold'}
-          else return {'backgroundColor': 'green'}  
-        }
-      
-        else return {}
-      },
+  },
+  methods: {
+    border(e) {
+      return border(e)
     },
-  }
+    background_color(e) {
+      return background_color(e)
+    },
+  },  
+}
 </script>
 
 <style scoped>

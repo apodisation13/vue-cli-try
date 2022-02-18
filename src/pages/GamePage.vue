@@ -8,32 +8,32 @@
 
 <field-comp :field='field' @exec_damage_ai_card='exec_damage_ai_card' />
 
-<health-comp :player_cards_active="player_cards_active" />
+<!-- <health-comp :player_cards_active="player_cards_active" /> -->
 
-<div class="active_buttons">
+<!-- <div class="active_buttons">
   <button class="btn_pass" @click="exec_ai_move">Пас</button>
   <deck-comp :deck='deck' />
   <grave-comp :grave='grave' />
   <remaining-enemies v-if="!beginning" :enemies='this.enemies'/>
   <button class="btn_draw" v-show="can_draw" 
   @click="draw_one_card">ДРО</button>
-</div>
+</div> -->
 
 <resurrect-modal v-if="show_deck_modal_by_abilities"
 :grave='grave' 
 @chosen_card='confirm_card_from_grave'
 />
 
-<div class="hand">
-  <leader-comp v-if="leader" 
+<!-- <div class="hand"> -->
+  <!-- <leader-comp v-if="leader" 
   :leader='leader'
   @exec_leader="chose_leader"
-  />
-  <hand-comp v-if="!beginning"
-  :hand='hand'
-  @chose_player_card='chose_player_card' 
-  />
-</div>
+  /> -->
+<hand-comp
+:hand='hand'
+@chose_player_card='chose_player_card' 
+/>
+<!-- </div> -->
 </div>
 </template>
 

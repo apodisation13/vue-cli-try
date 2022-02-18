@@ -242,6 +242,7 @@ table tr, td {
   position: relative;
 }
 
+/* ДИВ ВНУТРИ ТАБЛИЦЫ, ну чтобы он там не полностью клетку занимал */
 .enemy {
   width: 98%;
   height: 17vh;
