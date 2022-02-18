@@ -11,7 +11,6 @@
           <enemy-comp 
           :enemy='field[get_index(i,j)]'
           />
-          <!-- {{ field[get_index(i,j)].hp }} -->
       </td>
     </tr>
   </table>
