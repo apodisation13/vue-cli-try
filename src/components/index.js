@@ -11,6 +11,8 @@ import EnemyComp from '@/components/EnemyComp'
 import EnemyLeader from '@/components/EnemyLeader'
 import EnemiesRemaining from '@/components/EnemiesRemaining'
 import EnemiesGrave from '@/components/EnemiesGrave'
+import DrawComp from '@/components/DrawComp'
+import PassComp from '@/components/PassComp'
 
 import FieldModal from '@/components/ModalWindows/FieldModal'
 import CardModal from '@/components/ModalWindows/CardModal'
@@ -33,6 +35,8 @@ export default [
     EnemyLeader,
     EnemiesRemaining,
     EnemiesGrave,
+    DrawComp,
+    PassComp,
     
     FieldModal,
     CardModal,

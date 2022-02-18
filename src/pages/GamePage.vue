@@ -16,10 +16,24 @@
 
 <enemy-leader />
 
-<div class="remaining-enemies-and-enemy-grave">
+<div class="div-two-buttons">
  <remaining-enemies :enemies='enemies' />
  <enemies-grave />
 </div>
+
+<div class="draw">
+  <draw-comp v-show="can_draw"
+  @click="draw_one_card"
+  />
+</div>
+
+<pass-comp @click="exec_ai_move" />
+
+<div class="div-two-buttons">
+  <grave-comp :grave='grave' />
+  <deck-comp :deck='deck' />
+</div>
+
 
 </div>
 
@@ -206,7 +220,7 @@ export default {
   margin-right: 0.4%;
 }
 
-.remaining-enemies-and-enemy-grave {
+.div-two-buttons {
   height: 7.5vh;
   width: 98%;
   border: solid 1px red;
@@ -215,6 +229,14 @@ export default {
   position: relative;
 }
 
+.draw {
+  height: 4.3vh;
+  width: 98%;
+  border: solid 1px red;
+  margin-bottom: 1%;
+  margin-top: 1%;
+  position: relative;
+}
 
 
 
