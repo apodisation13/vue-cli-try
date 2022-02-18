@@ -133,19 +133,10 @@ sss2
     <div class="div-pass-btn">
       <button class="pass-btn">Пас</button>
     </div>
-    <div class="div-pass-btn">
-      <button class="single-btn">Колода</button>
-      <button class="single-btn">Клад</button>
+    <div class="div-pass-btn2">
+      <button class="single-btn2">Колода</button>
+      <button class="single-btn2">Клад</button>
     </div>
-    <!-- <div class="buttons">
-      
-
-      
-    </div>
-    
-    <div class="div-pass-btn">
-      <button class="pass-btn">Пас</button>
-    </div> -->
     
     <div class="enemy-leader">
       <img class="img" :src="require('@/assets/'+ '50.jpg')" alt="">
@@ -166,6 +157,10 @@ sss2
         </div>
     </div>
   
+    
+    <button class="health-btn">&hearts;142</button>
+  
+
   </div>
 
 
@@ -221,7 +216,7 @@ export default {
 .field {
   display: inline;
   float: left;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   font-size: 20pt;
   width: 75%;
   height: 74vh;
@@ -236,7 +231,7 @@ export default {
 table tr, td {
   /* width: 50%; */
   height: 18vh;
-  border: solid 1px black;
+  border: dashed 0.5px black;
   overflow: hidden;
   position: relative;
 }
@@ -244,8 +239,12 @@ table tr, td {
 .enemy {
   width: 98%;
   height: 17vh;
-  border: solid 1px green;
+  border: solid 2px green;
+  border-radius: 2%;
   position: relative;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .right-panel {
@@ -253,14 +252,15 @@ table tr, td {
   float: right;
   width: 24.5%;
   height: 74vh;
-  border: solid 1px orange;
+  /* border: solid 1px orange; */
   position: relative;
+  margin-right: 0.4%;
 }
 
 .hand {
   width: 98%;
-  height: 22vh;
-  border: solid 1px blue;
+  height: 20.5vh;
+  /* border: solid 1px blue; */
   clear: both;
   overflow: auto;
   white-space: nowrap;
@@ -269,7 +269,8 @@ table tr, td {
 .enemy-leader {
   height: 18vh;
   width: 98%;
-  border: solid 1px blue;
+  border: solid 2px blue;
+  border-radius: 2%;
   margin-bottom: 2px;
   margin-top: 2px;
   position: relative;
@@ -280,8 +281,8 @@ table tr, td {
   height: 12vh;
   width: 98%;
   border: solid 1px blue;
-  margin-bottom: 2px;
-  margin-top: 2px;
+  margin-bottom: 1%;
+  margin-top: 1%;
   position: relative;
 }
 
@@ -296,14 +297,12 @@ table tr, td {
   transform: translate(-50%, -50%);
   position: relative;
 }
-
-
-.buttons {
-  height: 24vh;
+.div-pass-btn2 {
+  height: 7.5vh;
   width: 98%;
-  border: solid 1px blue;
-  margin-bottom: 2px;
-  margin-top: 2px;
+  border: solid 1px red;
+  margin-bottom: 1%;
+  margin-top: 1%;
   position: relative;
 }
 
@@ -312,18 +311,40 @@ table tr, td {
   height: 20%;
   width: 98%;
   border: solid 1px yellow;
-  margin-bottom: 2px;
-  margin-top: 2px;
+  margin-bottom: 1%;
+  margin-top: 1%;
+  position: relative;
+}
+
+.single-btn2 {
+  height: 40%;
+  width: 98%;
+  border: solid 1px yellow;
+  margin-bottom: 1%;
+  margin-top: 1%;
+  position: relative;
+}
+
+.health-btn {
+  height: 4vh;
+  width: 98%;
+  background-color: green;
+  border: 0;
+  margin-bottom: 1%;
+  margin-top: 1%;
   position: relative;
 }
 
 
 .card {
   width: 26%;
-  height: 20vh;
+  height: 18.5vh;
   border: solid 3px gold;
+  border-radius: 2%;
   display: inline-block;
-  margin-right: 1px;
+  margin-right: 1%;
+  margin-left: 0.5%;
+  margin-top: 0.1%;
   position: relative;
 }
 
