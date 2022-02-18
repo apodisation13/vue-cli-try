@@ -1,6 +1,6 @@
 import { createStore } from "vuex"
 import { get } from '@/logic/requests'
-// import { levels } from '@/logic/enemies'
+
 
 // ИНСТРУКЦИЯ:
 // в шаблонах $store. state, getters['name'], commit('name', чё) для мутаций
@@ -17,7 +17,7 @@ const store = createStore({
         leader: null,
         
         levels: [],  // все уровни, из запроса
-        level: 0,  // номер уровня игры, выбирается на странице LevelPage
+        level: null,  // номер уровня игры, выбирается на странице LevelPage
         
         factions: [],
         leaders: [],

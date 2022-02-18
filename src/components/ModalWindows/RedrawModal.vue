@@ -72,14 +72,11 @@ export default {
 
 .redraw_modal_window {
   background-color: limegreen;
-  width: 70%;
-  height: 50%;
+  width: 100%;
+  height: 90%;
   border-radius: 12px;
   text-align: center;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: absolute;
   z-index: 9999;
 }
 
