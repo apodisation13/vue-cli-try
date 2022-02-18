@@ -1,13 +1,14 @@
 <template>
-<div class='deck'>Колода
-  <button class="btn_deck" @click="flag=true"> 
-      {{ deck_len }}
+
+  <button class="deck-btn" @click="flag=true"> 
+    Колода {{ deck_len }}
   </button>
+   
    <div class="modal_window" v-if="flag">
     <button @click="flag=false">Закрыть</button><br>
     <hand-comp :hand='deck'/>
   </div>
-</div>
+
 </template>
 
 <script>
@@ -31,17 +32,13 @@
 </script>
 
 <style scoped>
-.deck {
-    width: 100px;
-    height: 75px;
-    display: inline-block;
-    text-align: center;
-}
-
-.btn_deck {
-    width: 100px;
-    height: 35px;
-    background: lightgreen;
+.deck-btn {
+  height: 40%;
+  width: 98%;
+  border: solid 1px yellow;
+  margin-bottom: 1%;
+  margin-top: 1%;
+  position: relative;
 }
 
 .modal_window {

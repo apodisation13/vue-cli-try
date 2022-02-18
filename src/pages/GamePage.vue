@@ -4,36 +4,67 @@
   <start-game @start_game='start_game'/>
 </div>
 
+<!-- дальше идём только после нажатия кнопки начало -->
 <div v-else>
 
-<field-comp :field='field' @exec_damage_ai_card='exec_damage_ai_card' />
+<!-- поле с врагами -->
+<field-comp 
+:field='field' 
+@exec_damage_ai_card='exec_damage_ai_card'
+/>
 
-<!-- <health-comp :player_cards_active="player_cards_active" /> -->
+<!-- правая часть экрана -->
+<div class="right-panel">
 
-<!-- <div class="active_buttons">
-  <button class="btn_pass" @click="exec_ai_move">Пас</button>
-  <deck-comp :deck='deck' />
+<!-- лидер врага -->
+<enemy-leader />
+
+<!-- колода оставшихся врагов и кладбище врагов -->
+<div class="div-two-buttons">
+ <remaining-enemies :enemies='enemies' />
+ <enemies-grave />
+</div>
+
+<!-- возможность вытянуть карту, дро -->
+<div class="draw">
+  <draw-comp v-show="can_draw"
+  @click="draw_one_card"
+  />
+</div>
+
+<!-- чисто кнопка пас -->
+<pass-comp @click="exec_ai_move" />
+
+<!-- кнопки кладбища и колоды -->
+<div class="div-two-buttons">
   <grave-comp :grave='grave' />
-  <remaining-enemies v-if="!beginning" :enemies='this.enemies'/>
-  <button class="btn_draw" v-show="can_draw" 
-  @click="draw_one_card">ДРО</button>
-</div> -->
+  <deck-comp :deck='deck' />
+</div>
+
+<!-- лидер игрока -->
+<leader-comp 
+:leader='leader'
+@exec_leader="chose_leader"
+/>
+
+<!-- Просто полоска с жизнями (пока что) -->
+<health-comp /> 
+
+</div>
+
+<hand-comp
+:hand='hand'
+@chose_player_card='chose_player_card' 
+/>
 
 <resurrect-modal v-if="show_deck_modal_by_abilities"
 :grave='grave' 
 @chosen_card='confirm_card_from_grave'
 />
 
-<!-- <div class="hand"> -->
-  <!-- <leader-comp v-if="leader" 
-  :leader='leader'
-  @exec_leader="chose_leader"
-  /> -->
-<hand-comp
-:hand='hand'
-@chose_player_card='chose_player_card' 
-/>
-<!-- </div> -->
+
+
+
 </div>
 </template>
 
@@ -173,6 +204,37 @@ export default {
 </script>
 
 <style scoped>
+
+/* Панель справа - лидер врага, кнопки, пас, лидер игрока */
+.right-panel {
+  display: inline;
+  float: right;
+  width: 24.5%;
+  height: 74vh;
+  border: solid 1px orange;
+  position: relative;
+  margin-right: 0.4%;
+}
+
+.div-two-buttons {
+  height: 7.5vh;
+  width: 98%;
+  border: solid 1px red;
+  margin-bottom: 1%;
+  margin-top: 1%;
+  position: relative;
+}
+
+.draw {
+  height: 4.3vh;
+  width: 98%;
+  border: solid 1px red;
+  margin-bottom: 1%;
+  margin-top: 1%;
+  position: relative;
+}
+
+
 
 .hand {
     display: flex;  /*элементы в ряд*/

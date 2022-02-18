@@ -1,79 +1,45 @@
 <template>
-
-<div class="leader"
-  @contextmenu.prevent
-  @click.right="show_card_modal=true" @mouseleave="show_card_modal=false"
-  @click="exec_leader"
->
+<div class="enemy-leader">
   
-  <!-- {{ leader.ability }} -->
-
-  <img class="img" :src="leader.image" v-if="leader.image" alt="">
+  <!-- <img class="img" :src="require('@/assets/'+ '50.jpg')" alt=""> -->
   
   <div class="diamond">
-    <span3>&dagger;{{ leader.damage }}</span3> 
+    <span3>&dagger;4</span3> 
   </div>
   
-  <!-- <div class="circle">
+  <div class="circle">
     <span>+&hearts;2</span>
-  </div> -->
+  </div>
   
   <div class="charges">
-    <span>{{ leader.charges }}</span>
+    <span>2</span>
   </div>
   
-  <!-- <div class="typee">
+  <div class="hp">
+    <span>&hearts;12</span>
+  </div>
+  
+  <div class="typee">
     <span>&starf;</span>
-  </div> -->
-
+  </div>
 </div>
-
-<card-modal 
-:card='leader' 
-:show_card_modal='show_card_modal'
-/>
-
-
 </template>
 
 <script>
-import { background_color } from '@/logic/border_styles'
-  export default {
-    name: "leader-comp",
-    props: {
-      leader: {
-        required: true,
-        type: Object
-      },
-    },
-    data() {
-      return {
-        show_card_modal: false, 
-      }
-    },
-    methods: {
-      exec_leader() {
-        this.$emit("exec_leader")
-      },
-    },
-
-    emits: [
-      "exec_leader",
-    ],
-
-  }
+export default {
+  name: 'enemy-leader',
+}
 </script>
 
 <style scoped>
-
-.leader {
+.enemy-leader {
   height: 18vh;
   width: 98%;
+  border: solid 2px blue;
   border-radius: 2%;
   margin-bottom: 2px;
   margin-top: 2px;
   position: relative;
-  border: solid 1px black;
 }
 
 .img {
@@ -106,7 +72,7 @@ span3 {
   transform:  rotateZ(-45deg);
 }
 
-/* .circle {
+.circle {
   position: absolute;
   width: 34%;
   height: 4vh;
@@ -114,7 +80,7 @@ span3 {
   top: 30%;
   right: 3%;
   background: gray;
-} */
+}
 
 span {
   position: absolute;
@@ -134,12 +100,21 @@ span {
   border-radius: 20%;
 }
 
-/* .typee {
+.hp {
+  width: 30%;
+  height: 20%;
+  background-color: green;
+  position: absolute;
+  bottom: 2%;
+  left: 2%;
+  border-radius: 20%;
+}
+
+.typee {
   width: 10%;
   height: 10%;
   left: 1%;
   top: 1%; 
   position: absolute;
-} */
-
+}
 </style>
