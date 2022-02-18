@@ -47,7 +47,8 @@
 @exec_leader="chose_leader"
 />
 
-
+<!-- Просто полоска с жизнями (пока что) -->
+<health-comp /> 
 
 </div>
 
@@ -55,12 +56,6 @@
 :hand='hand'
 @chose_player_card='chose_player_card' 
 />
-
-
-
-<!-- <health-comp :player_cards_active="player_cards_active" /> -->
- 
-
 
 <resurrect-modal v-if="show_deck_modal_by_abilities"
 :grave='grave' 
