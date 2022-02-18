@@ -16,8 +16,12 @@
 
 <enemy-leader />
 
+<div class="remaining-enemies-and-enemy-grave">
+ <remaining-enemies :enemies='enemies' />
+ <enemies-grave />
 </div>
 
+</div>
 
 <hand-comp
 :hand='hand'
@@ -36,6 +40,7 @@
   <button class="btn_draw" v-show="can_draw" 
   @click="draw_one_card">ДРО</button>
 </div> -->
+ 
  <!-- <leader-comp v-if="leader" 
   :leader='leader'
   @exec_leader="chose_leader"
@@ -200,6 +205,17 @@ export default {
   position: relative;
   margin-right: 0.4%;
 }
+
+.remaining-enemies-and-enemy-grave {
+  height: 7.5vh;
+  width: 98%;
+  border: solid 1px red;
+  margin-bottom: 1%;
+  margin-top: 1%;
+  position: relative;
+}
+
+
 
 
 .hand {
