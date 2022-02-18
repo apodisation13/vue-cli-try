@@ -1,18 +1,21 @@
 <template>
-<table class='field'>
-  <tr v-for="i in 4" :key="i">
-    <td v-for="j in 3" :key="j"
-      @click.right="index=get_index(i,j); show_enemy_modal=true" 
-      @mouseleave="show_enemy_modal=false"
-      @click="exec_damage_ai_card(get_index(i,j))" 
-      @contextmenu.prevent
-    >
-      <enemy-comp 
-      :enemy='field[get_index(i,j)]'
-      />
-    </td>
-  </tr>
-</table>
+<div class="field">
+    <table class="table">
+      <tr v-for="i in 4" :key="i">
+        <td v-for="j in 3" :key="j"
+          @click.right="index=get_index(i,j); show_enemy_modal=true" 
+          @mouseleave="show_enemy_modal=false"
+          @click="exec_damage_ai_card(get_index(i,j))" 
+          @contextmenu.prevent
+        >
+          <enemy-comp 
+          :enemy='field[get_index(i,j)]'
+          />
+          <!-- {{ field[get_index(i,j)].hp }} -->
+      </td>
+    </tr>
+  </table>
+</div>
 
 <field-modal v-if="field[index]" 
 :enemy='field[index]' 
@@ -53,23 +56,26 @@
 
 <style scoped>
 .field {
-  border: 1px solid black;
+  display: inline;
+  float: left;
+  /* border: 1px solid red; */
   font-size: 20pt;
-  width: 80%;
-  /* width: 500px; */
-  /* height: 60%; */
-  /* background-image: url('../assets/grass.jpg'); */
-  /* background-image: url('../assets/brick.jpg'); */
-}
-th, td {
-  /* background-color: #96D4D4; */
-  width: 33%;
-  /* height: 300px; */
-  height: 130px;
-  text-align: center;
-  vertical-align: middle;
-  border: solid 2px black;
+  width: 75%;
+  height: 74vh;
+  overflow: hidden;
 }
 
+.table {
+  table-layout:fixed;
+  width: 100%;
+}
+
+table tr, td {
+  /* width: 50%; */
+  height: 18vh;
+  border: dashed 0.5px black;
+  overflow: hidden;
+  position: relative;
+}
 
 </style>

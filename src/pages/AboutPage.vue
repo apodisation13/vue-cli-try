@@ -216,6 +216,7 @@ export default {
 
 <style scoped>
 
+/* САМО ПОЛЕ ДИВ */
 .field {
   display: inline;
   float: left;
@@ -226,11 +227,13 @@ export default {
   overflow: hidden;
 }
 
+/* ТАБЛИЦА  */
 .table {
   table-layout:fixed;
   width: 100%;
 }
 
+/* КЛЕТКИ ТАБЛИЦЫ */
 table tr, td {
   /* width: 50%; */
   height: 18vh;
@@ -365,18 +368,18 @@ table tr, td {
   /* left: 60%; */
   right: 6%;
   /* right: 1vmax; */
-  height: 5vh;
-  width: 5vh;
+  height: 4vh;
+  width: 4vh;
   transform: rotateX(45deg) rotateZ(45deg);
   background-color: purple;
-  border: solid 2px yellow;
+  border: solid 1px yellow;
 }
 
 span3 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 25%;
-  right: 15%;
+  right: 10%;
   color: black;
   font-size: 10pt;
   transform:  rotateZ(-45deg);
