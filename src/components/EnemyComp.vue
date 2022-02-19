@@ -2,7 +2,7 @@
  
   <div class="enemy" v-if="enemy" :style="border(enemy)">
     
-    <img class="img" :src="require('@/assets/'+ '14.jpg')" alt="">
+    <img class="img" :src="enemy.image" v-if="enemy.image" alt="">
 
     <div class="diamond" :style="background_color(enemy)">
       <span-diamond>&dagger;{{ enemy.damage }}</span-diamond>
