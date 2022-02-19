@@ -12,12 +12,12 @@ const store = createStore({
     state: {
         cards_in_deck: 10,  // СКОЛЬКО В ДЕКЕ ДОЛЖНО БЫТЬ КАРТ
         
-        current_deck: [],  // дека выбранная для игры
-        health: 0,  // жизни деки
-        leader: null,
+        current_deck: [],  // дека выбранная для игры, deck.cards
+        health: 0,  // жизни деки, из деки, deck.health
+        leader: null,  // текущий лидер для игры из деки, deck.leader
         
         levels: [],  // все уровни, из запроса
-        level: null,  // номер уровня игры, выбирается на странице LevelPage
+        level: null,  // объект уровня из БД, выбирается на странице LevelPage
         
         factions: [],
         leaders: [],
@@ -45,16 +45,16 @@ const store = createStore({
         set_current_deck(state, deck) {  // сохранить в деку массив
             state.current_deck = deck
         },
-        change_health(state, param) {  // изменяем здоровье
+        change_health(state, param) {  // в процессе игры, dmg/heal
             state.health += param
         },
-        set_health(state, param) {  // устанавливаем здоровье
+        set_health(state, param) {  // установить здоровье из deck.health
             state.health = param
         },
-        set_level(state, level) {  // установить номер уровня
+        set_level(state, level) {  // установить уровень, объект
             state.level = level
         },
-        set_leader(state, leader) {  // установить лидера деки
+        set_leader(state, leader) {  // установить лидера деки, deck.leader
             state.leader = leader
         },
         
@@ -94,16 +94,27 @@ const store = createStore({
             get(factions).then((result) => commit('get_factions', result))
             get(leaders).then((result) => commit('get_leaders', result))
             get(cards).then((result) => commit('get_cards', result))
-            get(decks).then((result) => commit('get_decks', result))
-            get(levels).then((result) => commit('get_levels', result))
+            get(decks).then(
+                (result) => { 
+                    commit('get_decks', result)
+                    console.log(result[0])
+                    this.dispatch('set_deck_in_play', {deck: result[0]})
+                })
+            get(levels).then(
+                (result) => {
+                    commit('get_levels', result)
+                    console.log(result[0])
+                    commit('set_level', result[0])
+                })
 
             // commit('set_try', 10)
         },
 
-        set_deck_in_play({commit}, {decks, i}) {
-            commit('set_current_deck', decks[i].cards)
-            commit('set_health', decks[i].health)
-            commit('set_leader', decks[i].leader)
+        set_deck_in_play({commit}, {deck}) {
+            commit('set_current_deck', deck.cards)
+            commit('set_health', deck.health)
+            commit('set_leader', deck.leader)
+            console.log(deck.health)
         }
     }
 })
