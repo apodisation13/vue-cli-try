@@ -1,6 +1,6 @@
 <template>
   <div class="modal_window">
-    <button @click="close">Закрыть</button><br>
+    <!-- <button @click="close">Закрыть</button><br> -->
     
     <hand-comp :hand='grave'
     @chose_player_card='confirm_selection'
@@ -26,9 +26,10 @@
     },
     methods: {
       confirm_selection(i) {
-        alert(i)
+        // alert(i)
         this.card = this.grave[i]
         this.i = i
+        this.close()
       },
       
       close() {
@@ -45,8 +46,8 @@
 <style scoped>
 .modal_window {
   background-color: limegreen;
-  width: 1000px;
-  height: 400px;
+  width: 100%;
+  height: 90%;
   border-radius: 12px;
   text-align: center;
   position: fixed;
@@ -54,6 +55,5 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 9999;
-
 }
 </style>

@@ -2,26 +2,33 @@
 
 <div class="menu">
     
-<!-- <div>Игра</div> -->
-  <!-- <div class="menu_buttons"> -->
-    <button class="menu_button"
-    @click="$router.push('/')">Гл</button>
-    <button class="menu_button" style="backgroundColor: green;"
-    @click="$router.push('/game')">И</button>
-    <button class="menu_button"
-    @click="$router.push('/levelselect')">У</button>
-    <button class="menu_button" 
-    @click="$router.push('/deckbuild')">ДБ</button>
-    <button class="menu_button"
-    @click="$router.push('/about')">О</button>
-  <!-- </div> -->
+  <button class="menu_button"
+  @click="$router.push('/')">Гл</button>
+  
+  <button class="menu_button" style="backgroundColor: green;"
+  v-if="level"
+  @click="$router.push('/game')">И</button>
+  
+  <button class="menu_button"
+  @click="$router.push('/levelselect')">У</button>
+  
+  <button class="menu_button" 
+  @click="$router.push('/deckbuild')">ДБ</button>
+  
+  <button class="menu_button"
+  @click="$router.push('/about')">О</button>
 
 </div>
 </template>
 
 <script>
 export default {
-    
+  // кнопка появится только после загрузки дефолтного уровня и деки
+  computed: { 
+    level() {
+      return this.$store.state.level
+    },
+  },    
 }
 </script>
 

@@ -44,7 +44,7 @@ export default {
     set_default_deck() {
       this.$store.dispatch(
         "set_deck_in_play", 
-        {decks: this.$store.state.decks, i: 0}  // FIXME: вот здесь косяк
+        {deck: this.$store.state.decks[0]}  // FIXME: вот здесь косяк
       )  
     },
   },
