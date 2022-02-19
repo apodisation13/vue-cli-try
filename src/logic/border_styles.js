@@ -1,7 +1,7 @@
-function border(card) {
-    if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon'}
-    else if (card.color === 'Silver') return {'border': 'solid 3px silver'}
-    else if (card.color === 'Gold') return {'border': 'solid 3px gold'}
+function border(card, index) {
+    if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon', 'z-index': 6 - index}
+    else if (card.color === 'Silver') return {'border': 'solid 3px silver', 'z-index': 6 - index}
+    else if (card.color === 'Gold') return {'border': 'solid 3px gold', 'z-index': 6 - index}
     else return {}
 }
 

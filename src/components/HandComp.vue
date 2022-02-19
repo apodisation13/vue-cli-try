@@ -1,7 +1,7 @@
 <template>
 <div class="hand" >
 
-  <div class="card" :style="border(card)"
+  <div class="card" :style="border(card, index)"
   v-for="(card, index) in hand" :key='index'>
 
     <div 
@@ -76,8 +76,8 @@ export default {
       this.i = id
       this.$emit('chose_player_card', this.i)  // передаём this.index по эмиту 
     },
-    border(card) {
-      return border(card)
+    border(card, index) {
+      return border(card, index)
     },
     background_color(card) {
       return background_color(card)
@@ -106,7 +106,7 @@ export default {
   /* border: solid 3px gold; */
   border-radius: 2%;
   display: inline-block;
-  margin-right: 1%;
+  margin-right: -12%;
   margin-left: 0.5%;
   margin-top: 0.1%;
   position: relative;

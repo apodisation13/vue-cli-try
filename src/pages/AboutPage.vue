@@ -1,5 +1,4 @@
 <template>
-<!-- <img :src="require('@/assets/'+ 'grass.jpg')" alt=""> -->
 
 <!-- Страница о нас <br>
 ЗДЕСЬ Я ТРЕНИРУЮС -->
@@ -41,7 +40,7 @@ sss2
 
 
 
-  <div class="field">
+  <!-- <div class="field">
     <table class="table">
       <tr>
         <td>
@@ -164,11 +163,11 @@ sss2
     <button class="health-btn">&hearts;142</button>
   
 
-  </div>
+  </div> -->
 
 
 
-<div class="hand">
+<!-- <div class="hand">
   <div class='card' v-for="el in list" :key="el">
     <img class="img" :src="require('@/assets/'+ '2.jpg')" alt="">
     <div class="diamond3">
@@ -187,8 +186,29 @@ sss2
       <span>&starf;</span>
     </div>
   </div>
+</div> -->
+
+<div class="hand">
+  <div class='card0'>
+    <div class="diamond3">
+      <span3>&dagger;{{ list[0] * 5 }}</span3> 
+    </div>
+  </div>
+  <div class='card1'>
+    <div class="diamond3">
+      <span3>&dagger;{{ list[1] * 5 }}</span3> 
+    </div>
+  </div>
 </div>
 
+<div class="hand">
+  <div class='card' v-for="el, index in list" :key="el"
+  :style="{'z-index': 6 - index}">
+    <div class="diamond3">
+      <span3>&dagger;{{ el * 5 }}</span3> 
+    </div>
+  </div>
+</div>
 </template>
 
 <script>
@@ -357,7 +377,7 @@ table tr, td {
   border: solid 3px gold;
   border-radius: 2%;
   display: inline-block;
-  margin-right: 1%;
+  margin-right: -13%;
   margin-left: 0.5%;
   margin-top: 0.1%;
   position: relative;
@@ -445,128 +465,28 @@ span {
 }
 
 
-
-
-
-
-
-.x {
-  width: 20%;
-  /* height: 100%; */
-  height: 50%;
-  overflow: hidden;
-  max-height: 100%;
-  /* overflow: auto; */
-  border: solid orchid 3px;
-  /* position: relative; */
-  position: absolute;
- }
-/* .s {
-  width: 40%;
-  height: 150px;
-} */
-
-/* body {
-  background-image: require('@/assets/'+ 'grass.jpg');
-} */
-
-/* .hand {
-  display: inline-block; 
-  margin: 60px;  
-  background-image: url('../assets/brick.jpg');
-} */
-
-/* .card {
-  width: 100px;
-  height: 150px;
+.card0 {
+  width: 26%;
+  height: 18.5vh;
   border: solid 3px gold;
-  margin: 0px;
-  position: absolute;
-} */
-
-.card_selected {
-  width: 106px;
-  height: 156px;
-  border: solid 2px black;
-  position: absolute;
-}
-
-.active-class {
-  width: 100px;
-  height: 150px;
-  border: solid 3px red;
-  /* margin: 0px; */
-  /* position: absolute; */
-}
-
-
-span2 {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: black;
-  font-size: 14pt;
-}
-
-
-.diamond2 {
+  border-radius: 2%;
+  display: inline-block;
+  margin-right: 1%;
+  margin-left: 0.5%;
+  margin-top: 0.1%;
   position: relative;
-  height: 40px;
-  width: 40px;
-  /* line-height: 60px; */
-  text-align: center;
-  margin: -10px 50px;
-  top: 10%;
-  right: 10%;
+  z-index: 6;
 }
-
-.diamond3asda {
-  position: absolute;
-  /* margin: -10px 50px; */
-  top: 0;
-  right: 8%;
-  height: 40px;
-  width: 40px;
-  transform: rotateX(45deg) rotateZ(45deg);
-  /* box-shadow: 0px 0px 12px red; */
-  background-color: purple;
-  border: solid 2px yellow;
+.card1 {
+  width: 26%;
+  height: 18.5vh;
+  border: solid 3px gold;
+  border-radius: 2%;
+  display: inline-block;
+  margin-right: 1%;
+  margin-left: -20%;
+  margin-top: 0.1%;
+  position: relative;
+  z-index: 5;
 }
-
-
-.box {
-  margin: -150px;
-}
-
-/* html, body {
-  height: 100%;
-  background: url('~@/assets/brick.jpg');
-} */
-
-.divvv {
-  width: 80%;
-  height: 30%;
-  max-height: max-content;
-  border: solid 2px red;
-  /* margin-top: 30%; */
-  /* position: sticky; */
-  position: absolute;
-  background-image: url('~@/assets/brick.jpg');
-}
-.divvv2 {
-  width: 70%;
-  height: 30%;
-  max-height: max-content;
-  border: solid 2px green;
-  margin-top: 15%;
-  /* position: sticky; */
-  position: absolute;
-}
-
-
-
-
-
-
 </style>
