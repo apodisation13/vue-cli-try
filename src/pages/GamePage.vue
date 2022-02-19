@@ -160,7 +160,7 @@ export default {
         this.leader_active = false  // снова неактивен, тыкай на него опять
       
         // проверяем там, что врагов не осталось, поле и количество врагов
-        check_win(this.field, this.level)  
+        check_win(this.field, this.enemies)  
       }
     },
 
@@ -211,7 +211,7 @@ export default {
   float: right;
   width: 24.5%;
   height: 74vh;
-  border: solid 1px orange;
+  /* border: solid 1px orange; */
   position: relative;
   margin-right: 0.4%;
 }
@@ -219,7 +219,7 @@ export default {
 .div-two-buttons {
   height: 7.5vh;
   width: 98%;
-  border: solid 1px red;
+  /* border: solid 1px red; */
   margin-bottom: 1%;
   margin-top: 1%;
   position: relative;
@@ -228,41 +228,10 @@ export default {
 .draw {
   height: 4.3vh;
   width: 98%;
-  border: solid 1px red;
+  /* border: solid 1px red; */
   margin-bottom: 1%;
   margin-top: 1%;
   position: relative;
-}
-
-
-
-.hand {
-    display: flex;  /*элементы в ряд*/
-    float: left;
-    margin: 3px;  /*отступ между картами*/
-    width: 90%;
-}
-
-.active_buttons {
-    display: flex;  /*элементы в ряд*/
-    /* float: left; */
-    margin: 3px;  /*отступ между картами*/
-    /* width: 100%; */
-}
-
-.btn_pass {
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
-  background-color: crimson;
-}
-
-.btn_draw {
-  margin: 10px;
-  width: 150px;
-  height: 50px;
-  background-color: yellow;
-  border-radius: 20px;
 }
 
 </style>
