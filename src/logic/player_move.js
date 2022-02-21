@@ -89,4 +89,22 @@ function leader_move(leader, i, field) {
 
 }
 
-export { damage_ai_card, leader_move }
+
+// урон лидеру врага от карты из руки!
+function damage_enemy_leader_by_card(enemy_leader, hand, card_number, grave) {
+    damage_one(enemy_leader, hand[card_number])
+    remove_dead_card(hand, card_number, grave)
+}
+
+
+function damage_enemy_leader_by_leader(enemy_leader, leader) {
+    damage_one(enemy_leader, leader)
+}
+
+
+export { 
+    damage_ai_card, 
+    leader_move, 
+    damage_enemy_leader_by_card, 
+    damage_enemy_leader_by_leader
+}
