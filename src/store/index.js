@@ -18,6 +18,7 @@ const store = createStore({
         
         levels: [],  // все уровни, из запроса
         level: null,  // объект уровня из БД, выбирается на странице LevelPage
+        enemy_leader: null,  // объект лидера врагов из уровней
         
         factions: [],
         leaders: [],
@@ -45,17 +46,22 @@ const store = createStore({
         set_current_deck(state, deck) {  // сохранить в деку массив
             state.current_deck = deck
         },
-        change_health(state, param) {  // в процессе игры, dmg/heal
-            state.health += param
+        set_leader(state, leader) {  // установить лидера деки, deck.leader
+            state.leader = leader
         },
         set_health(state, param) {  // установить здоровье из deck.health
             state.health = param
         },
+
         set_level(state, level) {  // установить уровень, объект
             state.level = level
         },
-        set_leader(state, leader) {  // установить лидера деки, deck.leader
-            state.leader = leader
+        set_enemy_leader(state, enemy_leader) {  // установить лидера врагов
+            state.enemy_leader = enemy_leader
+        },
+
+        change_health(state, param) {  // в процессе игры, dmg/heal
+            state.health += param
         },
         
         get_factions(state, result) {  // гет запрос на фракции
@@ -105,6 +111,8 @@ const store = createStore({
                     commit('get_levels', result)
                     console.log(result[0])
                     commit('set_level', result[0])
+                    console.log(result[0].enemy_leader)
+                    commit('set_enemy_leader', result[0].enemy_leader)
                 })
 
             // commit('set_try', 10)

@@ -17,7 +17,9 @@
 <div class="right-panel">
 
 <!-- лидер врага -->
-<enemy-leader />
+<enemy-leader 
+:enemy_leader="enemy_leader"
+/>
 
 <!-- колода оставшихся врагов и кладбище врагов -->
 <div class="div-two-buttons">
@@ -82,6 +84,7 @@ export default {
       leader: JSON.parse(JSON.stringify(this.$store.state.leader)),
       grave: [],  // кладбище карт у которых 0 зарядов
       enemies: [],  // враги, копия из стора, приходит из start_game
+      enemy_leader: JSON.parse(JSON.stringify(this.$store.state.enemy_leader)),
             
       player_cards_active: true,  // активны ли карты игрока
       leader_active: false, // активен ли лидер
@@ -100,6 +103,10 @@ export default {
       this.field = dict.field
       this.enemies = dict.enemies
       this.beginning = false  // убираем кнопку с экрана после этого
+
+      if (this.enemy_leader.ability.name === "damage-once") {
+        alert(this.enemy_leader.damage_once)
+      }
     },
 
     // > по нажатию на карту игрока, из hand-comp, i - номер карты

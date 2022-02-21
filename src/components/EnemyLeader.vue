@@ -1,33 +1,50 @@
 <template>
 <div class="enemy-leader">
   
-  <!-- <img class="img" :src="require('@/assets/'+ '50.jpg')" alt=""> -->
+  <img class="img" :src="enemy_leader.image" alt="">
   
-  <div class="diamond">
-    <span3>&dagger;4</span3> 
+  <div class="diamond" v-if="enemy_leader.damage_per_turn">
+    <span3>&dagger;{{ enemy_leader.damage_per_turn }}</span3> 
   </div>
   
-  <div class="circle">
-    <span>+&hearts;2</span>
+  <div class="circle" v-if="enemy_leader.heal_self_per_turn">
+    <span>+&hearts;{{ enemy_leader.heal_self_per_turn }}</span>
   </div>
   
-  <div class="charges">
+  <!-- <div class="charges">
     <span>2</span>
-  </div>
+  </div> -->
   
   <div class="hp">
-    <span>&hearts;12</span>
+    <span>&hearts;{{ enemy_leader.hp }}</span>
   </div>
   
-  <div class="typee">
-    <span>&starf;</span>
+  <div class="ability" 
+  v-if="enemy_leader.ability.name==='damage-once'">
+    <span>1</span>
+  </div>  
+  <div class="ability" 
+  v-else-if="enemy_leader.ability.name==='damage-per-turn'">
+    <span>&#128337;1</span>  
   </div>
+  <div class="ability" 
+  v-else-if="enemy_leader.ability.name==='heal-self-per-turn'">
+    <span>+&hearts;</span>  
+  </div>
+
 </div>
 </template>
 
 <script>
 export default {
   name: 'enemy-leader',
+  props: {
+    enemy_leader: {
+      required: true,
+      type: Object
+    },
+  },
+  
 }
 </script>
 
@@ -79,7 +96,7 @@ span3 {
   border-radius: 50%;
   top: 30%;
   right: 3%;
-  background: gray;
+  background: green;
 }
 
 span {
@@ -110,11 +127,13 @@ span {
   border-radius: 20%;
 }
 
-.typee {
-  width: 10%;
-  height: 10%;
-  left: 1%;
-  top: 1%; 
+.ability {
   position: absolute;
+  width: 24%;
+  height: 3vh;
+  background: orangered;
+  border-radius: 50%;
+  top: 3%;
+  left: 3%;
 }
 </style>
