@@ -215,7 +215,7 @@ export default {
       if (this.player_cards_active && !this.leader_active && this.enemy_leader_active && this.enemy_leader.hp > 0) {
         this.can_draw = false
 
-        damage_enemy_leader_by_card(this.enemy_leader, this.hand, this.card_number, this.grave)
+        damage_enemy_leader_by_card(this.enemy_leader, this.hand, this.player_card_number, this.grave)
 
         this.player_cards_active = false
         this.player_card_number = null
