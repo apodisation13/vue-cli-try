@@ -52,7 +52,7 @@ export default {
 .enemy-leader {
   height: 18vh;
   width: 98%;
-  border: solid 2px blue;
+  border: solid 2px black;
   border-radius: 2%;
   margin-bottom: 2px;
   margin-top: 2px;
