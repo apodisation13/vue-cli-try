@@ -78,10 +78,10 @@ import {
 } from '@/logic/player_move'
 import {ai_move, leader_ai_move, leader_ai_move_once} from '@/logic/ai_move'
 import { calc_can_draw } from "@/logic/service"
-import smth from '@/components/smth'
+// import smth from '@/components/smth'
 
 export default {
-  mixins:[smth],
+  // mixins:[smth],
   async created() {
     this.leader = await JSON.parse(JSON.stringify(this.$store.state.leader))
     this.enemy_leader = await JSON.parse(JSON.stringify(this.$store.state.enemy_leader))
