@@ -38,18 +38,19 @@ export default {
     set_level(index) {
       this.toast.success(`Выбран уровень ${index + 1}! `, {timeout: 1000})
       this.$store.commit("set_level", this.levels[index])
+      this.$store.commit('set_enemy_leader', this.levels[index].enemy_leader)
       this.selected = index
     },
 
-    set_default_deck() {
-      this.$store.dispatch(
-        "set_deck_in_play", 
-        {decks: this.$store.state.decks, i: 0}  // FIXME: вот здесь косяк
-      )  
-    },
+    // set_default_deck() {
+    //   this.$store.dispatch(
+    //     "set_deck_in_play", 
+    //     {deck: this.$store.state.decks[0]}  // FIXME: вот здесь косяк
+    //   )  
+    // },
   },
   mounted() {
-    this.set_default_deck()
+    // this.set_default_deck()
   },
 
 }

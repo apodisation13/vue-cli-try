@@ -1,13 +1,15 @@
 <template>
-  <div>
-    <button class="btn_start" @click="start_game">НАЧАТЬ</button>
-
-    <redraw-modal v-if="redraw" 
+  <div class="start">
+    <button class="btn_start" v-if="deck.length"
+      @click="start_game">
+      НАЧАТЬ
+    </button>
+  </div>
+  <redraw-modal v-if="redraw" 
     :deck='deck' 
     :hand='hand' 
     @redraw_finished='redraw_finished'
-    />
-  </div>
+  />
 </template>
 
 <script>
@@ -17,13 +19,17 @@ import { draw_hand } from '@/logic/draw_hand'
   
   export default {
     name: 'start-game',
+    async created() {
+      this.deck = await JSON.parse(JSON.stringify(this.$store.state.current_deck))
+      this.enemies = await JSON.parse(JSON.stringify(this.$store.state.level.enemies))
+    },
     data() {
       return {
         redraw: false,
         hand: [],
-        deck: JSON.parse(JSON.stringify(this.$store.state.current_deck)),
         field: ['','','','','','','','','','','',''],
-        enemies: JSON.parse(JSON.stringify(this.$store.state.level.enemies)),
+        deck: '',
+        enemies: '',
       }
     },
     methods: {
@@ -52,12 +58,36 @@ import { draw_hand } from '@/logic/draw_hand'
     emits: [
       'start_game'
     ],
+    computed: {
+      // deck() {
+      //   return JSON.parse(JSON.stringify(this.$store.state.current_deck))
+      // },
+      // enemies() {
+      //   return JSON.parse(JSON.stringify(this.$store.state.level.enemies))
+      // },
+    }
   }
 </script>
 
 <style scoped>
+
+.start {
+  width: 50%;
+  height: 300px;
+  top: 50%; 
+  left: 50%;
+  border: solid 2px black;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
+
 .btn_start {
-  width: 160px;
-  height: 30px;
+  width: 50%;
+  height: 20%;
+  position: relative;
+  top: 50%; 
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

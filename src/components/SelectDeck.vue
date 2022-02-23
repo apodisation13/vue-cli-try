@@ -61,7 +61,7 @@
         
         this.$store.dispatch(
         "set_deck_in_play", 
-        {decks: this.$store.state.decks, i: this.selected_deck}
+        {deck: this.decks[this.selected_deck]}
       )  
       
       },

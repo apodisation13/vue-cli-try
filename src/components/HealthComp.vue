@@ -1,14 +1,14 @@
 <template>
 
-<div>ЖИЗНИ ИГРОКА --  {{ $store.state.health }}, Аптечек -- {{ health_kits_number }} 
+<button class="health-btn">
+  &hearts;{{ health }}
+</button>
 
-<button @click="use_health_kit"
+<!-- <button @click="use_health_kit"
 class="health_kit"
 :style="[health_kits_number ? {'backgroundColor': 'green'} : {'backgroundColor': 'red'}]"
 >
-  heal</button>
-
-</div>
+  heal</button> -->
 
 </template>
 
@@ -16,9 +16,9 @@ class="health_kit"
 
 export default {
   name: 'health-comp',
-  props: {
-    player_cards_active: {
-      required: true
+  computed: {
+    health() {
+      return this.$store.state.health
     }
   },
   data() {
@@ -28,15 +28,15 @@ export default {
     }
   },
   methods: {
-    use_health_kit() {
-      if (this.health_kits_number && this.player_cards_active) {
-        this.health_kits_number -= 1
+    // use_health_kit() {
+    //   if (this.health_kits_number && this.player_cards_active) {
+    //     this.health_kits_number -= 1
 
-        this.$store.commit('change_health', this.health_kit_bonus)
+    //     this.$store.commit('change_health', this.health_kit_bonus)
 
-        // this.$emit('use_health_kit')  // как бы название на что подписаться
-      }
-    },
+    //     // this.$emit('use_health_kit')  // как бы название на что подписаться
+    //   }
+    // },
   },
   // emits: [  // если было бы
   //   'use_health_kit', 
@@ -47,9 +47,14 @@ export default {
 
 <style scoped>
 
-.health_kit {
-  width: 100px;
-  height: 35px;
+.health-btn {
+  height: 4vh;
+  width: 98%;
+  background-color: green;
+  border: 0;
+  margin-bottom: 1%;
+  margin-top: 1%;
+  position: relative;
 }
 
 </style>

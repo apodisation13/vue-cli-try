@@ -1,46 +1,91 @@
 <template>
 
-<start-game v-if="beginning" @start_game='start_game'/>
-
-<field-comp :field='field' @exec_damage_ai_card='exec_damage_ai_card' />
-
-<health-comp :player_cards_active="player_cards_active" />
-
-<div class="active_buttons">
-  <button class="btn_pass" @click="exec_ai_move">Пас</button>
-  <deck-comp :deck='deck' />
-  <grave-comp :grave='grave' />
-  <remaining-enemies v-if="!beginning" :enemies='this.enemies'/>
-  <button class="btn_draw" v-show="can_draw" 
-  @click="draw_one_card">ДРО</button>
+<div v-if="beginning">
+  <start-game @start_game='start_game'/>
 </div>
 
+<!-- дальше идём только после нажатия кнопки начало -->
+<div v-else>
+
+<!-- поле с врагами -->
+<field-comp 
+:field='field' 
+@exec_damage_ai_card='exec_damage_ai_card'
+/>
+
+<!-- правая часть экрана -->
+<div class="right-panel">
+
+<!-- лидер врага -->
+<enemy-leader 
+:enemy_leader="enemy_leader"
+@click="onLeaderClick"
+/>
+
+<!-- колода оставшихся врагов и кладбище врагов -->
+<div class="div-two-buttons">
+ <remaining-enemies :enemies='enemies' />
+ <enemies-grave />
+</div>
+
+<!-- возможность вытянуть карту, дро -->
+<div class="draw">
+  <draw-comp v-show="can_draw"
+  @click="draw_one_card"
+  />
+</div>
+
+<!-- чисто кнопка пас -->
+<pass-comp @click="exec_ai_move" />
+
+<!-- кнопки кладбища и колоды -->
+<div class="div-two-buttons">
+  <grave-comp :grave='grave' />
+  <deck-comp :deck='deck' />
+</div>
+
+<!-- лидер игрока -->
+<leader-comp 
+:leader='leader'
+@exec_leader="chose_leader"
+/>
+
+<!-- Просто полоска с жизнями (пока что) -->
+<health-comp /> 
+
+</div>
+
+<hand-comp
+:hand='hand'
+@chose_player_card='chose_player_card' 
+/>
+
+</div>
 <resurrect-modal v-if="show_deck_modal_by_abilities"
 :grave='grave' 
 @chosen_card='confirm_card_from_grave'
 />
-
-<div class="hand">
-  <leader-comp v-if="leader" 
-  :leader='leader'
-  @exec_leader="chose_leader"
-  />
-  <hand-comp v-if="!beginning"
-  :hand='hand'
-  @chose_player_card='chose_player_card' 
-  />
-</div>
-
 </template>
 
 <script>
 
-import { appear_new_enemy } from '@/logic/place_enemies'
-import { damage_ai_card, leader_move } from '@/logic/player_move'
-import { ai_move } from '@/logic/ai_move'
-import { check_win, calc_can_draw } from "@/logic/service"
+import {appear_new_enemy} from '@/logic/place_enemies'
+import {
+  damage_ai_card,
+  damage_enemy_leader_by_card,
+  damage_enemy_leader_by_leader,
+  leader_move
+} from '@/logic/player_move'
+import {ai_move, leader_ai_move, leader_ai_move_once} from '@/logic/ai_move'
+import { calc_can_draw } from "@/logic/service"
+// import smth from '@/components/smth'
 
 export default {
+  // mixins:[smth],
+  async created() {
+    this.leader = await JSON.parse(JSON.stringify(this.$store.state.leader))
+    this.enemy_leader = await JSON.parse(JSON.stringify(this.$store.state.enemy_leader))
+  },
   data() {
     return {
       beginning: true,  // статус начала игры - только для кнопки начало
@@ -48,13 +93,15 @@ export default {
       field: [],
       deck: [],  // остаток сколько карт осталось в колоде
       hand: [],
-      leader: JSON.parse(JSON.stringify(this.$store.state.leader)),
+      leader: '',
       grave: [],  // кладбище карт у которых 0 зарядов
       enemies: [],  // враги, копия из стора, приходит из start_game
+      enemy_leader: '',
             
       player_cards_active: true,  // активны ли карты игрока
       leader_active: false, // активен ли лидер
       ai_cards_active: false,  // активны ли карты поля
+      enemy_leader_active: false, // активен ли лидер противника
       
       player_card_number: null,  // номер карты игрока в руке
       can_draw: false,  // возможность вытянуть карту
@@ -69,45 +116,51 @@ export default {
       this.field = dict.field
       this.enemies = dict.enemies
       this.beginning = false  // убираем кнопку с экрана после этого
+
+      // alert(this.s + 1)  // доступ к тем переменным
+      // this.show()  // доступ к тем методам
+      leader_ai_move_once(this.enemy_leader)  // функция урона лидера в начале
     },
 
     // > по нажатию на карту игрока, из hand-comp, i - номер карты
     chose_player_card(i) {
-      if (this.player_cards_active) {
-        this.player_card_number = i  // запомнить номер карты игрока
-        alert('УРОН ' + this.hand[i].damage + '  заряды ' + this.hand[i].charges)
-        this.ai_cards_active = true  // только теперь можно тыкать на карты противника
-        this.leader_active = false // а лидер теперь неактивен
-      }
+      if (!this.player_cards_active) return
+
+      this.player_card_number = i  // запомнить номер карты игрока
+      alert('УРОН ' + this.hand[i].damage + '  заряды ' + this.hand[i].charges)
+      this.ai_cards_active = true  // только теперь можно тыкать на карты противника!!!!!!!!!!!!!!
+      this.enemy_leader_active = true  // и лидер врагов активен тоже
+      this.leader_active = false // а лидер теперь неактивен
+
     },
 
     // по нажатию на лидера
     chose_leader() {
-      if (this.leader.charges > 0) {
-        this.leader_active = true
-        this.ai_cards_active = false  // чтобы карта руки туда не пульнула
-        alert(this.leader.charges + ' заряды лидера')
-      }
+      if (this.leader.charges <= 0) return
+
+      this.leader_active = true
+      // this.player_cards_active = false  // вот так нельзя к сожалению, ибо они всегда активны пока не сходил
+      this.ai_cards_active = true
+      this.enemy_leader_active = true  // и лидер врагов активен тоже
+      alert(this.leader.charges + ' заряды лидера')
+
     },
 
-    // если ткнули ранее на карту игрока, а потом на поле, ходим
+    // если ткнули ранее на карту игрока или лидера, а потом на поле, ходим
     exec_damage_ai_card(i) { 
       // i - номер клетки поля!
       this.can_draw = false  // если хотя бы раз сюда попали, то дро нельзя
       
       // если ранее ткнули на карту игрока, а потом на поле
-      if (this.ai_cards_active && this.field[i]) {
+      if (this.player_cards_active && !this.leader_active && this.ai_cards_active && this.field[i]) {
         
         // особие абилки, которые требуют открытия окон
         this.special_case_abilities()
         
         damage_ai_card(
           i, this.field, this.hand, 
-          this.player_card_number, this.grave, 
+          this.player_card_number, this.grave, this.enemy_leader, this.enemies
         )
-
-        // проверяем там, что врагов не осталось, поле и количество врагов
-        check_win(this.field, this.enemies)  
 
         this.player_card_number = null
         this.ai_cards_active = false
@@ -115,22 +168,23 @@ export default {
       }
 
       // если выбран лидер и ткнули на поле, урон наносит лидер
-      this.exec_leader_move(i)
+      if (this.leader_active && this.ai_cards_active && this.field[i]) {
+        this.exec_leader_move(i)
+      }
     },
     
     // только если ткнули на лидера, а потом на поле
     exec_leader_move(i) {
-      if (this.leader_active && this.field[i]) {
-        leader_move(this.leader, i, this.field)
-        this.leader_active = false  // снова неактивен, тыкай на него опять
       
-        // проверяем там, что врагов не осталось, поле и количество врагов
-        check_win(this.field, this.level)  
-      }
+      leader_move(this.leader, i, this.field, this.enemy_leader, this.enemies)
+      this.leader_active = false  // снова неактивен, тыкай на него опять
+      this.ai_cards_active = false
+
     },
 
     exec_ai_move() {
       ai_move(this.field)
+      leader_ai_move(this.enemy_leader)
       appear_new_enemy(this.field, this.enemies)  
       
       this.player_cards_active = true
@@ -155,12 +209,38 @@ export default {
     },
 
     // вытягивает в руку рандомную карту из деки, если рука не полна
-    draw_one_card() {  
+    draw_one_card() {
       let random = Math.floor(Math.random() * this.deck.length);
       this.hand.push(this.deck[random])
       this.deck.splice(random, 1)  // удалить этот 0й элемент
       this.player_cards_active = false
       this.can_draw = false
+    },
+
+    // если ранее ткнули на карту игрока или лидера игрока,
+    // а потом на лидера врагов!
+    onLeaderClick() {
+      
+      if (this.player_cards_active && !this.leader_active && this.enemy_leader_active && this.enemy_leader.hp > 0) {
+
+        // особие абилки, которые требуют открытия окон
+        this.special_case_abilities()
+
+        this.can_draw = false
+
+        damage_enemy_leader_by_card(this.enemy_leader, this.hand, this.player_card_number, this.grave, this.field, this.enemies)
+
+        this.player_cards_active = false
+        this.player_card_number = null
+      }
+
+      if (this.leader_active && this.leader.charges > 0 && this.enemy_leader_active && this.enemy_leader.hp > 0) {
+        this.can_draw = false
+        
+        damage_enemy_leader_by_leader(this.enemy_leader, this.leader, this.field, this.enemies)
+
+        this.leader_active = false
+      }
     },
 
   },
@@ -170,33 +250,33 @@ export default {
 
 <style scoped>
 
-.hand {
-    display: flex;  /*элементы в ряд*/
-    float: left;
-    margin: 3px;  /*отступ между картами*/
-    width: 90%;
+/* Панель справа - лидер врага, кнопки, пас, лидер игрока */
+.right-panel {
+  display: inline;
+  float: right;
+  width: 24.5%;
+  height: 74vh;
+  /* border: solid 1px orange; */
+  position: relative;
+  margin-right: 0.4%;
 }
 
-.active_buttons {
-    display: flex;  /*элементы в ряд*/
-    /* float: left; */
-    margin: 3px;  /*отступ между картами*/
-    /* width: 100%; */
+.div-two-buttons {
+  height: 7.5vh;
+  width: 98%;
+  /* border: solid 1px red; */
+  margin-bottom: 1%;
+  margin-top: 1%;
+  position: relative;
 }
 
-.btn_pass {
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
-  background-color: crimson;
-}
-
-.btn_draw {
-  margin: 10px;
-  width: 150px;
-  height: 50px;
-  background-color: yellow;
-  border-radius: 20px;
+.draw {
+  height: 4.3vh;
+  width: 98%;
+  /* border: solid 1px red; */
+  margin-bottom: 1%;
+  margin-top: 1%;
+  position: relative;
 }
 
 </style>

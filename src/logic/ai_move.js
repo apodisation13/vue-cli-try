@@ -7,7 +7,6 @@ const toast = useToast()
 
 function stand_still(field, i) {
   store.commit('change_health', -field[i].damage)
-  // alert('враг стоит и долбит тебя))')
   toast.error('враг стоит и долбит тебя))')
   check_lose(store.state.health)
 }
@@ -18,7 +17,6 @@ function random_move(field, i, status) {
     let random = Math.floor(Math.random() * field.length)
     if (field[random]) {
       store.commit('change_health', -field[i].damage)
-      // alert('враг хотел прыгнуть туда где уже есть враг и нанёс урон')
       toast.error('враг хотел прыгнуть туда где уже есть враг и нанёс урон')
       check_lose(store.state.health)
     }
@@ -37,7 +35,6 @@ function down_move(field, i) {
   // враги которые уже стоят внизу
   if (i >= 9) {
     store.commit('change_health', -field[i].damage)
-    // alert('враг внизу нанёс урон')
     toast.error('враг внизу нанёс урон')
   }
   // ДЛЯ ОСТАЛЬНЫХ ВРАГОВ
@@ -45,14 +42,12 @@ function down_move(field, i) {
     // ЕСЛИ У ВРАГА ЕСТЬ ВРАГ ПОД НИМ ВНИЗУ
     if (field[i+3]) {
       store.commit('change_health', -field[i].damage)
-      // alert('враг нанёс урон, потому что ему некуда ходить')
       toast.error('враг нанёс урон, потому что ему некуда ходить')
     }
     // ДЛЯ ОСТАЛЬНЫХ, КОМУ ЕСТЬ КУДА ПОХОДИТЬ
     else {
       field[i+3] = field[i]  // типа враг прыгнул на клеточку ниже
       field[i] = ''
-      // alert('враг походил')
       toast.info('враг походил')
     }
   }
@@ -82,4 +77,33 @@ function ai_move(field) {
   }
 }
 
-export { ai_move }
+
+// эта функция срабатывает для лидера только в начале игры 1 раз
+function leader_ai_move_once(leader) {
+  if (leader.ability.name === "damage-once") {
+    store.commit('change_health', -leader.damage_once)
+    toast.error(`лидер ослабил вас на ${leader.damage_once}`)
+    check_lose(store.state.health)
+  }
+}
+
+
+// эта функция срабатывает для лидера каждый ход врага
+function leader_ai_move(leader) {
+
+  if (leader.hp <= 0) return  // только если у лидера больше 0 жизней идём дальше
+
+  if (leader.ability.name === "heal-self-per-turn") {
+    leader.hp += leader.heal_self_per_turn
+    toast.info(`лидер вылечил себя на ${leader.heal_self_per_turn}`)
+  }
+
+  else if (leader.ability.name === "damage-per-turn") {
+    store.commit('change_health', -leader.damage_per_turn)
+    toast.error(`лидер пнул вас на ${leader.damage_per_turn}`)
+    check_lose(store.state.health)
+  }
+}
+
+
+export { ai_move, leader_ai_move_once, leader_ai_move }
