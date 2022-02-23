@@ -1,5 +1,6 @@
 import store from '@/store'  // вызов стора здесь!!!!!!!!!
 import { useToast } from 'vue-toastification'
+import { check_win } from "@/logic/service"
 
 const toast = useToast()
 
@@ -42,7 +43,7 @@ function remove_dead_card(hand, card_number, grave) {
 
 
 // сюда заходим если там есть враг
-function damage_ai_card(i, field, hand, card_number, grave) {
+function damage_ai_card(i, field, hand, card_number, grave, enemy_leader, enemies) {
 
     if (hand[card_number].ability === 'damage-one') {
         damage_one(field[i], hand[card_number])
@@ -59,6 +60,8 @@ function damage_ai_card(i, field, hand, card_number, grave) {
 
     else if (hand[card_number].ability === 'damage-all') {
        damage_all(field, hand[card_number])
+        enemy_leader.hp -= hand[card_number].damage
+        if (enemy_leader.hp < 0) enemy_leader.hp = 0
     }
 
     // если враг убит, убираем его с поля
@@ -67,11 +70,13 @@ function damage_ai_card(i, field, hand, card_number, grave) {
    
     // убираем карту игрока, если в ней не осталось зарядов
     remove_dead_card(hand, card_number, grave)
+
+    check_win(field, enemies, enemy_leader)
 }
 
 
 // ХОД ЛИДЕРОМ!
-function leader_move(leader, i, field) {
+function leader_move(leader, i, field, enemy_leader, enemies) {
     // i - номер клетки поля
     // leader - объект лидера целиком
     
@@ -81,24 +86,68 @@ function leader_move(leader, i, field) {
 
     else if (leader.ability === "damage-all") {
         damage_all(field, leader)
+        enemy_leader.hp -= leader.damage
+        if (enemy_leader.hp < 0) enemy_leader.hp = 0
     }
 
     // если враг убит, убираем его с поля
     // проверять надо всех врагов, потому что есть абилки на всех
     remove_dead_enemies(field)
 
+    check_win(field, enemies, enemy_leader)
 }
 
 
 // урон лидеру врага от карты из руки!
-function damage_enemy_leader_by_card(enemy_leader, hand, card_number, grave) {
-    damage_one(enemy_leader, hand[card_number])
+function damage_enemy_leader_by_card(enemy_leader, hand, card_number, grave, field, enemies) {
+
+    if (hand[card_number].ability === 'damage-one') {
+        damage_one(enemy_leader, hand[card_number])
+    }
+
+    else if (hand[card_number].ability === 'resurrect') {
+        damage_one(enemy_leader, hand[card_number])
+    }
+
+    else if (hand[card_number].ability === 'heal') {
+        damage_one(enemy_leader, hand[card_number])
+        heal(hand[card_number])
+    }
+
+    else if (hand[card_number].ability === 'damage-all') {
+        enemy_leader.hp -= hand[card_number].damage
+        damage_all(field, hand[card_number])
+    }
+
+    // если враг убит, убираем его с поля
+    // проверять надо всех врагов, потому что есть абилки на всех
+    remove_dead_enemies(field)
+
+    // убираем карту игрока, если в ней не осталось зарядов
     remove_dead_card(hand, card_number, grave)
+
+    if (enemy_leader.hp < 0) enemy_leader.hp = 0
+
+    check_win(field, enemies, enemy_leader)
 }
 
 
-function damage_enemy_leader_by_leader(enemy_leader, leader) {
-    damage_one(enemy_leader, leader)
+// урон лидеру врага от лидера игрока
+function damage_enemy_leader_by_leader(enemy_leader, leader, field, enemies) {
+
+    if (leader.ability === "damage-one") {
+        damage_one(enemy_leader, leader)
+    }
+
+    else if (leader.ability === "damage-all") {
+        enemy_leader.hp -= leader.damage
+        damage_all(field, leader)
+        remove_dead_enemies(field)
+    }
+
+    if (enemy_leader.hp < 0) enemy_leader.hp = 0
+
+    check_win(field, enemies, enemy_leader)
 }
 
 

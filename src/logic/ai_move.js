@@ -83,13 +83,16 @@ function leader_ai_move_once(leader) {
   if (leader.ability.name === "damage-once") {
     store.commit('change_health', -leader.damage_once)
     toast.error(`лидер ослабил вас на ${leader.damage_once}`)
+    check_lose(store.state.health)
   }
 }
 
 
 // эта функция срабатывает для лидера каждый ход врага
 function leader_ai_move(leader) {
-  
+
+  if (leader.hp <= 0) return  // только если у лидера больше 0 жизней идём дальше
+
   if (leader.ability.name === "heal-self-per-turn") {
     leader.hp += leader.heal_self_per_turn
     toast.info(`лидер вылечил себя на ${leader.heal_self_per_turn}`)
@@ -98,6 +101,7 @@ function leader_ai_move(leader) {
   else if (leader.ability.name === "damage-per-turn") {
     store.commit('change_health', -leader.damage_per_turn)
     toast.error(`лидер пнул вас на ${leader.damage_per_turn}`)
+    check_lose(store.state.health)
   }
 }
 

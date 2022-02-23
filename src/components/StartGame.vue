@@ -19,13 +19,17 @@ import { draw_hand } from '@/logic/draw_hand'
   
   export default {
     name: 'start-game',
+    async created() {
+      this.deck = await JSON.parse(JSON.stringify(this.$store.state.current_deck))
+      this.enemies = await JSON.parse(JSON.stringify(this.$store.state.level.enemies))
+    },
     data() {
       return {
         redraw: false,
         hand: [],
         field: ['','','','','','','','','','','',''],
-        deck: JSON.parse(JSON.stringify(this.$store.state.current_deck)),
-        enemies: JSON.parse(JSON.stringify(this.$store.state.level.enemies)),
+        deck: '',
+        enemies: '',
       }
     },
     methods: {

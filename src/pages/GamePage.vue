@@ -69,13 +69,23 @@
 
 <script>
 
-import { appear_new_enemy } from '@/logic/place_enemies'
-import { damage_ai_card, leader_move, damage_enemy_leader_by_card, damage_enemy_leader_by_leader } from '@/logic/player_move'
-import { ai_move, leader_ai_move, leader_ai_move_once } from '@/logic/ai_move'
-import { check_win, calc_can_draw } from "@/logic/service"
-
+import {appear_new_enemy} from '@/logic/place_enemies'
+import {
+  damage_ai_card,
+  damage_enemy_leader_by_card,
+  damage_enemy_leader_by_leader,
+  leader_move
+} from '@/logic/player_move'
+import {ai_move, leader_ai_move, leader_ai_move_once} from '@/logic/ai_move'
+import { calc_can_draw } from "@/logic/service"
+import smth from '@/components/smth'
 
 export default {
+  mixins:[smth],
+  async created() {
+    this.leader = await JSON.parse(JSON.stringify(this.$store.state.leader))
+    this.enemy_leader = await JSON.parse(JSON.stringify(this.$store.state.enemy_leader))
+  },
   data() {
     return {
       beginning: true,  // статус начала игры - только для кнопки начало
@@ -83,10 +93,10 @@ export default {
       field: [],
       deck: [],  // остаток сколько карт осталось в колоде
       hand: [],
-      leader: JSON.parse(JSON.stringify(this.$store.state.leader)),
+      leader: '',
       grave: [],  // кладбище карт у которых 0 зарядов
       enemies: [],  // враги, копия из стора, приходит из start_game
-      enemy_leader: JSON.parse(JSON.stringify(this.$store.state.enemy_leader)),
+      enemy_leader: '',
             
       player_cards_active: true,  // активны ли карты игрока
       leader_active: false, // активен ли лидер
@@ -107,29 +117,33 @@ export default {
       this.enemies = dict.enemies
       this.beginning = false  // убираем кнопку с экрана после этого
 
+      // alert(this.s + 1)  // доступ к тем переменным
+      // this.show()  // доступ к тем методам
       leader_ai_move_once(this.enemy_leader)  // функция урона лидера в начале
     },
 
     // > по нажатию на карту игрока, из hand-comp, i - номер карты
     chose_player_card(i) {
-      if (this.player_cards_active) {
-        this.player_card_number = i  // запомнить номер карты игрока
-        alert('УРОН ' + this.hand[i].damage + '  заряды ' + this.hand[i].charges)
-        this.ai_cards_active = true  // только теперь можно тыкать на карты противника
-        this.enemy_leader_active = true  // и лидер врагов активен тоже
-        this.leader_active = false // а лидер теперь неактивен
-      }
+      if (!this.player_cards_active) return
+
+      this.player_card_number = i  // запомнить номер карты игрока
+      alert('УРОН ' + this.hand[i].damage + '  заряды ' + this.hand[i].charges)
+      this.ai_cards_active = true  // только теперь можно тыкать на карты противника!!!!!!!!!!!!!!
+      this.enemy_leader_active = true  // и лидер врагов активен тоже
+      this.leader_active = false // а лидер теперь неактивен
+
     },
 
     // по нажатию на лидера
     chose_leader() {
-      if (this.leader.charges > 0) {
-        this.leader_active = true
-        // this.player_cards_active = false
-        // this.ai_cards_active = true
-        this.enemy_leader_active = true  // и лидер врагов активен тоже
-        alert(this.leader.charges + ' заряды лидера')
-      }
+      if (this.leader.charges <= 0) return
+
+      this.leader_active = true
+      // this.player_cards_active = false  // вот так нельзя к сожалению, ибо они всегда активны пока не сходил
+      this.ai_cards_active = true
+      this.enemy_leader_active = true  // и лидер врагов активен тоже
+      alert(this.leader.charges + ' заряды лидера')
+
     },
 
     // если ткнули ранее на карту игрока или лидера, а потом на поле, ходим
@@ -138,18 +152,15 @@ export default {
       this.can_draw = false  // если хотя бы раз сюда попали, то дро нельзя
       
       // если ранее ткнули на карту игрока, а потом на поле
-      if (this.player_cards_active && this.ai_cards_active && this.field[i]) {
+      if (this.player_cards_active && !this.leader_active && this.ai_cards_active && this.field[i]) {
         
         // особие абилки, которые требуют открытия окон
         this.special_case_abilities()
         
         damage_ai_card(
           i, this.field, this.hand, 
-          this.player_card_number, this.grave, 
+          this.player_card_number, this.grave, this.enemy_leader, this.enemies
         )
-
-        // проверяем там, что врагов не осталось, поле и количество врагов
-        check_win(this.field, this.enemies)  
 
         this.player_card_number = null
         this.ai_cards_active = false
@@ -157,7 +168,7 @@ export default {
       }
 
       // если выбран лидер и ткнули на поле, урон наносит лидер
-      if (this.leader_active && this.field[i]) {
+      if (this.leader_active && this.ai_cards_active && this.field[i]) {
         this.exec_leader_move(i)
       }
     },
@@ -165,12 +176,10 @@ export default {
     // только если ткнули на лидера, а потом на поле
     exec_leader_move(i) {
       
-      leader_move(this.leader, i, this.field)
+      leader_move(this.leader, i, this.field, this.enemy_leader, this.enemies)
       this.leader_active = false  // снова неактивен, тыкай на него опять
-    
-      // проверяем там, что врагов не осталось, поле и количество врагов
-      check_win(this.field, this.enemies)  
-      
+      this.ai_cards_active = false
+
     },
 
     exec_ai_move() {
@@ -200,7 +209,7 @@ export default {
     },
 
     // вытягивает в руку рандомную карту из деки, если рука не полна
-    draw_one_card() {  
+    draw_one_card() {
       let random = Math.floor(Math.random() * this.deck.length);
       this.hand.push(this.deck[random])
       this.deck.splice(random, 1)  // удалить этот 0й элемент
@@ -213,9 +222,13 @@ export default {
     onLeaderClick() {
       
       if (this.player_cards_active && !this.leader_active && this.enemy_leader_active && this.enemy_leader.hp > 0) {
+
+        // особие абилки, которые требуют открытия окон
+        this.special_case_abilities()
+
         this.can_draw = false
 
-        damage_enemy_leader_by_card(this.enemy_leader, this.hand, this.player_card_number, this.grave)
+        damage_enemy_leader_by_card(this.enemy_leader, this.hand, this.player_card_number, this.grave, this.field, this.enemies)
 
         this.player_cards_active = false
         this.player_card_number = null
@@ -224,9 +237,9 @@ export default {
       if (this.leader_active && this.leader.charges > 0 && this.enemy_leader_active && this.enemy_leader.hp > 0) {
         this.can_draw = false
         
-        damage_enemy_leader_by_leader(this.enemy_leader, this.leader)
+        damage_enemy_leader_by_leader(this.enemy_leader, this.leader, this.field, this.enemies)
 
-        this.leader_active = false 
+        this.leader_active = false
       }
     },
 
