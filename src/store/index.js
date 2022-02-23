@@ -10,7 +10,7 @@ import { get } from '@/logic/requests'
 
 const store = createStore({
     state: {
-        cards_in_deck: 10,  // СКОЛЬКО В ДЕКЕ ДОЛЖНО БЫТЬ КАРТ
+        cards_in_deck: 12,  // СКОЛЬКО В ДЕКЕ ДОЛЖНО БЫТЬ КАРТ
         
         current_deck: [],  // дека выбранная для игры, deck.cards
         health: 0,  // жизни деки, из деки, deck.health
