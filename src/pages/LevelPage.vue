@@ -6,9 +6,11 @@
   @click="set_level(index)"
   >
 
-  {{ level.name }} <br>
-  {{ level.difficulty }} <br>
-  Врагов - {{ level.enemies.length }}
+    {{ level.name }} <br>
+    {{ level.difficulty }} <br>
+    Врагов - {{ level.enemies.length }} <br>
+    Лидер - <br>
+    {{ level.enemy_leader.ability.name }}
   
   </button>
 </div>

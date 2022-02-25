@@ -45,20 +45,20 @@ function remove_dead_card(hand, card_number, grave) {
 // сюда заходим если там есть враг
 function damage_ai_card(i, field, hand, card_number, grave, enemy_leader, enemies) {
 
-    if (hand[card_number].ability === 'damage-one') {
+    if (hand[card_number].ability.name === 'damage-one') {
         damage_one(field[i], hand[card_number])
     }
 
-    else if (hand[card_number].ability === 'resurrect') {
+    else if (hand[card_number].ability.name === 'resurrect') {
         damage_one(field[i], hand[card_number])
     }
 
-    else if (hand[card_number].ability === 'heal') {
+    else if (hand[card_number].ability.name === 'heal') {
         damage_one(field[i], hand[card_number])
         heal(hand[card_number])
     }
 
-    else if (hand[card_number].ability === 'damage-all') {
+    else if (hand[card_number].ability.name === 'damage-all') {
        damage_all(field, hand[card_number])
         enemy_leader.hp -= hand[card_number].damage
         if (enemy_leader.hp < 0) enemy_leader.hp = 0
@@ -80,11 +80,11 @@ function leader_move(leader, i, field, enemy_leader, enemies) {
     // i - номер клетки поля
     // leader - объект лидера целиком
     
-    if (leader.ability === "damage-one") {
+    if (leader.ability.name === "damage-one") {
         damage_one(field[i], leader)
     }
 
-    else if (leader.ability === "damage-all") {
+    else if (leader.ability.name === "damage-all") {
         damage_all(field, leader)
         enemy_leader.hp -= leader.damage
         if (enemy_leader.hp < 0) enemy_leader.hp = 0
@@ -101,20 +101,20 @@ function leader_move(leader, i, field, enemy_leader, enemies) {
 // урон лидеру врага от карты из руки!
 function damage_enemy_leader_by_card(enemy_leader, hand, card_number, grave, field, enemies) {
 
-    if (hand[card_number].ability === 'damage-one') {
+    if (hand[card_number].ability.name === 'damage-one') {
         damage_one(enemy_leader, hand[card_number])
     }
 
-    else if (hand[card_number].ability === 'resurrect') {
+    else if (hand[card_number].ability.name === 'resurrect') {
         damage_one(enemy_leader, hand[card_number])
     }
 
-    else if (hand[card_number].ability === 'heal') {
+    else if (hand[card_number].ability.name === 'heal') {
         damage_one(enemy_leader, hand[card_number])
         heal(hand[card_number])
     }
 
-    else if (hand[card_number].ability === 'damage-all') {
+    else if (hand[card_number].ability.name === 'damage-all') {
         enemy_leader.hp -= hand[card_number].damage
         damage_all(field, hand[card_number])
     }
@@ -135,11 +135,11 @@ function damage_enemy_leader_by_card(enemy_leader, hand, card_number, grave, fie
 // урон лидеру врага от лидера игрока
 function damage_enemy_leader_by_leader(enemy_leader, leader, field, enemies) {
 
-    if (leader.ability === "damage-one") {
+    if (leader.ability.name === "damage-one") {
         damage_one(enemy_leader, leader)
     }
 
-    else if (leader.ability === "damage-all") {
+    else if (leader.ability.name === "damage-all") {
         enemy_leader.hp -= leader.damage
         damage_all(field, leader)
         remove_dead_enemies(field)
