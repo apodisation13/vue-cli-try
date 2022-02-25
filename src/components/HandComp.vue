@@ -21,11 +21,11 @@
     </div>
     
     <div class="circle" :style="{'backgroundColor': 'orange'}"
-    v-if="card.ability === 'damage-all'">
+    v-if="card.ability.name === 'damage-all'">
       <span>&#9850;</span>
     </div>
     <div class="circle" :style="{'backgroundColor': 'green'}"
-    v-if="card.ability === 'heal'">
+    v-if="card.ability.name === 'heal'">
       <span>+&hearts;{{ card.heal }}</span>
     </div>
     

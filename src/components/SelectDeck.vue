@@ -23,7 +23,7 @@
       Жизни -- {{ deck.health }} <br><br>
       Лидер: <br>
       {{ deck.leader.name }} <br>
-      {{ deck.leader.ability}}
+      {{ deck.leader.ability.name}}
     </div>
   </div>
 </div>

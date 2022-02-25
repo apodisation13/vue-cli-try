@@ -14,9 +14,9 @@
     <span3>&dagger;{{ leader.damage }}</span3> 
   </div>
   
-  <!-- <div class="circle">
-    <span>+&hearts;2</span>
-  </div> -->
+  <div class="circle" v-if="leader.ability.name === 'damage-all'">
+    <span>&#9850;</span>
+  </div>
   
   <div class="charges">
     <span>{{ leader.charges }}</span>
@@ -106,15 +106,15 @@ span3 {
   transform:  rotateZ(-45deg);
 }
 
-/* .circle {
+.circle {
   position: absolute;
   width: 34%;
   height: 4vh;
   border-radius: 50%;
   top: 30%;
   right: 3%;
-  background: gray;
-} */
+  background: orange;
+}
 
 span {
   position: absolute;
