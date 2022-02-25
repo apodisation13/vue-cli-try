@@ -202,13 +202,20 @@ sss2
 </div>
 
 <div class="hand">
-  <div class='card' v-for="el, index in list" :key="el"
+  <div class='card' v-for="(el, index) in list" :key="el"
   :style="{'z-index': 6 - index}">
     <div class="diamond3">
       <span3>&dagger;{{ el * 5 }}</span3> 
     </div>
   </div>
 </div>
+
+  <div class="card" v-touch="sss">
+    sss
+  </div>
+  <div class="card" v-touch:hold="ddd">
+    ddd
+  </div>
 </template>
 
 <script>
@@ -228,7 +235,13 @@ export default {
       alert(window.screen.height)
       alert(window.screen.width)
       this.active = el
-    }
+    },
+    sss() {
+      alert(111)
+    },
+    ddd() {
+      alert(222)
+    },
   },
      
 }
