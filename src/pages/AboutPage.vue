@@ -188,34 +188,48 @@ sss2
   </div>
 </div> -->
 
-<div class="hand">
-  <div class='card0'>
-    <div class="diamond3">
-      <span3>&dagger;{{ list[0] * 5 }}</span3> 
-    </div>
-  </div>
-  <div class='card1'>
-    <div class="diamond3">
-      <span3>&dagger;{{ list[1] * 5 }}</span3> 
-    </div>
-  </div>
-</div>
+<!--<div class="hand">-->
+<!--  <div class='card0'>-->
+<!--    <div class="diamond3">-->
+<!--      <span3>&dagger;{{ list[0] * 5 }}</span3> -->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class='card1'>-->
+<!--    <div class="diamond3">-->
+<!--      <span3>&dagger;{{ list[1] * 5 }}</span3> -->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
 
-<div class="hand">
-  <div class='card' v-for="(el, index) in list" :key="el"
-  :style="{'z-index': 6 - index}">
-    <div class="diamond3">
-      <span3>&dagger;{{ el * 5 }}</span3> 
-    </div>
-  </div>
-</div>
+<!--<div class="hand">-->
+<!--  <div class='card' v-for="(el, index) in list" :key="el"-->
+<!--  :style="{'z-index': 6 - index}">-->
+<!--    <div class="diamond3">-->
+<!--      <span3>&dagger;{{ el * 5 }}</span3> -->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
 
-  <div class="card" v-touch="sss">
-    sss
-  </div>
-  <div class="card" v-touch:hold="ddd">
-    ddd
-  </div>
+  <div class="card" v-touch="sss" v-touch:rollover="ee">
+    {{ list[0] }}
+  </div><br>
+  <div class="card" v-touch:longtap="sss">
+    {{ list[1] }}
+  </div><br>
+  <div class="card" v-touch:swipe.left="ee">
+    {{ list[2] }}
+  </div><br>
+  <div class="card" v-touch:drag.once="ff" v-touch:release="gg">
+<!--    <img class="img" :src="require('@/assets/'+ '2.jpg')" alt="">-->
+    {{ list[3] }}
+  </div><br>
+  <div class="card" v-on:touchmove="ff" v-touch:release="gg">
+    <img class="img" :src="require('@/assets/'+ '2.jpg')" alt="">
+    {{ list[4] }}
+  </div><br>
+
+
+
 </template>
 
 <script>
@@ -241,6 +255,15 @@ export default {
     },
     ddd() {
       alert(222)
+    },
+    ee() {
+      alert(333)
+    },
+    ff() {
+      console.log(4)
+    },
+    gg() {
+      alert(5)
     },
   },
      
