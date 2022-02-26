@@ -1,7 +1,11 @@
 <template>
- 
-  <div class="enemy" v-if="enemy" :style="border(enemy)">
-    
+
+  <div class="enemy" :style="border(enemy)"
+       @contextmenu.prevent
+       @click.right="show_modal"
+       v-touch:longtap="show_modal"
+  >
+
     <img class="img" :src="enemy.image" v-if="enemy.image" alt="">
 
     <div class="diamond" :style="background_color(enemy)">
@@ -12,18 +16,23 @@
       <span>&hearts;{{ enemy.hp }}</span>
     </div>
     
-    <div class="circle" v-if="enemy.move==='down'">
+    <div class="circle" v-if="enemy.move.name==='down'">
       <span>&#8595;</span>
     </div>  
-    <div class="circle" v-else-if="enemy.move==='stand'">
+    <div class="circle" v-else-if="enemy.move.name==='stand'">
       <span>&#9737;</span>  
     </div>
-    <div class="circle" v-else-if="enemy.move==='random'">
+    <div class="circle" v-else-if="enemy.move.name==='random'">
       <span>&#9736;</span>  
     </div>
-
   </div>
-  
+
+  <field-modal
+      v-if="show_enemy_modal"
+      :enemy='enemy'
+      @close_field_modal="show_enemy_modal=false"
+  />
+
 </template>
 
 <script>
@@ -35,12 +44,20 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      show_enemy_modal: false
+    }
+  },
   methods: {
     border(e) {
       return border(e)
     },
     background_color(e) {
       return background_color(e)
+    },
+    show_modal() {
+      this.show_enemy_modal = true
     },
   },  
 }

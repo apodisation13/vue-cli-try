@@ -63,13 +63,13 @@ function ai_move(field) {
   for (let i = 11; i >= 0; i--) {
     if (field[i]) {
 
-      if (field[i].move === "stand") {
+      if (field[i].move.name === "stand") {
         stand_still(field, i)
       }
-      else if (field[i].move === "random") {
+      else if (field[i].move.name === "random") {
         already_randomly_jumped = random_move(field, i, already_randomly_jumped )
       }
-      else if (field[i].move === "down") { 
+      else if (field[i].move.name === "down") {
         down_move(field, i)
       }
     
