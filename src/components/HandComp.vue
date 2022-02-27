@@ -1,7 +1,5 @@
 <template>
-<div class="hand"
-
->
+<div class="hand">
 
   <div class="card" :style="border(card, index)"
     v-for="(card, index) in hand" :key='card'

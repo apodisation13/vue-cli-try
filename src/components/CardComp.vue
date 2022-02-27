@@ -1,5 +1,5 @@
 <template>
-  <div class="s"
+  <div
       @contextmenu.prevent
       @click.right="show_modal"
       v-touch:longtap="show_modal"
@@ -71,16 +71,6 @@ export default {
 </script>
 
 <style scoped>
-.s {
-  /*width: 98%;*/
-  /*height: 17vh;*/
-  /*border-radius: 2%;*/
-  /*position: relative;*/
-  /*top: 48%;*/
-  /*left: 50%;*/
-  /*transform: translate(-50%, -50%);*/
-}
-
 .img {
   width: 99%;
   height: 99%;
