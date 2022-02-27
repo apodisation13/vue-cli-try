@@ -53,7 +53,8 @@ export default {
   /* border: solid 1px blue; */
   clear: both;
   overflow: auto;
-  white-space: nowrap;
+  /*white-space: nowrap;*/
+  /*ВОТ БЛЯТЬ ИЗЗА ЭТОЙ ЕБАНОЙ ПОЕБНИ БЛЯТЬ ВЫШЕ Я ЕБАЛСЯ ЕБАНЫЕ 3 ЧАСА БЛЯТЬ*/
   position: relative;
 }
 

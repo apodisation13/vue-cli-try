@@ -17,12 +17,18 @@
 
     <div class="circle" :style="{'backgroundColor': 'orange'}"
          v-if="card.ability.name === 'damage-all'">
-      <span>&#9850;</span>
+      <span :style="{'font-size': '12pt'}">&#9850;</span>
     </div>
     <div class="circle" :style="{'backgroundColor': 'green'}"
-         v-if="card.ability.name === 'heal'">
+         v-else-if="card.ability.name === 'heal'">
       <span>+&hearts;{{ card.heal }}</span>
     </div>
+    <div class="circle" :style="{'backgroundColor': 'purple'}"
+         v-else-if="card.ability.name === 'resurrect'">
+      <span :style="{'font-size': '12pt'}">&#10014;&#8680;</span>
+    </div>
+
+
 
     <div class="charges">
       <span>{{ card.charges }}</span>

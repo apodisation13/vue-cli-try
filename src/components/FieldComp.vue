@@ -5,7 +5,7 @@
         <td v-for="j in 3" :key="j"
           @click.right="index=get_index(i,j); show_enemy_modal=true" 
           @close_field_modal="show_enemy_modal=false"
-          @click="exec_damage_ai_card(get_index(i,j))" 
+          @dblclick="exec_damage_ai_card(get_index(i,j))"
           @contextmenu.prevent
         >
           <enemy-comp v-if="field[get_index(i,j)]"
