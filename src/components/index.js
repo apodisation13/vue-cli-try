@@ -1,5 +1,6 @@
 import HealthComp from '@/components/HealthComp'
 import HandComp from '@/components/HandComp'
+import CardComp from '@/components/CardComp'
 import LeaderComp from '@/components/LeaderComp'
 import DeckSelection from '@/components/DeckSelection'
 import SelectDeck from '@/components/SelectDeck'
@@ -23,6 +24,7 @@ import ResurrectModal from '@/components/ModalWindows/ResurrectModal'
 
 export default [
     HealthComp,
+    CardComp,
     HandComp,
     LeaderComp,
     DeckSelection,

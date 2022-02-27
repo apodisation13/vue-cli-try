@@ -1,66 +1,171 @@
 <template>
-<div class="card_view" v-if="show_card_modal">
-  <div class='card_view__content'>
-    <div class='data'>
-      <p>ОПИСАНИЕ</p>
-      <h2> Урон карты - {{ card.damage }} </h2><br>
-      <h2> Заряды карты - {{ card.charges }} </h2><br>
-      <h2> Тип абилки - {{ card.ability }} </h2><br>
-      <h3 v-if="card.type === 'Special'">sp</h3><br>
+  <div class="field_view">
+    <button class="close_button" @click="close_self">Закрыть</button>
+    <br>
+
+    <div class="enemy_border" :style="border(card)">
+      <img class="img" :src="card.image" v-if="card.image" alt="">
     </div>
+
+    <div class="damage_and_hp">
+      <div class="diamond" :style="background_color(card)"></div>
+      <h3> Урон
+        <br>&dagger;{{ card.damage }}
+      </h3>
+
+      <div class="hp" v-if="hp_needed"></div>
+      <h3 v-if="hp_needed"> Жизни
+        <br>&hearts;{{ card.hp }}
+      </h3>
+
+      <div class="charges"></div>
+      <h3> Заряды
+        <br>{{ card.charges }}
+      </h3>
+    </div>
+
+    <div class="circle" :style="{'backgroundColor': 'orange'}"
+         v-if="card.ability.name === 'damage-all'">
+      <span>&#9850;</span>
+    </div>
+    <div class="circle" :style="{'backgroundColor': 'green'}"
+         v-else-if="card.ability.name === 'heal'">
+      <span :style="{'font-size': '12pt'}">+&hearts;{{ card.heal }}</span>
+    </div>
+    <div class="circle" :style="{'backgroundColor': 'purple'}"
+         v-else-if="card.ability.name === 'resurrect'">
+      <span>&#10014;&#8680;</span>
+    </div>
+    <br>
+    <p> {{ card.ability.description }} </p>
+
   </div>
-</div>
 </template>
 
 <script>
+import { border, background_color } from '@/logic/border_styles'
 export default {
   name: 'card-modal',
   props: {
-    show_card_modal: {
-      required: true,
-      type: Boolean
-    },
-    card: {
+    card: {  // объект противника по индексу поля
       required: true,
       type: Object
-    }
+    },
+    hp_needed: {  // hp только для декбилдера, для игры не нужно оно
+      type: Boolean,
+      default: false
+    },
+  },
+  methods: {
+    close_self() {
+      this.$emit('close_card_modal')
+    },
+    border(e) {
+      return border(e)
+    },
+    background_color(e) {
+      return background_color(e)
+    },
+    emits: ['close_card_modal']
   },
 }
 </script>
 
 <style scoped>
 
-.card_view {
-  background: rgb(100, 6, 143);
-  width: 400px;
-  height: 300px;
+.field_view {
+  background-color: floralwhite;
+  width: 100%;
+  height: 76%;
   border-radius: 12px;
   text-align: center;
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 8pt;
-
+  transform: translate(-50%, -67%);
+  z-index: 9999;
 }
 
-.card_view__content {
-  width: 300px;
-  height: 200px;
-  border: solid 1px red;
-  border-radius: 5px;
-  font-size: 8pt;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  
+.close_button {
+  margin-top: 2%;
+  width: 20%;
+  height: 5%;
 }
 
-/* ВОПРОС ВОТ ТУТ */
-.data {
+h3 {
+  display: inline;
+  font-size: 14pt;
+}
+
+p {
+  font-size: 12pt;
+}
+
+.enemy_border {
+  width: 65%;
+  height: 55%;
+  display: inline;
+  float: left;
+  margin-left: 1%;
+  border-radius: 1%;
+}
+
+.damage_and_hp {
+  width: 30%;
+  height: 55%;
+  display: inline;
+  float: right;
+  margin-bottom: 3%;
+  /*border: solid 2px red;*/
+}
+
+.img {
+  width: 99%;
+  height: 99%;
+  margin: auto;
+}
+
+.hp {
+  width: 40%;
+  height: 10%;
+  background-color: green;
+  border-radius: 20%;
+  margin: 3% auto auto;
+}
+
+.charges {
+  width: 20%;
+  height: 10%;
+  background-color: hotpink;
+  border-radius: 20%;
+  margin: 3% auto auto;
+}
+
+.diamond {
+  /*height: 12%;*/
+  /*width: 36%;*/
+  height: 5vh;
+  width: 5vh;
+  transform: rotateX(45deg) rotateZ(45deg);
+  margin: 3% auto auto;
+  /* background-color: purple; */
+  /* border: solid 1px yellow; */
+}
+
+.circle {
+  display: inline-grid;
+  width: 14%;
+  height: 7%;
+  background: orangered;
+  border-radius: 50%;
+  margin: 3% auto;
+}
+
+span {
   position: relative;
-  align-self: center;
+  font-size: 22pt;
+  color: white;
 }
+
 
 </style>

@@ -216,7 +216,7 @@ sss2
   <div class="card" v-touch:longtap="sss">
     {{ list[1] }}
   </div><br>
-  <div class="card" v-touch:swipe.left="ee">
+  <div class="card" v-touch:swipe.left="ee" @dblclick="sss">
     {{ list[2] }}
   </div><br>
   <div class="card" v-touch:drag.once="ff" v-touch:release="gg">

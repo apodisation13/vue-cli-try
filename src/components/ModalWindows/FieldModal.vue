@@ -12,7 +12,7 @@
     <h3> Урон
       <br>&dagger;{{ enemy.damage }}
     </h3>
-    <br><br><br><br>
+
 
     <div class="hp"></div>
     <h3> Жизни
@@ -60,23 +60,15 @@ export default {
 <style scoped>
 
 .field_view {
-  /*background-color: floralwhite;*/
-  /*width: 100%;*/
-  /*height: 500px;*/
-  /*border-radius: 12px;*/
-  /*text-align: center;*/
-  /*position: fixed;*/
-  /*z-index: 9999;*/
-
   background-color: floralwhite;
   width: 100%;
-  height: 98%;
+  height: 76%;
   border-radius: 12px;
   text-align: center;
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -67%);
   z-index: 9999;
 }
 
@@ -101,6 +93,7 @@ p {
   display: inline;
   float: left;
   margin-left: 1%;
+  border-radius: 1%;
 }
 
 .damage_and_hp {

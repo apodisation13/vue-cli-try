@@ -28,10 +28,10 @@
 
 </div>
 
-<card-modal 
-:card='leader' 
-:show_card_modal='show_card_modal'
-/>
+<!--<card-modal -->
+<!--:card='leader' -->
+<!--:show_card_modal='show_card_modal'-->
+<!--/>-->
 
 
 </template>
