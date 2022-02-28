@@ -8,8 +8,8 @@
   @dblclick="exec_leader"
 >
 
-  <img class="img" :src="leader.image" v-if="leader.image" alt="">
-  
+  <img class="img" :src="leader.image" v-if="leader.charges > 0" alt="">
+
   <div class="diamond" :style="background_color(leader)">
     <span3>&dagger;{{ leader.damage }}</span3> 
   </div>

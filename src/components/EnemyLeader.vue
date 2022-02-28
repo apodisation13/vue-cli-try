@@ -4,9 +4,10 @@
      @contextmenu.prevent
      @click.right="open_card_modal"
      v-touch:longtap="open_card_modal"
+     @dblclick="exec_enemy_leader"
 >
   
-  <img class="img" :src="enemy_leader.image" alt="">
+  <img class="img" :src="enemy_leader.image" v-if="enemy_leader.hp > 0" alt="">
   
   <div class="diamond"
        :style="background_color(enemy_leader)"
@@ -72,7 +73,13 @@ export default {
     background_color(leader) {
       return background_color(leader)
     },
+    exec_enemy_leader() {
+      this.$emit("exec_enemy_leader")
+    },
   },
+  emits: [
+      'exec_enemy_leader'
+  ]
 }
 </script>
 
