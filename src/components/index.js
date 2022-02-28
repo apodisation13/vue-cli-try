@@ -20,7 +20,8 @@ import CardModal from '@/components/ModalWindows/CardModal'
 import RedrawModal from '@/components/ModalWindows/RedrawModal'
 import YesnoModal from '@/components/ModalWindows/YesnoModal'
 import ResurrectModal from '@/components/ModalWindows/ResurrectModal'
-
+import LeaderModal from "@/components/ModalWindows/LeaderModal"
+import EnemyLeaderModal from "@/components/ModalWindows/EnemyLeaderModal"
 
 export default [
     HealthComp,
@@ -45,5 +46,7 @@ export default [
     RedrawModal,
     YesnoModal,
     ResurrectModal,
+    LeaderModal,
+    EnemyLeaderModal,
     
 ]

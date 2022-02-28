@@ -5,6 +5,15 @@ function border(card, index) {
     else return {}
 }
 
+
+function border_leader(leader) {
+    if (leader.faction === 'Soldiers') return {'border': 'solid 3px blue'}
+    else if (leader.faction === 'Monsters') return {'border': 'solid 3px red'}
+    else if (leader.faction === 'Animals') return {'border': 'solid 3px green'}
+    else return {}
+}
+
+
 function background_color(card) {
     if (card.faction === 'Soldiers') {
         if (card.color === 'Bronze') return {'backgroundColor': 'blue'}
@@ -41,4 +50,4 @@ function background_color(card) {
     else return {}
 }
 
-export { border, background_color }
+export { border, border_leader, background_color }

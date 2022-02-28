@@ -3,71 +3,62 @@
     <button class="close_button" @click="close_self">Закрыть</button>
     <br>
 
-    <div class="enemy_border" :style="border(card)">
-      <img class="img" :src="card.image" v-if="card.image" alt="">
+    <div class="enemy_border" :style="border(leader)">
+      <img class="img" :src="leader.image" v-if="leader.image" alt="">
     </div>
 
     <div class="damage_and_hp">
-      <div class="diamond" :style="background_color(card)"></div>
+      <div class="diamond" :style="background_color(leader)"></div>
       <h3> Урон
-        <br>&dagger;{{ card.damage }}
-      </h3>
-
-      <div class="hp" v-if="hp_needed"></div>
-      <h3 v-if="hp_needed"> Жизни
-        <br>&hearts;{{ card.hp }}
+        <br>&dagger;{{ leader.damage }}
       </h3>
 
       <div class="charges"></div>
       <h3> Заряды
-        <br>{{ card.charges }}
+        <br>{{ leader.charges }}
       </h3>
     </div>
 
     <div class="circle" :style="{'backgroundColor': 'orange'}"
-         v-if="card.ability.name === 'damage-all'">
+         v-if="leader.ability.name === 'damage-all'">
       <span>&#9850;</span>
     </div>
     <div class="circle" :style="{'backgroundColor': 'green'}"
-         v-else-if="card.ability.name === 'heal'">
+         v-else-if="leader.ability.name === 'heal'">
       <span :style="{'font-size': '12pt'}">+&hearts;{{ card.heal }}</span>
     </div>
     <div class="circle" :style="{'backgroundColor': 'purple'}"
-         v-else-if="card.ability.name === 'resurrect'">
+         v-else-if="leader.ability.name === 'resurrect'">
       <span>&#10014;&#8680;</span>
     </div>
     <br>
-    <p> {{ card.ability.description }} </p>
+    <p> {{ leader.ability.description }} </p>
 
   </div>
 </template>
 
 <script>
-import { border, background_color } from '@/logic/border_styles'
+import { border_leader, background_color } from '@/logic/border_styles'
 export default {
-  name: 'card-modal',
+  name: 'leader-modal',
   props: {
-    card: {  // объект противника по индексу поля
+    leader: {  // объект противника по индексу поля
       required: true,
       type: Object
-    },
-    hp_needed: {  // hp только для декбилдера, для игры не нужно оно
-      type: Boolean,
-      default: false
     },
   },
   methods: {
     close_self() {
-      this.$emit('close_card_modal')
+      this.$emit('close_leader_modal')
     },
-    border(e) {
-      return border(e)
+    border(leader) {
+      return border_leader(leader)
     },
-    background_color(e) {
-      return background_color(e)
+    background_color(leader) {
+      return background_color(leader)
     },
     emits: [
-        'close_card_modal'
+      'close_leader_modal'
     ],
   },
 }

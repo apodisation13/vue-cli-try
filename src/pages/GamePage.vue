@@ -19,7 +19,7 @@
 <!-- лидер врага -->
 <enemy-leader 
 :enemy_leader="enemy_leader"
-@click="onLeaderClick"
+@exec_enemy_leader="onLeaderClick"
 />
 
 <!-- колода оставшихся врагов и кладбище врагов -->
