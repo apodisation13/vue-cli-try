@@ -1,7 +1,7 @@
 <template>
   
   <!-- вызов меню -->
-<!--  <menu-bar />-->
+  <menu-bar />
   
   <div class="app">
     
@@ -17,7 +17,7 @@ import MenuBar from './components/MenuBar'
 
 export default {
   components: { 
-    // MenuBar,
+    MenuBar, 
   },
   
   mounted() {  // вот так можно вызвать Экшен прям по загрузке сайта
