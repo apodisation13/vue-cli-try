@@ -1,9 +1,10 @@
 <template>
   <div class="modal_window">
-    <!-- <button @click="close">Закрыть</button><br> -->
-    
-    <hand-comp :hand='grave'
-    @chose_player_card='confirm_selection'
+    Щёлкните дважды для выбора карты
+
+    <hand-comp
+        :hand='grave'
+        @chose_player_card='confirm_selection'
     /> 
   
   </div>
