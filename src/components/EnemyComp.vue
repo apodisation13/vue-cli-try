@@ -9,7 +9,7 @@
     <img class="img" :src="enemy.image" v-if="enemy.image" alt="">
 
     <div class="diamond" :style="background_color(enemy)">
-      <span-diamond>&dagger;{{ enemy.damage }}</span-diamond>
+      <span class="span_diamond">&dagger;{{ enemy.damage }}</span>
     </div>
     
     <div class="hp">
@@ -94,7 +94,7 @@ export default {
   /* border: solid 1px yellow; */
 }
 
-span-diamond {
+.span_diamond {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 25%;

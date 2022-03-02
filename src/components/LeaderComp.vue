@@ -11,7 +11,7 @@
   <img class="img" :src="leader.image" v-if="leader.charges > 0" alt="">
 
   <div class="diamond" :style="background_color(leader)">
-    <span3>&dagger;{{ leader.damage }}</span3> 
+    <span class="span3">&dagger;{{ leader.damage }}</span>
   </div>
   
   <div class="circle" v-if="leader.ability.name === 'damage-all'">
@@ -102,7 +102,7 @@ import { border_leader, background_color } from '@/logic/border_styles'
   border: solid 1px yellow;
 }
 
-span3 {
+.span3 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 25%;

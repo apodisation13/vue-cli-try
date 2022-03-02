@@ -57,10 +57,10 @@ export default {
     background_color(leader) {
       return background_color(leader)
     },
-    emits: [
-      'close_leader_modal'
-    ],
   },
+  emits: [
+    'close_leader_modal',
+  ],
 }
 </script>
 

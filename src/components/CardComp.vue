@@ -12,7 +12,7 @@
     </div>
 
     <div class="diamond" :style="background_color(card)">
-      <span3>&dagger;{{ card.damage }}</span3>
+      <span class="span3">&dagger;{{ card.damage }}</span>
     </div>
 
     <div class="circle" :style="{'backgroundColor': 'orange'}"
@@ -97,7 +97,7 @@ export default {
   /* border: solid 1px yellow; */
 }
 
-span3 {
+.span3 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 25%;
