@@ -56,9 +56,8 @@
 </div>
 
 <hand-comp
-:hand='hand'
-:hand_in_game="true"
-@chose_player_card='chose_player_card' 
+  :hand='hand'
+  @chose_player_card='chose_player_card'
 />
 
 </div>

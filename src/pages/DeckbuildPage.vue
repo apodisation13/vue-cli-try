@@ -2,14 +2,18 @@
 
 <!-- база карт -->
 <div class="card_pool_view">
-  <hand-comp :hand='pool' :hp_needed=true
-  @chose_player_card='append_into_deck_in_progress' />
+  <cards-list
+      :cards="pool"
+      :hp_needed="true"
+      @chose_player_card="append_into_deck_in_progress" />
 </div>
 
 <!-- список всех лидеров из базы -->
 <div class="leader_pool_view">
-  <hand-comp :hand='leaders'
-  @chose_player_card='chose_leader' />
+  <cards-list
+      :cards="leaders"
+      :for_leaders="true"
+      @chose_player_card="chose_leader" />
 </div>
 
 
@@ -34,8 +38,10 @@
   </div>
   
   <div class="deck_build_view">
-    <hand-comp :hand='deck_is_progress' :hp_needed=true
-    @chose_player_card='delete_from_deck_in_progress' />
+    <cards-list
+        :cards='deck_is_progress'
+        :hp_needed=true
+        @chose_player_card='delete_from_deck_in_progress' />
   </div>
 </div>
 

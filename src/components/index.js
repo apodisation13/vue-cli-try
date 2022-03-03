@@ -1,5 +1,6 @@
 import HealthComp from '@/components/HealthComp'
 import HandComp from '@/components/HandComp'
+import CardsList from '@/components/CardsList'
 import CardComp from '@/components/CardComp'
 import LeaderComp from '@/components/LeaderComp'
 import DeckSelection from '@/components/DeckSelection'
@@ -27,6 +28,7 @@ export default [
     HealthComp,
     CardComp,
     HandComp,
+    CardsList,
     LeaderComp,
     DeckSelection,
     SelectDeck,
