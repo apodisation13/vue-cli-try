@@ -16,6 +16,8 @@ import EnemiesGrave from '@/components/EnemiesGrave'
 import DrawComp from '@/components/DrawComp'
 import PassComp from '@/components/PassComp'
 
+import SpecialCaseAbilities from "@/components/SpecialCaseAbilities"
+
 import FieldModal from '@/components/ModalWindows/FieldModal'
 import CardModal from '@/components/ModalWindows/CardModal'
 import RedrawModal from '@/components/ModalWindows/RedrawModal'
@@ -42,6 +44,8 @@ export default [
     EnemiesGrave,
     DrawComp,
     PassComp,
+
+    SpecialCaseAbilities,
     
     FieldModal,
     CardModal,

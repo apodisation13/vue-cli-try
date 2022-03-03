@@ -1,11 +1,13 @@
+import store from '@/store' // stote.state OR store.commit
 import { useToast } from 'vue-toastification'
 
 const toast = useToast()
 
 
+// расставить врагов, только первые 9 клеток, + параметр из уровня, сколько в начале появляется сразу врагов
 function place_enemies(field, enemy_list) {
     
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < store.state.level.starting_enemies_number; i++) {
         let random = Math.floor(Math.random() * 9)  // 9, чтобы внизу не появлялись
         let random_enemy = Math.floor(Math.random() * enemy_list.length)
         field[random] = enemy_list[random_enemy]

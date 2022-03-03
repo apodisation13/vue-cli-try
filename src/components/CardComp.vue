@@ -8,7 +8,7 @@
     <img class="img" :src="card.image" v-if="card.image" alt="">
 
     <div class="typee" v-if="card.type === 'Special'">
-      <span>&starf;</span>
+      <span :style="{'font-size': '14pt'}">&starf;</span>
     </div>
 
     <div class="diamond" :style="background_color(card)">
@@ -100,11 +100,11 @@ export default {
 
 .span3 {
   position: absolute;
-  transform: translate(-50%, -50%);
+  /*transform: translate(-50%, -50%);*/
   top: 25%;
   right: 2%;
-  color: black;
-  font-size: 10pt;
+  color: whitesmoke;
+  font-size: 11pt;
   transform:  rotateZ(-45deg);
 }
 
