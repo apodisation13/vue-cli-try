@@ -2,8 +2,8 @@
   <div class="modal_window">
     Щёлкните дважды для выбора карты
 
-    <hand-comp
-        :hand='grave'
+    <cards-list
+        :cards='grave'
         @chose_player_card='confirm_selection'
     /> 
   
