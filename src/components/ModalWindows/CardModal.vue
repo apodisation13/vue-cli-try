@@ -66,10 +66,10 @@ export default {
     background_color(e) {
       return background_color(e)
     },
-    emits: [
-        'close_card_modal'
-    ],
   },
+  emits: [
+    'close_card_modal'
+  ],
 }
 </script>
 

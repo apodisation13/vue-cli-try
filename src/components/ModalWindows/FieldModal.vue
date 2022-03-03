@@ -54,6 +54,9 @@ export default {
       return background_color(e)
     },
   },
+  emits: [
+    'close_field_modal'
+  ],
 }
 </script>
 
