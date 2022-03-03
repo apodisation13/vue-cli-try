@@ -15,6 +15,7 @@ import EnemiesRemaining from '@/components/EnemiesRemaining'
 import EnemiesGrave from '@/components/EnemiesGrave'
 import DrawComp from '@/components/DrawComp'
 import PassComp from '@/components/PassComp'
+import DeckPreviewComp from '@/components/DeckPreviewComp'
 
 import SpecialCaseAbilities from "@/components/SpecialCaseAbilities"
 
@@ -25,6 +26,8 @@ import YesnoModal from '@/components/ModalWindows/YesnoModal'
 import ResurrectModal from '@/components/ModalWindows/ResurrectModal'
 import LeaderModal from "@/components/ModalWindows/LeaderModal"
 import EnemyLeaderModal from "@/components/ModalWindows/EnemyLeaderModal"
+import LevelModal from '@/components/ModalWindows/LevelModal'
+import DeckModal from '@/components/ModalWindows/DeckModal'
 
 export default [
     HealthComp,
@@ -44,6 +47,7 @@ export default [
     EnemiesGrave,
     DrawComp,
     PassComp,
+    DeckPreviewComp,
 
     SpecialCaseAbilities,
     
@@ -54,5 +58,7 @@ export default [
     ResurrectModal,
     LeaderModal,
     EnemyLeaderModal,
+    LevelModal,
+    DeckModal,
     
 ]

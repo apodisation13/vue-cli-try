@@ -58,4 +58,13 @@ function background_color(card) {
     else return {}
 }
 
-export { border_for_hand, border_for_card, border_leader, background_color }
+
+function background_color_deck(deck) {
+    if (deck.leader.faction === 'Soldiers') return {'backgroundColor': 'blue'}
+    else if (deck.leader.faction === 'Monsters') return {'backgroundColor': 'red'}
+    else if (deck.leader.faction === 'Animals') return {'backgroundColor': 'green'}
+    else return {}
+}
+
+
+export { border_for_hand, border_for_card, border_leader, background_color, background_color_deck }

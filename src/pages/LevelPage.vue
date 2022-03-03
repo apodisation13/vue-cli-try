@@ -1,18 +1,22 @@
 <template>
-ВЫБЕРИТЕ УРОВЕНЬ <br><br>
+<div class="levels" >
+  ВЫБЕРИТЕ УРОВЕНЬ (дважды ЛКМ) <br>
 
-<div class="levels" v-for="(level, index) in levels" :key="index">
-  <button class="level_btn" :class="{'level_btn_selected': index === selected}"
-  @click="set_level(index)"
+  <div class="level" :class="{'level_btn_selected': index === selected}"
+    v-for="(level, index) in levels" :key="index"
+    @dblclick="set_level(index)"
+    @click.right="open_level_modal"
+    v-touch:longtap="open_level_modal"
+    @contextmenu.prevent
   >
 
     {{ level.name }} <br>
     {{ level.difficulty }} <br>
     Врагов - {{ level.enemies.length }} <br>
-    Лидер - <br>
-    {{ level.enemy_leader.ability.name }}
+<!--    Лидер - <br>-->
+<!--    {{ level.enemy_leader.ability.name }}-->
   
-  </button>
+  </div>
 </div>
 
 <select-deck />
@@ -29,6 +33,7 @@ export default {
   data() {
     return {
       selected: undefined,
+      show_level_modal: false,
     }
   },
   computed: {
@@ -42,6 +47,9 @@ export default {
       this.$store.commit("set_level", this.levels[index])
       this.$store.commit('set_enemy_leader', this.levels[index].enemy_leader)
       this.selected = index
+    },
+    open_level_modal() {
+      alert(111)
     },
 
     // set_default_deck() {
@@ -61,18 +69,25 @@ export default {
 <style scoped>
 
 .levels {
-    display: inline;
-    margin: 3px;
+  margin: 1%;
+  width: 95%;
+  height: 50vh;
+  border: solid 1px orchid;
 }
 
-.level_btn {
-  width: 150px;
-  height: 150px;
+.level {
+  margin: 1%;
+  width: 8vh;
+  height: 5vh;
+  font-size: 6pt;
+  border: solid 1px brown;
+  display: inline-block;
 }
 
 .level_btn_selected {
-  width: 150px;
-  height: 150px;
+  width: 8vh;
+  height: 5vh;
+  font-size: 6pt;
   background-color: green;
 }
 
