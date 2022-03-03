@@ -22,22 +22,15 @@
     data() {
       return {
         card: {},
-        i: null,
       }
     },
     methods: {
       confirm_selection(i) {
         // alert(i)
         this.card = this.grave[i]
-        this.i = i
-        this.close()
+        this.$emit('chosen_card', {card: this.card, i: i})
       },
-      
-      close() {
-        this.$emit('chosen_card', {card: this.card, i: this.i})
-      }
     },
-
     emits: [
       'chosen_card'
     ]

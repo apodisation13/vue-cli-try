@@ -61,10 +61,13 @@
 />
 
 </div>
-<resurrect-modal v-if="show_deck_modal_by_abilities"
-:grave='grave' 
-@chosen_card='confirm_card_from_grave'
+
+<special-case-abilities
+  :grave='grave'
+  :resurrect_modal="show_resurrect_modal"
+  @chosen_card='confirm_card_from_grave'
 />
+
 </template>
 
 <script>
@@ -105,7 +108,7 @@ export default {
       
       player_card_number: null,  // номер карты игрока в руке
       can_draw: false,  // возможность вытянуть карту
-      show_deck_modal_by_abilities: false,
+      show_resurrect_modal: false,
     }
   },
   methods: {
@@ -197,12 +200,12 @@ export default {
     special_case_abilities() {
       if (this.hand[this.player_card_number].ability.name === 'resurrect') {
           // откр окно с grave, приходит confirm_card_from_grave()
-          this.show_deck_modal_by_abilities = true 
+          this.show_resurrect_modal = true
         }
     },
 
     confirm_card_from_grave(dict) {
-      this.show_deck_modal_by_abilities = false
+      this.show_resurrect_modal = false
       dict.card.charges = 1
       this.hand.push(dict.card)
       this.grave.splice(dict.i, 1)
