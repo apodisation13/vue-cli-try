@@ -40,6 +40,7 @@
 
     <card-modal v-if="show_card_modal"
       :card='card'
+      :hp_needed="hp_needed"
       @close_card_modal="show_card_modal=false"
     />
 
