@@ -52,4 +52,11 @@ export default {
 /* body {
   background-image: url('~@/assets/grass.jpg');
 } */
+
+body, html {
+  padding: 0;
+  margin: 0;
+  /*overflow: auto;*/
+  height: 100vh;
+}
 </style>
