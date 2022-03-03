@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { border_for_card } from '@/logic/border_styles'
+import { border_for_card, border_leader } from '@/logic/border_styles'
 export default {
   name: "cards-list",
   props: {
@@ -28,13 +28,18 @@ export default {
       type: Boolean,
       default: false
     },
+    for_leaders: {  // брать границу карты как для лидеров
+      type: Boolean,
+      default: false
+    },
   },
   methods: {
     chose_player_card(index) {
       this.$emit('chose_player_card', index)  // передаём this.index по эмиту
     },
     border(card) {
-      return border_for_card(card)
+      if (!this.for_leaders) return border_for_card(card)
+      else if (this.for_leaders) return border_leader(card)
     },
   },
   emits: [
