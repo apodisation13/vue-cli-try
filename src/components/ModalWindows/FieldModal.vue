@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { border, background_color } from '@/logic/border_styles'
+import { border_for_card, background_color } from '@/logic/border_styles'
 export default {
   name: 'field-modal',
   props: {
@@ -48,7 +48,7 @@ export default {
       this.$emit('close_field_modal')
     },
     border(e) {
-      return border(e)
+      return border_for_card(e)
     },
     background_color(e) {
       return background_color(e)

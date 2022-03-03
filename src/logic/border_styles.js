@@ -1,7 +1,15 @@
-function border(card, index) {
+function border_for_hand(card, index) {
     if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon', 'z-index': 6 - index}
     else if (card.color === 'Silver') return {'border': 'solid 3px silver', 'z-index': 6 - index}
     else if (card.color === 'Gold') return {'border': 'solid 3px gold', 'z-index': 6 - index}
+    else return {}
+}
+
+
+function border_for_card(card) {
+    if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon'}
+    else if (card.color === 'Silver') return {'border': 'solid 3px silver'}
+    else if (card.color === 'Gold') return {'border': 'solid 3px gold'}
     else return {}
 }
 
@@ -50,4 +58,4 @@ function background_color(card) {
     else return {}
 }
 
-export { border, border_leader, background_color }
+export { border_for_hand, border_for_card, border_leader, background_color }
