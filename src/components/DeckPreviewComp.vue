@@ -6,7 +6,7 @@
 >
 
   {{ deck.name }}
-  Жизни -- {{ deck.health }}
+  Жизни -- {{ deck.health }}<br>
   Лидер {{ deck.leader.name }}
   {{ deck.leader.ability.name}}
 

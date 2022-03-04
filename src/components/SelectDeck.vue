@@ -72,7 +72,7 @@ export default {
 .deck {
   margin: 1%;
   width: 95%;
-  height: 15%;
+  height: 20%;
   font-size: 10pt;
   border-radius: 5%;
   padding-left: 1%;
