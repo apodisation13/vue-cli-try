@@ -1,21 +1,14 @@
 <template>
-<div class="levels" >
-  ВЫБЕРИТЕ УРОВЕНЬ (дважды ЛКМ) <br>
+  <div class="levels" >
+    ВЫБЕРИТЕ УРОВЕНЬ (дважды ЛКМ) <br>
 
-  <div class="level" :class="{'level_btn_selected': index === selected}"
-    v-for="(level, index) in levels" :key="index"
-    @dblclick="set_level(index)"
-    @click.right="open_level_modal"
-    v-touch:longtap="open_level_modal"
-    @contextmenu.prevent
-  >
+    <div class="level" :class="{'level_selected': index === selected}"
+      v-for="(level, index) in levels" :key="level"
+      @dblclick="set_level(index)"
+    >
 
-    {{ level.name }} <br>
-    {{ level.difficulty }} <br>
-    Врагов - {{ level.enemies.length }} <br>
-<!--    Лидер - <br>-->
-<!--    {{ level.enemy_leader.ability.name }}-->
-  
+      <level-preview-comp :level="level" />
+
   </div>
 </div>
 
@@ -32,8 +25,7 @@ export default {
   },
   data() {
     return {
-      selected: undefined,
-      show_level_modal: false,
+      selected: undefined,  // для подсветки выбранного уровня
     }
   },
   computed: {
@@ -48,21 +40,7 @@ export default {
       this.$store.commit('set_enemy_leader', this.levels[index].enemy_leader)
       this.selected = index
     },
-    open_level_modal() {
-      alert(111)
-    },
-
-    // set_default_deck() {
-    //   this.$store.dispatch(
-    //     "set_deck_in_play", 
-    //     {deck: this.$store.state.decks[0]}  // FIXME: вот здесь косяк
-    //   )  
-    // },
   },
-  mounted() {
-    // this.set_default_deck()
-  },
-
 }
 </script>
 
@@ -84,7 +62,7 @@ export default {
   display: inline-block;
 }
 
-.level_btn_selected {
+.level_selected {
   width: 8vh;
   height: 5vh;
   font-size: 6pt;
