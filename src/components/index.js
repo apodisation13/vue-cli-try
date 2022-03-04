@@ -16,6 +16,7 @@ import EnemiesGrave from '@/components/EnemiesGrave'
 import DrawComp from '@/components/DrawComp'
 import PassComp from '@/components/PassComp'
 import DeckPreviewComp from '@/components/DeckPreviewComp'
+import LevelPreviewComp from '@/components/LevelPreviewComp'
 
 import SpecialCaseAbilities from "@/components/SpecialCaseAbilities"
 
@@ -48,6 +49,7 @@ export default [
     DrawComp,
     PassComp,
     DeckPreviewComp,
+    LevelPreviewComp,
 
     SpecialCaseAbilities,
     
