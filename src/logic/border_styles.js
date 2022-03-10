@@ -54,6 +54,17 @@ function background_color(card) {
         }
         else return {'backgroundColor': 'green'}  
     }
+
+    else if (card.faction === 'Neutral') {
+        if (card.color === 'Bronze') return {'backgroundColor': 'brown'}
+        else if (card.color === 'Silver') {
+            return {'backgroundColor': 'brown', 'border': 'solid 2px silver'}
+        }
+        else if (card.color === 'Gold') {
+            return {'backgroundColor': 'brown', 'border': 'solid 2px gold'}
+        }
+        else return {'backgroundColor': 'brown'}
+    }
     
     else return {}
 }

@@ -53,6 +53,10 @@ function damage_ai_card(i, field, hand, card_number, grave, enemy_leader, enemie
         damage_one(field[i], hand[card_number])
     }
 
+    else if (hand[card_number].ability.name === 'draw-one-card') {
+        damage_one(field[i], hand[card_number])
+    }
+
     else if (hand[card_number].ability.name === 'heal') {
         damage_one(field[i], hand[card_number])
         heal(hand[card_number])

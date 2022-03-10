@@ -34,7 +34,7 @@ const store = createStore({
             return state.leaders
         },
         filtered_cards: (state) => (fac) => {
-            return state.cards.filter(f => f.faction===fac.name)
+            return state.cards.filter(f => f.faction===fac.name || f.faction==='Neutral')
         },
         filtered_leaders: (state) => (fac) => {
             return state.leaders.filter(f => f.faction===fac.name)
