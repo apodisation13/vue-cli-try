@@ -205,6 +205,10 @@ export default {
         this.grave_filtered = this.grave.filter(card => card.type==="Unit")  // берем только Юнит
         this.show_resurrect_modal = true
         }
+
+      else if (this.hand[this.player_card_number].ability.name === 'draw-one-card') {
+        this.draw_one_card()
+      }
     },
 
     confirm_card_from_grave(dict) {
