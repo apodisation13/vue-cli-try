@@ -15,11 +15,11 @@
   </div>
   
   <div class="circle" v-if="leader.ability.name === 'damage-all'">
-    <span :style="{'font-size': '12pt'}">&#9850;</span>
+    <span>&#9850;</span>
   </div>
   
   <div class="charges">
-    <span>{{ leader.charges }}</span>
+    <span>{{ leader.charges }}&#8607;</span>
   </div>
 
 </div>
@@ -127,7 +127,7 @@ span {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 8pt;
+  font-size: 10pt;
 }
 
 .charges {
