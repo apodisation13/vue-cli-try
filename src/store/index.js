@@ -103,15 +103,15 @@ const store = createStore({
             get(decks).then(
                 (result) => { 
                     commit('get_decks', result)
-                    console.log(result[0])
+                    // console.log(result[0])
                     this.dispatch('set_deck_in_play', {deck: result[0]})
                 })
             get(levels).then(
                 (result) => {
                     commit('get_levels', result)
-                    console.log(result[0])
+                    // console.log(result[0])
                     commit('set_level', result[0])
-                    console.log(result[0].enemy_leader)
+                    // console.log(result[0].enemy_leader)
                     commit('set_enemy_leader', result[0].enemy_leader)
                 })
 
@@ -122,7 +122,7 @@ const store = createStore({
             commit('set_current_deck', deck.cards)
             commit('set_health', deck.health)
             commit('set_leader', deck.leader)
-            console.log(deck.health)
+            // console.log(deck.health)
         }
     }
 })
