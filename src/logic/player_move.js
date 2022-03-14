@@ -57,6 +57,10 @@ function damage_ai_card(i, field, hand, card_number, grave, enemy_leader, enemie
         damage_one(field[i], hand[card_number])
     }
 
+    else if (hand[card_number].ability.name === 'give-charges-to-card-in-hand-1') {
+        damage_one(field[i], hand[card_number])
+    }
+
     else if (hand[card_number].ability.name === 'heal') {
         damage_one(field[i], hand[card_number])
         heal(hand[card_number])
@@ -110,6 +114,10 @@ function damage_enemy_leader_by_card(enemy_leader, hand, card_number, grave, fie
     }
 
     else if (hand[card_number].ability.name === 'resurrect') {
+        damage_one(enemy_leader, hand[card_number])
+    }
+
+    else if (hand[card_number].ability.name === 'give-charges-to-card-in-hand-1') {
         damage_one(enemy_leader, hand[card_number])
     }
 
