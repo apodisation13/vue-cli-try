@@ -17,21 +17,28 @@
 
     <div class="circle" :style="{'backgroundColor': 'orange'}"
          v-if="card.ability.name === 'damage-all'">
-      <span :style="{'font-size': '12pt'}">&#9850;</span>
+      <span>&#9850;</span>
     </div>
     <div class="circle" :style="{'backgroundColor': 'green'}"
          v-else-if="card.ability.name === 'heal'">
-      <span>+&hearts;{{ card.heal }}</span>
+      <span :style="{'font-size': '8pt'}">+&hearts;{{ card.heal }}</span>
     </div>
     <div class="circle" :style="{'backgroundColor': 'purple'}"
          v-else-if="card.ability.name === 'resurrect'">
-      <span :style="{'font-size': '12pt'}">&#10014;&#8680;</span>
+      <span>&#10014;&#8680;</span>
+    </div>
+    <div class="circle" :style="{'backgroundColor': 'purple'}"
+         v-else-if="card.ability.name === 'draw-one-card'">
+      <span>&#127136;</span>
+    </div>
+    <div class="circle" :style="{'backgroundColor': 'purple'}"
+         v-else-if="card.ability.name === 'give-charges-to-card-in-hand-1'">
+      <span>+1&#8607;</span>
     </div>
 
 
-
     <div class="charges">
-      <span>{{ card.charges }}</span>
+      <span>{{ card.charges }}&#8607;</span>
     </div>
 
     <div class="hp" v-if="hp_needed">
@@ -122,7 +129,7 @@ span {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 8pt;
+  font-size: 10pt;
 }
 
 .charges {

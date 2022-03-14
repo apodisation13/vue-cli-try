@@ -20,7 +20,7 @@
 
       <div class="charges"></div>
       <h3> Заряды
-        <br>{{ card.charges }}
+        <br>{{ card.charges }}&#8607;
       </h3>
     </div>
 
@@ -36,6 +36,16 @@
          v-else-if="card.ability.name === 'resurrect'">
       <span>&#10014;&#8680;</span>
     </div>
+    <div class="circle" :style="{'backgroundColor': 'purple'}"
+         v-else-if="card.ability.name === 'draw-one-card'">
+      <span>&#127136;</span>
+    </div>
+    <div class="circle" :style="{'backgroundColor': 'purple'}"
+         v-else-if="card.ability.name === 'give-charges-to-card-in-hand-1'">
+      <span>+1&#8607;</span>
+    </div>
+
+
     <br>
     <p> {{ card.ability.description }} </p>
 

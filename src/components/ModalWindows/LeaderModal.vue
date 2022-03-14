@@ -15,7 +15,7 @@
 
       <div class="charges"></div>
       <h3> Заряды
-        <br>{{ leader.charges }}
+        <br>{{ leader.charges }}&#8607;
       </h3>
     </div>
 
