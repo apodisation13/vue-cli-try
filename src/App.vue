@@ -52,4 +52,9 @@ export default {
 /* body {
   background-image: url('~@/assets/grass.jpg');
 } */
+
+html,
+body {
+  overscroll-behavior-y: contain;
+}
 </style>
