@@ -19,21 +19,14 @@
         type: Array
       },
     },
-    data() {
-      return {
-        card: {},
-      }
-    },
     methods: {
       confirm_selection(i) {
-        // alert(i)
-        this.card = this.grave[i]
-        this.$emit('chosen_card', {card: this.card, i: i})
+        this.$emit('chosen_card', this.grave[i])
       },
     },
     emits: [
       'chosen_card'
-    ]
+    ],
   }
 </script>
 

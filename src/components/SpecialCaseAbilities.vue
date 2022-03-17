@@ -39,11 +39,11 @@ export default {
 
   },
   methods: {
-    chosen_card(emit) { // приходит из ResurrectModal - emit это {card: this.card, i: i}, карта и индекс
-      this.$emit('chosen_card', emit)
+    chosen_card(card) { // приходит из ResurrectModal - emit это вся карта, this.hand[i], выбранная
+      this.$emit('chosen_card', card)
     },
-    chosen_card_from_hsca(emit) {  // приходит из HSCA - emit это вся карта, this.hand[i] - выбранная
-      this.$emit('chosen_card_from_hsca', emit)
+    chosen_card_from_hsca(card) {  // приходит из HSCA - emit это вся карта, this.hand[i] - выбранная
+      this.$emit('chosen_card_from_hsca', card)
     },
   },
   emits: [
