@@ -208,25 +208,25 @@ export default {
       if (this.hand[this.player_card_number].ability.name === 'resurrect') {
           // откр окно с grave, приходит confirm_card_from_grave()
         this.grave_filtered = this.grave.filter(card => card.type==="Unit")  // берем только Юнит
-        this.show_resurrect_modal = true
-        }
+        if (this.grave_filtered.length) this.show_resurrect_modal = true
+      }
 
       else if (this.hand[this.player_card_number].ability.name === 'draw-one-card') {
         this.draw_one_card()
       }
 
       else if (this.hand[this.player_card_number].ability.name === 'give-charges-to-card-in-hand-1') {
-        this.show_hand_special_case_abilities = true
         this.hand_filtered = this.hand.filter(card => card.color==="Bronze" && card.id !== this.hand[this.player_card_number].id)
+        if (this.hand_filtered.length) this.show_hand_special_case_abilities = true
       }
     },
 
-    confirm_card_from_grave(dict) {
+    confirm_card_from_grave(card) {
+      card.charges = 1
+      this.hand.push(card)
+      let chosen_card = this.grave.filter(c => c===card)[0]  // ведь формально это Array
+      this.grave.splice(this.grave.indexOf(chosen_card), 1)
       this.show_resurrect_modal = false
-      this.grave_filtered = []  // обнуляем эту переменную, чтобы не забыть потом
-      dict.card.charges = 1
-      this.hand.push(dict.card)
-      this.grave.splice(dict.i, 1)
     },
 
     give_charges_to_card_in_hand(card) {
