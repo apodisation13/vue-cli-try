@@ -67,7 +67,7 @@ function damage_ai_card(i, field, hand, card_number, grave, enemy_leader, enemie
     }
 
     else if (hand[card_number].ability.name === 'damage-all') {
-       damage_all(field, hand[card_number])
+        damage_all(field, hand[card_number])
         enemy_leader.hp -= hand[card_number].damage
         if (enemy_leader.hp < 0) enemy_leader.hp = 0
     }
