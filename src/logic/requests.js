@@ -2,15 +2,6 @@ import axios from "axios";
 // import store from "@/store";
 
 
-// КОРЯВО!
-// function get(url, commit_name) {
-//     axios.get(url)
-//       .then(function (response) {
-//         store.commit(commit_name, response.data)
-//       })
-// }
-
-
 function try_post(body, url) {
     
     fetch(url, {
