@@ -31,7 +31,7 @@
 <!-- возможность вытянуть карту, дро -->
 <div class="draw">
   <draw-comp v-show="can_draw"
-  @click="draw_one_card"
+    @click="draw_one_card"
   />
 </div>
 
@@ -83,11 +83,12 @@ import {
   leader_move
 } from '@/logic/player_move'
 import {ai_move, leader_ai_move, leader_ai_move_once} from '@/logic/ai_move'
-import { calc_can_draw } from "@/logic/service"
-// import smth from '@/components/smth'
+import draw from '@/mixins/GamePage/draw'
 
 export default {
-  // mixins:[smth],
+  mixins: [
+      draw,
+  ],
   async created() {
     this.leader = await JSON.parse(JSON.stringify(this.$store.state.leader))
     this.enemy_leader = await JSON.parse(JSON.stringify(this.$store.state.enemy_leader))
@@ -110,7 +111,6 @@ export default {
       enemy_leader_active: false, // активен ли лидер противника
       
       player_card_number: null,  // номер карты игрока в руке
-      can_draw: false,  // возможность вытянуть карту
 
       grave_filtered: [],  // кладбище, но отфильтрованное, логикой ResurrectModal
       show_resurrect_modal: false,  // показать ResurrectModal, по card.ability.name==resurrect
@@ -198,7 +198,7 @@ export default {
       appear_new_enemy(this.field, this.enemies)  
       
       this.player_cards_active = true
-      this.can_draw = calc_can_draw(  // можем ли сделать draw
+      this.can_draw = this.calc_can_draw(  // можем ли сделать draw
         this.player_cards_active, this.hand, this.deck
       )  
     },
@@ -233,15 +233,6 @@ export default {
       let chosen_card = this.hand.filter(c => c===card)[0]  // ведь формально это Array
       chosen_card.charges += 1
       this.show_hand_special_case_abilities = false
-    },
-
-    // вытягивает в руку рандомную карту из деки, если рука не полна
-    draw_one_card() {
-      let random = Math.floor(Math.random() * this.deck.length);
-      this.hand.push(this.deck[random])
-      this.deck.splice(random, 1)  // удалить этот 0й элемент
-      this.player_cards_active = false
-      this.can_draw = false
     },
 
     // если ранее ткнули на карту игрока или лидера игрока,
