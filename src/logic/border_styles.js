@@ -1,9 +1,26 @@
-function border(card, index) {
+function border_for_hand(card, index) {
     if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon', 'z-index': 6 - index}
     else if (card.color === 'Silver') return {'border': 'solid 3px silver', 'z-index': 6 - index}
     else if (card.color === 'Gold') return {'border': 'solid 3px gold', 'z-index': 6 - index}
     else return {}
 }
+
+
+function border_for_card(card) {
+    if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon'}
+    else if (card.color === 'Silver') return {'border': 'solid 3px silver'}
+    else if (card.color === 'Gold') return {'border': 'solid 3px gold'}
+    else return {}
+}
+
+
+function border_leader(leader) {
+    if (leader.faction === 'Soldiers') return {'border': 'solid 3px blue'}
+    else if (leader.faction === 'Monsters') return {'border': 'solid 3px red'}
+    else if (leader.faction === 'Animals') return {'border': 'solid 3px green'}
+    else return {}
+}
+
 
 function background_color(card) {
     if (card.faction === 'Soldiers') {
@@ -37,8 +54,28 @@ function background_color(card) {
         }
         else return {'backgroundColor': 'green'}  
     }
+
+    else if (card.faction === 'Neutral') {
+        if (card.color === 'Bronze') return {'backgroundColor': 'brown'}
+        else if (card.color === 'Silver') {
+            return {'backgroundColor': 'brown', 'border': 'solid 2px silver'}
+        }
+        else if (card.color === 'Gold') {
+            return {'backgroundColor': 'brown', 'border': 'solid 2px gold'}
+        }
+        else return {'backgroundColor': 'brown'}
+    }
     
     else return {}
 }
 
-export { border, background_color }
+
+function background_color_deck(deck) {
+    if (deck.leader.faction === 'Soldiers') return {'backgroundColor': 'blue'}
+    else if (deck.leader.faction === 'Monsters') return {'backgroundColor': 'red'}
+    else if (deck.leader.faction === 'Animals') return {'backgroundColor': 'green'}
+    else return {}
+}
+
+
+export { border_for_hand, border_for_card, border_leader, background_color, background_color_deck }

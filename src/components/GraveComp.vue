@@ -6,7 +6,7 @@
   
   <div class="modal_window" v-if="flag">
     <button @click="flag=false">Закрыть</button><br>
-    <hand-comp :hand='grave'/> 
+    <cards-list :cards='grave'/>
   </div>
 
 </template>
@@ -43,8 +43,8 @@
 
 .modal_window {
   background-color: limegreen;
-  width: 80%;
-  height: 400px;
+  width: 100%;
+  height: 90%;
   border-radius: 12px;
   text-align: center;
   position: fixed;

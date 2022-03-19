@@ -4,11 +4,11 @@
       <tr v-for="i in 4" :key="i">
         <td v-for="j in 3" :key="j"
           @click.right="index=get_index(i,j); show_enemy_modal=true" 
-          @mouseleave="show_enemy_modal=false"
-          @click="exec_damage_ai_card(get_index(i,j))" 
+          @close_field_modal="show_enemy_modal=false"
+          @dblclick="exec_damage_ai_card(get_index(i,j))"
           @contextmenu.prevent
         >
-          <enemy-comp 
+          <enemy-comp v-if="field[get_index(i,j)]"
           :enemy='field[get_index(i,j)]'
           />
       </td>
@@ -16,10 +16,10 @@
   </table>
 </div>
 
-<field-modal v-if="field[index]" 
-:enemy='field[index]' 
-:flag='show_enemy_modal'
-/>
+<!--<field-modal v-if="field[index] && show_enemy_modal"-->
+<!--:enemy='field[index]'-->
+<!--@close_field_modal="show_enemy_modal=false"-->
+<!--/>-->
 
 </template>
 
@@ -45,7 +45,6 @@
       exec_damage_ai_card(i) {  // эмиттим номер (индекс) клетки поля
         this.$emit('exec_damage_ai_card', i)
       },
-
     },
     emits: [
       'exec_damage_ai_card',
@@ -74,7 +73,7 @@ table tr, td {
   height: 18vh;
   border: dashed 0.5px black;
   overflow: hidden;
-  position: relative;
+  /*position: relative;*/
 }
 
 </style>

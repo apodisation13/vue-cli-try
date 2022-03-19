@@ -1,9 +1,10 @@
 <template>
   <div class="modal_window">
-    <!-- <button @click="close">Закрыть</button><br> -->
-    
-    <hand-comp :hand='grave'
-    @chose_player_card='confirm_selection'
+    Щёлкните дважды для выбора карты
+
+    <cards-list
+        :cards='grave'
+        @chose_player_card='confirm_selection'
     /> 
   
   </div>
@@ -18,28 +19,14 @@
         type: Array
       },
     },
-    data() {
-      return {
-        card: {},
-        i: null,
-      }
-    },
     methods: {
       confirm_selection(i) {
-        // alert(i)
-        this.card = this.grave[i]
-        this.i = i
-        this.close()
+        this.$emit('chosen_card', this.grave[i])
       },
-      
-      close() {
-        this.$emit('chosen_card', {card: this.card, i: this.i})
-      }
     },
-
     emits: [
       'chosen_card'
-    ]
+    ],
   }
 </script>
 

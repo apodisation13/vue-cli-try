@@ -19,7 +19,7 @@
 <!-- лидер врага -->
 <enemy-leader 
 :enemy_leader="enemy_leader"
-@click="onLeaderClick"
+@exec_enemy_leader="onLeaderClick"
 />
 
 <!-- колода оставшихся врагов и кладбище врагов -->
@@ -56,15 +56,21 @@
 </div>
 
 <hand-comp
-:hand='hand'
-@chose_player_card='chose_player_card' 
+  :hand='hand'
+  @chose_player_card='chose_player_card'
 />
 
 </div>
-<resurrect-modal v-if="show_deck_modal_by_abilities"
-:grave='grave' 
-@chosen_card='confirm_card_from_grave'
+
+<special-case-abilities
+  :grave='grave_filtered'
+  :resurrect_modal="show_resurrect_modal"
+  :hand="hand_filtered"
+  :hand_special_case_abilities="show_hand_special_case_abilities"
+  @chosen_card='confirm_card_from_grave'
+  @chosen_card_from_hsca="give_charges_to_card_in_hand"
 />
+
 </template>
 
 <script>
@@ -105,7 +111,11 @@ export default {
       
       player_card_number: null,  // номер карты игрока в руке
       can_draw: false,  // возможность вытянуть карту
-      show_deck_modal_by_abilities: false,
+
+      grave_filtered: [],  // кладбище, но отфильтрованное, логикой ResurrectModal
+      show_resurrect_modal: false,  // показать ResurrectModal, по card.ability.name==resurrect
+      hand_filtered: [],   // рука, отфильтрованная для HandSpecialCaseAbilities
+      show_hand_special_case_abilities: false,  // показать HandSpecialCaseAbilities
     }
   },
   methods: {
@@ -195,17 +205,34 @@ export default {
 
     // особые абилки, которые требуют каких-либо окон
     special_case_abilities() {
-      if (this.hand[this.player_card_number].ability === 'resurrect') {
+      if (this.hand[this.player_card_number].ability.name === 'resurrect') {
           // откр окно с grave, приходит confirm_card_from_grave()
-          this.show_deck_modal_by_abilities = true 
-        }
+        this.grave_filtered = this.grave.filter(card => card.type==="Unit")  // берем только Юнит
+        if (this.grave_filtered.length) this.show_resurrect_modal = true
+      }
+
+      else if (this.hand[this.player_card_number].ability.name === 'draw-one-card') {
+        this.draw_one_card()
+      }
+
+      else if (this.hand[this.player_card_number].ability.name === 'give-charges-to-card-in-hand-1') {
+        this.hand_filtered = this.hand.filter(card => card.color==="Bronze" && card.id !== this.hand[this.player_card_number].id)
+        if (this.hand_filtered.length) this.show_hand_special_case_abilities = true
+      }
     },
 
-    confirm_card_from_grave(dict) {
-      this.show_deck_modal_by_abilities = false
-      dict.card.charges = 1
-      this.hand.push(dict.card)
-      this.grave.splice(dict.i, 1)
+    confirm_card_from_grave(card) {
+      card.charges = 1
+      this.hand.push(card)
+      let chosen_card = this.grave.filter(c => c===card)[0]  // ведь формально это Array
+      this.grave.splice(this.grave.indexOf(chosen_card), 1)
+      this.show_resurrect_modal = false
+    },
+
+    give_charges_to_card_in_hand(card) {
+      let chosen_card = this.hand.filter(c => c===card)[0]  // ведь формально это Array
+      chosen_card.charges += 1
+      this.show_hand_special_case_abilities = false
     },
 
     // вытягивает в руку рандомную карту из деки, если рука не полна

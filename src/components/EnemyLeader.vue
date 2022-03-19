@@ -1,19 +1,24 @@
 <template>
-<div class="enemy-leader">
+<div class="enemy-leader"
+     :style="border(enemy_leader)"
+     @contextmenu.prevent
+     @click.right="open_card_modal"
+     v-touch:longtap="open_card_modal"
+     @dblclick="exec_enemy_leader"
+>
   
-  <img class="img" :src="enemy_leader.image" alt="">
+  <img class="img" :src="enemy_leader.image" v-if="enemy_leader.hp > 0" alt="">
   
-  <div class="diamond" v-if="enemy_leader.damage_per_turn">
-    <span3>&dagger;{{ enemy_leader.damage_per_turn }}</span3> 
+  <div class="diamond"
+       :style="background_color(enemy_leader)"
+       v-if="enemy_leader.damage_per_turn"
+  >
+    <span class="span3">&dagger;{{ enemy_leader.damage_per_turn }}</span>
   </div>
   
   <div class="circle" v-if="enemy_leader.heal_self_per_turn">
     <span>+&hearts;{{ enemy_leader.heal_self_per_turn }}</span>
   </div>
-  
-  <!-- <div class="charges">
-    <span>2</span>
-  </div> -->
   
   <div class="hp">
     <span>&hearts;{{ enemy_leader.hp }}</span>
@@ -33,9 +38,18 @@
   </div>
 
 </div>
+
+  <enemy-leader-modal v-if="show_enemy_leader_modal"
+    :enemy_leader='enemy_leader'
+    @close_enemy_leader_modal="show_enemy_leader_modal=false"
+  />
+
 </template>
 
 <script>
+
+import {background_color, border_leader} from "@/logic/border_styles";
+
 export default {
   name: 'enemy-leader',
   props: {
@@ -44,7 +58,28 @@ export default {
       type: Object
     },
   },
-  
+  data() {
+    return {
+      show_enemy_leader_modal: false,
+    }
+  },
+  methods: {
+    open_card_modal() {
+      this.show_enemy_leader_modal = true
+    },
+    border(leader) {
+      return border_leader(leader)
+    },
+    background_color(leader) {
+      return background_color(leader)
+    },
+    exec_enemy_leader() {
+      this.$emit("exec_enemy_leader")
+    },
+  },
+  emits: [
+      'exec_enemy_leader'
+  ]
 }
 </script>
 
@@ -79,7 +114,7 @@ export default {
   border: solid 1px yellow;
 }
 
-span3 {
+.span3 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 25%;

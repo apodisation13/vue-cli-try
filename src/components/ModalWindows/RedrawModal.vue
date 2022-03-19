@@ -4,8 +4,9 @@
   <button class="close_button" @click="close_self">ПРИНЯТЬ</button>
   <br>
  
-  <hand-comp :hand='hand_current' 
-  @chose_player_card='chose_player_card' 
+  <cards-list
+      :cards='hand_current'
+      @chose_player_card='chose_player_card'
   />
   <br>
 

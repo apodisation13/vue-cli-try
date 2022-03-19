@@ -5,6 +5,16 @@ import { useToast } from 'vue-toastification'
 const toast = useToast()
 
 
+// в начале хода компа установит всем врагам, кто должен прыгать, false
+function set_already_jumped(field) {
+  for (let i = 11; i >= 0; i--) {
+    if (field[i] && field[i].already_jumped) {
+      field[i].already_jumped = false
+    }
+  }
+}
+
+
 function stand_still(field, i) {
   store.commit('change_health', -field[i].damage)
   toast.error('враг стоит и долбит тебя))')
@@ -12,21 +22,20 @@ function stand_still(field, i) {
 }
 
 
-function random_move(field, i, status) {
-  if (!status) {
-    let random = Math.floor(Math.random() * field.length)
-    if (field[random]) {
-      store.commit('change_health', -field[i].damage)
-      toast.error('враг хотел прыгнуть туда где уже есть враг и нанёс урон')
-      check_lose(store.state.health)
-    }
-    else {
-      field[random] = field[i]  // враг прыгнул рандом клетку
-      field[i] = ''
-      toast.info(`враг прыгнул на клетку ${random}`)
-    }
-    status = true
-    return status
+function random_move(field, i) {
+  let random = Math.floor(Math.random() * field.length)
+  if (field[random]) {
+    store.commit('change_health', -field[i].damage)
+    toast.error('враг хотел прыгнуть туда где уже есть враг и нанёс урон')
+    console.log(`враг c ${i}, хотел на ${random}, а там враг`)
+    check_lose(store.state.health)
+  }
+  else {
+    console.log(`враг c ${i}, хотел на ${random}, и прыгнул`)
+    field[i]['already_jumped'] = true  // он уже прыгнул, чтобы потом не прыгать ещё раз
+    field[random] = field[i]  // враг прыгнул рандом клетку
+    field[i] = ''
+    toast.info(`враг прыгнул на клетку ${random}`)
   }
 }
 
@@ -44,7 +53,7 @@ function down_move(field, i) {
       store.commit('change_health', -field[i].damage)
       toast.error('враг нанёс урон, потому что ему некуда ходить')
     }
-    // ДЛЯ ОСТАЛЬНЫХ, КОМУ ЕСТЬ КУДА ПОХОДИТЬ
+    // ДЛЯ ОСТАЛЬНЫХ, КОМУ ЕСТЬ КУДА ПОХОДИТЬzz
     else {
       field[i+3] = field[i]  // типа враг прыгнул на клеточку ниже
       field[i] = ''
@@ -57,19 +66,19 @@ function down_move(field, i) {
 
 
 function ai_move(field) {
-  // alert('ход компа')
-  let already_randomly_jumped = false
+
+  set_already_jumped(field)  // установить false параметр enemy.already_jumped
 
   for (let i = 11; i >= 0; i--) {
     if (field[i]) {
 
-      if (field[i].move === "stand") {
+      if (field[i].move.name === "stand") {
         stand_still(field, i)
       }
-      else if (field[i].move === "random") {
-        already_randomly_jumped = random_move(field, i, already_randomly_jumped )
+      else if (field[i].move.name === "random" && !field[i].already_jumped) {
+        random_move(field, i)
       }
-      else if (field[i].move === "down") { 
+      else if (field[i].move.name === "down") {
         down_move(field, i)
       }
     

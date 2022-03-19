@@ -1,43 +1,40 @@
 <template>
 
 <div class="leader"
+  :style="border(leader)"
   @contextmenu.prevent
-  @click.right="show_card_modal=true" @mouseleave="show_card_modal=false"
-  @click="exec_leader"
+  @click.right="open_card_modal"
+  v-touch:longtap="open_card_modal"
+  @dblclick="exec_leader"
 >
-  
-  <!-- {{ leader.ability }} -->
 
-  <img class="img" :src="leader.image" v-if="leader.image" alt="">
-  
-  <div class="diamond">
-    <span3>&dagger;{{ leader.damage }}</span3> 
+  <img class="img" :src="leader.image" v-if="leader.charges > 0" alt="">
+
+  <div class="diamond" :style="background_color(leader)">
+    <span class="span3">&dagger;{{ leader.damage }}</span>
   </div>
   
-  <!-- <div class="circle">
-    <span>+&hearts;2</span>
-  </div> -->
+  <div class="circle" v-if="leader.ability.name === 'damage-all'">
+    <span>&#9850;</span>
+  </div>
   
   <div class="charges">
-    <span>{{ leader.charges }}</span>
+    <span>{{ leader.charges }}&#8607;</span>
   </div>
-  
-  <!-- <div class="typee">
-    <span>&starf;</span>
-  </div> -->
 
 </div>
 
-<card-modal 
-:card='leader' 
-:show_card_modal='show_card_modal'
+<leader-modal
+    v-if="show_card_modal"
+    :leader='leader'
+    @close_leader_modal="show_card_modal=false"
 />
 
 
 </template>
 
 <script>
-import { background_color } from '@/logic/border_styles'
+import { border_leader, background_color } from '@/logic/border_styles'
   export default {
     name: "leader-comp",
     props: {
@@ -54,6 +51,15 @@ import { background_color } from '@/logic/border_styles'
     methods: {
       exec_leader() {
         this.$emit("exec_leader")
+      },
+      open_card_modal() {
+        this.show_card_modal = true
+      },
+      border(leader) {
+        return border_leader(leader)
+      },
+      background_color(leader) {
+        return background_color(leader)
       },
     },
 
@@ -73,7 +79,7 @@ import { background_color } from '@/logic/border_styles'
   margin-bottom: 2px;
   margin-top: 2px;
   position: relative;
-  border: solid 1px black;
+  /*border: solid 1px black;*/
 }
 
 .img {
@@ -96,7 +102,7 @@ import { background_color } from '@/logic/border_styles'
   border: solid 1px yellow;
 }
 
-span3 {
+.span3 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 25%;
@@ -106,22 +112,22 @@ span3 {
   transform:  rotateZ(-45deg);
 }
 
-/* .circle {
+.circle {
   position: absolute;
   width: 34%;
   height: 4vh;
   border-radius: 50%;
   top: 30%;
   right: 3%;
-  background: gray;
-} */
+  background: orange;
+}
 
 span {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 8pt;
+  font-size: 10pt;
 }
 
 .charges {
