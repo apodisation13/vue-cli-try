@@ -17,7 +17,7 @@ function set_already_jumped(field) {
 
 function stand_still(field, i) {
   store.commit('change_health', -field[i].damage)
-  toast.error('враг стоит и долбит тебя))')
+  toast.error(`враг стоит и нанёс урон ${field[i].damage}`)
   check_lose(store.state.health)
 }
 
@@ -26,8 +26,8 @@ function random_move(field, i) {
   let random = Math.floor(Math.random() * field.length)
   if (field[random]) {
     store.commit('change_health', -field[i].damage)
-    toast.error('враг хотел прыгнуть туда где уже есть враг и нанёс урон')
-    console.log(`враг c ${i}, хотел на ${random}, а там враг`)
+    toast.error(`враг c ${i} хотел прыгнуть на ${random} и нанёс урон ${field[i].damage}`)
+    // console.log(`враг c ${i}, хотел на ${random}, а там враг`)
     check_lose(store.state.health)
   }
   else {
@@ -44,14 +44,14 @@ function down_move(field, i) {
   // враги которые уже стоят внизу
   if (i >= 9) {
     store.commit('change_health', -field[i].damage)
-    toast.error('враг внизу нанёс урон')
+    toast.error(`враг внизу нанёс урон ${field[i].damage}`)
   }
   // ДЛЯ ОСТАЛЬНЫХ ВРАГОВ
   else {
     // ЕСЛИ У ВРАГА ЕСТЬ ВРАГ ПОД НИМ ВНИЗУ
     if (field[i+3]) {
       store.commit('change_health', -field[i].damage)
-      toast.error('враг нанёс урон, потому что ему некуда ходить')
+      toast.error(`враг нанёс урон ${field[i].damage}, потому что ему некуда ходить`)
     }
     // ДЛЯ ОСТАЛЬНЫХ, КОМУ ЕСТЬ КУДА ПОХОДИТЬzz
     else {
@@ -109,7 +109,7 @@ function leader_ai_move(leader) {
 
   else if (leader.ability.name === "damage-per-turn") {
     store.commit('change_health', -leader.damage_per_turn)
-    toast.error(`лидер пнул вас на ${leader.damage_per_turn}`)
+    toast.error(`лидер нанёс вам ${leader.damage_per_turn} урона`)
     check_lose(store.state.health)
   }
 }

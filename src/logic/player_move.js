@@ -13,7 +13,7 @@ function heal(card) {
 function damage_one(enemy, card) {
     enemy.hp -= card.damage  // нанесли урон и-тому элементу от конкретной карты
     card.charges -= 1  // вычитаем 1 заряд у карты игрока
-    toast.info('ЖИЗНИ ' + enemy.hp + ' после урона')
+    // toast.info('ЖИЗНИ ' + enemy.hp + ' после урона')
 }
 
 function damage_all(field, card) {
@@ -67,7 +67,7 @@ function damage_ai_card(i, field, hand, card_number, grave, enemy_leader, enemie
     }
 
     else if (hand[card_number].ability.name === 'damage-all') {
-       damage_all(field, hand[card_number])
+        damage_all(field, hand[card_number])
         enemy_leader.hp -= hand[card_number].damage
         if (enemy_leader.hp < 0) enemy_leader.hp = 0
     }
@@ -118,6 +118,10 @@ function damage_enemy_leader_by_card(enemy_leader, hand, card_number, grave, fie
     }
 
     else if (hand[card_number].ability.name === 'give-charges-to-card-in-hand-1') {
+        damage_one(enemy_leader, hand[card_number])
+    }
+
+    else if (hand[card_number].ability.name === 'draw-one-card') {
         damage_one(enemy_leader, hand[card_number])
     }
 

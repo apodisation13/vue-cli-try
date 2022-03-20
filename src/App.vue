@@ -13,7 +13,7 @@
 
 <script>
 
-import MenuBar from './components/MenuBar'
+import MenuBar from './components/UI/MenuBar'
 
 export default {
   components: { 
@@ -21,17 +21,9 @@ export default {
   },
   
   mounted() {  // вот так можно вызвать Экшен прям по загрузке сайта
-    // this.$store.dispatch('set_try')
     this.$store.dispatch('get_data')
   },
 
-  // created() { 
-  //   this.$store.dispatch('get_data')
-  // },
-
-  // beforeRouteEnter (to, from, next) {
-  //   this.$store.dispatch('get_data')
-  // }
 }
 
 </script>
@@ -53,8 +45,8 @@ export default {
   background-image: url('~@/assets/grass.jpg');
 } */
 
-html,
-body {
+/*заблокировать перезагрузку страницы на мобилке по прокрутке вверх*/
+html, body {
   overscroll-behavior-y: contain;
 }
 </style>
