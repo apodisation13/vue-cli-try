@@ -1,7 +1,6 @@
 <template>
   <div class="selected_deck" v-if="$store.state.current_deck.length > 0">
-    ВЫБРАННАЯ ДЕКА - <br>
-    Жизни {{ $store.state.health }} <br>
+    ВЫБРАННАЯ ДЕКА - Жизни {{ $store.state.health }} <br>
     Лидер {{ $store.state.leader.name }}
   </div>
 
@@ -56,7 +55,7 @@ export default {
 
 .selected_deck {
   width: 95%;
-  height: 10vh;
+  height: 6vh;
   border: solid 1px black;
   margin: 1%;
 }
