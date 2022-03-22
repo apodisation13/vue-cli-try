@@ -34,4 +34,10 @@ async function get(url) {
 }
 
 
-export { try_post, try_delete, get }
+async function post(url, body) {
+    let response = await axios.post(url, body)
+    return response.data
+}
+
+
+export { try_post, try_delete, get, post}
