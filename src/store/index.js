@@ -1,5 +1,5 @@
 import { createStore } from "vuex"
-import { get, post } from '@/logic/requests'
+import { get, post, axios_delete } from '@/logic/requests'
 
 
 // ИНСТРУКЦИЯ:
@@ -99,50 +99,42 @@ const store = createStore({
     // вызывает мутацию, выполняясь через store.dispatch('название')
     actions: {  
         async get_data({commit}) {
-
             get(factions).then((result) => commit('get_factions', result))
             get(leaders).then((result) => commit('get_leaders', result))
             get(cards).then((result) => commit('get_cards', result))
-            get(decks).then(
-                (result) => { 
-                    commit('get_decks', result)
-                    // console.log(result[0])
-                    this.dispatch('set_deck_in_play', {deck: result[0]})
-                })
             get(levels).then(
                 (result) => {
                     commit('get_levels', result)
-                    // console.log(result[0])
                     commit('set_level', result[0])
-                    // console.log(result[0].enemy_leader)
                     commit('set_enemy_leader', result[0].enemy_leader)
                 })
+            this.dispatch('get_decks')
+        },
+
+        async get_decks({commit}) {
+            get(decks).then(
+                (result) => {
+                    commit('get_decks', result)
+                    this.dispatch('set_deck_in_play', {deck: result[0]})
+                }
+            )
         },
 
         set_deck_in_play({commit}, {deck}) {
             commit('set_current_deck', deck.cards)
             commit('set_health', deck.health)
             commit('set_leader', deck.leader)
-            // console.log(deck.health)
         },
 
         // выполняется по добавлении новой деки со страницы DeckBuilder
-        async get_decks({commit}, {body}) {
-            post(decks, body).then(
-                () => {
-                    get(decks).then(
-                        (result) => {
-                            commit('get_decks', result)
-                            this.dispatch('set_deck_in_play', {deck: result[0]})
-                        })
-                }
-            )
+        async post_deck_get_decks({commit}, {body}) {
+            post(decks, body).then(() => this.dispatch('get_decks'))
+        },
 
-            // get(decks).then(
-            //     (result) => {
-            //         commit('get_decks', result)
-            //         this.dispatch('set_deck_in_play', {deck: result[0]})
-            //     })
+        // выполняется по удалению деки id со страницы DeckBuilder
+        async delete_deck({commit}, {id}) {
+            let url = `${decks}${id}/`
+            axios_delete(url).then(() => this.dispatch('get_decks'))
         },
     }
 })

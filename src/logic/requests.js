@@ -39,5 +39,10 @@ async function post(url, body) {
     return response.data
 }
 
+async function axios_delete(url) {
+    let response = await axios.delete(url)
+    return response.data
+}
 
-export { try_post, try_delete, get, post}
+
+export { try_post, try_delete, get, post, axios_delete}
