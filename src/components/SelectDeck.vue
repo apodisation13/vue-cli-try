@@ -1,5 +1,5 @@
 <template>
-  <div class="selected_deck" v-if="$store.state.current_deck.length > 0">
+  <div class="selected_deck" v-if="$store.state.current_deck.length > 0 && !deckbuilder">
     ВЫБРАННАЯ ДЕКА - Жизни {{ $store.state.health }} <br>
     Лидер {{ $store.state.leader.name }}
   </div>
@@ -7,16 +7,37 @@
   <div class="deck_pool">
     ВЫБЕРЕТЕ ДЕКУ (дважды ЛКМ)<br>
 
-    <div class="deck" :style="background_color(deck)"
+    <div class="deck"
+         :style="background_color(deck)"
          v-for="(deck, index) in decks" :key='deck'
          @dblclick="select_deck(index)"
     >
 
+
       <deck-preview-comp
-        :deck="deck"
+          :deck="deck"
       />
 
+      <button v-if="deckbuilder && deck.id !== 1"
+        @click="change_deck(deck)"
+      >
+        Изменить
+      </button>
+
+      <button v-if="deckbuilder && deck.id !== 1"
+        @click="delete_deck(deck)"
+      >
+        Удалить
+      </button>
+
     </div>
+
+    <yesno-modal
+        :visible='show_yesno'
+        @confirm='confirm_delete'
+        @cancel='cancel_delete'
+    />
+
   </div>
 
 
@@ -26,9 +47,17 @@
 import { background_color_deck } from '@/logic/border_styles'
 export default {
   name: 'select-deck',
+  props: {
+    deckbuilder: {  // отображать или нет выбранная дека, отображать или нет кнопки изменить\удалить
+      default: false,
+      type: Boolean,
+    },
+  },
   data() {
     return {
-      is_selected: false,  // какая-то дека выбрана
+      is_selected: false,  // хоть какая-то дека выбрана
+      show_yesno: false, // показать да\нет по кнопке удалить деку
+      deck_id: undefined, // id деки, которую надо удалить
     }
   },
   methods: {
@@ -40,6 +69,24 @@ export default {
     select_deck(i) {
       this.is_selected = true
       this.$store.dispatch("set_deck_in_play", {deck: this.decks[i]})
+    },
+
+    delete_deck(deck) {
+      this.show_yesno = true
+      this.deck_id = deck.id  // запоминаем id деки, которую надо удалить
+    },
+
+    confirm_delete() {
+      this.show_yesno = false
+      this.$store.dispatch("delete_deck", {id: this.deck_id})
+    },
+
+    cancel_delete() {
+      this.show_yesno = false
+    },
+
+    change_deck(deck) {
+      alert(deck.id)
     },
   },
 
@@ -69,12 +116,12 @@ export default {
 }
 
 .deck {
-  margin: 1%;
   width: 95%;
   height: 20%;
   font-size: 10pt;
   border-radius: 5%;
   padding-left: 1%;
+  margin: 1% 1% 3%;
 }
 
 </style>
