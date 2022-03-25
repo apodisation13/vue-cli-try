@@ -19,11 +19,13 @@
 
 <!-- новая дека + фракции из стора -->
 <div class="new_deck">
-  <button class="btn_save_deck" @click="new_deck()">
-  new deck</button>
+  <button class="btn"
+    @click="new_deck()">
+    new+
+  </button>
   <div class="factions"
-    v-for="faction in $store.state.factions" :key="faction">
-      <button class="btn_save_deck"
+    v-for="faction in factions" :key="faction">
+      <button class="btn"
         @click="filtering(faction)">
         {{ faction.name }}
       </button>
@@ -45,29 +47,32 @@
   </div>
 </div>
 
-Лидер: {{ leader_selected }} <br>
-Размер деки: {{ deck_is_progress.length }}/{{ $store.state.cards_in_deck }} <br>
-Жизни деки: {{ health }} <br>
+  Лидер: {{ leader_selected }}
+  Размер: {{ deck_is_progress.length }}/{{ $store.state.cards_in_deck }}
+  Жизни: {{ health }} <br>
+  <button class="btn_save_deck"
+    v-show="this.deck_is_progress.length === this.$store.state.cards_in_deck && this.leader_selected"
+    @click="save_deck"
+  >
+    СОХРАНИТЬ ДЕКУ
+  </button>
 
-<button class="btn_save_deck" :style="save_btn_style"
-@click="save_deck">
-СОХРАНИТЬ ДЕКУ
-</button>
 
+<br>
+<div class="decks_btn"
+  @click="open_decks_list_modal"
+>
+  КОЛОДЫ!
+</div>
 
-<!-- выбор деки для редакирования и просмотра -->
-<select-deck 
-@emit_state_deck_index="show_deck"
+<decks-list-modal
+    v-if="show_decks_list_modal"
+    @close_decks_list_modal="show_decks_list_modal=false"
 />
-
 
 </template>
 
 <script>
-
-import { try_post, get } from '@/logic/requests'
-
-
 export default {
   data() {
     return {       
@@ -78,12 +83,11 @@ export default {
       health: 0,  // жизни текущей деки
       deck_body: [],  // только {card: id} для пост-запроса
       
-      number: 1,  // для сохранения деки имя1, имя2, имя3 итп
-      
       faction_selected: false,  // выбрана ли фракция, можно ли добавить лидера в деку
       leader_selected: false,  // выбран лидер или нет
       leader_index: null,  // индекс выбранного лидера
-      
+
+      show_decks_list_modal: false,  // показать окно с колодами
     }
   },
 
@@ -116,21 +120,21 @@ export default {
           this.deck_body.push({"card": this.pool[i].id})  
           this.health = this.health + this.pool[i].hp
       }
-      else {alert('нельзя карту добавить ещё раз или карт больше 10')}
+      else {alert('нельзя карту добавить ещё раз или карт больше 12')}
     },
 
     // выбираем лидера для деки
     chose_leader(i) {
-      if (this.faction_selected) {
-        this.leader_selected = true
-        this.leader_index = i
-        this.leader_in_progress = this.leaders[i]
+      if (!this.faction_selected) {
+        alert('выберете фракцию!')
+        return
       }
-      else alert('выберете фракцию!')
-      
+      this.leader_selected = true
+      this.leader_index = i
+      this.leader_in_progress = this.leaders[i]
     },
 
-    // удалить из деки в процессе по нажатию ЛКМ
+    // удалить из деки в процессе по нажатию дважды ЛКМ
     delete_from_deck_in_progress(i) {
       this.health -= this.deck_is_progress[i].hp
       this.deck_is_progress.splice(i, 1)
@@ -138,34 +142,25 @@ export default {
     },
 
     save_deck() {
-      if (  // карт ровно 10 и лидер выбран
-        this.deck_is_progress.length === this.$store.state.cards_in_deck
-        && this.leader_selected
-      ) 
-      {
-        alert(this.leaders[this.leader_index].name)
-        let deck_name = `deck-${this.number}`
-        let body = {
-          name: deck_name,
-          health: this.health,
-          d: this.deck_body,
-          leader_id: this.leaders[this.leader_index].id
-        }
-
-        let url = 'http://194.67.109.190:82/api/v1/decks/'
-        try_post(body, url)
-
-        this.number += 1  // +1 для следующего имени деки
-        
-        this.new_deck()  // всё обнуляем!
-        alert('сохранили деку')
-
-        // this.$refs.deckselection.get_decks()  // обновляем деки после сохран
-        let decks = 'http://194.67.109.190:82/api/v1/decks/'
-        get(decks, 'get_decks')
+      // карт ровно 12 и лидер выбран
+      if (this.deck_is_progress.length !== this.$store.state.cards_in_deck || !this.leader_selected) {
+        alert('меньше 12 карт, или не выбран лидер')
+        return
       }
 
-      else {alert('меньше 10 карт, или не выбран лидер')}
+      // alert(this.leaders[this.leader_index].name)
+      let deck_name = 'deck-abcd'
+      let body = {
+        name: deck_name,
+        health: this.health,
+        d: this.deck_body,
+        leader_id: this.leaders[this.leader_index].id
+      }
+
+      this.$store.dispatch('post_deck_get_decks', {body: body})
+
+      this.new_deck()  // всё обнуляем!
+      alert('сохранили деку')
     },
 
     show_deck(index) {
@@ -174,7 +169,10 @@ export default {
       this.leader_in_progress = this.$store.state.decks[index].leader
       this.leader_selected = true
     },
-    
+
+    open_decks_list_modal() {
+      this.show_decks_list_modal = true
+    },
   },
 
   computed: {
@@ -185,6 +183,9 @@ export default {
     leaders() {
       if (!this.faction) return this.$store.getters.all_leaders
       else return this.$store.getters.filtered_leaders(this.faction)
+    },
+    factions() {
+      return this.$store.state.factions.slice(1)
     },
     save_btn_style() {
       if (this.deck_is_progress.length < this.$store.state.cards_in_deck
@@ -199,63 +200,77 @@ export default {
 </script>
 
 <style scoped>
+/*база карт*/
 .card_pool_view {
-  /* width: 800px; */
-  width: 99%;
-  height: 330px;
+  width: 80%;
+  height: 30vh;
   border: solid 1px black;
-  margin: 3px;
+  margin: 1px;
   overflow: scroll;
-  position: relative;
 }
 
+/*база лидеров*/
 .leader_pool_view {
-  width: 99%;
-  height: 180px;
+  width: 80%;
+  height: 18vh;
   border: solid 1px black;
-  margin: 3px;
+  margin: 1px;
   overflow: scroll;
 }
 
+/*область новая дека + фракции*/
 .new_deck {
-  margin: 3px;
-  margin-top: 10px;
+  width: 98%;
+  height: 7vh;
+  margin: 1%;
+  position: relative;
+  display: inline;
 }
 
+/*сами фракции*/
 .factions {
   display: inline;
-  margin: 10px;
+  margin: 1%;
 }
 
 .deck_in_progress { 
   /* два дива в один ряд! */
-  margin: 3px;
-  margin-top: 10px;
+  margin: 1%;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  height: 24vh;
 }
 
 .leader {
-  /* width: 130px; */
-  width: 10%;
-  height: 190px;
+  width: 18%;
   border: dashed 1px black;
-  margin: 3px;
 }
 
 .deck_build_view {
-  width: 89%;
-  height: 180px;
+  width: 80%;
   border: solid 1px black;
-  margin: 3px;
   overflow: scroll;
 }
 
+.btn {
+  width: 23%;
+  height: 6vh;
+}
+
 .btn_save_deck {
-  /* width: 100px; */
-  width: 15%;
-  height: 50px;
+  width: 23%;
+  height: 6vh;
+  background-color: green;
+}
+
+/*кнопка КОЛОДЫ*/
+.decks_btn {
+  height: 5vh;
+  width: 50%;
+  border: solid 2px green;
+  text-align: center;
+  margin: 1% auto auto;
 }
 
 </style>

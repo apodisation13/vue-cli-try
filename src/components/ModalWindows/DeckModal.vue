@@ -3,6 +3,10 @@
 
      <button @click="close_self">Закрыть</button><br>
 
+     <div class="leader">
+       <leader-comp :leader="leader" />
+     </div>
+
      <cards-list :cards='deck' />
 
    </div>
@@ -13,6 +17,10 @@ export default {
   name: "deck-modal",
   props: {
     deck: {
+      type: Object,
+      required: true,
+    },
+    leader: {
       type: Object,
       required: true,
     },
@@ -40,5 +48,15 @@ export default {
   left: 50%;
   transform: translate(-50%, -53%);
   z-index: 9999;
+}
+
+.leader {
+  height: 18vh;
+  width: 30%;
+  border-radius: 2%;
+  margin-bottom: 2px;
+  margin-top: 2px;
+  position: relative;
+  /*border: solid 1px black;*/
 }
 </style>

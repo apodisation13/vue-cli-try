@@ -13,6 +13,7 @@
   <deck-modal
     v-if="show_deck"
     :deck="deck.cards"
+    :leader="deck.leader"
     @close_deck_modal="show_deck=false"
   />
 

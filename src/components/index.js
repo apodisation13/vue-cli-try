@@ -30,6 +30,7 @@ import EnemyLeaderModal from "@/components/ModalWindows/EnemyLeaderModal"
 import LevelModal from '@/components/ModalWindows/LevelModal'
 import DeckModal from '@/components/ModalWindows/DeckModal'
 import HandSpecialCaseAbilities from "@/components/ModalWindows/HandSpecialCaseAbilities"
+import DecksListModal from "@/components/ModalWindows/DecksListModal"
 
 export default [
     HealthComp,
@@ -63,6 +64,7 @@ export default [
     EnemyLeaderModal,
     LevelModal,
     DeckModal,
+    DecksListModal,
 
     HandSpecialCaseAbilities,
     

@@ -1,11 +1,24 @@
 import { createStore } from "vuex"
-import { get } from '@/logic/requests'
+import { get, post, axios_delete } from '@/logic/requests'
 
 
 // ИНСТРУКЦИЯ:
 // в шаблонах $store. state, getters['name'], commit('name', чё) для мутаций
 // в .vue - this.$store. и то же самое
 // в .js - ИМПОРТ store отсюда, и тогда store.  а дальше то же
+
+
+// let factions = 'http://127.0.0.1:8000/api/v1/factions/'
+// let leaders = 'http://127.0.0.1:8000/api/v1/leaders/'
+// let cards = 'http://127.0.0.1:8000/api/v1/cards/'
+// let decks = 'http://127.0.0.1:8000/api/v1/decks/'
+// let levels = 'http://127.0.0.1:8000/api/v1/levels/'
+
+let factions = 'http://194.67.109.190:82/api/v1/factions/'
+let leaders = 'http://194.67.109.190:82/api/v1/leaders/'
+let cards = 'http://194.67.109.190:82/api/v1/cards/'
+let decks = 'http://194.67.109.190:82/api/v1/decks/'
+let levels = 'http://194.67.109.190:82/api/v1/levels/'
 
 
 const store = createStore({
@@ -86,45 +99,43 @@ const store = createStore({
     // вызывает мутацию, выполняясь через store.dispatch('название')
     actions: {  
         async get_data({commit}) {
-            // let factions = 'http://127.0.0.1:8000/api/v1/factions/'
-            // let leaders = 'http://127.0.0.1:8000/api/v1/leaders/'
-            // let cards = 'http://127.0.0.1:8000/api/v1/cards/'
-            // let decks = 'http://127.0.0.1:8000/api/v1/decks/' 
-            // let levels = 'http://127.0.0.1:8000/api/v1/levels/'          
-            
-            let factions = 'http://194.67.109.190:82/api/v1/factions/'
-            let leaders = 'http://194.67.109.190:82/api/v1/leaders/'
-            let cards = 'http://194.67.109.190:82/api/v1/cards/'
-            let decks = 'http://194.67.109.190:82/api/v1/decks/' 
-            let levels = 'http://194.67.109.190:82/api/v1/levels/' 
-            
             get(factions).then((result) => commit('get_factions', result))
             get(leaders).then((result) => commit('get_leaders', result))
             get(cards).then((result) => commit('get_cards', result))
-            get(decks).then(
-                (result) => { 
-                    commit('get_decks', result)
-                    // console.log(result[0])
-                    this.dispatch('set_deck_in_play', {deck: result[0]})
-                })
             get(levels).then(
                 (result) => {
                     commit('get_levels', result)
-                    // console.log(result[0])
                     commit('set_level', result[0])
-                    // console.log(result[0].enemy_leader)
                     commit('set_enemy_leader', result[0].enemy_leader)
                 })
+            this.dispatch('get_decks')
+        },
 
-            // commit('set_try', 10)
+        async get_decks({commit}) {
+            get(decks).then(
+                (result) => {
+                    commit('get_decks', result)
+                    this.dispatch('set_deck_in_play', {deck: result[0]})
+                }
+            )
         },
 
         set_deck_in_play({commit}, {deck}) {
             commit('set_current_deck', deck.cards)
             commit('set_health', deck.health)
             commit('set_leader', deck.leader)
-            // console.log(deck.health)
-        }
+        },
+
+        // выполняется по добавлении новой деки со страницы DeckBuilder
+        async post_deck_get_decks({commit}, {body}) {
+            post(decks, body).then(() => this.dispatch('get_decks'))
+        },
+
+        // выполняется по удалению деки id со страницы DeckBuilder
+        async delete_deck({commit}, {id}) {
+            let url = `${decks}${id}/`
+            axios_delete(url).then(() => this.dispatch('get_decks'))
+        },
     }
 })
 
