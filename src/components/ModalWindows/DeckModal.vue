@@ -1,5 +1,5 @@
 <template>
-   <div class="modal_window">
+   <div class="modal_window" v-touch:swipe="close_self">
 
      <button @click="close_self">Закрыть</button><br>
 
