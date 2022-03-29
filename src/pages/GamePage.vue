@@ -67,8 +67,11 @@
   :resurrect_modal="show_resurrect_modal"
   :hand="hand_filtered"
   :hand_special_case_abilities="show_hand_special_case_abilities"
+  :deck="deck_filtered"
+  :play_from_deck="show_play_from_deck"
   @chosen_card='confirm_card_from_grave'
   @chosen_card_from_hsca="give_charges_to_card_in_hand"
+  @chosen_card_from_deck="chosen_card_from_deck"
 />
 
 </template>
@@ -88,12 +91,8 @@ import specialcaseabilities from "@/mixins/GamePage/specialcaseabilities"
 
 export default {
   mixins: [
-    draw,  // can_draw; calc_can_draw, draw_one_card
-
-    // grave_filtered, show_resurrect_modal, hand_filtered, show_hand_special_case_abilities;
-    // special_case_abilities, confirm_card_from_grave, give_charges_to_card_in_hand
+    draw,
     specialcaseabilities,
-
   ],
 
   async created() {
@@ -117,8 +116,8 @@ export default {
       leader_active: false, // активен ли лидер
       ai_cards_active: false,  // активны ли карты поля
       enemy_leader_active: false, // активен ли лидер противника
-      
-      player_card_number: null,  // номер карты игрока в руке
+
+      selected_card: null,  // объект выбранной карты путём дважды ЛКМ на карте в руке
     }
   },
   methods: {
@@ -137,12 +136,12 @@ export default {
       leader_ai_move_once(this.enemy_leader)  // функция урона лидера в начале
     },
 
-    // > по нажатию на карту игрока, из hand-comp, i - номер карты
-    chose_player_card(i) {
+    // > по нажатию на карту игрока, из hand-comp, card - вся карта целиком
+    chose_player_card(card) {
       if (!this.player_cards_active) return
 
-      this.player_card_number = i  // запомнить номер карты игрока
-      alert('УРОН ' + this.hand[i].damage + '  заряды ' + this.hand[i].charges)
+      this.selected_card = card  // ВОТ ЗДЕСЬ МЫ ЗАПОМНИЛИ КАРТУ ИЗ РУКИ НА КОТОРУЮ ТКНУЛИ
+      alert('УРОН ' + this.selected_card.damage + '  заряды ' + this.selected_card.charges)
       this.ai_cards_active = true  // только теперь можно тыкать на карты противника!!!!!!!!!!!!!!
       this.enemy_leader_active = true  // и лидер врагов активен тоже
       this.leader_active = false // а лидер теперь неактивен
@@ -173,11 +172,11 @@ export default {
         this.special_case_abilities()
         
         damage_ai_card(
-          i, this.field, this.hand, 
-          this.player_card_number, this.grave, this.enemy_leader, this.enemies
+          i, this.field, this.selected_card, this.hand,
+          this.grave, this.enemy_leader, this.enemies
         )
 
-        this.player_card_number = null
+        this.selected_card = null
         this.ai_cards_active = false
         this.player_cards_active = false
       }
@@ -209,10 +208,13 @@ export default {
         this.special_case_abilities()
         this.can_draw = false
 
-        damage_enemy_leader_by_card(this.enemy_leader, this.hand, this.player_card_number, this.grave, this.field, this.enemies)
+        damage_enemy_leader_by_card(
+            this.enemy_leader, this.selected_card, this.hand,
+            this.grave, this.field, this.enemies
+        )
 
         this.player_cards_active = false
-        this.player_card_number = null
+        this.selected_card = null
       }
 
       if (this.leader_active && this.leader.charges > 0 && this.enemy_leader_active && this.enemy_leader.hp > 0) {

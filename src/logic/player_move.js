@@ -34,41 +34,45 @@ function remove_dead_enemies(field) {
     }
 }
 
-function remove_dead_card(hand, card_number, grave) {
-    if (hand[card_number].charges === 0) {
-        grave.push(hand[card_number])  // поместили карту в кладбище
-        hand.splice(card_number, 1)
+function remove_dead_card(card, grave, hand) {
+    if (card.charges === 0) {
+        grave.push(card)  // поместили карту в кладбище
+        hand.splice(hand.indexOf(card), 1)
     }
 }
 
 
 // сюда заходим если там есть враг
-function damage_ai_card(i, field, hand, card_number, grave, enemy_leader, enemies) {
+function damage_ai_card(i, field, card, hand, grave, enemy_leader, enemies) {
 
-    if (hand[card_number].ability.name === 'damage-one') {
-        damage_one(field[i], hand[card_number])
+    if (card.ability.name === 'damage-one') {
+        damage_one(field[i], card)
     }
 
-    else if (hand[card_number].ability.name === 'resurrect') {
-        damage_one(field[i], hand[card_number])
+    else if (card.ability.name === 'resurrect') {
+        damage_one(field[i], card)
     }
 
-    else if (hand[card_number].ability.name === 'draw-one-card') {
-        damage_one(field[i], hand[card_number])
+    else if (card.ability.name === 'draw-one-card') {
+        damage_one(field[i], card)
     }
 
-    else if (hand[card_number].ability.name === 'give-charges-to-card-in-hand-1') {
-        damage_one(field[i], hand[card_number])
+    else if (card.ability.name === 'give-charges-to-card-in-hand-1') {
+        damage_one(field[i], card)
     }
 
-    else if (hand[card_number].ability.name === 'heal') {
-        damage_one(field[i], hand[card_number])
-        heal(hand[card_number])
+    else if (card.ability.name === 'play-from-deck') {
+        damage_one(field[i], card)
     }
 
-    else if (hand[card_number].ability.name === 'damage-all') {
-        damage_all(field, hand[card_number])
-        enemy_leader.hp -= hand[card_number].damage
+    else if (card.ability.name === 'heal') {
+        damage_one(field[i], card)
+        heal(card)
+    }
+
+    else if (card.ability.name === 'damage-all') {
+        damage_all(field, card)
+        enemy_leader.hp -= card.damage
         if (enemy_leader.hp < 0) enemy_leader.hp = 0
     }
 
@@ -77,7 +81,7 @@ function damage_ai_card(i, field, hand, card_number, grave, enemy_leader, enemie
     remove_dead_enemies(field)
    
     // убираем карту игрока, если в ней не осталось зарядов
-    remove_dead_card(hand, card_number, grave)
+    remove_dead_card(card, grave, hand)
 
     check_win(field, enemies, enemy_leader)
 }
@@ -107,32 +111,36 @@ function leader_move(leader, i, field, enemy_leader, enemies) {
 
 
 // урон лидеру врага от карты из руки!
-function damage_enemy_leader_by_card(enemy_leader, hand, card_number, grave, field, enemies) {
+function damage_enemy_leader_by_card(enemy_leader, card, hand, grave, field, enemies) {
 
-    if (hand[card_number].ability.name === 'damage-one') {
-        damage_one(enemy_leader, hand[card_number])
+    if (card.ability.name === 'damage-one') {
+        damage_one(enemy_leader, card)
     }
 
-    else if (hand[card_number].ability.name === 'resurrect') {
-        damage_one(enemy_leader, hand[card_number])
+    else if (card.ability.name === 'resurrect') {
+        damage_one(enemy_leader, card)
     }
 
-    else if (hand[card_number].ability.name === 'give-charges-to-card-in-hand-1') {
-        damage_one(enemy_leader, hand[card_number])
+    else if (card.ability.name === 'give-charges-to-card-in-hand-1') {
+        damage_one(enemy_leader, card)
     }
 
-    else if (hand[card_number].ability.name === 'draw-one-card') {
-        damage_one(enemy_leader, hand[card_number])
+    else if (card.ability.name === 'draw-one-card') {
+        damage_one(enemy_leader, card)
     }
 
-    else if (hand[card_number].ability.name === 'heal') {
-        damage_one(enemy_leader, hand[card_number])
-        heal(hand[card_number])
+    else if (card.ability.name === 'play-from-deck') {
+        damage_one(enemy_leader, card)
     }
 
-    else if (hand[card_number].ability.name === 'damage-all') {
-        enemy_leader.hp -= hand[card_number].damage
-        damage_all(field, hand[card_number])
+    else if (card.ability.name === 'heal') {
+        damage_one(enemy_leader, card)
+        heal(card)
+    }
+
+    else if (card.ability.name === 'damage-all') {
+        enemy_leader.hp -= card.damage
+        damage_all(field, card)
     }
 
     // если враг убит, убираем его с поля
@@ -140,7 +148,7 @@ function damage_enemy_leader_by_card(enemy_leader, hand, card_number, grave, fie
     remove_dead_enemies(field)
 
     // убираем карту игрока, если в ней не осталось зарядов
-    remove_dead_card(hand, card_number, grave)
+    remove_dead_card(card, hand, grave)
 
     if (enemy_leader.hp < 0) enemy_leader.hp = 0
 
