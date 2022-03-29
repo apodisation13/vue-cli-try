@@ -3,7 +3,7 @@
 
     <div class="card_in_hand" :style="border(card, index)"
       v-for="(card, index) in hand" :key='card'
-      @dblclick="chose_player_card(index)"
+      @dblclick="chose_player_card(card)"
     >
 
       <card-comp :card="card" />
@@ -24,8 +24,8 @@ export default {
     },
   },
   methods: {
-    chose_player_card(index) {
-      this.$emit('chose_player_card', index)  // передаём this.index по эмиту
+    chose_player_card(card) {
+      this.$emit('chose_player_card', card)  // передаём card по эмиту
     },
     border(card, index) {
       return border_for_hand(card, index)
