@@ -69,6 +69,7 @@
   :hand_special_case_abilities="show_hand_special_case_abilities"
   :deck="deck_filtered"
   :play_from_deck="show_play_from_deck"
+  :show_card_from_deck="show_card_from_deck"
   @chosen_card='confirm_card_from_grave'
   @chosen_card_from_hsca="give_charges_to_card_in_hand"
   @chosen_card_from_deck="chosen_card_from_deck"
@@ -172,13 +173,14 @@ export default {
         this.special_case_abilities()
         
         damage_ai_card(
-          i, this.field, this.selected_card, this.hand,
+          i, this.field, this.selected_card, this.hand, this.deck,
           this.grave, this.enemy_leader, this.enemies
         )
 
         this.selected_card = null
         this.ai_cards_active = false
         this.player_cards_active = false
+        this.show_card_from_deck = false  // из specialcaseabilities.js!!!
       }
 
       // если выбран лидер и ткнули на поле, урон наносит лидер
@@ -209,12 +211,13 @@ export default {
         this.can_draw = false
 
         damage_enemy_leader_by_card(
-            this.enemy_leader, this.selected_card, this.hand,
+            this.enemy_leader, this.selected_card, this.hand, this.deck,
             this.grave, this.field, this.enemies
         )
 
         this.player_cards_active = false
         this.selected_card = null
+        this.show_card_from_deck = false  // из specialcaseabilities.js!!!
       }
 
       if (this.leader_active && this.leader.charges > 0 && this.enemy_leader_active && this.enemy_leader.hp > 0) {

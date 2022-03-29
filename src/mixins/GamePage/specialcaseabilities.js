@@ -3,10 +3,13 @@ export default {
     return {
       grave_filtered: [],  // кладбище, но отфильтрованное, логикой ResurrectModal
       show_resurrect_modal: false,  // показать ResurrectModal, по card.ability.name==resurrect
+
       hand_filtered: [],   // рука, отфильтрованная для HandSpecialCaseAbilities
       show_hand_special_case_abilities: false,  // показать HandSpecialCaseAbilities
+
       deck_filtered: [],  // колода, отфильтрованная, для PlayFromDeck
       show_play_from_deck: false,  // показать PlayFromDeck, по card.ability.name===play-from-deck
+      show_card_from_deck: false,  // показывать ли саму карту, выбранную из деки
 
     }
   },
@@ -35,8 +38,7 @@ export default {
       }
 
       else if (this.selected_card.ability.name === 'play-from-deck') {
-        alert(11233123)
-        this.deck_filtered = this.deck
+        this.deck_filtered = this.deck.filter(card => card.color==="Bronze" && card.id !== this.selected_card.id)
         if (this.deck_filtered.length) this.show_play_from_deck = true
       }
 
@@ -60,7 +62,13 @@ export default {
 
     chosen_card_from_deck(card) {
       this.show_play_from_deck = false
-      alert(111111111111)
+      this.show_card_from_deck = true
+      this.selected_card = card  // ВОТ ЗДЕСЬ МЫ ЗАПОМНИЛИ КАРТУ ИЗ РУКИ НА КОТОРУЮ ТКНУЛИ
+      alert('УРОН ' + this.selected_card.damage + '  заряды ' + this.selected_card.charges)
+      this.player_cards_active = true
+      this.ai_cards_active = true  // только теперь можно тыкать на карты противника!!!!!!!!!!!!!!
+      this.enemy_leader_active = true  // и лидер врагов активен тоже
+      this.leader_active = false // а лидер теперь неактивен
     }
 
   },

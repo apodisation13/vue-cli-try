@@ -19,7 +19,7 @@
     :deck="deck"
     @chose_card_to_play_from_deck="chosen_card_from_deck"
   />
-  <div class="chosen_card_from_deck" v-if="chosen_card_from_play_from_deck">
+  <div class="chosen_card_from_deck" v-if="show_card_from_deck">
     <card-comp
       :card="card_from_play_from_deck"
     />
@@ -59,12 +59,15 @@ export default {
       required: true,
       type: Boolean,
     },
+    show_card_from_deck: {  // флаг, показывать ли саму выбранную карту из колоды
+      required: true,
+      type: Boolean,
+    },
 
   },
 
   data() {
     return {
-      chosen_card_from_play_from_deck: false,
       card_from_play_from_deck: null,
     }
   },
@@ -79,7 +82,6 @@ export default {
     chosen_card_from_deck(card) {  // приходит из PlayFromDeck
       console.log(card)
       this.card_from_play_from_deck = card
-      this.chosen_card_from_play_from_deck = true
       this.$emit('chosen_card_from_deck', card)
     },
   },

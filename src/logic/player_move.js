@@ -34,16 +34,25 @@ function remove_dead_enemies(field) {
     }
 }
 
-function remove_dead_card(card, grave, hand) {
+function remove_dead_card(card, grave, hand, deck) {
     if (card.charges === 0) {
         grave.push(card)  // поместили карту в кладбище
-        hand.splice(hand.indexOf(card), 1)
+
+        // если такая карта есть в руке, удаляем её из руки, если есть в колоде - удаляем из колоды
+        if (hand.indexOf(card) !== -1) {
+            hand.splice(hand.indexOf(card), 1)
+            // alert('удалили карту из руки')
+        }
+        else if (deck.indexOf(card) !== -1) {
+            deck.splice(deck.indexOf(card), 1)
+            // alert('удалили карту из колоды')
+        }
     }
 }
 
 
 // сюда заходим если там есть враг
-function damage_ai_card(i, field, card, hand, grave, enemy_leader, enemies) {
+function damage_ai_card(i, field, card, hand, deck, grave, enemy_leader, enemies) {
 
     if (card.ability.name === 'damage-one') {
         damage_one(field[i], card)
@@ -80,8 +89,8 @@ function damage_ai_card(i, field, card, hand, grave, enemy_leader, enemies) {
     // проверять надо всех врагов, потому что есть абилки на всех
     remove_dead_enemies(field)
    
-    // убираем карту игрока, если в ней не осталось зарядов
-    remove_dead_card(card, grave, hand)
+    // убираем карту игрока, если в ней не осталось зарядов, из руки и из колоды, если играли оттуда
+    remove_dead_card(card, grave, hand, deck)
 
     check_win(field, enemies, enemy_leader)
 }
@@ -111,7 +120,7 @@ function leader_move(leader, i, field, enemy_leader, enemies) {
 
 
 // урон лидеру врага от карты из руки!
-function damage_enemy_leader_by_card(enemy_leader, card, hand, grave, field, enemies) {
+function damage_enemy_leader_by_card(enemy_leader, card, hand, deck, grave, field, enemies) {
 
     if (card.ability.name === 'damage-one') {
         damage_one(enemy_leader, card)
@@ -148,7 +157,7 @@ function damage_enemy_leader_by_card(enemy_leader, card, hand, grave, field, ene
     remove_dead_enemies(field)
 
     // убираем карту игрока, если в ней не осталось зарядов
-    remove_dead_card(card, hand, grave)
+    remove_dead_card(card, grave, hand, deck)
 
     if (enemy_leader.hp < 0) enemy_leader.hp = 0
 

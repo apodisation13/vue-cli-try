@@ -18,7 +18,6 @@ export default {
   },
   methods: {
     confirm_selection(i) {
-      alert(i)
       this.$emit('chose_card_to_play_from_deck', this.deck[i])
     },
   },
