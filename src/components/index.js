@@ -31,6 +31,7 @@ import LevelModal from '@/components/ModalWindows/LevelModal'
 import DeckModal from '@/components/ModalWindows/DeckModal'
 import HandSpecialCaseAbilities from "@/components/ModalWindows/HandSpecialCaseAbilities"
 import DecksListModal from "@/components/ModalWindows/DecksListModal"
+import PlayFromDeck from "@/components/ModalWindows/PlayFromDeck"
 
 export default [
     HealthComp,
@@ -67,5 +68,6 @@ export default [
     DecksListModal,
 
     HandSpecialCaseAbilities,
+    PlayFromDeck,
     
 ]
