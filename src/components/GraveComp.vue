@@ -4,9 +4,12 @@
     Сброс {{ grave_len }}
   </button>
   
-  <div class="modal_window" v-if="flag">
-    <button @click="flag=false">Закрыть</button><br>
-    <cards-list :cards='grave'/>
+  <div class="modal_window" v-if="flag" v-touch:swipe="close_self">
+    <button-close @close_self="close_self" />
+
+    <cards-list
+        :cards='grave'
+    />
   </div>
 
 </template>
@@ -27,7 +30,12 @@
     },
     computed: {
       grave_len() {return this.grave.length}
-    } 
+    },
+    methods: {
+      close_self() {
+        this.flag = false
+      },
+    },
   }
 </script>
 

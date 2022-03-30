@@ -1,7 +1,7 @@
 <template>
-  <div class="modal_window" v-touch:swipe="close_self">
+  <div class="modal_window">
 
-    <button @click="close_self">Закрыть</button><br>
+    <button-close @close_self="close_self" />
 
     {{ level.name }} - {{ level.difficulty }} <br>
 

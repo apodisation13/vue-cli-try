@@ -1,5 +1,7 @@
 <template>
   <div class="modal_window">
+    Щёлкните дважды для выбора карты
+
     <cards-list
       :cards="deck"
       @chose_player_card='confirm_selection'
