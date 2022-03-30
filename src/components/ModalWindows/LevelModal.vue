@@ -1,6 +1,5 @@
 <template>
-  <div class="modal_window">
-
+  <modal-window>
     <button-close @close_self="close_self" />
 
     {{ level.name }} - {{ level.difficulty }} <br>
@@ -17,7 +16,7 @@
       </div>
     </div>
 
-  </div>
+  </modal-window>
 </template>
 
 <script>
@@ -40,20 +39,6 @@ export default {
 </script>
 
 <style scoped>
-.modal_window {
-  background-color: limegreen;
-  width: 100%;
-  height: 90%;
-  border-radius: 12px;
-  text-align: center;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -53%);
-  z-index: 9999;
-  font-size: 12pt;
-}
-
 .enemy_leader {
   width: 30%;
   right: -35%;
