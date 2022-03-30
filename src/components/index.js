@@ -34,6 +34,7 @@ import DecksListModal from "@/components/ModalWindows/DecksListModal"
 import PlayFromDeck from "@/components/ModalWindows/PlayFromDeck"
 
 import ButtonClose from "@/components/UI/ButtonClose"
+import ModalWindow from "@/components/UI/ModalWindow"
 
 export default [
     HealthComp,
@@ -73,4 +74,5 @@ export default [
     PlayFromDeck,
 
     ButtonClose,
+    ModalWindow,
 ]
