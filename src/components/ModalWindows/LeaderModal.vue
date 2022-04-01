@@ -1,7 +1,6 @@
 <template>
-  <div class="field_view">
-    <button class="close_button" @click="close_self">Закрыть</button>
-    <br>
+  <div class="field_view" v-touch:swipe="close_self">
+    <button-close @close_self="close_self" />
 
     <div class="enemy_border" :style="border(leader)">
       <img class="img" :src="leader.image" v-if="leader.image" alt="">
@@ -77,12 +76,6 @@ export default {
   left: 50%;
   transform: translate(-50%, -67%);
   z-index: 9999;
-}
-
-.close_button {
-  margin-top: 2%;
-  width: 20%;
-  height: 5%;
 }
 
 h3 {

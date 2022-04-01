@@ -1,19 +1,18 @@
 <template>
-<div class='redraw_modal_window' v-if='visible'>
- 
-  <button class="close_button" @click="close_self">ПРИНЯТЬ</button>
-  <br>
- 
-  <cards-list
-      :cards='hand_current'
-      @chose_player_card='chose_player_card'
-  />
-  <br>
+  <modal-window v-if="visible">
+    <button-close @close_self="close_self" />
 
-  <h1>Изменить карту можно ещё {{ redraws }} раз</h1><br>
-  <h2>В колоде осталось ещё {{ deck_current.length }} карт</h2>
+    <div>
+      <cards-list
+          :cards='hand_current'
+          @chose_player_card='chose_player_card'
+      />
+    </div>
 
- </div>
+    <div><h1>Изменить карту можно ещё {{ redraws }} раз</h1></div>
+    <h2>В колоде осталось ещё {{ deck_current.length }} карт</h2>
+
+  </modal-window>
 </template>
 
 <script>
@@ -61,29 +60,13 @@ export default {
       this.hand_current.splice(id, 1, this.deck_current[random])  // обновить
       this.deck_current.splice(random, 1)  // удалить этот i-й элемент
       
-      if (this.redraws === 0) {
-        this.close_self()
-      }
-    }
-  } 
+      if (this.redraws === 0) this.close_self()
+    },
+
+  },
 }
 </script>
 
 <style scoped>
-
-.redraw_modal_window {
-  background-color: limegreen;
-  width: 100%;
-  height: 90%;
-  border-radius: 12px;
-  text-align: center;
-  position: absolute;
-  z-index: 9999;
-}
-
-.close_button {
-  width: 150px;
-  height: 50px;
-}
 
 </style>

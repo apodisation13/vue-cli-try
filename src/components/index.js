@@ -30,6 +30,11 @@ import EnemyLeaderModal from "@/components/ModalWindows/EnemyLeaderModal"
 import LevelModal from '@/components/ModalWindows/LevelModal'
 import DeckModal from '@/components/ModalWindows/DeckModal'
 import HandSpecialCaseAbilities from "@/components/ModalWindows/HandSpecialCaseAbilities"
+import DecksListModal from "@/components/ModalWindows/DecksListModal"
+import PlayFromDeck from "@/components/ModalWindows/PlayFromDeck"
+
+import ButtonClose from "@/components/UI/ButtonClose"
+import ModalWindow from "@/components/UI/ModalWindow"
 
 export default [
     HealthComp,
@@ -63,7 +68,11 @@ export default [
     EnemyLeaderModal,
     LevelModal,
     DeckModal,
+    DecksListModal,
 
     HandSpecialCaseAbilities,
-    
+    PlayFromDeck,
+
+    ButtonClose,
+    ModalWindow,
 ]

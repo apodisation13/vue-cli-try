@@ -51,14 +51,14 @@ export default {
 <style scoped>
 .cards {
   width: 98%;
-  /*height: 80%;*/
   overflow: scroll;
   /*position: relative;*/
+  /*border: solid 2px red;*/
 }
 
 .card_in_list {
-  width: 26%;
-  height: 18.5vh;
+  width: 24%;
+  height: 16vh;
   /* border: solid 3px gold; */
   border-radius: 2%;
   display: inline-block;

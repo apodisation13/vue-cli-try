@@ -2,8 +2,8 @@
   <div class="yes_no_modal" v-if="visible">
       Подтвердить? <br>
       <div class="content">
-        <button class="btn_yes" @click="confirm()">ДА</button>
-        <button class="btn_no" @click="cancel()">нет</button>
+        <button class="btn_yes" @click="confirm">ДА</button>
+        <button class="btn_no" @click="cancel">нет</button>
       </div>
   </div>
 </template>
@@ -19,12 +19,16 @@
     },
     methods: {
       confirm() {
-        this.$emit('confirm', false)
+        this.$emit('confirm')
       },
       cancel() {
-        this.$emit('cancel', false)
+        this.$emit('cancel')
       }
-    }
+    },
+    emits: [
+      'confirm',
+      'cancel',
+    ],
   }
 </script>
 
@@ -40,6 +44,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 15pt;
+  z-index: 99999;
 
 }
 

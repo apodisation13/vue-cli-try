@@ -2,15 +2,6 @@ import axios from "axios";
 // import store from "@/store";
 
 
-// КОРЯВО!
-// function get(url, commit_name) {
-//     axios.get(url)
-//       .then(function (response) {
-//         store.commit(commit_name, response.data)
-//       })
-// }
-
-
 function try_post(body, url) {
     
     fetch(url, {
@@ -43,4 +34,15 @@ async function get(url) {
 }
 
 
-export { try_post, try_delete, get }
+async function post(url, body) {
+    let response = await axios.post(url, body)
+    return response.data
+}
+
+async function axios_delete(url) {
+    let response = await axios.delete(url)
+    return response.data
+}
+
+
+export { try_post, try_delete, get, post, axios_delete}

@@ -1,5 +1,5 @@
 <template>
-<div class="field_view">
+<div class="field_view" v-touch:swipe="close_self">
   <button class="close_button" @click="close_self">Закрыть</button>
   <br>
 
