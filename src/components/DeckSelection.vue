@@ -1,133 +1,118 @@
 <template>
-ДВАЖДЫ ЩЁЛКНИТЕ ЛКМ на деку для её выбора
+  <div :class="deckbuilder ? 'deck_pool_for_deckbuilder' : 'deck_pool' ">
+    ВЫБЕРЕТЕ ДЕКУ (дважды ЛКМ)<br>
 
-<!-- загружаем из БД список дек -->
-<a v-once>{{ get_decks() }}</a>
+    <div class="deck"
+         :style="background_color(deck)"
+         v-for="(deck, index) in decks" :key='deck'
+         @dblclick="select_deck(index)"
+    >
 
+      <deck-preview-comp :deck="deck" />
 
-<div class="decks_pool_view">
-  <div class="deck-view"  v-for="(deck, index) in deck_pool" :key='deck'
-  @dblclick="select_deck(index)"
-  @click.right="delete_deck(index)" @contextmenu.prevent 
-  @click="show_deck(index)"
-  >
-    <div class="deck" >
-      {{ deck.name }} <br>
-      Жизни деки -- {{ deck.health }}
+      <button v-if="deckbuilder && deck.id !== 1"
+        @click="change_deck(deck)"
+      >Изменить</button>
+
+      <button v-if="deckbuilder && deck.id !== 1"
+        @click="delete_deck(deck)"
+      >Удалить</button>
+
     </div>
-  </div>
-</div>
-<yesno-modal :visible='show_yesno' 
-@confirm='confirm_delete'
-@cancel='cancel_delete'
-/>
 
-<div class="selected_deck" >
-  <div v-if="is_selected">
-    ВЫБРАННАЯ ДЕКА - <br>
-  {{ deck_pool[selected_deck].name }} <br>
-  {{ $store.state.health }} <br>
+    <yesno-modal
+        :visible='show_yesno'
+        @confirm='confirm_delete'
+        @cancel='cancel_delete'
+    />
   </div>
-</div>
-
 </template>
 
 <script>
-import { try_delete } from '@/logic/requests'
-import axios from "axios"
-
+import { background_color_deck } from '@/logic/border_styles'
+import DeckPreviewComp from "@/components/DeckPreviewComp"
+import YesnoModal from "@/components/ModalWindows/YesnoModal"
 export default {
+  name: 'deck-selection',
+  components: {YesnoModal, DeckPreviewComp},
+  props: {
+    deckbuilder: {  // отображать или нет выбранная дека, отображать или нет кнопки изменить\удалить
+      default: false,
+      type: Boolean,
+    },
+  },
   data() {
     return {
-      deck_pool: [],
-      selected_deck: 0,  // индекс выбранной деки
-      is_selected: false,  // что хоть что-то выбрано
-      show_yesno: false,  // показать да\нет для удаления деки
-      index: 0,  // индекс выбранной для удаления деки
+      is_selected: false,  // хоть какая-то дека выбрана
+      show_yesno: false, // показать да\нет по кнопке удалить деку
+      deck_id: undefined, // id деки, которую надо удалить
     }
   },
   methods: {
-    get_decks() {
-      let url = 'http://127.0.0.1:8000/api/v1/decks/'
-      axios.get(url)
-      .then(response => {
-        this.deck_pool = response.data
-      })
+    background_color(deck) {
+      return background_color_deck(deck)
     },
 
-    select_deck(id) {
-      alert(id)
-      this.selected_deck = id
+    // осуществить выбор деки для игры, дважды ЛКМ
+    select_deck(i) {
       this.is_selected = true
-      this.$store.commit('set_current_deck', this.deck_pool[this.selected_deck].cards)
-      this.$store.commit('set_health', this.deck_pool[this.selected_deck].health)
-      this.$store.commit('set_leader', this.deck_pool[this.selected_deck].leader)
-      // alert(this.deck_pool[this.selected_deck].leader.name)
+      this.$store.dispatch("set_deck_in_play", {deck: this.decks[i]})
     },
 
-    delete_deck(id) {
-      this.index = id  // записали номер нажатой кнопки
+    delete_deck(deck) {
       this.show_yesno = true
+      this.deck_id = deck.id  // запоминаем id деки, которую надо удалить
     },
 
-    confirm_delete(flag) {
-      this.show_yesno = flag
-      let id = this.deck_pool[this.index].id  // id деки из базы по индексу
-      let url = `http://127.0.0.1:8000/api/v1/decks/${id}/`
-      try_delete(url)
-      this.get_decks()  // заново делаем запрос на список дек
-    },
-    cancel_delete(flag) {
-      this.show_yesno = flag
+    confirm_delete() {
+      this.show_yesno = false
+      this.$store.dispatch("delete_deck", {id: this.deck_id})
     },
 
-    show_deck(index) {
-      this.$emit('show_deck', this.deck_pool[index])
+    cancel_delete() {
+      this.show_yesno = false
     },
-    
+
+    change_deck(deck) {
+      alert(deck.id)
+    },
   },
 
-  emits: ["show_deck", ]
+  computed: {
+    decks() {
+      return this.$store.state.decks
+    },
+  },
 
+  emits: ['emit_state_deck_index'],
 }
 </script>
 
 <style scoped>
-.decks_pool_view {
-  width: 800px;
-  height: 330px;
-  border: solid 1px black;
-  margin: 10px;
+
+.deck_pool {
+  margin: 1%;
+  width: 95%;
+  height: 30vh;
+  border: solid 1px orchid;
   overflow: scroll;
 }
 
-.btn_save_deck {
-  width: 120px;
-  height: 50px;
-  margin: 10px;
-}
-
-.selected_deck {
-  width: 200px;
-  height: 200px;
-  border: solid 1px black;
-  margin: 10px;
-}
-
-.deck-view {
-    width: 100px;
-    height: 150px;
-    border: solid 1px black;
-    border-radius: 5px;
-    text-align: center;
-    display: inline-block;
-    margin: 3px;
+.deck_pool_for_deckbuilder {
+  margin: 1%;
+  width: 95%;
+  height: 80vh;
+  border: solid 1px orchid;
+  overflow: scroll;
 }
 
 .deck {
-  display: table-cell;
-  vertical-align: middle;
-  text-align: center;
+  width: 95%;
+  height: 6vh;
+  font-size: 10pt;
+  border-radius: 5%;
+  padding-left: 1%;
+  margin: 1% 1% 3%;
 }
 
 </style>
