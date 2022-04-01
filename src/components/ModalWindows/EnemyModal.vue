@@ -1,42 +1,44 @@
 <template>
-<div class="field_view" v-touch:swipe="close_self">
-  <button class="close_button" @click="close_self">Закрыть</button>
-  <br>
+  <div class="field_view" v-touch:swipe="close_self">
+    <button-close @close_self="close_self" />
 
-  <div class="enemy_border" :style="border(enemy)">
-    <img class="img" :src="enemy.image" v-if="enemy.image" alt="">
-  </div>
+    <div class="enemy_border" :style="border(enemy)">
+      <img class="img" :src="enemy.image" v-if="enemy.image" alt="">
+    </div>
 
-  <div class="damage_and_hp">
-    <div class="diamond" :style="background_color(enemy)"></div>
-    <h3> Урон
-      <br>&dagger;{{ enemy.damage }}
-    </h3>
+    <div class="damage_and_hp">
+      <div class="diamond" :style="background_color(enemy)"></div>
+      <h3> Урон
+        <br>&dagger;{{ enemy.damage }}
+      </h3>
 
 
-    <div class="hp"></div>
-    <h3> Жизни
-      <br>&hearts;{{ enemy.hp }}
-    </h3>
-  </div>
+      <div class="hp"></div>
+      <h3> Жизни
+        <br>&hearts;{{ enemy.hp }}
+      </h3>
+    </div>
 
-  <div class="circle" v-if="enemy.move.name==='down'">
-    <span>&#8595;</span>
-  </div>
-  <div class="circle" v-else-if="enemy.move.name==='stand'">
-    <span>&#9737;</span>
-  </div>
-  <div class="circle" v-else-if="enemy.move.name==='random'">
-    <span>&#9736;</span>
-  </div><br>
-  <p> {{ enemy.move.description }} </p>
+    <div class="circle" v-if="enemy.move.name==='down'">
+      <span>&#8595;</span>
+    </div>
+    <div class="circle" v-else-if="enemy.move.name==='stand'">
+      <span>&#9737;</span>
+    </div>
+    <div class="circle" v-else-if="enemy.move.name==='random'">
+      <span>&#9736;</span>
+    </div><br>
+
+    <p> {{ enemy.move.description }} </p>
  </div>
 </template>
 
 <script>
 import { border_for_card, background_color } from '@/logic/border_styles'
+import ButtonClose from "@/components/UI/ButtonClose"
 export default {
-  name: 'field-modal',
+  name: 'enemy-modal',
+  components: {ButtonClose},
   props: {
     enemy: {  // объект противника по индексу поля
       required: true,
@@ -73,12 +75,6 @@ export default {
   left: 50%;
   transform: translate(-50%, -67%);
   z-index: 9999;
-}
-
-.close_button {
-  margin-top: 2%;
-  width: 20%;
-  height: 5%;
 }
 
 h3 {
