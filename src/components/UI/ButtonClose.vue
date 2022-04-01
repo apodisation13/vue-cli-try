@@ -1,12 +1,9 @@
 <template>
   <div>
-    <button class="close_button"
-            @click="close"
-    >
+    <button class="close_button" @click="close">
       Закрыть
     </button>
   </div>
-
 </template>
 
 <script>
@@ -23,8 +20,6 @@ export default {
 
 <style scoped>
 .close_button {
-  /*width: 150px;*/
-  /*height: 50px;*/
   width: 17%;
   height: 5vh;
   margin-top: 1%;
