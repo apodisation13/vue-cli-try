@@ -1,51 +1,49 @@
 <template>
 
-<!-- база карт -->
-<div class="card_pool_view">
-  <cards-list
-      :cards="pool"
-      :hp_needed="true"
-      @chose_player_card="append_into_deck_in_progress" />
-</div>
+  <!-- база карт -->
+  <div class="card_pool_view">
+    <cards-list
+        :cards="pool"
+        :hp_needed="true"
+        @chose_player_card="append_into_deck_in_progress" />
+  </div>
 
-<!-- список всех лидеров из базы -->
-<div class="leader_pool_view">
-  <cards-list
-      :cards="leaders"
-      :for_leaders="true"
-      @chose_player_card="chose_leader" />
-</div>
+  <!-- список всех лидеров из базы -->
+  <div class="leader_pool_view">
+    <cards-list
+        :cards="leaders"
+        :for_leaders="true"
+        @chose_player_card="chose_leader" />
+  </div>
 
 
-<!-- новая дека + фракции из стора -->
-<div class="new_deck">
-  <button class="btn"
-    @click="new_deck()">
-    new+
-  </button>
-  <div class="factions"
-    v-for="faction in factions" :key="faction">
-      <button class="btn"
-        @click="filtering(faction)">
+  <!-- новая дека + фракции из стора -->
+  <div class="new_deck">
+    <button class="btn" @click="new_deck()">
+      new+
+    </button>
+    <div class="factions" v-for="faction in factions" :key="faction">
+      <button class="btn" @click="filtering(faction)">
         {{ faction.name }}
       </button>
+    </div>
   </div>
-</div>
 
 
-<div class="deck_in_progress">
-  
-  <div class="leader">
-    <leader-comp v-if="leader_selected" :leader=leader_in_progress  />
-  </div>
-  
-  <div class="deck_build_view">
-    <cards-list
+  <div class="deck_in_progress">
+
+    <div class="leader">
+      <leader-comp v-if="leader_selected" :leader=leader_in_progress  />
+    </div>
+
+    <div class="deck_build_view">
+      <cards-list
         :cards='deck_is_progress'
         :hp_needed=true
-        @chose_player_card='delete_from_deck_in_progress' />
+        @chose_player_card='delete_from_deck_in_progress'
+      />
+    </div>
   </div>
-</div>
 
   Лидер: {{ leader_selected }}
   Размер: {{ deck_is_progress.length }}/{{ $store.state.cards_in_deck }}
@@ -56,24 +54,26 @@
   >
     СОХРАНИТЬ ДЕКУ
   </button>
+  <br>
 
 
-<br>
-<div class="decks_btn"
-  @click="open_decks_list_modal"
->
-  КОЛОДЫ!
-</div>
+  <div class="decks_btn" @click="open_decks_list_modal">
+    КОЛОДЫ!
+  </div>
 
-<decks-list-modal
-    v-if="show_decks_list_modal"
-    @close_decks_list_modal="show_decks_list_modal=false"
-/>
+  <decks-list-modal
+      v-if="show_decks_list_modal"
+      @close_decks_list_modal="show_decks_list_modal=false"
+  />
 
 </template>
 
 <script>
+import CardsList from "@/components/CardsList"
+import LeaderComp from "@/components/LeaderComp"
+import DecksListModal from "@/components/ModalWindows/DecksListModal"
 export default {
+  components: {DecksListModal, LeaderComp, CardsList},
   data() {
     return {       
       faction: '',
@@ -187,14 +187,7 @@ export default {
     factions() {
       return this.$store.state.factions.slice(1)
     },
-    save_btn_style() {
-      if (this.deck_is_progress.length < this.$store.state.cards_in_deck
-          || !this.leader_selected) { 
-        return {'backgroundColor': 'red'}
-      }
-      else return {'backgroundColor': 'green'}
-    },
-  }
+  },
 
 }
 </script>
