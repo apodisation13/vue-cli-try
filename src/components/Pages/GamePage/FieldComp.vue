@@ -1,5 +1,5 @@
 <template>
-<div class="field">
+  <div class="field">
     <table class="table">
       <tr v-for="i in 4" :key="i">
         <td v-for="j in 3" :key="j"
@@ -8,28 +8,26 @@
           @dblclick="exec_damage_ai_card(get_index(i,j))"
           @contextmenu.prevent
         >
+
           <enemy-comp v-if="field[get_index(i,j)]"
-          :enemy='field[get_index(i,j)]'
+            :enemy='field[get_index(i,j)]'
           />
-      </td>
-    </tr>
-  </table>
-</div>
 
-<!--<field-modal v-if="field[index] && show_enemy_modal"-->
-<!--:enemy='field[index]'-->
-<!--@close_field_modal="show_enemy_modal=false"-->
-<!--/>-->
-
+        </td>
+      </tr>
+    </table>
+  </div>
 </template>
 
 <script>
+  import EnemyComp from "@/components/EnemyComp"
   export default {
     name: 'field-comp',
+    components: {EnemyComp},
     props: {
       field: {
         required: true,
-        type: Array
+        type: Array,
       },
     },
     data() {
