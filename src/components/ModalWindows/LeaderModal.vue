@@ -38,8 +38,10 @@
 
 <script>
 import { border_leader, background_color } from '@/logic/border_styles'
+import ButtonClose from "@/components/UI/ButtonClose"
 export default {
   name: 'leader-modal',
+  components: {ButtonClose},
   props: {
     leader: {  // объект противника по индексу поля
       required: true,
@@ -109,14 +111,6 @@ p {
   width: 99%;
   height: 99%;
   margin: auto;
-}
-
-.hp {
-  width: 40%;
-  height: 10%;
-  background-color: green;
-  border-radius: 20%;
-  margin: 3% auto auto;
 }
 
 .charges {
