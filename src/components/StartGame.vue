@@ -23,6 +23,14 @@ export default {
     this.deck = await JSON.parse(JSON.stringify(this.$store.state.current_deck))
     this.enemies = await JSON.parse(JSON.stringify(this.$store.state.level.enemies))
   },
+  // computed: {
+  //   deck() {
+  //     return JSON.parse(JSON.stringify(this.$store.state.current_deck))
+  //   },
+  //   enemies() {
+  //     return JSON.parse(JSON.stringify(this.$store.state.level.enemies))
+  //   },
+  // },
   data() {
     return {
       redraw: false,
