@@ -30,7 +30,8 @@
 
 <!-- возможность вытянуть карту, дро -->
 <div class="draw">
-  <draw-comp v-show="can_draw"
+  <draw-comp
+    v-show="can_draw"
     @click="draw_one_card"
   />
 </div>
@@ -80,17 +81,37 @@
 <script>
 
 import {appear_new_enemy} from '@/logic/place_enemies'
-import {
-  damage_ai_card,
-  damage_enemy_leader_by_card,
-  damage_enemy_leader_by_leader,
-  leader_move
-} from '@/logic/player_move'
+import {damage_ai_card, damage_enemy_leader_by_card, damage_enemy_leader_by_leader, leader_move}
+  from '@/logic/player_move'
 import {ai_move, leader_ai_move, leader_ai_move_once} from '@/logic/ai_move'
+
 import draw from '@/mixins/GamePage/draw'
 import specialcaseabilities from "@/mixins/GamePage/specialcaseabilities"
 
+import StartGame from "@/components/StartGame"
+import FieldComp from "@/components/Pages/GamePage/FieldComp"
+import EnemyLeader from "@/components/EnemyLeader"
+import RemainingEnemies from "@/components/Pages/GamePage/EnemiesRemaining"
+import EnemiesGrave from "@/components/Pages/GamePage/EnemiesGrave"
+import DrawComp from "@/components/Pages/GamePage/DrawComp"
+import PassComp from "@/components/Pages/GamePage/PassComp"
+import GraveComp from "@/components/Pages/GamePage/GraveComp"
+import DeckComp from "@/components/Pages/GamePage/DeckComp"
+import LeaderComp from "@/components/LeaderComp"
+import HealthComp from "@/components/Pages/GamePage/HealthComp"
+import HandComp from "@/components/Pages/GamePage/HandComp"
+import SpecialCaseAbilities from "@/components/AbilitiesComponents/SpecialCaseAbilities"
+
 export default {
+  components: {
+    StartGame,
+    FieldComp,
+    EnemyLeader, RemainingEnemies, EnemiesGrave,
+    DrawComp, PassComp, DeckComp, GraveComp,
+    LeaderComp, HealthComp,
+    HandComp,
+    SpecialCaseAbilities,
+  },
   mixins: [
     draw,
     specialcaseabilities,
