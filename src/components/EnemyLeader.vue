@@ -1,43 +1,43 @@
 <template>
-<div class="enemy-leader"
-     :style="border(enemy_leader)"
-     @contextmenu.prevent
-     @click.right="open_card_modal"
-     v-touch:longtap="open_card_modal"
-     @dblclick="exec_enemy_leader"
->
-  
-  <img class="img" :src="enemy_leader.image" v-if="enemy_leader.hp > 0" alt="">
-  
-  <div class="diamond"
-       :style="background_color(enemy_leader)"
-       v-if="enemy_leader.damage_per_turn"
+  <div class="enemy-leader"
+    :style="border(enemy_leader)"
+    @contextmenu.prevent
+    @click.right="open_card_modal"
+    v-touch:longtap="open_card_modal"
+    @dblclick="exec_enemy_leader"
   >
-    <span class="span3">&dagger;{{ enemy_leader.damage_per_turn }}</span>
-  </div>
   
-  <div class="circle" v-if="enemy_leader.heal_self_per_turn">
-    <span>+&hearts;{{ enemy_leader.heal_self_per_turn }}</span>
-  </div>
+    <img class="img" :src="enemy_leader.image" v-if="enemy_leader.hp > 0" alt="">
   
-  <div class="hp">
-    <span>&hearts;{{ enemy_leader.hp }}</span>
-  </div>
+    <div class="diamond"
+     :style="background_color(enemy_leader)"
+     v-if="enemy_leader.damage_per_turn"
+    >
+      <span class="span3">&dagger;{{ enemy_leader.damage_per_turn }}</span>
+    </div>
   
-  <div class="ability" 
-  v-if="enemy_leader.ability.name==='damage-once'">
-    <span>1</span>
-  </div>  
-  <div class="ability" 
-  v-else-if="enemy_leader.ability.name==='damage-per-turn'">
-    <span>&#128337;1</span>  
-  </div>
-  <div class="ability" 
-  v-else-if="enemy_leader.ability.name==='heal-self-per-turn'">
-    <span>+&hearts;</span>  
-  </div>
+    <div class="circle" v-if="enemy_leader.heal_self_per_turn">
+      <span>+&hearts;{{ enemy_leader.heal_self_per_turn }}</span>
+    </div>
+  
+    <div class="hp">
+      <span>&hearts;{{ enemy_leader.hp }}</span>
+    </div>
+  
+    <div class="ability"
+    v-if="enemy_leader.ability.name==='damage-once'">
+      <span>1</span>
+    </div>
+    <div class="ability"
+    v-else-if="enemy_leader.ability.name==='damage-per-turn'">
+      <span>&#128337;1</span>
+    </div>
+    <div class="ability"
+    v-else-if="enemy_leader.ability.name==='heal-self-per-turn'">
+      <span>+&hearts;</span>
+    </div>
 
-</div>
+  </div>
 
   <enemy-leader-modal v-if="show_enemy_leader_modal"
     :enemy_leader='enemy_leader'
@@ -48,10 +48,12 @@
 
 <script>
 
-import {background_color, border_leader} from "@/logic/border_styles";
+import {background_color, border_leader} from "@/logic/border_styles"
+import EnemyLeaderModal from "@/components/ModalWindows/EnemyLeaderModal"
 
 export default {
   name: 'enemy-leader',
+  components: {EnemyLeaderModal},
   props: {
     enemy_leader: {
       required: true,
@@ -79,7 +81,7 @@ export default {
   },
   emits: [
       'exec_enemy_leader'
-  ]
+  ],
 }
 </script>
 
@@ -140,16 +142,6 @@ span {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 8pt;
-}
-
-.charges {
-  width: 20%;
-  height: 20%;
-  background-color: hotpink;
-  position: absolute;
-  bottom: 2%;
-  right: 2%;
-  border-radius: 20%;
 }
 
 .hp {
