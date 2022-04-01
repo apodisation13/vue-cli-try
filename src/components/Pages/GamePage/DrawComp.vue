@@ -3,9 +3,9 @@
 </template>
 
 <script>
-  export default {
-    name: "draw-comp",  
-  }
+export default {
+  name: "draw-comp",
+}
 </script>
 
 <style scoped>

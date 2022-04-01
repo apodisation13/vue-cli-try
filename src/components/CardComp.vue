@@ -56,16 +56,18 @@
 
 <script>
 import { background_color } from '@/logic/border_styles'
+import CardModal from "@/components/ModalWindows/CardModal"
 export default {
   name: 'card-comp',
+  components: {CardModal},
   props: {
     card: {
       type: Object,
-      required: true
+      required: true,
     },
     hp_needed: {  // hp только для декбилдера, для игры не нужно оно
       type: Boolean,
-      default: false
+      default: false,
     },
   },
   data() {

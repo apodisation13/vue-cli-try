@@ -27,7 +27,7 @@
     </div>
   </div>
 
-  <field-modal
+  <enemy-modal
       v-if="show_enemy_modal"
       :enemy='enemy'
       @close_field_modal="show_enemy_modal=false"
@@ -37,8 +37,10 @@
 
 <script>
 import { border_for_card, background_color } from '@/logic/border_styles'
+import EnemyModal from "@/components/ModalWindows/EnemyModal"
 export default {
   name: 'enemy-comp',
+  components: {EnemyModal},
   props: {
     enemy: {
       required: true,
@@ -46,7 +48,7 @@ export default {
   },
   data() {
     return {
-      show_enemy_modal: false
+      show_enemy_modal: false,
     }
   },
   methods: {

@@ -11,8 +11,8 @@ export default {
   props: {
     enemies: {
       required: true,
-      type: Array
-    }
+      type: Array,
+    },
   },
 }
 </script>

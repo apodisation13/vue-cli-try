@@ -16,25 +16,29 @@
 </template>
 
 <script>
+import ModalWindow from "@/components/UI/ModalWindow"
+import CardsList from "@/components/CardsList"
+import ButtonClose from "@/components/UI/ButtonClose"
 export default {
   name: 'redraw-modal',
+  components: {ButtonClose, CardsList, ModalWindow},
   data() {
     return {
       visible: true,
       redraws: 3,
       hand_current: this.hand.slice(),
       deck_current: this.deck.slice(),
-      redraw_array: []
+      redraw_array: [],
     }
   },
   props: {
     deck: {
       required: true,
-      type: Array
+      type: Array,
     },
     hand: {
       required: true,
-      type: Array
+      type: Array,
     },
 
   },

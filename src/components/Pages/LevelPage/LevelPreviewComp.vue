@@ -8,8 +8,6 @@
     {{ level.name }} <br>
     {{ level.difficulty }} <br>
     Врагов - {{ level.enemies.length }} <br>
-    <!--    Лидер - <br>-->
-    <!--    {{ level.enemy_leader.ability.name }}-->
 
     <level-modal
         v-if="show_level_modal"
@@ -21,8 +19,10 @@
 </template>
 
 <script>
+import LevelModal from "@/components/ModalWindows/LevelModal"
 export default {
   name: "level-preview-comp",
+  components: {LevelModal},
   props: {
     level: {
       required: true,

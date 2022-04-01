@@ -12,8 +12,13 @@
 </template>
 
 <script>
+import ModalWindow from "@/components/UI/ModalWindow"
+import ButtonClose from "@/components/UI/ButtonClose"
+import LeaderComp from "@/components/LeaderComp"
+import CardsList from "@/components/CardsList"
 export default {
   name: "deck-modal",
+  components: {CardsList, LeaderComp, ButtonClose, ModalWindow},
   props: {
     deck: {
       type: Object,

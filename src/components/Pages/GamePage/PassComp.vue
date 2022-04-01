@@ -5,9 +5,9 @@
 </template>
 
 <script>
-  export default {
-    name: "pass-comp",
-  }
+export default {
+  name: "pass-comp",
+}
 </script>
 
 <style scoped>

@@ -13,7 +13,7 @@
 
 <script>
 
-import MenuBar from './components/UI/MenuBar'
+import MenuBar from '@/components/UI/MenuBar'
 
 export default {
   components: { 

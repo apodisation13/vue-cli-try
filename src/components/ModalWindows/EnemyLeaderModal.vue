@@ -41,8 +41,10 @@
 
 <script>
 import { border_leader, background_color } from '@/logic/border_styles'
+import ButtonClose from "@/components/UI/ButtonClose"
 export default {
   name: 'enemy-leader-modal',
+  components: {ButtonClose},
   props: {
     enemy_leader: {
       required: true,

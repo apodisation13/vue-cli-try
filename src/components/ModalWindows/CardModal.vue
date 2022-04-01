@@ -53,8 +53,10 @@
 
 <script>
 import { border_for_card, background_color } from '@/logic/border_styles'
+import ButtonClose from "@/components/UI/ButtonClose"
 export default {
   name: 'card-modal',
+  components: {ButtonClose},
   props: {
     card: {  // объект противника по индексу поля
       required: true,
@@ -171,6 +173,5 @@ span {
   font-size: 22pt;
   color: white;
 }
-
 
 </style>

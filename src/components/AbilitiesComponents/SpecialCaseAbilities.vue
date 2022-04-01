@@ -1,18 +1,18 @@
 <template>
-<!--  Выбрать карту из кладбища, дать ей 1 заряд и восстановить в руку-->
+
+  <!--  Выбрать карту из кладбища, дать ей 1 заряд и восстановить в руку-->
   <resurrect-modal
       v-if="resurrect_modal"
       :grave='grave'
       @chosen_card='chosen_card'
   />
 
-<!--  Выбрать карту из руки, дать ей 1 заряд -->
+  <!--  Выбрать карту из руки, дать ей 1 заряд -->
   <hand-special-case-abilities
       v-if="hand_special_case_abilities"
       :hand="hand"
       @chosen_card_from_hand_special_case_abilities="chosen_card_from_hsca"
   />
-
 
   <play-from-deck
     v-if="play_from_deck"
@@ -25,17 +25,20 @@
     />
   </div>
 
-
-
 </template>
 
 <script>
+import ResurrectModal from "@/components/AbilitiesComponents/ResurrectModal"
+import HandSpecialCaseAbilities from "@/components/AbilitiesComponents/HandSpecialCaseAbilities"
+import PlayFromDeck from "@/components/AbilitiesComponents/PlayFromDeck"
+import CardComp from "@/components/CardComp"
 export default {
   name: "special-case-abilities",
+  components: {CardComp, PlayFromDeck, HandSpecialCaseAbilities, ResurrectModal},
   props: {
     grave: {  // кладбище для ResurrectModal
       required: true,
-      type: Object,
+      type: Array,
     },
     resurrect_modal: {  // нужно ли показывать ResurrectModal
       required: true,
@@ -44,7 +47,7 @@ export default {
 
     hand: {  // рука для HandSpecialCaseAbilities
       required: true,
-      type: Object,
+      type: Array,
     },
     hand_special_case_abilities: {  // нужно ли показывать HandSpecialCaseAbilities
       required: true,
@@ -53,7 +56,7 @@ export default {
 
     deck: {  // колода для PlayFromDeck
       required: true,
-      type: Object,
+      type: Array,
     },
     play_from_deck: {  // флаг, нужно ли показывать PlayFromDeck
       required: true,

@@ -14,13 +14,14 @@
 
 <script>
 import { border_for_hand } from '@/logic/border_styles'
-
+import CardComp from "@/components/CardComp"
 export default {
   name: 'hand-comp',
+  components: {CardComp},
   props: {
     hand: {
       required: true,
-      type: Array
+      type: Array,
     },
   },
   methods: {

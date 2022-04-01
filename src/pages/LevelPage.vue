@@ -9,16 +9,21 @@
 
       <level-preview-comp :level="level" />
 
+    </div>
   </div>
-</div>
 
-<select-deck />
+  <selected-deck />
+  <deck-selection />
 
 </template>
 
 <script>
-import { useToast } from "vue-toastification";
+import { useToast } from "vue-toastification"
+import LevelPreviewComp from "@/components/Pages/LevelPage/LevelPreviewComp"
+import DeckSelection from "@/components/DeckSelection"
+import SelectedDeck from "@/components/Pages/LevelPage/SelectedDeck"
 export default {
+  components: {SelectedDeck, DeckSelection, LevelPreviewComp},
   setup() {
     const toast = useToast()
     return { toast }
