@@ -4,7 +4,7 @@
     Лидер {{ $store.state.leader.name }}
   </div>
 
-  <div class="deck_pool">
+  <div :class="deckbuilder ? 'deck_pool_for_deckbuilder' : 'deck_pool' ">
     ВЫБЕРЕТЕ ДЕКУ (дважды ЛКМ)<br>
 
     <div class="deck"
@@ -12,7 +12,6 @@
          v-for="(deck, index) in decks" :key='deck'
          @dblclick="select_deck(index)"
     >
-
 
       <deck-preview-comp
           :deck="deck"
@@ -93,8 +92,10 @@ export default {
   computed: {
     decks() {
       return this.$store.state.decks
-    }
-  }
+    },
+  },
+
+  emits: ['emit_state_deck_index']
 }
 </script>
 
@@ -115,9 +116,17 @@ export default {
   overflow: scroll;
 }
 
+.deck_pool_for_deckbuilder {
+  margin: 1%;
+  width: 95%;
+  height: 80vh;
+  border: solid 1px orchid;
+  overflow: scroll;
+}
+
 .deck {
   width: 95%;
-  height: 20%;
+  height: 6vh;
   font-size: 10pt;
   border-radius: 5%;
   padding-left: 1%;
