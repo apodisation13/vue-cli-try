@@ -33,6 +33,9 @@ import HandSpecialCaseAbilities from "@/components/ModalWindows/HandSpecialCaseA
 import DecksListModal from "@/components/ModalWindows/DecksListModal"
 import PlayFromDeck from "@/components/ModalWindows/PlayFromDeck"
 
+import ButtonClose from "@/components/UI/ButtonClose"
+import ModalWindow from "@/components/UI/ModalWindow"
+
 export default [
     HealthComp,
     CardComp,
@@ -69,5 +72,7 @@ export default [
 
     HandSpecialCaseAbilities,
     PlayFromDeck,
-    
+
+    ButtonClose,
+    ModalWindow,
 ]
