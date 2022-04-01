@@ -17,20 +17,22 @@
 
 <script>
 import { border_for_card, border_leader } from '@/logic/border_styles'
+import CardComp from "@/components/CardComp"
 export default {
   name: "cards-list",
+  components: {CardComp},
   props: {
     cards: {
       required: true,
-      type: Array
+      type: Array,
     },
     hp_needed: {  // hp только для декбилдера, для игры не нужно оно
       type: Boolean,
-      default: false
+      default: false,
     },
     for_leaders: {  // брать границу карты как для лидеров
       type: Boolean,
-      default: false
+      default: false,
     },
   },
   methods: {
