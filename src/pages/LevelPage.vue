@@ -21,7 +21,7 @@
 import { useToast } from "vue-toastification"
 import LevelPreviewComp from "@/components/Pages/LevelPage/LevelPreviewComp"
 import DeckSelection from "@/components/DeckSelection"
-import SelectedDeck from "@/components/SelectedDeck"
+import SelectedDeck from "@/components/Pages/LevelPage/SelectedDeck"
 export default {
   components: {SelectedDeck, DeckSelection, LevelPreviewComp},
   setup() {
