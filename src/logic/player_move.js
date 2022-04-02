@@ -11,15 +11,24 @@ function heal(card) {
 }
 
 function damage_one(enemy, card) {
-    enemy.hp -= card.damage  // нанесли урон и-тому элементу от конкретной карты
+    // нанесли урон и-тому элементу от конкретной карты
+    if (enemy.shield) {
+        enemy.shield = false
+        toast.warning('Попали в щит!')
+    }
+    else enemy.hp -= card.damage
+
     card.charges -= 1  // вычитаем 1 заряд у карты игрока
-    // toast.info('ЖИЗНИ ' + enemy.hp + ' после урона')
 }
 
 function damage_all(field, card) {
     field.forEach(enemy => {
         if (enemy) {
-            enemy.hp -= card.damage
+            if (enemy.shield) {
+                enemy.shield = false
+                toast.warning('Попали в щит!')
+            }
+            else enemy.hp -= card.damage
            }
        })
     card.charges -= 1
@@ -54,27 +63,7 @@ function remove_dead_card(card, grave, hand, deck) {
 // сюда заходим если там есть враг
 function damage_ai_card(i, field, card, hand, deck, grave, enemy_leader, enemies) {
 
-    if (card.ability.name === 'damage-one') {
-        damage_one(field[i], card)
-    }
-
-    else if (card.ability.name === 'resurrect') {
-        damage_one(field[i], card)
-    }
-
-    else if (card.ability.name === 'draw-one-card') {
-        damage_one(field[i], card)
-    }
-
-    else if (card.ability.name === 'give-charges-to-card-in-hand-1') {
-        damage_one(field[i], card)
-    }
-
-    else if (card.ability.name === 'play-from-deck') {
-        damage_one(field[i], card)
-    }
-
-    else if (card.ability.name === 'heal') {
+    if (card.ability.name === 'heal') {
         damage_one(field[i], card)
         heal(card)
     }
@@ -84,6 +73,11 @@ function damage_ai_card(i, field, card, hand, deck, grave, enemy_leader, enemies
         enemy_leader.hp -= card.damage
         if (enemy_leader.hp < 0) enemy_leader.hp = 0
     }
+
+    // 'damage-one', 'resurrect', 'draw-one-card', 'give-charges-to-card-in-hand-1',
+    // 'play-from-deck',
+    else damage_one(field[i], card)
+
 
     // если враг убит, убираем его с поля
     // проверять надо всех врагов, потому что есть абилки на всех
@@ -122,27 +116,7 @@ function leader_move(leader, i, field, enemy_leader, enemies) {
 // урон лидеру врага от карты из руки!
 function damage_enemy_leader_by_card(enemy_leader, card, hand, deck, grave, field, enemies) {
 
-    if (card.ability.name === 'damage-one') {
-        damage_one(enemy_leader, card)
-    }
-
-    else if (card.ability.name === 'resurrect') {
-        damage_one(enemy_leader, card)
-    }
-
-    else if (card.ability.name === 'give-charges-to-card-in-hand-1') {
-        damage_one(enemy_leader, card)
-    }
-
-    else if (card.ability.name === 'draw-one-card') {
-        damage_one(enemy_leader, card)
-    }
-
-    else if (card.ability.name === 'play-from-deck') {
-        damage_one(enemy_leader, card)
-    }
-
-    else if (card.ability.name === 'heal') {
+    if (card.ability.name === 'heal') {
         damage_one(enemy_leader, card)
         heal(card)
     }
@@ -151,6 +125,11 @@ function damage_enemy_leader_by_card(enemy_leader, card, hand, deck, grave, fiel
         enemy_leader.hp -= card.damage
         damage_all(field, card)
     }
+
+    // 'damage-one', 'resurrect', 'draw-one-card', 'give-charges-to-card-in-hand-1',
+    // 'play-from-deck',
+    else damage_one(enemy_leader, card)
+
 
     // если враг убит, убираем его с поля
     // проверять надо всех врагов, потому что есть абилки на всех

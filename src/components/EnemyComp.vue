@@ -11,6 +11,10 @@
     <div class="diamond" :style="background_color(enemy)">
       <span class="span_diamond">&dagger;{{ enemy.damage }}</span>
     </div>
+
+    <div class="shield" v-if="enemy.shield">
+      <span :style="{'font-size': '30pt'}">&#128737;</span>
+    </div>
     
     <div class="hp">
       <span>&hearts;{{ enemy.hp }}</span>
@@ -104,6 +108,17 @@ export default {
   color: black;
   font-size: 10pt;
   transform:  rotateZ(-45deg);
+}
+
+.shield {
+  position: absolute;
+  /*height: 8vh;*/
+  /*width: 8vh;*/
+  /*background-color: red;*/
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  /* border: solid 1px yellow; */
 }
 
 .circle {

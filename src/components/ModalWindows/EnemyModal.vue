@@ -17,6 +17,14 @@
       <h3> Жизни
         <br>&hearts;{{ enemy.hp }}
       </h3>
+
+      <br>
+      <div v-if="enemy.shield" :style="{'font-size': '30pt'}">
+        &#128737;
+        <br>
+        ЩИТ!
+      </div>
+
     </div>
 
     <div class="circle" v-if="enemy.move.name==='down'">
@@ -29,7 +37,11 @@
       <span>&#9736;</span>
     </div><br>
 
-    <p> {{ enemy.move.description }} </p>
+    <p> {{ enemy.move.description }} </p><br>
+
+    <h3 v-if="enemy.shield">
+      Щит защищает врага от урона! После попадания щит снимается
+    </h3>
  </div>
 </template>
 
