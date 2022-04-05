@@ -8,17 +8,17 @@ import { get, post, axios_delete } from '@/logic/requests'
 // в .js - ИМПОРТ store отсюда, и тогда store.  а дальше то же
 
 
-// let factions = 'http://127.0.0.1:8000/api/v1/factions/'
-// let leaders = 'http://127.0.0.1:8000/api/v1/leaders/'
-// let cards = 'http://127.0.0.1:8000/api/v1/cards/'
-// let decks = 'http://127.0.0.1:8000/api/v1/decks/'
-// let levels = 'http://127.0.0.1:8000/api/v1/levels/'
+// const FACTIONS = 'http://127.0.0.1:8000/api/v1/factions/'
+// const LEADERS = 'http://127.0.0.1:8000/api/v1/leaders/'
+// const CARDS = 'http://127.0.0.1:8000/api/v1/cards/'
+// const DECKS = 'http://127.0.0.1:8000/api/v1/decks/'
+// const LEVELS = 'http://127.0.0.1:8000/api/v1/levels/'
 
-let factions = 'http://194.67.109.190:82/api/v1/factions/'
-let leaders = 'http://194.67.109.190:82/api/v1/leaders/'
-let cards = 'http://194.67.109.190:82/api/v1/cards/'
-let decks = 'http://194.67.109.190:82/api/v1/decks/'
-let levels = 'http://194.67.109.190:82/api/v1/levels/'
+let FACTIONS = 'http://194.67.109.190:82/api/v1/factions/'
+let LEADERS = 'http://194.67.109.190:82/api/v1/leaders/'
+let CARDS = 'http://194.67.109.190:82/api/v1/cards/'
+let DECKS = 'http://194.67.109.190:82/api/v1/decks/'
+let LEVELS = 'http://194.67.109.190:82/api/v1/levels/'
 
 
 const store = createStore({
@@ -109,86 +109,71 @@ const store = createStore({
     // вызывает мутацию, выполняясь через store.dispatch('название')
     actions: {  
         async get_data({commit}) {
-            // get(factions).then((result) => commit('get_factions', result))
-            // get(leaders).then((result) => commit('get_leaders', result))
-            // get(cards).then((result) => commit('get_cards', result))
-            // get(levels).then(
-            //     (result) => {
-            //         commit('get_levels', result)
-            //         commit('set_level', result[0])
-            //         commit('set_enemy_leader', result[0].enemy_leader)
-            //     })
-            // this.dispatch('get_decks')
 
-            const fact = get(factions)
-            const lead = get(leaders)
-            const car = get(cards)
-            const lev = get(levels)
-            // const d = get(decks)
+            const factions = get(FACTIONS)
+            const leaders = get(LEADERS)
+            const cards = get(CARDS)
+            const levels = get(LEVELS)
+            const decks = this.dispatch("get_decks")  // вот так можно, хотя там нет ретерна
 
             try {
                 const responses = await Promise.all([
-                    fact, lead, car, lev, this.dispatch("get_decks")
+                    factions, leaders, cards, levels, decks,
                 ])
                 commit('get_factions', responses[0])
                 commit('get_leaders', responses[1])
                 commit('get_cards', responses[2])
 
                 commit('get_levels', responses[3])
-                commit('set_level', responses[3][0])
-                commit('set_enemy_leader', responses[3][0].enemy_leader)
-
-                // commit('get_decks', responses[4])
-                // this.dispatch('set_deck_in_play', {deck: responses[4][0]})
-
-                // console.log(state.error)
-                // await this.dispatch("get_decks")
-                // console.log(state.error)
+                commit('set_level', responses[3]?.[0])
+                commit('set_enemy_leader', responses[3]?.[0]?.enemy_leader)
 
                 commit('set_isLoaded', true)
 
             } catch (err) {
                 this.dispatch("error_action", err)
+                throw new Error("Произошла ошибка в загрузке данных")
             }
 
         },
 
         async get_decks({commit}) {
-            // get(decks).then(
-            //     (result) => {
-            //         commit('get_decks', result)
-            //         this.dispatch('set_deck_in_play', {deck: result[0]})
-            //     }
-            // )
             try {
-                const d = await get(decks)
-                commit('get_decks', d)
-                await this.dispatch('set_deck_in_play', {deck: d[0]})
+                const decks = await get(DECKS)
+                commit('get_decks', decks)
+                await this.dispatch('set_deck_in_play', decks?.[0])
             } catch (err) {
                 this.dispatch("error_action", err)
+                throw new Error("Какая-то ошибка с загрузкой деки")
             }
         },
 
-        set_deck_in_play({commit}, {deck}) {
+        set_deck_in_play({commit}, deck) {
             commit('set_current_deck', deck.cards)
             commit('set_health', deck.health)
             commit('set_leader', deck.leader)
         },
 
         // выполняется по добавлении новой деки со страницы DeckBuilder
-        async post_deck_get_decks({commit}, {body}) {
-            post(decks, body).then(() => this.dispatch('get_decks'))
+        async post_deck_get_decks({commit}, body) {
+            try {
+                await post(DECKS, body)
+                await this.dispatch('get_decks')
+            } catch (err) {
+                this.dispatch("error_action", err)
+                throw new Error("Какая-то ошибка при добавлении деки")
+            }
         },
 
         // выполняется по удалению деки id со страницы DeckBuilder
-        async delete_deck({commit}, {id}) {
-            let url = `${decks}13123213${id}/`
-            // axios_delete(url).then(() => this.dispatch('get_decks'))
+        async delete_deck({commit}, id) {
+            let url = `${DECKS}13123213${id}/`
             try {
                 await axios_delete(url)
-                this.dispatch('get_decks')
+                await this.dispatch('get_decks')
             } catch (err) {
                 this.dispatch("error_action", err)
+                throw new Error("Какая-то ошибка с удалением деки")
             }
         },
 
