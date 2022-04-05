@@ -40,8 +40,8 @@ export default {
     get_index(i, j) {  // расчёт индекса клетки поля
       return (i-1) * 3 + (j-1)
     },
-    exec_damage_ai_card(i) {  // эмиттим номер (индекс) клетки поля
-      this.$emit('exec_damage_ai_card', i)
+    exec_damage_ai_card(i) {  // эмиттим ВСЕГО врага
+      this.$emit('exec_damage_ai_card', this.field[i])
     },
   },
   emits: [
