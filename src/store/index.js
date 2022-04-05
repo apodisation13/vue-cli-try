@@ -23,6 +23,9 @@ let levels = 'http://194.67.109.190:82/api/v1/levels/'
 
 const store = createStore({
     state: {
+        isLoaded: false,  // загружены ли данные
+        error: "",  // сообщение об ошибке загрузки данных
+
         cards_in_deck: 12,  // СКОЛЬКО В ДЕКЕ ДОЛЖНО БЫТЬ КАРТ
         hand_size: 6,  // СКОЛЬКО КАРТ В РУКЕ
         
@@ -92,32 +95,78 @@ const store = createStore({
         },
         get_levels(state, result) {  // гет запрос уровни (а в них враги)
             state.levels = result
-        }
+        },
+
+        set_isLoaded(state, payload) {
+            state.isLoaded = payload
+        },
+        set_error(state, payload) {
+            state.error = payload
+        },
 
     },
 
     // вызывает мутацию, выполняясь через store.dispatch('название')
     actions: {  
         async get_data({commit}) {
-            get(factions).then((result) => commit('get_factions', result))
-            get(leaders).then((result) => commit('get_leaders', result))
-            get(cards).then((result) => commit('get_cards', result))
-            get(levels).then(
-                (result) => {
-                    commit('get_levels', result)
-                    commit('set_level', result[0])
-                    commit('set_enemy_leader', result[0].enemy_leader)
-                })
-            this.dispatch('get_decks')
+            // get(factions).then((result) => commit('get_factions', result))
+            // get(leaders).then((result) => commit('get_leaders', result))
+            // get(cards).then((result) => commit('get_cards', result))
+            // get(levels).then(
+            //     (result) => {
+            //         commit('get_levels', result)
+            //         commit('set_level', result[0])
+            //         commit('set_enemy_leader', result[0].enemy_leader)
+            //     })
+            // this.dispatch('get_decks')
+
+            const fact = get(factions)
+            const lead = get(leaders)
+            const car = get(cards)
+            const lev = get(levels)
+            // const d = get(decks)
+
+            try {
+                const responses = await Promise.all([
+                    fact, lead, car, lev, this.dispatch("get_decks")
+                ])
+                commit('get_factions', responses[0])
+                commit('get_leaders', responses[1])
+                commit('get_cards', responses[2])
+
+                commit('get_levels', responses[3])
+                commit('set_level', responses[3][0])
+                commit('set_enemy_leader', responses[3][0].enemy_leader)
+
+                // commit('get_decks', responses[4])
+                // this.dispatch('set_deck_in_play', {deck: responses[4][0]})
+
+                // console.log(state.error)
+                // await this.dispatch("get_decks")
+                // console.log(state.error)
+
+                commit('set_isLoaded', true)
+
+            } catch (err) {
+                this.dispatch("error_action", err)
+            }
+
         },
 
         async get_decks({commit}) {
-            get(decks).then(
-                (result) => {
-                    commit('get_decks', result)
-                    this.dispatch('set_deck_in_play', {deck: result[0]})
-                }
-            )
+            // get(decks).then(
+            //     (result) => {
+            //         commit('get_decks', result)
+            //         this.dispatch('set_deck_in_play', {deck: result[0]})
+            //     }
+            // )
+            try {
+                const d = await get(decks)
+                commit('get_decks', d)
+                await this.dispatch('set_deck_in_play', {deck: d[0]})
+            } catch (err) {
+                this.dispatch("error_action", err)
+            }
         },
 
         set_deck_in_play({commit}, {deck}) {
@@ -133,8 +182,20 @@ const store = createStore({
 
         // выполняется по удалению деки id со страницы DeckBuilder
         async delete_deck({commit}, {id}) {
-            let url = `${decks}${id}/`
-            axios_delete(url).then(() => this.dispatch('get_decks'))
+            let url = `${decks}13123213${id}/`
+            // axios_delete(url).then(() => this.dispatch('get_decks'))
+            try {
+                await axios_delete(url)
+                this.dispatch('get_decks')
+            } catch (err) {
+                this.dispatch("error_action", err)
+            }
+        },
+
+        error_action({commit}, err) {
+            console.log(err)
+            commit("set_error", err.message)
+            commit('set_isLoaded', false)
         },
     }
 })
