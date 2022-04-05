@@ -25,23 +25,17 @@
          v-if="leader.ability.name === 'damage-all'">
       <span>&#9850;</span>
     </div>
-
-<!--    ВЕДЬ ЭТИХ АБИЛОК-ТО НЕТУ-->
-<!--    <div class="circle" :style="{'backgroundColor': 'green'}"-->
-<!--         v-else-if="leader.ability.name === 'heal'">-->
-<!--      <span :style="{'font-size': '12pt'}">+&hearts;{{ card.heal }}</span>-->
-<!--    </div>-->
-<!--    <div class="circle" :style="{'backgroundColor': 'purple'}"-->
-<!--         v-else-if="leader.ability.name === 'resurrect'">-->
-<!--      <span>&#10014;&#8680;</span>-->
-<!--    </div>-->
+    <div class="circle" :style="{'backgroundColor': 'orange'}"
+         v-if="leader.ability.name === 'spread-damage'">
+      <span :style="{'font-size': '14pt'}">&#9798;</span>
+    </div>
     <br>
 
     <div class="text">
-      СПОСОБНОСТЬ - {{ leader.ability.description }}
+      <b>СПОСОБНОСТЬ</b> - {{ leader.ability.description }}
     </div>
 
-    <div class="text" v-if="leader.has_passive">ПАССИВНАЯ СПОСОБНОСТЬ</div>
+    <div class="text" v-if="leader.has_passive"><b>ПАССИВНАЯ СПОСОБНОСТЬ</b></div>
     <div class="text" v-if="leader.has_passive">{{ leader.passive_ability.description }}</div>
 
   </modal-window>
@@ -149,11 +143,12 @@ span {
   position: relative;
   font-size: 22pt;
   color: white;
+  margin: auto;
 }
 
 .text {
   margin-bottom: 1%;
-  font-size: 16pt;
+  font-size: 14pt;
 }
 
 </style>

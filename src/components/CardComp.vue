@@ -19,6 +19,10 @@
          v-if="card.ability.name === 'damage-all'">
       <span>&#9850;</span>
     </div>
+    <div class="circle" :style="{'backgroundColor': 'orange'}"
+         v-if="card.ability.name === 'spread-damage'">
+      <span :style="{'font-size': '14pt'}">&#9798;</span>
+    </div>
     <div class="circle" :style="{'backgroundColor': 'green'}"
          v-else-if="card.ability.name === 'heal'">
       <span :style="{'font-size': '8pt'}">+&hearts;{{ card.heal }}</span>
@@ -28,7 +32,11 @@
       <span>&#10014;&#8680;</span>
     </div>
     <div class="circle" :style="{'backgroundColor': 'purple'}"
-         v-else-if="card.ability.name === 'draw-one-card'">
+         v-else-if="
+            card.ability.name === 'draw-one-card' ||
+            card.ability.name === 'play-from-deck' ||
+            card.ability.name === 'play-from-grave'
+         ">
       <span>&#127136;</span>
     </div>
     <div class="circle" :style="{'backgroundColor': 'purple'}"

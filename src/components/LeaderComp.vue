@@ -17,6 +17,10 @@
     <div class="circle" v-if="leader.ability.name === 'damage-all'">
       <span>&#9850;</span>
     </div>
+    <div class="circle" :style="{'backgroundColor': 'orange'}"
+         v-if="leader.ability.name === 'spread-damage'">
+      <span :style="{'font-size': '14pt'}">&#9798;</span>
+    </div>
 
     <div class="triangle" v-if="leader.has_passive" :style="background_color(leader)">
       <span>&#8987;</span>
@@ -108,7 +112,7 @@ import LeaderModal from "@/components/ModalWindows/LeaderModal"
 
 .span3 {
   position: absolute;
-  transform: translate(-50%, -50%);
+  /*transform: translate(-50%, -50%);*/
   top: 25%;
   right: 2%;
   color: black;
