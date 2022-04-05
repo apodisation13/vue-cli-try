@@ -81,8 +81,7 @@
 <script>
 
 import {appear_new_enemy} from '@/logic/place_enemies'
-import {damage_ai_card, damage_enemy_leader_by_card, damage_enemy_leader_by_leader, leader_move}
-  from '@/logic/player_move/player_move'
+import {damage_ai_card} from '@/logic/player_move/player_move'
 import {ai_move, leader_ai_move, leader_ai_move_once} from '@/logic/ai_move/ai_move'
 
 import draw from '@/mixins/GamePage/draw'
@@ -140,6 +139,7 @@ export default {
       enemy_leader_active: false, // активен ли лидер противника
 
       selected_card: null,  // объект выбранной карты путём дважды ЛКМ на карте в руке
+      selected_enemy: null,  // объёкт выбранного врага, по которому ткнули дважды ЛКМ, из field-comp
     }
   },
   methods: {
@@ -167,7 +167,6 @@ export default {
       this.ai_cards_active = true  // только теперь можно тыкать на карты противника!!!!!!!!!!!!!!
       this.enemy_leader_active = true  // и лидер врагов активен тоже
       this.leader_active = false // а лидер теперь неактивен
-
     },
 
     // по нажатию на лидера
@@ -179,23 +178,25 @@ export default {
       this.ai_cards_active = true
       this.enemy_leader_active = true  // и лидер врагов активен тоже
       alert(this.leader.charges + ' заряды лидера')
-
     },
 
-    // если ткнули ранее на карту игрока или лидера, а потом на поле, ходим // i - номер клетки поля!
-    exec_damage_ai_card(i) { 
+    // если ткнули ранее на карту игрока или лидера, а потом на поле, ходим // enemy - объект врага (field[i])
+    exec_damage_ai_card(enemy) {
+      this.selected_enemy = enemy
 
       this.can_draw = false  // если хотя бы раз сюда попали, то дро нельзя
       
       // если ранее ткнули на карту игрока, а потом на поле
-      if (this.player_cards_active && !this.leader_active && this.ai_cards_active && this.field[i]) {
+      if (this.player_cards_active && !this.leader_active && this.ai_cards_active && this.selected_enemy) {
         
         // особие абилки, которые требуют открытия окон
         this.special_case_abilities()
         
         damage_ai_card(
-          i, this.field, this.selected_card, this.hand, this.deck,
-          this.grave, this.enemy_leader, this.enemies
+          this.selected_card, this.selected_enemy, this.field, this.enemy_leader,
+          this.hand, this.deck, this.grave,
+          this.enemies,
+          true,
         )
 
         this.selected_card = null
@@ -205,12 +206,17 @@ export default {
       }
 
       // если выбран лидер и ткнули на поле, урон наносит лидер
-      if (this.leader_active && this.ai_cards_active && this.field[i]) this.exec_leader_move(i)
+      if (this.leader_active && this.ai_cards_active && this.selected_enemy) this.exec_leader_move()
     },
     
     // только если ткнули на лидера, а потом на поле
-    exec_leader_move(i) {
-      leader_move(this.leader, i, this.field, this.enemy_leader, this.enemies)
+    exec_leader_move() {
+      damage_ai_card(
+          this.leader, this.selected_enemy, this.field, this.enemy_leader,
+          undefined, undefined, undefined,
+          this.enemies,
+          false,
+      )
       this.leader_active = false  // снова неактивен, тыкай на него опять
       this.ai_cards_active = false
     },
@@ -225,15 +231,18 @@ export default {
 
     // если ранее ткнули на карту игрока или лидера игрока, а потом на лидера врагов!
     onLeaderClick() {
-      
+
+      // ткнули на карту игрока, а потом на лидера врагов
       if (this.player_cards_active && !this.leader_active && this.enemy_leader_active && this.enemy_leader.hp > 0) {
         // особие абилки, которые требуют открытия окон
         this.special_case_abilities()
         this.can_draw = false
 
-        damage_enemy_leader_by_card(
-            this.enemy_leader, this.selected_card, this.hand, this.deck,
-            this.grave, this.field, this.enemies
+        damage_ai_card(
+            this.selected_card, this.enemy_leader, this.field, this.enemy_leader,
+            this.hand, this.deck, this.grave,
+            this.enemies,
+            true,
         )
 
         this.player_cards_active = false
@@ -241,9 +250,15 @@ export default {
         this.show_card_from_deck = false  // из specialcaseabilities.js!!!
       }
 
+      // ткнули на лидера игрока, а потом на лидера врагов
       if (this.leader_active && this.leader.charges > 0 && this.enemy_leader_active && this.enemy_leader.hp > 0) {
         this.can_draw = false
-        damage_enemy_leader_by_leader(this.enemy_leader, this.leader, this.field, this.enemies)
+        damage_ai_card(
+            this.leader, this.enemy_leader, this.field, this.enemy_leader,
+            undefined, undefined, undefined,
+            this.enemies,
+            false,
+        )
         this.leader_active = false
       }
     },
