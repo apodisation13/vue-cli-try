@@ -16,6 +16,9 @@
       <h3> Заряды <br>
         {{ leader.charges }}&#8607;
       </h3>
+
+      <div class="triangle" :style="background_color(leader)" v-if="leader.has_passive"></div>
+      <div class="text" :style="{'font-size': '20pt'}" v-if="leader.has_passive"><b>&#8987;</b></div>
     </div>
 
     <div class="circle" :style="{'backgroundColor': 'orange'}"
@@ -111,6 +114,14 @@ h3 {
   height: 10%;
   background-color: hotpink;
   border-radius: 20%;
+  margin: 3% auto auto;
+}
+
+.triangle {
+  width: 5vh;
+  height: 5vh;
+  border-radius: 20%;
+  font-size: 10pt;
   margin: 3% auto auto;
 }
 

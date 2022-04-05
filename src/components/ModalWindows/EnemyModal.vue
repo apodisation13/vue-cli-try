@@ -1,5 +1,5 @@
 <template>
-  <div class="field_view" v-touch:swipe="close_self">
+  <modal-window :style="{'backgroundColor': 'floralwhite'}" v-touch:swipe="close_self">
     <button-close @close_self="close_self" />
 
     <div class="enemy_border" :style="border(enemy)">
@@ -25,6 +25,9 @@
         ЩИТ!
       </div>
 
+      <div class="triangle" :style="background_color(enemy)" v-if="enemy.passive"></div>
+      <div class="text" :style="{'font-size': '20pt'}" v-if="enemy.passive"><b>&#8987;</b></div>
+
     </div>
 
     <div class="circle" v-if="enemy.move.name==='down'">
@@ -37,20 +40,25 @@
       <span>&#9736;</span>
     </div><br>
 
-    <p> {{ enemy.move.description }} </p><br>
+    <div class="text" v-if="enemy.shield">
+      <b>Щит защищает врага от урона! После попадания щит снимается</b>
+    </div>
 
-    <h3 v-if="enemy.shield">
-      Щит защищает врага от урона! После попадания щит снимается
-    </h3>
- </div>
+    <div class="text"><b>ХОДИТ</b> - {{ enemy.move.description }} </div>
+
+    <div class="text" v-if="enemy.passive"><b>ПАССИВНАЯ СПОСОБНОСТЬ</b></div>
+    <div class="text" v-if="enemy.passive">{{ enemy.passive_ability.description }}</div>
+
+  </modal-window>
 </template>
 
 <script>
 import { border_for_card, background_color } from '@/logic/border_styles'
 import ButtonClose from "@/components/UI/ButtonClose"
+import ModalWindow from "@/components/UI/ModalWindow";
 export default {
   name: 'enemy-modal',
-  components: {ButtonClose},
+  components: {ModalWindow, ButtonClose},
   props: {
     enemy: {  // объект противника по индексу поля
       required: true,
@@ -75,19 +83,6 @@ export default {
 </script>
 
 <style scoped>
-
-.field_view {
-  background-color: floralwhite;
-  width: 100%;
-  height: 76%;
-  border-radius: 12px;
-  text-align: center;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -67%);
-  z-index: 9999;
-}
 
 h3 {
   display: inline;
@@ -141,6 +136,14 @@ p {
   /* border: solid 1px yellow; */
 }
 
+.triangle {
+  width: 5vh;
+  height: 5vh;
+  border-radius: 20%;
+  font-size: 10pt;
+  margin: 3% auto auto;
+}
+
 .circle {
   display: inline-grid;
   width: 14%;
@@ -156,5 +159,9 @@ span {
   color: white;
 }
 
+.text {
+  margin-bottom: 1%;
+  font-size: 12pt;
+}
 
 </style>

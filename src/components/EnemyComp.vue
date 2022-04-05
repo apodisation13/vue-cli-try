@@ -12,6 +12,10 @@
       <span class="span_diamond">&dagger;{{ enemy.damage }}</span>
     </div>
 
+    <div class="triangle" v-if="enemy.passive" :style="background_color(enemy)">
+      <span>&#8987;</span>
+    </div>
+
     <div class="shield" v-if="enemy.shield">
       <span :style="{'font-size': '30pt'}">&#128737;</span>
     </div>
@@ -108,6 +112,16 @@ export default {
   color: black;
   font-size: 10pt;
   transform:  rotateZ(-45deg);
+}
+
+.triangle {
+  width: 15%;
+  height: 15%;
+  position: absolute;
+  bottom: 18%;
+  right: 2%;
+  border-radius: 20%;
+  font-size: 10pt;
 }
 
 .shield {

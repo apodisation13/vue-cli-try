@@ -17,7 +17,10 @@
     <div class="circle" v-if="leader.ability.name === 'damage-all'">
       <span>&#9850;</span>
     </div>
-  
+
+    <div class="triangle" v-if="leader.has_passive" :style="background_color(leader)">
+      <span>&#8987;</span>
+    </div>
     <div class="charges">
       <span>{{ leader.charges }}&#8607;</span>
     </div>
@@ -141,4 +144,13 @@ span {
   border-radius: 20%;
 }
 
+.triangle {
+  width: 15%;
+  height: 15%;
+  position: absolute;
+  bottom: 25%;
+  right: 2%;
+  border-radius: 20%;
+  font-size: 10pt;
+}
 </style>

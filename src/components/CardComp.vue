@@ -36,7 +36,9 @@
       <span>+1&#8607;</span>
     </div>
 
-
+    <div class="triangle" v-if="card.has_passive" :style="background_color(card)">
+      <span>&#8987;</span>
+    </div>
     <div class="charges">
       <span>{{ card.charges }}&#8607;</span>
     </div>
@@ -142,6 +144,16 @@ span {
   bottom: 2%;
   right: 2%;
   border-radius: 20%;
+}
+
+.triangle {
+  width: 15%;
+  height: 15%;
+  position: absolute;
+  bottom: 25%;
+  right: 2%;
+  border-radius: 20%;
+  font-size: 10pt;
 }
 
 .hp {

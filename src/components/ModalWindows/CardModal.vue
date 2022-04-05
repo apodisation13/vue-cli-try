@@ -21,6 +21,9 @@
       <h3> Заряды <br>
         {{ card.charges }}&#8607;
       </h3>
+
+      <div class="triangle" :style="background_color(card)" v-if="card.has_passive"></div>
+      <div class="text" :style="{'font-size': '20pt'}" v-if="card.has_passive"><b>&#8987;</b></div>
     </div>
 
     <div class="circle" :style="{'backgroundColor': 'orange'}"
@@ -46,10 +49,10 @@
     <br>
 
     <div class="text">
-      СПОСОБНОСТЬ - {{ card.ability.description }}
+      <b>СПОСОБНОСТЬ</b> - {{ card.ability.description }}
     </div>
 
-    <div class="text" v-if="card.has_passive">ПАССИВНАЯ СПОСОБНОСТЬ</div>
+    <div class="text" v-if="card.has_passive"><b>ПАССИВНАЯ СПОСОБНОСТЬ</b></div>
     <div class="text" v-if="card.has_passive">{{ card.passive_ability.description }}</div>
 
 
@@ -135,6 +138,14 @@ h3 {
   height: 10%;
   background-color: hotpink;
   border-radius: 20%;
+  margin: 3% auto auto;
+}
+
+.triangle {
+  width: 5vh;
+  height: 5vh;
+  border-radius: 20%;
+  font-size: 10pt;
   margin: 3% auto auto;
 }
 
