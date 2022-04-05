@@ -1,63 +1,9 @@
-import store from '@/store'  // вызов стора здесь!!!!!!!!!
-import { useToast } from 'vue-toastification'
-import { check_win } from "@/logic/service"
+import {heal} from "@/logic/player_move/abilities/ability_heal"
+import {damage_one} from "@/logic/player_move/abilities/ability_damage_one"
+import {damage_all} from "@/logic/player_move/abilities/ability_damage_all"
 
-const toast = useToast()
-
-
-function heal(card) {
-    store.commit('change_health', card.heal)
-    toast.success(`лечение на ${card.heal}`)
-}
-
-function damage_one(enemy, card) {
-    // нанесли урон и-тому элементу от конкретной карты
-    if (enemy.shield) {
-        enemy.shield = false
-        toast.warning('Попали в щит!')
-    }
-    else enemy.hp -= card.damage
-
-    card.charges -= 1  // вычитаем 1 заряд у карты игрока
-}
-
-function damage_all(field, card) {
-    field.forEach(enemy => {
-        if (enemy) {
-            if (enemy.shield) {
-                enemy.shield = false
-                toast.warning('Попали в щит!')
-            }
-            else enemy.hp -= card.damage
-           }
-       })
-    card.charges -= 1
-    toast.warning('УРОН ВСЕМ!')
-}
-
-function remove_dead_enemies(field) {
-    for (let i = 0; i < field.length; i++) {
-        if (field[i].hp <= 0) {
-            field[i] = ''
-        }   
-    }
-}
-
-function remove_dead_card(card, grave, hand, deck) {
-    if (card.charges === 0) {
-        grave.push(card)  // поместили карту в кладбище
-
-        // если такая карта есть в руке, удаляем её из руки, если есть в колоде - удаляем из колоды
-        if (hand.indexOf(card) !== -1) {
-            hand.splice(hand.indexOf(card), 1)
-            // alert('удалили карту из руки')
-        }
-        else if (deck.indexOf(card) !== -1) {
-            deck.splice(deck.indexOf(card), 1)
-            // alert('удалили карту из колоды')
-        }
-    }
-}
+import {remove_dead_enemies, remove_dead_card} from "@/logic/player_move/service/service_for_player_move"
+import {check_win} from "@/logic/player_move/service/check_win"
 
 
 // сюда заходим если там есть враг
