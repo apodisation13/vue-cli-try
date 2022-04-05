@@ -157,7 +157,7 @@ export default {
         leader_id: this.leaders[this.leader_index].id
       }
 
-      this.$store.dispatch('post_deck_get_decks', {body: body})
+      this.$store.dispatch('post_deck_get_decks', body)
 
       this.new_deck()  // всё обнуляем!
       alert('сохранили деку')
