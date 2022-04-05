@@ -1,5 +1,5 @@
 <template>
-  <div class="field_view" v-touch:swipe="close_self">
+  <modal-window :style="{'backgroundColor': 'floralwhite'}" v-touch:swipe="close_self">
     <button-close @close_self="close_self" />
 
     <div class="enemy_border" :style="border(card)">
@@ -8,18 +8,18 @@
 
     <div class="damage_and_hp">
       <div class="diamond" :style="background_color(card)"></div>
-      <h3> Урон
-        <br>&dagger;{{ card.damage }}
+      <h3> Урон <br>
+        &dagger;{{ card.damage }}
       </h3>
 
       <div class="hp" v-if="hp_needed"></div>
-      <h3 v-if="hp_needed"> Жизни
-        <br>&hearts;{{ card.hp }}
+      <h3 v-if="hp_needed"> Жизни <br>
+        &hearts;{{ card.hp }}
       </h3>
 
       <div class="charges"></div>
-      <h3> Заряды
-        <br>{{ card.charges }}&#8607;
+      <h3> Заряды <br>
+        {{ card.charges }}&#8607;
       </h3>
     </div>
 
@@ -43,20 +43,26 @@
          v-else-if="card.ability.name === 'give-charges-to-card-in-hand-1'">
       <span>+1&#8607;</span>
     </div>
-
-
     <br>
-    <p> {{ card.ability.description }} </p>
 
-  </div>
+    <div class="text">
+      СПОСОБНОСТЬ - {{ card.ability.description }}
+    </div>
+
+    <div class="text" v-if="card.has_passive">ПАССИВНАЯ СПОСОБНОСТЬ</div>
+    <div class="text" v-if="card.has_passive">{{ card.passive_ability.description }}</div>
+
+
+  </modal-window>
 </template>
 
 <script>
 import { border_for_card, background_color } from '@/logic/border_styles'
 import ButtonClose from "@/components/UI/ButtonClose"
+import ModalWindow from "@/components/UI/ModalWindow"
 export default {
   name: 'card-modal',
-  components: {ButtonClose},
+  components: {ModalWindow, ButtonClose},
   props: {
     card: {  // объект противника по индексу поля
       required: true,
@@ -86,50 +92,34 @@ export default {
 
 <style scoped>
 
-.field_view {
-  background-color: floralwhite;
-  width: 100%;
-  height: 76%;
-  border-radius: 12px;
-  text-align: center;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -67%);
-  z-index: 9999;
-}
-
-h3 {
-  display: inline;
-  font-size: 14pt;
-}
-
-p {
-  font-size: 12pt;
-}
-
 .enemy_border {
   width: 65%;
-  height: 55%;
+  height: 60%;
   display: inline;
   float: left;
   margin-left: 1%;
   border-radius: 1%;
-}
-
-.damage_and_hp {
-  width: 30%;
-  height: 55%;
-  display: inline;
-  float: right;
-  margin-bottom: 3%;
-  /*border: solid 2px red;*/
+  margin-bottom: 1%;
 }
 
 .img {
   width: 99%;
   height: 99%;
   margin: auto;
+}
+
+.damage_and_hp {
+  width: 30%;
+  height: 60%;
+  display: inline;
+  float: right;
+  margin-bottom: 3%;
+  /*border: solid 2px red;*/
+}
+
+h3 {
+  display: inline;
+  font-size: 14pt;
 }
 
 .hp {
@@ -172,6 +162,12 @@ span {
   position: relative;
   font-size: 22pt;
   color: white;
+  margin: auto;
+}
+
+.text {
+  margin-bottom: 1%;
+  font-size: 14pt;
 }
 
 </style>
