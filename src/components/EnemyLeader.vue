@@ -9,9 +9,8 @@
   
     <img class="img" :src="enemy_leader.image" v-if="enemy_leader.hp > 0" alt="">
   
-    <div class="diamond"
-     :style="background_color(enemy_leader)"
-     v-if="enemy_leader.damage_per_turn"
+    <div class="diamond" :style="background_color(enemy_leader)"
+         v-if="enemy_leader.damage_per_turn"
     >
       <span class="span3">&dagger;{{ enemy_leader.damage_per_turn }}</span>
     </div>
@@ -24,17 +23,17 @@
       <span>&hearts;{{ enemy_leader.hp }}</span>
     </div>
   
-    <div class="ability"
-    v-if="enemy_leader.ability.name==='damage-once'">
+    <div class="ability" v-if="enemy_leader.ability.name==='damage-once'">
       <span>1</span>
     </div>
-    <div class="ability"
-    v-else-if="enemy_leader.ability.name==='damage-per-turn'">
-      <span>&#128337;1</span>
+    <div class="ability" v-else-if="enemy_leader.ability.name==='damage-per-turn'">
+      <span>&#128337;</span>
     </div>
-    <div class="ability"
-    v-else-if="enemy_leader.ability.name==='heal-self-per-turn'">
+    <div class="ability" v-else-if="enemy_leader.ability.name==='heal-self-per-turn'">
       <span>+&hearts;</span>
+    </div>
+    <div class="ability" v-else-if="enemy_leader.ability.name==='decrease-all-player-damage-1'">
+      <span>-1&dagger;</span>
     </div>
 
   </div>
@@ -118,7 +117,7 @@ export default {
 
 .span3 {
   position: absolute;
-  transform: translate(-50%, -50%);
+  /*transform: translate(-50%, -50%);*/
   top: 25%;
   right: 2%;
   color: black;
