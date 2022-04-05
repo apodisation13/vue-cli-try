@@ -82,8 +82,8 @@
 
 import {appear_new_enemy} from '@/logic/place_enemies'
 import {damage_ai_card, damage_enemy_leader_by_card, damage_enemy_leader_by_leader, leader_move}
-  from '@/logic/player_move'
-import {ai_move, leader_ai_move, leader_ai_move_once} from '@/logic/ai_move'
+  from '@/logic/player_move/player_move'
+import {ai_move, leader_ai_move, leader_ai_move_once} from '@/logic/ai_move/ai_move'
 
 import draw from '@/mixins/GamePage/draw'
 import specialcaseabilities from "@/mixins/GamePage/specialcaseabilities"
