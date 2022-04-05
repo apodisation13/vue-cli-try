@@ -24,7 +24,21 @@ function remove_dead_card(card, grave, hand, deck) {
 }
 
 
+// собирает всех врагов на поле в один список + лидера врагов
+function get_all_enemies(field, enemy_leader) {
+  let enemy_list = []
+  field.forEach(enemy => {
+    if (enemy) {
+      enemy_list.push(enemy)
+    }
+  })
+  enemy_list.push(enemy_leader)
+  return enemy_list
+}
+
+
 export {
   remove_dead_enemies,
   remove_dead_card,
+  get_all_enemies,
 }

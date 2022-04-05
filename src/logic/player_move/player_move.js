@@ -4,6 +4,7 @@ import {damage_all} from "@/logic/player_move/abilities/ability_damage_all"
 
 import {remove_dead_enemies, remove_dead_card} from "@/logic/player_move/service/service_for_player_move"
 import {check_win} from "@/logic/player_move/service/check_win"
+import {spread_damage} from "@/logic/player_move/abilities/ability_spread_damage";
 
 
 // сюда заходим если там есть враг
@@ -20,8 +21,11 @@ function damage_ai_card(i, field, card, hand, deck, grave, enemy_leader, enemies
         if (enemy_leader.hp < 0) enemy_leader.hp = 0
     }
 
-    // 'damage-one', 'resurrect', 'draw-one-card', 'give-charges-to-card-in-hand-1',
-    // 'play-from-deck',
+    else if (card.ability.name === 'spread-damage') {
+        spread_damage(card, field, enemy_leader)
+        if (enemy_leader.hp < 0) enemy_leader.hp = 0
+    }
+
     else damage_one(field[i], card)
 
 
@@ -51,6 +55,11 @@ function leader_move(leader, i, field, enemy_leader, enemies) {
         if (enemy_leader.hp < 0) enemy_leader.hp = 0
     }
 
+    else if (leader.ability.name === "spread-damage") {
+        spread_damage(leader, field, enemy_leader)
+        if (enemy_leader.hp < 0) enemy_leader.hp = 0
+    }
+
     // если враг убит, убираем его с поля
     // проверять надо всех врагов, потому что есть абилки на всех
     remove_dead_enemies(field)
@@ -72,8 +81,10 @@ function damage_enemy_leader_by_card(enemy_leader, card, hand, deck, grave, fiel
         damage_all(field, card)
     }
 
-    // 'damage-one', 'resurrect', 'draw-one-card', 'give-charges-to-card-in-hand-1',
-    // 'play-from-deck',
+    else if (card.ability.name === "spread-damage") {
+        spread_damage(card, field, enemy_leader)
+    }
+
     else damage_one(enemy_leader, card)
 
 
@@ -100,10 +111,15 @@ function damage_enemy_leader_by_leader(enemy_leader, leader, field, enemies) {
     else if (leader.ability.name === "damage-all") {
         enemy_leader.hp -= leader.damage
         damage_all(field, leader)
-        remove_dead_enemies(field)
+        if (enemy_leader.hp < 0) enemy_leader.hp = 0
     }
 
-    if (enemy_leader.hp < 0) enemy_leader.hp = 0
+    else if (leader.ability.name === "spread-damage") {
+        spread_damage(leader, field, enemy_leader)
+        if (enemy_leader.hp < 0) enemy_leader.hp = 0
+    }
+
+    remove_dead_enemies(field)
 
     check_win(field, enemies, enemy_leader)
 }
