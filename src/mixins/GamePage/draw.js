@@ -18,7 +18,7 @@ export default {
     // тянем одну карту из деки, блокируем карты игрока
     draw_one_card() {
       let random = Math.floor(Math.random() * this.deck.length);
-      this.hand.push(this.deck[random])
+      this.hand.unshift(this.deck[random])  // добавить в список на 1е место )))) потому что там в руке float:right
       this.deck.splice(random, 1)  // удалить этот 0й элемент
       this.player_cards_active = false
       this.can_draw = false

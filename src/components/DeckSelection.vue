@@ -56,7 +56,7 @@ export default {
     // осуществить выбор деки для игры, дважды ЛКМ
     select_deck(i) {
       this.is_selected = true
-      this.$store.dispatch("set_deck_in_play", {deck: this.decks[i]})
+      this.$store.dispatch("set_deck_in_play", this.decks[i])
     },
 
     delete_deck(deck) {
@@ -66,7 +66,7 @@ export default {
 
     confirm_delete() {
       this.show_yesno = false
-      this.$store.dispatch("delete_deck", {id: this.deck_id})
+      this.$store.dispatch("delete_deck", this.deck_id)
     },
 
     cancel_delete() {

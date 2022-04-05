@@ -1,8 +1,8 @@
 <template>
   <div class="hand">
 
-    <div class="card_in_hand" :style="border(card, index)"
-      v-for="(card, index) in hand" :key='card'
+    <div class="card_in_hand" :style="border(card)"
+      v-for="(card, ) in hand" :key='card'
       @dblclick="chose_player_card(card)"
     >
 
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { border_for_hand } from '@/logic/border_styles'
+import { border_for_hand, border_for_card, border_for_hand_2 } from '@/logic/border_styles'
 import CardComp from "@/components/CardComp"
 export default {
   name: 'hand-comp',
@@ -29,7 +29,9 @@ export default {
       this.$emit('chose_player_card', card)  // передаём card по эмиту
     },
     border(card, index) {
-      return border_for_hand(card, index)
+      // return border_for_hand(card, index)
+      // return border_for_card(card)
+      return border_for_hand_2(this.hand, card)
     },
   },
   emits: [
@@ -48,7 +50,7 @@ export default {
   overflow: auto;
   /*white-space: nowrap;*/
   /*ВОТ БЛЯТЬ ИЗЗА ЭТОЙ ЕБАНОЙ ПОЕБНИ БЛЯТЬ ВЫШЕ Я ЕБАЛСЯ ЕБАНЫЕ 3 ЧАСА БЛЯТЬ*/
-  position: relative;
+  /*position: relative;*/
 }
 
 .card_in_hand {
@@ -56,9 +58,15 @@ export default {
   height: 18.5vh;
   /* border: solid 3px gold; */
   border-radius: 2%;
-  display: inline-block;
-  margin-right: -12%;
-  margin-left: 0.5%;
+  display: table-row;
+  overflow: hidden;
+  /*вот так было через жопу*/
+  /*margin-right: -12%;*/
+  /*margin-left: 0.5%;*/
+  /*ну а вот так вроде всё заебись*/
+  /*margin-right: 0.3%;*/
+  /*margin-left: -12%;*/
+  /*float: right;*/
   margin-top: 0.1%;
   position: relative;
 }
