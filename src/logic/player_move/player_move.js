@@ -5,12 +5,14 @@ import {damage_all} from "@/logic/player_move/abilities/ability_damage_all"
 import {remove_dead_enemies, remove_dead_card} from "@/logic/player_move/service/service_for_player_move"
 import {check_win} from "@/logic/player_move/service/check_win"
 import {spread_damage} from "@/logic/player_move/abilities/ability_spread_damage";
+import {damage_row} from "@/logic/player_move/abilities/ability_damage_row";
+import {damage_column} from "@/logic/player_move/abilities/ability_damage_column";
 
 
 // сюда заходим если там есть враг
 // card - EITHER player_card or player_leader WHO we chose to play,
 // enemy - EITHER enemy or enemy_leader, WHO we target
-// field - for damage-all, check win, remove dead enemies
+// field - for damage-all, damage-row, damage-column, check win, remove dead enemies
 // hand,deck,grave - remove dead card if isCard;
 // enemies - list of remaining enemies for check win,
 // isCard - FLAG: need to remove dead card (hand) or not, Boolean
@@ -28,6 +30,14 @@ function damage_ai_card(card, enemy, field, enemy_leader, hand, deck, grave, ene
 
     else if (card.ability.name === 'spread-damage') {
         spread_damage(card, field, enemy_leader)
+    }
+
+    else if (card.ability.name === 'damage-row') {
+        damage_row(enemy, card, field)
+    }
+
+    else if (card.ability.name === 'damage-column') {
+        damage_column(enemy, card, field)
     }
 
     else damage_one(enemy, card)
