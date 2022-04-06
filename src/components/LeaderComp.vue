@@ -10,24 +10,13 @@
 
     <img class="img" :src="leader.image" v-if="leader.charges > 0" alt="">
 
-    <div class="diamond" :style="background_color(leader)">
-      <span class="span3">&dagger;{{ leader.damage }}</span>
-    </div>
+    <card-diamond :style="background_color(leader)">&dagger;{{ leader.damage }}</card-diamond>
   
-    <div class="circle" v-if="leader.ability.name === 'damage-all'">
-      <span>&#9850;</span>
-    </div>
-    <div class="circle" :style="{'backgroundColor': 'orange'}"
-         v-if="leader.ability.name === 'spread-damage'">
-      <span :style="{'font-size': '14pt'}">&#9798;</span>
-    </div>
+    <card-ability-circle :card="leader"/>
 
-    <div class="triangle" v-if="leader.has_passive" :style="background_color(leader)">
-      <span>&#8987;</span>
-    </div>
-    <div class="charges">
-      <span>{{ leader.charges }}&#8607;</span>
-    </div>
+    <card-passive v-if="leader.has_passive" :style="background_color(leader)" />
+
+    <card-charges>{{ leader.charges }}&#8607;</card-charges>
 
   </div>
 
@@ -42,9 +31,13 @@
 <script>
 import { border_leader, background_color } from '@/logic/border_styles'
 import LeaderModal from "@/components/ModalWindows/LeaderModal"
+import CardDiamond from "@/components/UI/CardDiamond"
+import CardAbilityCircle from "@/components/UI/CardAbilityCircle"
+import CardPassive from "@/components/UI/CardPassive"
+import CardCharges from "@/components/UI/CardCharges"
   export default {
     name: "leader-comp",
-    components: {LeaderModal},
+    components: {CardCharges, CardPassive, CardAbilityCircle, CardDiamond, LeaderModal},
     props: {
       leader: {
         required: true,
@@ -79,7 +72,6 @@ import LeaderModal from "@/components/ModalWindows/LeaderModal"
 </script>
 
 <style scoped>
-
 .leader {
   height: 18vh;
   width: 98%;
@@ -97,64 +89,5 @@ import LeaderModal from "@/components/ModalWindows/LeaderModal"
   left: 50%;
   transform: translate(-50%, -50%);
   position: absolute;
-}
-
-.diamond {
-  position: absolute;
-  top: 1%;
-  right: 6%;
-  height: 4vh;
-  width: 4vh;
-  transform: rotateX(45deg) rotateZ(45deg);
-  background-color: purple; 
-  border: solid 1px yellow;
-}
-
-.span3 {
-  position: absolute;
-  /*transform: translate(-50%, -50%);*/
-  top: 25%;
-  right: 2%;
-  color: black;
-  font-size: 10pt;
-  transform:  rotateZ(-45deg);
-}
-
-.circle {
-  position: absolute;
-  width: 34%;
-  height: 4vh;
-  border-radius: 50%;
-  top: 30%;
-  right: 3%;
-  background: orange;
-}
-
-span {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 10pt;
-}
-
-.charges {
-  width: 20%;
-  height: 20%;
-  background-color: hotpink;
-  position: absolute;
-  bottom: 2%;
-  right: 2%;
-  border-radius: 20%;
-}
-
-.triangle {
-  width: 15%;
-  height: 15%;
-  position: absolute;
-  bottom: 25%;
-  right: 2%;
-  border-radius: 20%;
-  font-size: 10pt;
 }
 </style>
