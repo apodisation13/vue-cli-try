@@ -32,7 +32,7 @@
 import { border_leader, background_color } from '@/logic/border_styles'
 import LeaderModal from "@/components/ModalWindows/LeaderModal"
 import CardDiamond from "@/components/UI/CardDiamond"
-import CardAbilityCircle from "@/components/UI/CardAbilityCircle"
+import CardAbilityCircle from "@/components/UI/AbilityCircleCard"
 import CardPassive from "@/components/UI/CardPassive"
 import CardCharges from "@/components/UI/CardCharges"
   export default {
