@@ -1,10 +1,10 @@
 <template>
   <!--  Кружок абилок карт игрока и лидера игрока-->
   <card-circle-heal v-if="card.ability.name === 'heal'">+&hearts;{{ card.heal }}</card-circle-heal>
-  <card-circle :style="{'backgroundColor': 'orange'}" v-if="card.ability.name === 'damage-all'">
+  <card-circle v-if="card.ability.name === 'damage-all'">
     &#9850;
   </card-circle>
-  <card-circle :style="{'backgroundColor': 'orange'}" v-else-if="card.ability.name === 'spread-damage'">
+  <card-circle v-else-if="card.ability.name === 'spread-damage'">
     &#9798;
   </card-circle>
   <card-circle :style="{'backgroundColor': 'purple'}" v-else-if="card.ability.name === 'resurrect'">
@@ -20,6 +20,12 @@
   </card-circle>
   <card-circle :style="{'backgroundColor': 'purple'}" v-else-if="card.ability.name === 'give-charges-to-card-in-hand-1'">
     +1&#8607;
+  </card-circle>
+  <card-circle v-else-if="card.ability.name === 'damage-row'">
+    &#8649;
+  </card-circle>
+  <card-circle v-else-if="card.ability.name === 'damage-column'">
+    &#8648;
   </card-circle>
 </template>
 

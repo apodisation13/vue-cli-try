@@ -20,6 +20,7 @@ export default {
   border-radius: 50%;
   top: 30%;
   right: 3%;
+  background: orange;
 }
 
 span {
