@@ -52,6 +52,7 @@ export default {
     // редро - перетянуть карты и закрыть redraw-modal
     redraw_finished(dict) { // пришедший параметр из ЭМИТА этого компонента
       this.hand = dict.hand
+      this.hand.reverse()  // КОСТЫЛЬ ДЛЯ FLOAT:RIGHT
       this.deck = dict.deck
       this.redraw = false  // закончили редро
 

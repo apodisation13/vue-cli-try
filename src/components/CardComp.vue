@@ -7,45 +7,17 @@
 
     <img class="img" :src="card.image" v-if="card.image" alt="">
 
-    <div class="typee" v-if="card.type === 'Special'">
-      <span :style="{'font-size': '14pt'}">&starf;</span>
-    </div>
+    <card-type v-if="card.type === 'Special'">&starf;</card-type>
 
-    <div class="diamond" :style="background_color(card)">
-      <span class="span3">&dagger;{{ card.damage }}</span>
-    </div>
+    <card-diamond :style="background_color(card)">&dagger;{{ card.damage }}</card-diamond>
+`   `
+    <card-ability-circle :card="card" />
 
-    <div class="circle" :style="{'backgroundColor': 'orange'}"
-         v-if="card.ability.name === 'damage-all'">
-      <span>&#9850;</span>
-    </div>
-    <div class="circle" :style="{'backgroundColor': 'green'}"
-         v-else-if="card.ability.name === 'heal'">
-      <span :style="{'font-size': '8pt'}">+&hearts;{{ card.heal }}</span>
-    </div>
-    <div class="circle" :style="{'backgroundColor': 'purple'}"
-         v-else-if="card.ability.name === 'resurrect'">
-      <span>&#10014;&#8680;</span>
-    </div>
-    <div class="circle" :style="{'backgroundColor': 'purple'}"
-         v-else-if="card.ability.name === 'draw-one-card'">
-      <span>&#127136;</span>
-    </div>
-    <div class="circle" :style="{'backgroundColor': 'purple'}"
-         v-else-if="card.ability.name === 'give-charges-to-card-in-hand-1'">
-      <span>+1&#8607;</span>
-    </div>
+    <card-passive v-if="card.has_passive" :style="background_color(card)" />
 
-    <div class="triangle" v-if="card.has_passive" :style="background_color(card)">
-      <span>&#8987;</span>
-    </div>
-    <div class="charges">
-      <span>{{ card.charges }}&#8607;</span>
-    </div>
+    <card-charges>{{ card.charges }}&#8607;</card-charges>
 
-    <div class="hp" v-if="hp_needed">
-      <span>&hearts;{{ card.hp }}</span>
-    </div>
+    <card-hp v-if="hp_needed">&hearts;{{ card.hp }}</card-hp>
 
     <card-modal v-if="show_card_modal"
       :card='card'
@@ -59,9 +31,15 @@
 <script>
 import { background_color } from '@/logic/border_styles'
 import CardModal from "@/components/ModalWindows/CardModal"
+import CardDiamond from "@/components/UI/CardDiamond"
+import CardType from "@/components/UI/CardType"
+import CardAbilityCircle from "@/components/UI/AbilityCircleCard"
+import CardPassive from "@/components/UI/CardPassive"
+import CardCharges from "@/components/UI/CardCharges"
+import CardHp from "@/components/UI/CardHp"
 export default {
   name: 'card-comp',
-  components: {CardModal},
+  components: {CardHp, CardCharges, CardPassive, CardAbilityCircle, CardType, CardDiamond, CardModal},
   props: {
     card: {
       type: Object,
@@ -95,82 +73,6 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  position: absolute;
-}
-
-.diamond {
-  position: absolute;
-  top: 1%;
-  right: 6%;
-  height: 4vh;
-  width: 4vh;
-  transform: rotateX(45deg) rotateZ(45deg);
-  /* background-color: purple; */
-  /* border: solid 1px yellow; */
-}
-
-.span3 {
-  position: absolute;
-  /*transform: translate(-50%, -50%);*/
-  top: 25%;
-  right: 2%;
-  color: whitesmoke;
-  font-size: 11pt;
-  transform:  rotateZ(-45deg);
-}
-
-.circle {
-  position: absolute;
-  width: 34%;
-  height: 4vh;
-  border-radius: 50%;
-  top: 30%;
-  right: 3%;
-}
-
-span {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 10pt;
-}
-
-.charges {
-  width: 20%;
-  height: 20%;
-  background-color: hotpink;
-  position: absolute;
-  bottom: 2%;
-  right: 2%;
-  border-radius: 20%;
-}
-
-.triangle {
-  width: 15%;
-  height: 15%;
-  position: absolute;
-  bottom: 25%;
-  right: 2%;
-  border-radius: 20%;
-  font-size: 10pt;
-}
-
-.hp {
-  width: 30%;
-  height: 20%;
-  background-color: green;
-  position: absolute;
-  bottom: 2%;
-  left: 2%;
-  border-radius: 20%;
-}
-
-.typee {
-  width: 10%;
-  height: 10%;
-  left: 1%;
-  top: 1%;
   position: absolute;
 }
 </style>

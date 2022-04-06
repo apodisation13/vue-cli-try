@@ -196,7 +196,7 @@ export default {
 /*база карт*/
 .card_pool_view {
   width: 80%;
-  height: 30vh;
+  height: 40vh;
   border: solid 1px black;
   margin: 1px;
   overflow: scroll;
@@ -232,7 +232,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  height: 24vh;
+  height: 18vh;
 }
 
 .leader {
@@ -248,7 +248,7 @@ export default {
 
 .btn {
   width: 23%;
-  height: 6vh;
+  height: 4vh;
 }
 
 .btn_save_deck {
