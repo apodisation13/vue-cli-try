@@ -33,7 +33,7 @@ import { background_color } from '@/logic/border_styles'
 import CardModal from "@/components/ModalWindows/CardModal"
 import CardDiamond from "@/components/UI/CardDiamond"
 import CardType from "@/components/UI/CardType"
-import CardAbilityCircle from "@/components/UI/CardAbilityCircle"
+import CardAbilityCircle from "@/components/UI/AbilityCircleCard"
 import CardPassive from "@/components/UI/CardPassive"
 import CardCharges from "@/components/UI/CardCharges"
 import CardHp from "@/components/UI/CardHp"
