@@ -20,7 +20,7 @@ export default {
       alert(this.s+333)
     },
 
-    // особые абилки, которые требуют каких-либо окон
+    // !!!МЕНЕДЖЕР особых абилок, которые требуют каких-либо окон!!!
     special_case_abilities() {
       if (this.selected_card.ability.name === 'resurrect') {
         // откр окно с grave, приходит confirm_card_from_grave()
@@ -39,6 +39,11 @@ export default {
 
       else if (this.selected_card.ability.name === 'play-from-deck') {
         this.deck_filtered = this.deck.filter(card => card.color==="Bronze" && card.id !== this.selected_card.id)
+        if (this.deck_filtered.length) this.show_play_from_deck = true
+      }
+
+      else if (this.selected_card.ability.name === 'play-from-grave') {
+        this.deck_filtered = this.grave.filter(card => (card.color==="Bronze" || card.color==="Silver") && card.id !== this.selected_card.id)
         if (this.deck_filtered.length) this.show_play_from_deck = true
       }
 
