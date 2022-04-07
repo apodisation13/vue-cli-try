@@ -1,19 +1,13 @@
 import { useToast } from 'vue-toastification'
+import {hit_one_enemy} from "@/logic/player_move/service/service_for_player_move";
 
 const toast = useToast()
 
 
 function damage_all(field, card) {
   field.forEach(enemy => {
-    if (enemy) {
-      if (enemy.shield) {
-        enemy.shield = false
-        toast.warning('Попали в щит!')
-      }
-      else enemy.hp -= card.damage
-    }
+    if (enemy) hit_one_enemy(enemy, card)
   })
-  card.charges -= 1
   toast.warning('УРОН ВСЕМ!')
 }
 

@@ -1,4 +1,4 @@
-import {get_all_enemies, remove_dead_card} from "@/logic/player_move/service/service_for_player_move"
+import {get_all_enemies, hit_one_enemy, remove_dead_card} from "@/logic/player_move/service/service_for_player_move"
 import {check_win} from "@/logic/player_move/service/check_win"
 
 
@@ -18,9 +18,9 @@ function spread_damage(card, field, enemy_leader, grave, hand, deck, isCard, ene
     else {
       j++
       let random_enemy = Math.floor(Math.random() * enemy_list.length)
-      // console.log(`попали во врага ${enemy_list[random_enemy].id}`)
+      console.log(`попали во врага ${enemy_list[random_enemy].id}`)
 
-      enemy_list[random_enemy].hp -= 1
+      hit_one_enemy(enemy_list[random_enemy], {'damage': 1} )
 
       if (enemy_list[random_enemy].hp === 0) {  // убрали врага из списка врагов и из поля тоже
         field[field.indexOf(enemy_list[random_enemy])] = ''

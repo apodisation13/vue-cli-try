@@ -1,3 +1,6 @@
+import {hit_one_enemy} from "@/logic/player_move/service/service_for_player_move";
+
+
 function damage_row(enemy, card, field) {
   let index = field.indexOf(enemy)
   let min = Math.floor(index / 3) * 3
@@ -5,11 +8,9 @@ function damage_row(enemy, card, field) {
 
   field.slice(min, max).forEach(enemy => {
     if (enemy) {
-      enemy.hp -= card.damage
+      hit_one_enemy(enemy, card)
     }
   })
-
-  card.charges -= 1
 }
 
 

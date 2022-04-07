@@ -51,6 +51,7 @@ function damage_ai_card(card, enemy, field, enemy_leader, hand, deck, grave, ene
     if (enemy_leader.hp < 0) enemy_leader.hp = 0
    
     // убираем карту игрока, если в ней не осталось зарядов, из руки и из колоды, если играли оттуда
+    card.charges -= 1
     if (isCard) remove_dead_card(card, grave, hand, deck)
 
     // проверяем, не выиграли ли мы

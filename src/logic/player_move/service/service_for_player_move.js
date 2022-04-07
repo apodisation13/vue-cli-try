@@ -1,3 +1,8 @@
+import { useToast } from 'vue-toastification'
+
+const toast = useToast()
+
+
 function remove_dead_enemies(field) {
   for (let i = 0; i < field.length; i++) {
     if (field[i].hp <= 0) {
@@ -37,8 +42,18 @@ function get_all_enemies(field, enemy_leader) {
 }
 
 
+function hit_one_enemy(enemy, card) {
+  if (enemy.shield) {
+    enemy.shield = false
+    toast.warning('Попали в щит!')
+  }
+  else enemy.hp -= card.damage
+}
+
+
 export {
   remove_dead_enemies,
   remove_dead_card,
   get_all_enemies,
+  hit_one_enemy,
 }
