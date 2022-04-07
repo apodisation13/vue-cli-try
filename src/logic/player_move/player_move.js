@@ -29,7 +29,8 @@ function damage_ai_card(card, enemy, field, enemy_leader, hand, deck, grave, ene
     }
 
     else if (card.ability.name === 'spread-damage') {
-        spread_damage(card, field, enemy_leader)
+        spread_damage(card, field, enemy_leader, grave, hand, deck, isCard, enemies)
+        return  // ретерн здесь, так как общие штуки в конце выполняются прям там изза sleep
     }
 
     else if (card.ability.name === 'damage-row') {
