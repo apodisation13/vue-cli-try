@@ -12,49 +12,52 @@
         &dagger;{{ card.damage }}
       </h3>
 
-      <div class="hp" v-if="hp_needed"></div>
-      <h3 v-if="hp_needed"> Жизни <br>
-        &hearts;{{ card.hp }}
-      </h3>
+      <div class="circle" :style="{'backgroundColor': 'orange'}"
+           v-if="card.ability.name === 'damage-all'">
+        <span>&#9850;</span>
+      </div>
+      <div class="circle" :style="{'backgroundColor': 'orange'}"
+           v-if="card.ability.name === 'spread-damage'">
+        <span :style="{'font-size': '18pt'}">&#9798;</span>
+      </div>
+      <div class="circle" :style="{'backgroundColor': 'green'}"
+           v-else-if="card.ability.name === 'heal'">
+        <span :style="{'font-size': '12pt'}">+&hearts;{{ card.heal }}</span>
+      </div>
+      <div class="circle" :style="{'backgroundColor': 'purple'}"
+           v-else-if="card.ability.name === 'resurrect'">
+        <span>&#10014;&#8680;</span>
+      </div>
+      <div class="circle" :style="{'backgroundColor': 'purple'}"
+           v-else-if="
+            card.ability.name === 'draw-one-card' ||
+            card.ability.name === 'play-from-deck' ||
+            card.ability.name === 'play-from-grave'
+         ">
+        <span>&#127136;</span>
+      </div>
+      <div class="circle" :style="{'backgroundColor': 'purple'}"
+           v-else-if="card.ability.name === 'give-charges-to-card-in-hand-1'">
+        <span>+1&#8607;</span>
+      </div>
+
+
+      <div class="triangle" :style="background_color(card)" v-if="card.has_passive"></div>
+      <div class="text" :style="{'font-size': '20pt'}" v-if="card.has_passive"><b>&#8987;</b></div>
+
 
       <div class="charges"></div>
       <h3> Заряды <br>
         {{ card.charges }}&#8607;
       </h3>
 
-      <div class="triangle" :style="background_color(card)" v-if="card.has_passive"></div>
-      <div class="text" :style="{'font-size': '20pt'}" v-if="card.has_passive"><b>&#8987;</b></div>
-    </div>
 
-    <div class="circle" :style="{'backgroundColor': 'orange'}"
-         v-if="card.ability.name === 'damage-all'">
-      <span>&#9850;</span>
+      <div class="hp" v-if="hp_needed"></div>
+      <h3 v-if="hp_needed"> Жизни <br>
+        &hearts;{{ card.hp }}
+      </h3>
+
     </div>
-    <div class="circle" :style="{'backgroundColor': 'orange'}"
-         v-if="card.ability.name === 'spread-damage'">
-      <span :style="{'font-size': '18pt'}">&#9798;</span>
-    </div>
-    <div class="circle" :style="{'backgroundColor': 'green'}"
-         v-else-if="card.ability.name === 'heal'">
-      <span :style="{'font-size': '12pt'}">+&hearts;{{ card.heal }}</span>
-    </div>
-    <div class="circle" :style="{'backgroundColor': 'purple'}"
-         v-else-if="card.ability.name === 'resurrect'">
-      <span>&#10014;&#8680;</span>
-    </div>
-    <div class="circle" :style="{'backgroundColor': 'purple'}"
-         v-else-if="
-            card.ability.name === 'draw-one-card' ||
-            card.ability.name === 'play-from-deck' ||
-            card.ability.name === 'play-from-grave'
-         ">
-      <span>&#127136;</span>
-    </div>
-    <div class="circle" :style="{'backgroundColor': 'purple'}"
-         v-else-if="card.ability.name === 'give-charges-to-card-in-hand-1'">
-      <span>+1&#8607;</span>
-    </div>
-    <br>
 
     <div class="text">
       <b>СПОСОБНОСТЬ</b> - {{ card.ability.description }}
@@ -129,8 +132,8 @@ export default {
 }
 
 h3 {
-  display: inline;
   font-size: 14pt;
+  display: block;
 }
 
 .hp {
@@ -170,8 +173,8 @@ h3 {
 
 .circle {
   display: inline-grid;
-  width: 14%;
-  height: 7%;
+  width: 25%;
+  height: 15%;
   background: orangered;
   border-radius: 50%;
   margin: 3% auto;

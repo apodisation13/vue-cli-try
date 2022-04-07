@@ -12,24 +12,25 @@
         &dagger;{{ leader.damage }}
       </h3>
 
+
+      <div class="circle" :style="{'backgroundColor': 'orange'}"
+           v-if="leader.ability.name === 'damage-all'">
+        <span>&#9850;</span>
+      </div>
+      <div class="circle" :style="{'backgroundColor': 'orange'}"
+           v-if="leader.ability.name === 'spread-damage'">
+        <span :style="{'font-size': '14pt'}">&#9798;</span>
+      </div>
+
+      <div class="triangle" :style="background_color(leader)" v-if="leader.has_passive"></div>
+      <div class="text" :style="{'font-size': '20pt'}" v-if="leader.has_passive"><b>&#8987;</b></div>
+
+
       <div class="charges"></div>
       <h3> Заряды <br>
         {{ leader.charges }}&#8607;
       </h3>
-
-      <div class="triangle" :style="background_color(leader)" v-if="leader.has_passive"></div>
-      <div class="text" :style="{'font-size': '20pt'}" v-if="leader.has_passive"><b>&#8987;</b></div>
     </div>
-
-    <div class="circle" :style="{'backgroundColor': 'orange'}"
-         v-if="leader.ability.name === 'damage-all'">
-      <span>&#9850;</span>
-    </div>
-    <div class="circle" :style="{'backgroundColor': 'orange'}"
-         v-if="leader.ability.name === 'spread-damage'">
-      <span :style="{'font-size': '14pt'}">&#9798;</span>
-    </div>
-    <br>
 
     <div class="text">
       <b>СПОСОБНОСТЬ</b> - {{ leader.ability.description }}
@@ -93,8 +94,8 @@ export default {
 }
 
 h3 {
-  display: inline;
   font-size: 14pt;
+  display: block;
 }
 
 .img {
@@ -132,8 +133,8 @@ h3 {
 
 .circle {
   display: inline-grid;
-  width: 14%;
-  height: 7%;
+  width: 25%;
+  height: 15%;
   background: orangered;
   border-radius: 50%;
   margin: 3% auto;

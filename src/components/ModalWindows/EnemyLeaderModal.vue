@@ -7,6 +7,20 @@
     </div>
 
     <div class="right-panel">
+      <div class="circle" v-if="enemy_leader.ability.name==='damage-once'">
+        <span>{{ enemy_leader.damage_once }}</span>
+      </div>
+      <div class="circle" v-else-if="enemy_leader.ability.name==='damage-per-turn'">
+        <span>&#128337;1</span>
+      </div>
+      <div class="circle" v-else-if="enemy_leader.ability.name==='heal-self-per-turn'">
+        <span>&hearts;{{ enemy_leader.heal_self_per_turn }}</span>
+      </div>
+      <div class="circle" v-else-if="enemy_leader.ability.name==='decrease-all-player-damage-1'">
+        <span>-1&dagger;</span>
+      </div>
+
+
       <div class="diamond" :style="background_color(enemy_leader)"
            v-if="enemy_leader.damage_per_turn"></div>
       <h3 v-if="enemy_leader.damage_per_turn"> Урон
@@ -19,22 +33,8 @@
       </h3>
     </div>
 
-    <div class="circle" v-if="enemy_leader.ability.name==='damage-once'">
-      <span>{{ enemy_leader.damage_once }}</span>
-    </div>
-    <div class="circle" v-else-if="enemy_leader.ability.name==='damage-per-turn'">
-      <span>&#128337;1</span>
-    </div>
-    <div class="circle" v-else-if="enemy_leader.ability.name==='heal-self-per-turn'">
-      <span>&hearts;{{ enemy_leader.heal_self_per_turn }}</span>
-    </div>
-    <div class="circle" v-else-if="enemy_leader.ability.name==='decrease-all-player-damage-1'">
-      <span>-1&dagger;</span>
-    </div>
-    <br>
-
     <div class="text" v-if="enemy_leader.passive"> ПАССИВНАЯ СПОСОБНОСТЬ </div>
-    <div class="text"> {{ enemy_leader.ability.description }} </div>
+    <div class="text"> <b>СПОСОБНОСТЬ</b> - {{ enemy_leader.ability.description }} </div>
 
   </modal-window>
 </template>
@@ -96,7 +96,7 @@ export default {
 }
 
 h3 {
-  display: inline;
+  display: block;
   font-size: 14pt;
 }
 
@@ -117,8 +117,8 @@ h3 {
 
 .circle {
   display: inline-grid;
-  width: 14%;
-  height: 7%;
+  width: 25%;
+  height: 15%;
   background: orangered;
   border-radius: 50%;
   margin: 3% auto;

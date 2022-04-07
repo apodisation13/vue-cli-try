@@ -7,38 +7,38 @@
     </div>
 
     <div class="damage_and_hp">
+      <div class="circle" v-if="enemy.move.name==='down'">
+        <span>&#8595;</span>
+      </div>
+      <div class="circle" v-else-if="enemy.move.name==='stand'">
+        <span>&#9737;</span>
+      </div>
+      <div class="circle" v-else-if="enemy.move.name==='random'">
+        <span>&#9736;</span>
+      </div><br>
+
+
       <div class="diamond" :style="background_color(enemy)"></div>
       <h3> Урон
         <br>&dagger;{{ enemy.damage }}
       </h3>
 
+      <div class="triangle" :style="background_color(enemy)" v-if="enemy.passive"></div>
+      <div class="text" :style="{'font-size': '20pt'}" v-if="enemy.passive"><b>&#8987;</b></div>
 
-      <div class="hp"></div>
-      <h3> Жизни
-        <br>&hearts;{{ enemy.hp }}
-      </h3>
 
-      <br>
       <div v-if="enemy.shield" :style="{'font-size': '30pt'}">
         &#128737;
         <br>
         ЩИТ!
       </div>
 
-      <div class="triangle" :style="background_color(enemy)" v-if="enemy.passive"></div>
-      <div class="text" :style="{'font-size': '20pt'}" v-if="enemy.passive"><b>&#8987;</b></div>
 
+      <div class="hp"></div>
+      <h3> Жизни
+        <br>&hearts;{{ enemy.hp }}
+      </h3>
     </div>
-
-    <div class="circle" v-if="enemy.move.name==='down'">
-      <span>&#8595;</span>
-    </div>
-    <div class="circle" v-else-if="enemy.move.name==='stand'">
-      <span>&#9737;</span>
-    </div>
-    <div class="circle" v-else-if="enemy.move.name==='random'">
-      <span>&#9736;</span>
-    </div><br>
 
     <div class="text" v-if="enemy.shield">
       <b>Щит защищает врага от урона! После попадания щит снимается</b>
@@ -85,12 +85,8 @@ export default {
 <style scoped>
 
 h3 {
-  display: inline;
   font-size: 14pt;
-}
-
-p {
-  font-size: 12pt;
+  display: block;
 }
 
 .enemy_border {
@@ -146,8 +142,8 @@ p {
 
 .circle {
   display: inline-grid;
-  width: 14%;
-  height: 7%;
+  width: 25%;
+  height: 15%;
   background: orangered;
   border-radius: 50%;
   margin: 3% auto;
@@ -157,6 +153,7 @@ span {
   position: relative;
   font-size: 22pt;
   color: white;
+  margin: auto;
 }
 
 .text {
