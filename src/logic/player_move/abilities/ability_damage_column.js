@@ -5,7 +5,6 @@ function damage_column(enemy, card, field) {
   indexes.forEach(i => {
     if (field[i]) {
       field[i].hp -= card.damage
-      alert('попали в врага в стоблце')
     }
   })
 
