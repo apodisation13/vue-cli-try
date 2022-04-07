@@ -1,17 +1,8 @@
-import { useToast } from 'vue-toastification'
-
-const toast = useToast()
-
+import {hit_one_enemy} from "@/logic/player_move/service/service_for_player_move";
 
 function damage_one(enemy, card) {
   // нанесли урон и-тому элементу от конкретной карты
-  if (enemy.shield) {
-    enemy.shield = false
-    toast.warning('Попали в щит!')
-  }
-  else enemy.hp -= card.damage
-
-  card.charges -= 1  // вычитаем 1 заряд у карты игрока
+  hit_one_enemy(enemy, card)
 }
 
 export { damage_one }
