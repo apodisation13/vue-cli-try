@@ -1,3 +1,4 @@
+import store from "@/store"
 import { useToast } from 'vue-toastification'
 
 const toast = useToast()
@@ -46,6 +47,10 @@ function hit_one_enemy(enemy, card) {
   if (enemy.shield) {
     enemy.shield = false
     toast.warning('Попали в щит!')
+    if (store.state.play_sound) {
+      const audio = new Audio(require('@/assets/audio/sounds/hit_shield.wav'))
+      audio.play()
+    }
   }
   else enemy.hp -= card.damage
 }

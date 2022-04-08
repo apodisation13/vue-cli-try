@@ -26,6 +26,8 @@ const store = createStore({
         isLoaded: false,  // загружены ли данные
         error: "",  // сообщение об ошибке загрузки данных
 
+        play_sound: false,
+
         cards_in_deck: 12,  // СКОЛЬКО В ДЕКЕ ДОЛЖНО БЫТЬ КАРТ
         hand_size: 6,  // СКОЛЬКО КАРТ В РУКЕ
         
@@ -105,6 +107,9 @@ const store = createStore({
         },
         set_error(state, payload) {
             state.error = payload
+        },
+        set_play_sound(state, payload) {
+            state.play_sound = payload
         },
 
     },
