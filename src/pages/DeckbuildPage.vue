@@ -1,34 +1,45 @@
 <template>
+  <div class="database">
 
-  <!-- база карт -->
-  <div class="card_pool_view">
-    <cards-list
-        :cards="pool"
-        :hp_needed="true"
-        @chose_player_card="append_into_deck_in_progress" />
-  </div>
+    <!-- база карт -->
+    <div class="card_pool_view">
+      <cards-list
+          :cards="pool"
+          :hp_needed="true"
+          @chose_player_card="append_into_deck_in_progress" />
+    </div>
 
-  <!-- список всех лидеров из базы -->
-  <div class="leader_pool_view">
-    <cards-list
-        :cards="leaders"
-        :for_leaders="true"
-        @chose_player_card="chose_leader" />
-  </div>
-
-
-  <!-- новая дека + фракции из стора -->
-  <div class="new_deck">
-    <button class="btn" @click="new_deck()">
-      new+
-    </button>
-    <div class="factions" v-for="faction in factions" :key="faction">
-      <button class="btn" @click="filtering(faction)">
-        {{ faction.name }}
-      </button>
+    <!-- список всех лидеров из базы -->
+    <div class="leader_pool_view">
+      <cards-list
+          :cards="leaders"
+          :for_leaders="true"
+          @chose_player_card="chose_leader" />
     </div>
   </div>
 
+  <div class="filters">
+    <button class="new" @click="new_deck()">NEW+</button>
+
+    <filter-factions
+        @filter-factions="filter_factions"
+    />
+
+    <filter-types
+        @filter-types="filter_types"
+        @reset-filter-types="reset_filter_types"
+    />
+
+    <filter-colors
+        @filter-colors="filter_colors"
+        @reset-filter-colors="reset_filter_colors"
+    />
+
+    <filter-passives
+        @filter-passives="filter_passives"
+        @reset-filter-passives="reset_filter_passives"
+    />
+  </div>
 
   <div class="deck_in_progress">
 
@@ -54,8 +65,6 @@
   >
     СОХРАНИТЬ ДЕКУ
   </button>
-  <br>
-
 
   <div class="decks_btn" @click="open_decks_list_modal">
     КОЛОДЫ!
@@ -72,10 +81,15 @@
 import CardsList from "@/components/CardsList"
 import LeaderComp from "@/components/LeaderComp"
 import DecksListModal from "@/components/ModalWindows/DecksListModal"
+import FilterFactions from "@/components/Pages/DeckbuildPage/FilterFactions"
+import FilterTypes from "@/components/Pages/DeckbuildPage/FilterTypes"
+import FilterColors from "@/components/Pages/DeckbuildPage/FilterColors"
+import FilterPassives from "@/components/Pages/DeckbuildPage/FilterPassives"
 export default {
-  components: {DecksListModal, LeaderComp, CardsList},
+  components: {FilterPassives, FilterColors, FilterTypes, FilterFactions, DecksListModal,  CardsList, LeaderComp},
   data() {
-    return {       
+    return {
+      query: {},
       faction: '',
 
       deck_is_progress: [],  // колода в процессе - целиком объкты
@@ -93,15 +107,38 @@ export default {
 
   methods: {
     // фильтр карт и лидеров по фракции по нажатию на кнопку фракции
-    filtering(faction) {
-      this.faction = faction
-      this.faction_selected = true  // чтобы можно было добавить лидера, онли выбрав фракцию
+    filter_factions(emit) {
+      this.query.faction = emit[0]  // для this.query.cards
+      this.faction = emit[0][0]  // для this.query.leaders
+      this.faction_selected = emit[1]  // чтобы можно было добавить лидера, онли выбрав фракцию
+      if (this.deck_is_progress.length) this.new_deck()  // если в процессе сборки переключили фракцию - ОБНУЛИЛИСЬ
+    },
+    filter_types(type) {
+      this.query.type = type
+    },
+    filter_colors(color) {
+      this.query.color = color
+    },
+    filter_passives(passive) {
+      this.query.has_passive = passive
+      console.log(this.query)
+    },
+    reset_filter_types() {
+      delete this.query.type
+    },
+    reset_filter_colors() {
+      delete this.query.color
+    },
+    reset_filter_passives() {
+      delete this.query.has_passive
     },
 
     // новая дека, обнуляем фильтры и сбрасываем все добавления
     new_deck() {
+      this.query = {}
       this.faction = ''
       this.deck_is_progress = []
+      this.deck_body = []
       this.health = 0
       this.leader_selected = false
       this.faction_selected = false
@@ -163,12 +200,12 @@ export default {
       alert('сохранили деку')
     },
 
-    show_deck(index) {
-      this.deck_is_progress = this.$store.state.decks[index].cards
-      this.health = this.$store.state.decks[index].health
-      this.leader_in_progress = this.$store.state.decks[index].leader
-      this.leader_selected = true
-    },
+    // show_deck(index) {
+    //   this.deck_is_progress = this.$store.state.decks[index].cards
+    //   this.health = this.$store.state.decks[index].health
+    //   this.leader_in_progress = this.$store.state.decks[index].leader
+    //   this.leader_selected = true
+    // },
 
     open_decks_list_modal() {
       this.show_decks_list_modal = true
@@ -177,15 +214,11 @@ export default {
 
   computed: {
     pool() {
-      if (!this.faction) return this.$store.getters.all_cards
-      else return this.$store.getters.filtered_cards(this.faction)
+      return this.$store.getters.filtered_cards(this.query)
     },
     leaders() {
       if (!this.faction) return this.$store.getters.all_leaders
       else return this.$store.getters.filtered_leaders(this.faction)
-    },
-    factions() {
-      return this.$store.state.factions.slice(1)
     },
   },
 
@@ -193,77 +226,94 @@ export default {
 </script>
 
 <style scoped>
+
+.database {
+  display: inline;
+  float: left;
+  width: 80%;
+  /*border: solid 1px red;*/
+}
+
+.filters {
+  display: inline;
+  float: right;
+  /*border: solid 1px black;*/
+  width: 18%;
+  height: 58vh;
+  margin-right: 1%;
+  margin-top: 0.05%;
+}
+
 /*база карт*/
 .card_pool_view {
-  width: 80%;
   height: 40vh;
   border: solid 1px black;
-  margin: 1px;
+  margin: 0.05%;
   overflow: scroll;
 }
 
 /*база лидеров*/
 .leader_pool_view {
-  width: 80%;
   height: 18vh;
   border: solid 1px black;
-  margin: 1px;
+  /*margin: 1px;*/
   overflow: scroll;
 }
 
-/*область новая дека + фракции*/
-.new_deck {
-  width: 98%;
-  height: 7vh;
-  margin: 1%;
-  position: relative;
-  display: inline;
+.new {
+  height: 4vh;
+  width: 92%;
+  margin: 2% auto;
 }
 
-/*сами фракции*/
-.factions {
-  display: inline;
-  margin: 1%;
-}
-
-.deck_in_progress { 
+.deck_in_progress {
   /* два дива в один ряд! */
-  margin: 1%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  height: 18vh;
+  margin: 0.05%;
+  clear: both;
+  height: 22vh;
+  /*border: solid 2px yellow;*/
+  width: 99%;
+  margin-bottom: 1%;
 }
 
 .leader {
-  width: 18%;
+  width: 20%;
+  height: 100%;
   border: dashed 1px black;
+  display: inline;
+  float: left;
+  /*margin: 0.05%;*/
 }
 
 .deck_build_view {
-  width: 80%;
+  width: 79%;
+  height: 100%;
   border: solid 1px black;
   overflow: scroll;
-}
-
-.btn {
-  width: 23%;
-  height: 4vh;
+  display: inline;
+  float: right;
+  margin: 0.05%;
 }
 
 .btn_save_deck {
   width: 23%;
   height: 6vh;
   background-color: green;
+  display: inline;
+  float: left;
+  margin-top: 5%;
 }
 
 /*кнопка КОЛОДЫ*/
 .decks_btn {
-  height: 5vh;
-  width: 50%;
+  height: 6vh;
+  width: 70%;
   border: solid 2px green;
   text-align: center;
-  margin: 1% auto auto;
+  display: inline;
+  float: right;
+  margin-right: 2%;
+  margin-top: 5%;
 }
 
 </style>

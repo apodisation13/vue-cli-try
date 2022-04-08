@@ -26,6 +26,8 @@ const store = createStore({
         isLoaded: false,  // загружены ли данные
         error: "",  // сообщение об ошибке загрузки данных
 
+        play_sound: false,
+
         cards_in_deck: 12,  // СКОЛЬКО В ДЕКЕ ДОЛЖНО БЫТЬ КАРТ
         hand_size: 6,  // СКОЛЬКО КАРТ В РУКЕ
         
@@ -50,11 +52,14 @@ const store = createStore({
         all_leaders: state => {
             return state.leaders
         },
-        filtered_cards: (state) => (fac) => {
-            return state.cards.filter(f => f.faction===fac.name || f.faction==='Neutral')
+        filtered_cards: (state) => (query) => {
+            const applyFilter = (data, query) => data.filter(obj =>
+                Object.entries(query).every(([prop, find]) => find.includes(obj[prop]))
+            )
+            return applyFilter(state.cards, query)
         },
         filtered_leaders: (state) => (fac) => {
-            return state.leaders.filter(f => f.faction===fac.name)
+            return state.leaders.filter(f => f.faction===fac)
         },
     
     },
@@ -102,6 +107,9 @@ const store = createStore({
         },
         set_error(state, payload) {
             state.error = payload
+        },
+        set_play_sound(state, payload) {
+            state.play_sound = payload
         },
 
     },
@@ -167,7 +175,7 @@ const store = createStore({
 
         // выполняется по удалению деки id со страницы DeckBuilder
         async delete_deck({commit}, id) {
-            let url = `${DECKS}13123213${id}/`
+            let url = `${DECKS}${id}/`
             try {
                 await axios_delete(url)
                 await this.dispatch('get_decks')
