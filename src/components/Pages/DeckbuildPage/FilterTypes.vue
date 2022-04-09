@@ -4,7 +4,7 @@
     <div class="types" v-for="type in types" :key="type">
 
       <button class="type" @click="filtering(type)">
-        {{ type }}
+        {{ type[0] }}
       </button>
 
     </div>

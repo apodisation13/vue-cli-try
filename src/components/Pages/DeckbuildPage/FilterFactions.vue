@@ -3,7 +3,7 @@
     <div class="factions" v-for="faction in factions" :key="faction">
 
       <button class="faction" @click="filtering(faction)" :style="{'backgroundColor': faction.color}">
-        {{ faction.name }}
+        {{ faction.name[0] }}
       </button>
 
     </div>

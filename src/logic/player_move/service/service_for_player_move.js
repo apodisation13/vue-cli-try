@@ -51,10 +51,21 @@ function hit_one_enemy(enemy, card) {
       const audio = new Audio(require('@/assets/audio/sounds/hit_shield.wav'))
       audio.play()
     }
+    // play_sound("@/assets/audio/sounds/hit_shield.wav")
   }
   else enemy.hp -= card.damage
 }
 
+
+function play_sound(path) {
+  alert(path)
+  if (store.state.play_sound) {
+    const p = require(path)
+    alert(p)
+    const audio = new Audio(p)
+    audio.play()
+  }
+}
 
 export {
   remove_dead_enemies,
