@@ -1,5 +1,6 @@
 import {get_all_enemies, hit_one_enemy, remove_dead_card} from "@/logic/player_move/service/service_for_player_move"
 import {check_win} from "@/logic/player_move/service/check_win"
+import {sound_spread_damage} from "@/logic/play_sounds"
 
 
 function spread_damage(card, field, enemy_leader, grave, hand, deck, isCard, enemies) {
@@ -26,6 +27,8 @@ function spread_damage(card, field, enemy_leader, grave, hand, deck, isCard, ene
         field[field.indexOf(enemy_list[random_enemy])] = ''
         enemy_list.splice(random_enemy, 1)  // если убили лидера вдруг, то у него просто 0 и всё
       }
+
+      sound_spread_damage()
     }
   }, 200)
 }
