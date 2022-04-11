@@ -4,6 +4,16 @@ import {sound_hit_shield} from "@/logic/play_sounds"
 const toast = useToast()
 
 
+function hit_one_enemy(enemy, card) {
+  if (enemy.shield) {
+    enemy.shield = false
+    toast.warning('Попали в щит!')
+    sound_hit_shield()
+  }
+  else enemy.hp -= card.damage
+}
+
+
 function remove_dead_enemies(field) {
   for (let i = 0; i < field.length; i++) {
     if (field[i].hp <= 0) {
@@ -43,13 +53,11 @@ function get_all_enemies(field, enemy_leader) {
 }
 
 
-function hit_one_enemy(enemy, card) {
-  if (enemy.shield) {
-    enemy.shield = false
-    toast.warning('Попали в щит!')
-    sound_hit_shield()
-  }
-  else enemy.hp -= card.damage
+// взять рандомного врага из всех врагов
+function get_random_enemy(field, enemy_leader) {
+  let enemies_list = get_all_enemies(field, enemy_leader)
+  let random = Math.floor(Math.random() * enemies_list.length)
+  return enemies_list[random]
 }
 
 
@@ -58,4 +66,5 @@ export {
   remove_dead_card,
   get_all_enemies,
   hit_one_enemy,
+  get_random_enemy,
 }
