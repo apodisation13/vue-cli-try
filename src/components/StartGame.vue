@@ -15,6 +15,7 @@
 
 import { place_enemies } from '@/logic/place_enemies'
 import { draw_hand } from '@/logic/draw_hand'
+import {enemy_leader_ai_move_once} from "@/logic/ai_move/ai_move"
 import RedrawModal from "@/components/RedrawModal"
 export default {
   name: 'start-game',
@@ -44,6 +45,7 @@ export default {
     // начало игры: расставить врагов, вытянуть карты в руку, открыть redraw-modal
     start_game() {
       place_enemies(this.field, this.enemies)  // рандомно расставит врагов
+      enemy_leader_ai_move_once(this.$store.state.enemy_leader, this.deck)  // АБИЛКИ ЛИДЕРА врага в самом начале
       draw_hand(this.hand, this.deck)  // вытянет руку, остальное оставит в деке
 
       this.redraw = true
