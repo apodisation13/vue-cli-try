@@ -25,7 +25,7 @@ function down_move(field, i) {
     else {
       field[i+3] = field[i]  // типа враг прыгнул на клеточку ниже
       field[i] = ''
-      toast.info('враг походил')
+      // toast.info('враг походил')
     }
   }
 

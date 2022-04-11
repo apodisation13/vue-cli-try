@@ -20,7 +20,7 @@ function random_move(field, i) {
     field[i]['already_jumped'] = true  // он уже прыгнул, чтобы потом не прыгать ещё раз
     field[random] = field[i]  // враг прыгнул рандом клетку
     field[i] = ''
-    toast.info(`враг прыгнул на клетку ${random}`)
+    // toast.info(`враг прыгнул на клетку ${random}`)
     sound_enemy_move_down()
   }
 }
