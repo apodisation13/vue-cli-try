@@ -7,6 +7,7 @@ import {check_win}
 import {passive_end_turn_increase_damage_in_hand}
   from "@/logic/player_move/passive_abilities/increase_damage_to-card_in_hand"
 import {passive_end_turn_heal_leader} from "@/logic/player_move/passive_abilities/heal_leader";
+import {passive_end_turn_increase_self_damage} from "@/logic/player_move/passive_abilities/increase_self_damage";
 
 
 function player_passive_abilities_upon_playing_a_card(player_card, leader) {
@@ -37,6 +38,10 @@ function player_passive_abilities_end_turn(hand, leader, deck, grave, field, ene
 
     else if (card.passive_ability.name === 'heal-leader-by-1') {
       passive_end_turn_heal_leader()
+    }
+
+    else if (card.passive_ability.name === 'increase-self-damage-by-1') {
+      passive_end_turn_increase_self_damage(card)
     }
 
   })
