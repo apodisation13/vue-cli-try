@@ -1,7 +1,17 @@
-import store from "@/store"
 import { useToast } from 'vue-toastification'
+import {sound_hit_shield} from "@/logic/play_sounds"
 
 const toast = useToast()
+
+
+function hit_one_enemy(enemy, card) {
+  if (enemy.shield) {
+    enemy.shield = false
+    toast.warning('Попали в щит!')
+    sound_hit_shield()
+  }
+  else enemy.hp -= card.damage
+}
 
 
 function remove_dead_enemies(field) {
@@ -43,33 +53,18 @@ function get_all_enemies(field, enemy_leader) {
 }
 
 
-function hit_one_enemy(enemy, card) {
-  if (enemy.shield) {
-    enemy.shield = false
-    toast.warning('Попали в щит!')
-    if (store.state.play_sound) {
-      const audio = new Audio(require('@/assets/audio/sounds/hit_shield.wav'))
-      audio.play()
-    }
-    // play_sound("@/assets/audio/sounds/hit_shield.wav")
-  }
-  else enemy.hp -= card.damage
+// взять рандомного врага из всех врагов
+function get_random_enemy(field, enemy_leader) {
+  let enemies_list = get_all_enemies(field, enemy_leader)
+  let random = Math.floor(Math.random() * enemies_list.length)
+  return enemies_list[random]
 }
 
-
-function play_sound(path) {
-  alert(path)
-  if (store.state.play_sound) {
-    const p = require(path)
-    alert(p)
-    const audio = new Audio(p)
-    audio.play()
-  }
-}
 
 export {
   remove_dead_enemies,
   remove_dead_card,
   get_all_enemies,
   hit_one_enemy,
+  get_random_enemy,
 }

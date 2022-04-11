@@ -4,9 +4,10 @@ import {damage_all} from "@/logic/player_move/abilities/ability_damage_all"
 
 import {remove_dead_enemies, remove_dead_card} from "@/logic/player_move/service/service_for_player_move"
 import {check_win} from "@/logic/player_move/service/check_win"
-import {spread_damage} from "@/logic/player_move/abilities/ability_spread_damage";
-import {damage_row} from "@/logic/player_move/abilities/ability_damage_row";
-import {damage_column} from "@/logic/player_move/abilities/ability_damage_column";
+import {spread_damage} from "@/logic/player_move/abilities/ability_spread_damage"
+import {damage_row} from "@/logic/player_move/abilities/ability_damage_row"
+import {damage_column} from "@/logic/player_move/abilities/ability_damage_column"
+import {player_passive_abilities_upon_playing_a_card} from "@/logic/player_move/player_passive_abilities"
 
 
 // сюда заходим если там есть враг
@@ -16,7 +17,8 @@ import {damage_column} from "@/logic/player_move/abilities/ability_damage_column
 // hand,deck,grave - remove dead card if isCard;
 // enemies - list of remaining enemies for check win,
 // isCard - FLAG: need to remove dead card (hand) or not, Boolean
-function damage_ai_card(card, enemy, field, enemy_leader, hand, deck, grave, enemies, isCard) {
+// leader - для пассивок во время хода
+function damage_ai_card(card, enemy, field, enemy_leader, hand, deck, grave, enemies, isCard, leader) {
 
     if (card.ability.name === 'heal') {
         damage_one(enemy, card)
@@ -56,6 +58,10 @@ function damage_ai_card(card, enemy, field, enemy_leader, hand, deck, grave, ene
 
     // проверяем, не выиграли ли мы
     check_win(field, enemies, enemy_leader)
+
+    // пассивные абилки от хода
+    // пока только лидер игрока, +заряд от спецкарты
+    player_passive_abilities_upon_playing_a_card(card, leader)
 }
 
 export { damage_ai_card }

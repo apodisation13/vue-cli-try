@@ -82,7 +82,8 @@
 
 import {appear_new_enemy} from '@/logic/place_enemies'
 import {damage_ai_card} from '@/logic/player_move/player_move'
-import {ai_move, leader_ai_move, leader_ai_move_once} from '@/logic/ai_move/ai_move'
+import {ai_move, leader_ai_move} from '@/logic/ai_move/ai_move'
+import {player_passive_abilities_end_turn} from "@/logic/player_move/player_passive_abilities"
 
 import draw from '@/mixins/GamePage/draw'
 import specialcaseabilities from "@/mixins/GamePage/specialcaseabilities"
@@ -154,8 +155,6 @@ export default {
       // alert(this.s + 1)  // доступ к тем переменным
       // this.show()  // доступ к тем методам
       // this.f()  // из 1 миксина можно дергать параметры и методы другого!
-
-      leader_ai_move_once(this.enemy_leader)  // функция урона лидера в начале
     },
 
     // > по нажатию на карту игрока, из hand-comp, card - вся карта целиком
@@ -197,6 +196,7 @@ export default {
           this.hand, this.deck, this.grave,
           this.enemies,
           true,
+          this.leader
         )
 
         this.selected_card = null
@@ -216,12 +216,15 @@ export default {
           undefined, undefined, undefined,
           this.enemies,
           false,
+          this.leader,
       )
       this.leader_active = false  // снова неактивен, тыкай на него опять
       this.ai_cards_active = false
     },
 
+    // нажал ПАС - переход хода компу
     exec_ai_move() {
+      player_passive_abilities_end_turn(this.hand, this.leader, this.deck, this.grave, this.field, this.enemy_leader)
       ai_move(this.field)
       leader_ai_move(this.enemy_leader)
       appear_new_enemy(this.field, this.enemies)
@@ -243,6 +246,7 @@ export default {
             this.hand, this.deck, this.grave,
             this.enemies,
             true,
+            this.leader
         )
 
         this.player_cards_active = false
@@ -258,6 +262,7 @@ export default {
             undefined, undefined, undefined,
             this.enemies,
             false,
+            this.leader
         )
         this.leader_active = false
       }

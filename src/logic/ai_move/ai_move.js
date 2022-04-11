@@ -34,11 +34,18 @@ function ai_move(field) {
 
 
 // эта функция срабатывает для лидера только в начале игры 1 раз
-function leader_ai_move_once(leader) {
+function enemy_leader_ai_move_once(leader, deck) {
   if (leader.ability.name === "damage-once") {
     store.commit('change_health', -leader.damage_once)
     toast.error(`лидер ослабил вас на ${leader.damage_once}`)
     check_lose(store.state.health)
+  }
+
+  else if (leader.ability.name === 'decrease-all-player-damage-1') {
+    deck.forEach(card => {
+      if (card.damage > 0) card.damage -= 1
+    })
+    toast.error(`лидер врага уменьшил урон ВСЕХ ваших карт на 1`)
   }
 }
 
@@ -61,4 +68,4 @@ function leader_ai_move(leader) {
 }
 
 
-export { ai_move, leader_ai_move_once, leader_ai_move }
+export { ai_move, enemy_leader_ai_move_once, leader_ai_move }
