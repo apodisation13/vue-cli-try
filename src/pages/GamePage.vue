@@ -224,14 +224,23 @@ export default {
 
     // нажал ПАС - переход хода компу
     exec_ai_move() {
+
       player_passive_abilities_end_turn(
           this.hand, this.leader, this.deck, this.grave, this.field, this.enemy_leader, this.enemies
       )
-      ai_move(this.field)
-      leader_ai_move(this.enemy_leader)
-      appear_new_enemy(this.field, this.enemies)
-      this.player_cards_active = true
-      this.can_draw = this.calc_can_draw(this.player_cards_active, this.hand, this.deck)
+
+      setTimeout(
+          () => {
+            ai_move(this.field)
+            leader_ai_move(this.enemy_leader)
+            appear_new_enemy(this.field, this.enemies)
+            this.player_cards_active = true
+            this.can_draw = this.calc_can_draw(this.player_cards_active, this.hand, this.deck)
+          }, 2000
+      )
+
+
+
     },
 
     // если ранее ткнули на карту игрока или лидера игрока, а потом на лидера врагов!
