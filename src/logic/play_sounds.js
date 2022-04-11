@@ -25,6 +25,11 @@ function sound_damage_column() {
   if (store.state.play_sound) new Audio(require('@/assets/audio/sounds/damage_column.wav')).play()
 }
 
+function sound_heal() {
+  if (store.state.play_sound) new Audio(require('@/assets/audio/sounds/heal.wav')).play()
+}
+
+
 function sound_enemy_damage_player() {
   if (store.state.play_sound) new Audio(require('@/assets/audio/sounds/enemy_damage_player.wav')).play()
 }
@@ -36,6 +41,7 @@ function sound_enemy_move_down() {
 
 
 
+
 export {
     sound_hit_shield,
     sound_damage_all,
@@ -43,6 +49,7 @@ export {
     sound_spread_damage,
     sound_damage_row,
     sound_damage_column,
+    sound_heal,
 
     sound_enemy_damage_player,
     sound_enemy_move_down,
