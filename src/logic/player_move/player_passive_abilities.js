@@ -6,6 +6,7 @@ import {check_win}
   from "@/logic/player_move/service/check_win"
 import {passive_end_turn_increase_damage_in_hand}
   from "@/logic/player_move/passive_abilities/increase_damage_to-card_in_hand"
+import {passive_end_turn_heal_leader} from "@/logic/player_move/passive_abilities/heal_leader";
 
 
 function player_passive_abilities_upon_playing_a_card(player_card, leader) {
@@ -22,6 +23,8 @@ function player_passive_abilities_upon_playing_a_card(player_card, leader) {
 
 
 function player_passive_abilities_end_turn(hand, leader, deck, grave, field, enemy_leader, enemies) {
+
+  // диспетчер вызова пассивных абилок из РУКИ
   hand.filter(c => c.has_passive).forEach(card => {
 
     if (card.passive_ability.name === 'damage-random-enemy-by-1') {
@@ -31,6 +34,11 @@ function player_passive_abilities_end_turn(hand, leader, deck, grave, field, ene
     else if (card.passive_ability.name === 'increase-damage-to-card-in-hand-by-1') {
       passive_end_turn_increase_damage_in_hand(hand)
     }
+
+    else if (card.passive_ability.name === 'heal-leader-by-1') {
+      passive_end_turn_heal_leader()
+    }
+
   })
 
   if (leader.passive_ability.name === 'damage-random-enemy-by-1') {
