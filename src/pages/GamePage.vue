@@ -224,7 +224,9 @@ export default {
 
     // нажал ПАС - переход хода компу
     exec_ai_move() {
-      player_passive_abilities_end_turn(this.hand, this.leader, this.deck, this.grave, this.field, this.enemy_leader)
+      player_passive_abilities_end_turn(
+          this.hand, this.leader, this.deck, this.grave, this.field, this.enemy_leader, this.enemies
+      )
       ai_move(this.field)
       leader_ai_move(this.enemy_leader)
       appear_new_enemy(this.field, this.enemies)
