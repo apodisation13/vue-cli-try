@@ -11,9 +11,7 @@ function destroy_random(field, enemy_leader) {
   toast.warning(`Уничтожили случайного врага, ${target.name}!`)
   sound_destroy_enemy()
 
-  let index = field.indexOf(target)
-  if (index !== -1) field[index] = ''
-  else enemy_leader.hp = 0
+  target.hp = 0
 }
 
 

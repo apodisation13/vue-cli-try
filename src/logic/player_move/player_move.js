@@ -11,6 +11,7 @@ import {player_passive_abilities_upon_playing_a_card} from "@/logic/player_move/
 import {destroy_highest_hp} from "@/logic/player_move/abilities/ability_destroy_highest_hp";
 import {destroy_highest_damage} from "@/logic/player_move/abilities/ability_destroy_highest_damage";
 import {destroy_random} from "@/logic/player_move/abilities/ability_destroy_random";
+import {destroy_all_same_hp} from "@/logic/player_move/abilities/ability_destroy_all_same_hp";
 
 
 // сюда заходим если там есть враг
@@ -56,6 +57,10 @@ function damage_ai_card(card, enemy, field, enemy_leader, hand, deck, grave, ene
 
     else if (card.ability.name === 'destroy-random') {
         destroy_random(field, enemy_leader)
+    }
+
+    else if (card.ability.name === 'destroy-all-same-hp') {
+        destroy_all_same_hp(enemy, field, enemy_leader)
     }
 
     else damage_one(enemy, card)

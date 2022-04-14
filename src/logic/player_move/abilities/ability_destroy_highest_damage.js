@@ -13,13 +13,13 @@ function destroy_highest_damage(field, enemy_leader) {
   }
   else all_enemies = get_all_enemies(field, {hp: 0})
 
-
   all_enemies.sort((a, b) => b.damage - a.damage)
-  let index = field.indexOf(all_enemies[0])
-  toast.warning(`Уничтожили врага с самым большим уроном, ${all_enemies[0].damage}!`)
+  let target = all_enemies[0]
+
+  toast.warning(`Уничтожили врага с самым большим уроном, ${target.damage}!`)
   sound_destroy_enemy()
-  if (index !== -1) field[index] = ''
-  else enemy_leader.hp = 0
+
+  target.hp = 0
 }
 
 
