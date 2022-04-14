@@ -1,6 +1,8 @@
 export default {
   data() {
     return {
+      ability: '',  // параметр для выхода из эмита
+
       grave_filtered: [],  // кладбище, но отфильтрованное, логикой ResurrectModal
       show_resurrect_modal: false,  // показать ResurrectModal, по card.ability.name==resurrect
 
@@ -29,11 +31,13 @@ export default {
       }
 
       else if (this.selected_card.ability.name === 'draw-one-card') {
-        if (this.deck.length !== 0) this.draw_one_card()
+        if (this.deck.length !== 0 && this.hand.length < 6) this.draw_one_card()
+        if (this.deck.length !== 0 && this.hand.length < 6) this.draw_one_card()
       }
 
       else if (this.selected_card.ability.name === 'give-charges-to-card-in-hand-1') {
         this.hand_filtered = this.hand.filter(card => card.color==="Bronze" && card.id !== this.selected_card.id)
+        this.ability = "give-charges-to-card-in-hand-1"
         if (this.hand_filtered.length) this.show_hand_special_case_abilities = true
       }
 
@@ -45,6 +49,12 @@ export default {
       else if (this.selected_card.ability.name === 'play-from-grave') {
         this.deck_filtered = this.grave.filter(card => (card.color==="Bronze" || card.color==="Silver") && card.id !== this.selected_card.id)
         if (this.deck_filtered.length) this.show_play_from_deck = true
+      }
+
+      else if (this.selected_card.ability.name === 'discard-draw-2') {
+        this.hand_filtered = this.hand.filter(card => card.id !== this.selected_card.id)
+        this.ability = "discard-draw-2"
+        if (this.hand_filtered.length) this.show_hand_special_case_abilities = true
       }
 
     },
@@ -60,9 +70,23 @@ export default {
 
     // дать карте в руке 1 заряд по абилке give-charges-to-card-in-hand-1
     give_charges_to_card_in_hand(card) {
-      let chosen_card = this.hand.filter(c => c===card)[0]  // ведь формально это Array
-      chosen_card.charges += 1
-      this.show_hand_special_case_abilities = false
+      if (this.ability === 'give-charges-to-card-in-hand-1') {
+        let chosen_card = this.hand.filter(c => c===card)[0]  // ведь формально это Array
+        chosen_card.charges += 1
+        this.show_hand_special_case_abilities = false
+        this.ability = ''
+      }
+      else if (this.ability === 'discard-draw-2') {
+        let chosen_card = this.hand.filter(c => c===card)[0]
+        this.grave.push(chosen_card)
+        this.hand.splice(this.hand.indexOf(chosen_card), 1)
+        if (this.deck.length !== 0 && this.hand.length < 6) this.draw_one_card()
+        if (this.deck.length !== 0 && this.hand.length < 6) this.draw_one_card()
+        this.show_hand_special_case_abilities = false
+        this.ability = ''
+      }
+
+
     },
 
     chosen_card_from_deck(card) {

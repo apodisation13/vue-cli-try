@@ -187,10 +187,7 @@ export default {
       
       // если ранее ткнули на карту игрока, а потом на поле
       if (this.player_cards_active && !this.leader_active && this.ai_cards_active && this.selected_enemy) {
-        
-        // особие абилки, которые требуют открытия окон
-        this.special_case_abilities()
-        
+
         damage_ai_card(
           this.selected_card, this.selected_enemy, this.field, this.enemy_leader,
           this.hand, this.deck, this.grave,
@@ -198,6 +195,9 @@ export default {
           true,
           this.leader
         )
+
+        // особие абилки, которые требуют открытия окон
+        this.special_case_abilities()
 
         this.selected_card = null
         this.ai_cards_active = false
