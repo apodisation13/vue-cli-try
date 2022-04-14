@@ -1,97 +1,57 @@
 <template>
+<!--  отркывается по любой абилке где нужно окно, там отфильтрованные карты cards_pool-->
+  <modal-window v-if="show_pick_a_card_selection">
+    <cards-list
+      :cards="cards_pool"
+      @chose_player_card='confirm_selection'
+    />
+  </modal-window>
 
-  <!--  Выбрать карту из кладбища, дать ей 1 заряд и восстановить в руку-->
-  <resurrect-modal
-      v-if="resurrect_modal"
-      :grave='grave'
-      @chosen_card='chosen_card'
-  />
-
-  <!--  Выбрать карту из руки, дать ей 1 заряд -->
-  <hand-special-case-abilities
-      v-if="hand_special_case_abilities"
-      :hand="hand"
-      @chosen_card_from_hand_special_case_abilities="chosen_card_from_hsca"
-  />
-
-  <play-from-deck
-    v-if="play_from_deck"
-    :deck="deck"
-    @chose_card_to_play_from_deck="chosen_card_from_deck"
-  />
-  <div class="chosen_card_from_deck" v-if="show_card_from_deck">
+<!--  а тут только 1 выбранная карта, при абилках играть play_from-->
+  <div class="chosen_card_from_deck" v-if="show_picked_card">
     <card-comp
-      :card="card_from_play_from_deck"
+      :card="picked_card"
     />
   </div>
 
 </template>
 
 <script>
-import ResurrectModal from "@/components/AbilitiesComponents/ResurrectModal"
-import HandSpecialCaseAbilities from "@/components/AbilitiesComponents/HandSpecialCaseAbilities"
-import PlayFromDeck from "@/components/AbilitiesComponents/PlayFromDeck"
 import CardComp from "@/components/CardComp"
+import ModalWindow from "@/components/UI/ModalWindow";
+import CardsList from "@/components/CardsList";
 export default {
   name: "special-case-abilities",
-  components: {CardComp, PlayFromDeck, HandSpecialCaseAbilities, ResurrectModal},
+  components: {CardsList, ModalWindow, CardComp, },
   props: {
-    grave: {  // кладбище для ResurrectModal
+    cards_pool: {
       required: true,
       type: Array,
     },
-    resurrect_modal: {  // нужно ли показывать ResurrectModal
+    show_pick_a_card_selection: {
       required: true,
       type: Boolean,
     },
-
-    hand: {  // рука для HandSpecialCaseAbilities
-      required: true,
-      type: Array,
-    },
-    hand_special_case_abilities: {  // нужно ли показывать HandSpecialCaseAbilities
+    show_picked_card: {  // флаг, показывать ли саму выбранную карту из колоды
       required: true,
       type: Boolean,
     },
-
-    deck: {  // колода для PlayFromDeck
-      required: true,
-      type: Array,
-    },
-    play_from_deck: {  // флаг, нужно ли показывать PlayFromDeck
-      required: true,
-      type: Boolean,
-    },
-    show_card_from_deck: {  // флаг, показывать ли саму выбранную карту из колоды
-      required: true,
-      type: Boolean,
-    },
-
   },
 
   data() {
     return {
-      card_from_play_from_deck: null,
+      picked_card: null,
     }
   },
 
   methods: {
-    chosen_card(card) { // приходит из ResurrectModal - emit это вся карта, this.hand[i], выбранная
-      this.$emit('chosen_card', card)
-    },
-    chosen_card_from_hsca(card) {  // приходит из HSCA - emit это вся карта, this.hand[i] - выбранная
-      this.$emit('chosen_card_from_hsca', card)
-    },
-    chosen_card_from_deck(card) {  // приходит из PlayFromDeck
-      console.log(card)
-      this.card_from_play_from_deck = card
-      this.$emit('chosen_card_from_deck', card)
+    confirm_selection(card) {
+      this.$emit('confirm_selection', card)
+      this.picked_card = card
     },
   },
   emits: [
-    'chosen_card',
-    'chosen_card_from_hsca',
-    'chosen_card_from_deck',
+    'confirm_selection',
   ],
 }
 </script>
