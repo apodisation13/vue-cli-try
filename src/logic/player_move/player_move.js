@@ -8,6 +8,7 @@ import {spread_damage} from "@/logic/player_move/abilities/ability_spread_damage
 import {damage_row} from "@/logic/player_move/abilities/ability_damage_row"
 import {damage_column} from "@/logic/player_move/abilities/ability_damage_column"
 import {player_passive_abilities_upon_playing_a_card} from "@/logic/player_move/player_passive_abilities"
+import {destroy_highest_hp} from "@/logic/player_move/abilities/ability_destroy_highest_hp";
 
 
 // сюда заходим если там есть враг
@@ -41,6 +42,10 @@ function damage_ai_card(card, enemy, field, enemy_leader, hand, deck, grave, ene
 
     else if (card.ability.name === 'damage-column') {
         damage_column(enemy, card, field)
+    }
+
+    else if (card.ability.name === 'destroy-highest-hp') {
+        destroy_highest_hp(field, enemy_leader)
     }
 
     else damage_one(enemy, card)
