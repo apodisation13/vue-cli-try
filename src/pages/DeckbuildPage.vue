@@ -44,7 +44,7 @@
   <div class="deck_in_progress">
 
     <div class="leader">
-      <leader-comp v-if="leader_selected" :leader=leader_in_progress  />
+      <leader-comp v-if="leader_selected" :leader=leader  />
     </div>
 
     <div class="deck_build_view">
@@ -99,7 +99,7 @@ export default {
       
       faction_selected: false,  // выбрана ли фракция, можно ли добавить лидера в деку
       leader_selected: false,  // выбран лидер или нет
-      leader_index: null,  // индекс выбранного лидера
+      leader: null,  // сам выбранный лидер
 
       show_decks_list_modal: false,  // показать окно с колодами
     }
@@ -146,36 +146,36 @@ export default {
     },
 
     // добавляем карты в колоду из базы карт
-    append_into_deck_in_progress(i) {
+    append_into_deck_in_progress(card) {
       if ( // если карты там УЖЕ нету
-        !this.deck_is_progress.includes(this.pool[i]) 
+        !this.deck_is_progress.includes(card)
         && this.deck_is_progress.length < this.$store.state.cards_in_deck
         && this.faction_selected
         ) 
         {
-          this.deck_is_progress.push(this.pool[i])
-          this.deck_body.push({"card": this.pool[i].id})  
-          this.health = this.health + this.pool[i].hp
+          this.deck_is_progress.push(card)
+          this.deck_body.push({"card": card.id})
+          this.health = this.health + card.hp
       }
       else {alert('нельзя карту добавить ещё раз или карт больше 12')}
     },
 
+    // удалить из деки в процессе по нажатию дважды ЛКМ
+    delete_from_deck_in_progress(card) {
+      this.health -= card.hp
+      this.deck_is_progress.splice(this.deck_is_progress.indexOf(card), 1)
+      this.deck_body.splice(this.deck_body.indexOf(card), 1)
+    },
+
     // выбираем лидера для деки
-    chose_leader(i) {
+    chose_leader(leader) {
       if (!this.faction_selected) {
         alert('выберете фракцию!')
         return
       }
       this.leader_selected = true
-      this.leader_index = i
-      this.leader_in_progress = this.leaders[i]
-    },
-
-    // удалить из деки в процессе по нажатию дважды ЛКМ
-    delete_from_deck_in_progress(i) {
-      this.health -= this.deck_is_progress[i].hp
-      this.deck_is_progress.splice(i, 1)
-      this.deck_body.splice(i, 1)
+      this.leader = leader
+      // this.leader_in_progress = this.leaders[i]
     },
 
     save_deck() {
@@ -191,7 +191,7 @@ export default {
         name: deck_name,
         health: this.health,
         d: this.deck_body,
-        leader_id: this.leaders[this.leader_index].id
+        leader_id: this.leader.id
       }
 
       this.$store.dispatch('post_deck_get_decks', body)

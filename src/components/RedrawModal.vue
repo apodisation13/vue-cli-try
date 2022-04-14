@@ -56,12 +56,12 @@ export default {
       ) 
     },
 
-    chose_player_card(id) {
+    chose_player_card(card) {
       this.redraws -= 1
       
-      this.redraw_array.push(this.hand_current[id])  // добавили карту в темп-список
+      this.redraw_array.push(card)  // добавили карту в темп-список
       let random = Math.floor(Math.random() * this.deck_current.length);
-      this.hand_current.splice(id, 1, this.deck_current[random])  // обновить
+      this.hand_current.splice(this.hand_current.indexOf(card), 1, this.deck_current[random])  // обновить
       this.deck_current.splice(random, 1)  // удалить этот i-й элемент
       
       if (this.redraws === 0) this.close_self()
