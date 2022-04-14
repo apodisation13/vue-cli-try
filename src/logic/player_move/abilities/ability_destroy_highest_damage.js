@@ -14,6 +14,9 @@ function destroy_highest_damage(field, enemy_leader) {
   else all_enemies = get_all_enemies(field, {hp: 0})
 
   all_enemies.sort((a, b) => b.damage - a.damage)
+
+  if (!all_enemies.length) return
+
   let target = all_enemies[0]
 
   toast.warning(`Уничтожили врага с самым большим уроном, ${target.damage}!`)
