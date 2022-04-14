@@ -6,8 +6,10 @@ import {check_win}
   from "@/logic/player_move/service/check_win"
 import {passive_end_turn_increase_damage_in_hand}
   from "@/logic/player_move/passive_abilities/increase_damage_to-card_in_hand"
-import {passive_end_turn_heal_leader} from "@/logic/player_move/passive_abilities/heal_leader";
-import {passive_end_turn_increase_self_damage} from "@/logic/player_move/passive_abilities/increase_self_damage";
+import {passive_end_turn_heal_leader} from "@/logic/player_move/passive_abilities/heal_leader"
+import {passive_end_turn_increase_self_damage} from "@/logic/player_move/passive_abilities/increase_self_damage"
+import {if_in_deck_increase_self_damage} from "@/logic/player_move/passive_abilities/if_in_deck_increase_self_damage"
+import {if_in_grave_increase_self_damage} from "@/logic/player_move/passive_abilities/if_in_grave_increase_self_damage"
 
 
 function player_passive_abilities_upon_playing_a_card(player_card, leader) {
@@ -27,24 +29,32 @@ function player_passive_abilities_end_turn(hand, leader, deck, grave, field, ene
 
   // диспетчер вызова пассивных абилок из РУКИ
   hand.filter(c => c.has_passive).forEach(card => {
-
     if (card.passive_ability.name === 'damage-random-enemy-by-1') {
       passive_end_turn_damage_random_enemy(field, card, undefined, enemy_leader)
     }
-
     else if (card.passive_ability.name === 'increase-damage-to-card-in-hand-by-1') {
       passive_end_turn_increase_damage_in_hand(hand)
     }
-
     else if (card.passive_ability.name === 'heal-leader-by-1') {
       passive_end_turn_heal_leader()
     }
-
     else if (card.passive_ability.name === 'increase-self-damage-by-1') {
       passive_end_turn_increase_self_damage(card)
     }
-
   })
+
+  deck.filter(c => c.has_passive).forEach(card => {
+    if (card.passive_ability.name === 'if-in-deck-increase-self-damage-by-1') {
+      if_in_deck_increase_self_damage(card)
+    }
+  })
+
+  grave.filter(c => c.has_passive).forEach(card => {
+    if (card.passive_ability.name === 'if-in-grave-increase-self-damage-by-1') {
+      if_in_grave_increase_self_damage(card)
+    }
+  })
+
   check_win(field, enemies, enemy_leader)
 
   if (!leader.passive_ability) return
