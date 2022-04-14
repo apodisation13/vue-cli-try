@@ -64,16 +64,10 @@
 </div>
 
 <special-case-abilities
-  :grave='grave_filtered'
-  :resurrect_modal="show_resurrect_modal"
-  :hand="hand_filtered"
-  :hand_special_case_abilities="show_hand_special_case_abilities"
-  :deck="deck_filtered"
-  :play_from_deck="show_play_from_deck"
-  :show_card_from_deck="show_card_from_deck"
-  @chosen_card='confirm_card_from_grave'
-  @chosen_card_from_hsca="give_charges_to_card_in_hand"
-  @chosen_card_from_deck="chosen_card_from_deck"
+  :show_pick_a_card_selection="show_pick_a_card_selection"
+  :cards_pool="cards_pool"
+  :show_picked_card="show_picked_card"
+  @confirm_selection="confirm_selection"
 />
 
 </template>
@@ -202,7 +196,7 @@ export default {
         this.selected_card = null
         this.ai_cards_active = false
         this.player_cards_active = false
-        this.show_card_from_deck = false  // из specialcaseabilities.js!!!
+        this.show_picked_card = false  // из specialcaseabilities.js!!!
       }
 
       // если выбран лидер и ткнули на поле, урон наносит лидер
