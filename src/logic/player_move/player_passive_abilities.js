@@ -45,7 +45,9 @@ function player_passive_abilities_end_turn(hand, leader, deck, grave, field, ene
     }
 
   })
+  check_win(field, enemies, enemy_leader)
 
+  if (!leader.passive_ability) return
   if (leader.passive_ability.name === 'damage-random-enemy-by-1') {
     passive_end_turn_damage_random_enemy(field, undefined, leader, enemy_leader)
   }
