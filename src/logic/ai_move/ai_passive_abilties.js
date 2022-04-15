@@ -1,4 +1,5 @@
 import {passive_end_turn_increase_damage} from "@/logic/ai_move/passive_abilities/increase_damage"
+import {passive_end_turn_heal} from "@/logic/ai_move/passive_abilities/heal";
 
 
 function enemy_passive_abilities_end_turn(field) {
@@ -7,6 +8,10 @@ function enemy_passive_abilities_end_turn(field) {
 
     if (enemy.passive_ability.name === 'increase-damage') {
       passive_end_turn_increase_damage(enemy)
+    }
+
+    else if (enemy.passive_ability.name === 'heal') {
+      passive_end_turn_heal(enemy)
     }
 
   })
