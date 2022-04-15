@@ -216,6 +216,44 @@ export default {
       this.ai_cards_active = false
     },
 
+    // если ранее ткнули на карту игрока или лидера игрока, а потом на лидера врагов!
+    onLeaderClick() {
+
+      // ткнули на карту игрока, а потом на лидера врагов
+      if (this.player_cards_active && !this.leader_active && this.enemy_leader_active && this.enemy_leader.hp > 0) {
+        // особие абилки, которые требуют открытия окон
+
+        this.can_draw = false
+
+        damage_ai_card(
+            this.selected_card, this.enemy_leader, this.field, this.enemy_leader,
+            this.hand, this.deck, this.grave,
+            this.enemies,
+            true,
+            this.leader
+        )
+
+        this.special_case_abilities()
+
+        this.player_cards_active = false
+        this.selected_card = null
+        this.show_picked_card = false  // из specialcaseabilities.js!!!
+      }
+
+      // ткнули на лидера игрока, а потом на лидера врагов
+      if (this.leader_active && this.leader.charges > 0 && this.enemy_leader_active && this.enemy_leader.hp > 0) {
+        this.can_draw = false
+        damage_ai_card(
+            this.leader, this.enemy_leader, this.field, this.enemy_leader,
+            undefined, undefined, undefined,
+            this.enemies,
+            false,
+            this.leader
+        )
+        this.leader_active = false
+      }
+    },
+
     // нажал ПАС - переход хода компу
     exec_ai_move() {
 
@@ -232,46 +270,8 @@ export default {
             this.can_draw = this.calc_can_draw(this.player_cards_active, this.hand, this.deck)
           }, 2000
       )
-
-
-
     },
 
-    // если ранее ткнули на карту игрока или лидера игрока, а потом на лидера врагов!
-    onLeaderClick() {
-
-      // ткнули на карту игрока, а потом на лидера врагов
-      if (this.player_cards_active && !this.leader_active && this.enemy_leader_active && this.enemy_leader.hp > 0) {
-        // особие абилки, которые требуют открытия окон
-        this.special_case_abilities()
-        this.can_draw = false
-
-        damage_ai_card(
-            this.selected_card, this.enemy_leader, this.field, this.enemy_leader,
-            this.hand, this.deck, this.grave,
-            this.enemies,
-            true,
-            this.leader
-        )
-
-        this.player_cards_active = false
-        this.selected_card = null
-        this.show_card_from_deck = false  // из specialcaseabilities.js!!!
-      }
-
-      // ткнули на лидера игрока, а потом на лидера врагов
-      if (this.leader_active && this.leader.charges > 0 && this.enemy_leader_active && this.enemy_leader.hp > 0) {
-        this.can_draw = false
-        damage_ai_card(
-            this.leader, this.enemy_leader, this.field, this.enemy_leader,
-            undefined, undefined, undefined,
-            this.enemies,
-            false,
-            this.leader
-        )
-        this.leader_active = false
-      }
-    },
 
   },
 }
