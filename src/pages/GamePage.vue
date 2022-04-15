@@ -78,6 +78,7 @@ import {appear_new_enemy} from '@/logic/place_enemies'
 import {damage_ai_card} from '@/logic/player_move/player_move'
 import {ai_move, leader_ai_move} from '@/logic/ai_move/ai_move'
 import {player_passive_abilities_end_turn} from "@/logic/player_move/player_passive_abilities"
+import {enemy_passive_abilities_end_turn} from "@/logic/ai_move/ai_passive_abilties"
 
 import draw from '@/mixins/GamePage/draw'
 import specialcaseabilities from "@/mixins/GamePage/specialcaseabilities"
@@ -216,34 +217,13 @@ export default {
       this.ai_cards_active = false
     },
 
-    // нажал ПАС - переход хода компу
-    exec_ai_move() {
-
-      player_passive_abilities_end_turn(
-          this.hand, this.leader, this.deck, this.grave, this.field, this.enemy_leader, this.enemies
-      )
-
-      setTimeout(
-          () => {
-            ai_move(this.field)
-            leader_ai_move(this.enemy_leader)
-            appear_new_enemy(this.field, this.enemies)
-            this.player_cards_active = true
-            this.can_draw = this.calc_can_draw(this.player_cards_active, this.hand, this.deck)
-          }, 2000
-      )
-
-
-
-    },
-
     // если ранее ткнули на карту игрока или лидера игрока, а потом на лидера врагов!
     onLeaderClick() {
 
       // ткнули на карту игрока, а потом на лидера врагов
       if (this.player_cards_active && !this.leader_active && this.enemy_leader_active && this.enemy_leader.hp > 0) {
         // особие абилки, которые требуют открытия окон
-        this.special_case_abilities()
+
         this.can_draw = false
 
         damage_ai_card(
@@ -254,9 +234,11 @@ export default {
             this.leader
         )
 
+        this.special_case_abilities()
+
         this.player_cards_active = false
         this.selected_card = null
-        this.show_card_from_deck = false  // из specialcaseabilities.js!!!
+        this.show_picked_card = false  // из specialcaseabilities.js!!!
       }
 
       // ткнули на лидера игрока, а потом на лидера врагов
@@ -272,6 +254,26 @@ export default {
         this.leader_active = false
       }
     },
+
+    // нажал ПАС - переход хода компу
+    exec_ai_move() {
+
+      player_passive_abilities_end_turn(
+          this.hand, this.leader, this.deck, this.grave, this.field, this.enemy_leader, this.enemies
+      )
+
+      setTimeout(
+          () => {
+            ai_move(this.field)
+            leader_ai_move(this.enemy_leader)
+            enemy_passive_abilities_end_turn(this.field, this.enemy_leader, this.hand)
+            appear_new_enemy(this.field, this.enemies)
+            this.player_cards_active = true
+            this.can_draw = this.calc_can_draw(this.player_cards_active, this.hand, this.deck)
+          }, 2000
+      )
+    },
+
 
   },
 }
