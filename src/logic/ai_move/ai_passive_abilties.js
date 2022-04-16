@@ -57,7 +57,11 @@ function enemy_passive_abilities_end_turn(field, enemy_leader, hand) {
 function passive_leader_ai_move(enemy_leader) {
   store.commit('set_leader_ai_move', true)
 
-  if (enemy_leader.hp <= 0) return  // только если у лидера больше 0 жизней идём дальше
+  // только если у лидера больше 0 жизней идём дальше
+  if (enemy_leader.hp <= 0) {
+    store.commit('set_leader_ai_move', false)
+    return
+  }
 
   // ДИСПЕТЧЕР пассивных абилок лидера врага
   if (enemy_leader.ability.name === "heal-self-per-turn") {
