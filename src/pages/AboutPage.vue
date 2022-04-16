@@ -265,6 +265,11 @@ export default {
     gg() {
       alert(5)
     },
+    // function search(cards) {
+      // вот такой супер способ если бы словарь query был ключ-значение, а не ключ-список
+      //     return Object.keys(this).every((key) => cards[key] === this[key]);
+      // }
+      // return state.cards.filter(search, query)
   },
      
 }

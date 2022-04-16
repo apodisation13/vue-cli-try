@@ -20,8 +20,13 @@
 </template>
 
 <script>
+import ModalWindow from "@/components/UI/ModalWindow"
+import ButtonClose from "@/components/UI/ButtonClose"
+import EnemyLeader from "@/components/EnemyLeader"
+import EnemyComp from "@/components/EnemyComp"
 export default {
   name: "level-modal",
+  components: {EnemyComp, EnemyLeader, ButtonClose, ModalWindow},
   props: {
     level: {
       required: true

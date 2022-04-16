@@ -8,26 +8,18 @@
 
     <img class="img" :src="enemy.image" v-if="enemy.image" alt="">
 
-    <div class="diamond" :style="background_color(enemy)">
-      <span class="span_diamond">&dagger;{{ enemy.damage }}</span>
-    </div>
+    <card-diamond :style="background_color(enemy)">&dagger;{{ enemy.damage }}</card-diamond>
+
+    <card-passive v-if="enemy.passive" :style="background_color(enemy)"/>
+
+    <enemy-shield v-if="enemy.shield"/>
+
+    <card-hp>&hearts;{{ enemy.hp }}</card-hp>
     
-    <div class="hp">
-      <span>&hearts;{{ enemy.hp }}</span>
-    </div>
-    
-    <div class="circle" v-if="enemy.move.name==='down'">
-      <span>&#8595;</span>
-    </div>  
-    <div class="circle" v-else-if="enemy.move.name==='stand'">
-      <span>&#9737;</span>  
-    </div>
-    <div class="circle" v-else-if="enemy.move.name==='random'">
-      <span>&#9736;</span>  
-    </div>
+    <ability-circle-enemy :enemy="enemy"/>
   </div>
 
-  <field-modal
+  <enemy-modal
       v-if="show_enemy_modal"
       :enemy='enemy'
       @close_field_modal="show_enemy_modal=false"
@@ -37,8 +29,15 @@
 
 <script>
 import { border_for_card, background_color } from '@/logic/border_styles'
+import EnemyModal from "@/components/ModalWindows/EnemyModal"
+import CardDiamond from "@/components/UI/CardDiamond"
+import CardPassive from "@/components/UI/CardPassive"
+import EnemyShield from "@/components/UI/EnemyShield"
+import CardHp from "@/components/UI/CardHp"
+import AbilityCircleEnemy from "@/components/UI/AbilityCircleEnemy"
 export default {
   name: 'enemy-comp',
+  components: {AbilityCircleEnemy, CardHp, EnemyShield, CardPassive, CardDiamond, EnemyModal},
   props: {
     enemy: {
       required: true,
@@ -46,7 +45,7 @@ export default {
   },
   data() {
     return {
-      show_enemy_modal: false
+      show_enemy_modal: false,
     }
   },
   methods: {
@@ -82,55 +81,4 @@ export default {
   transform: translate(-50%, -50%);
   position: absolute;
 }
-
-.diamond {
-  position: absolute;
-  top: 1%;
-  right: 6%;
-  height: 4vh;
-  width: 4vh;
-  transform: rotateX(45deg) rotateZ(45deg);
-  /* background-color: purple; */
-  /* border: solid 1px yellow; */
-}
-
-.span_diamond {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 25%;
-  right: 10%;
-  color: black;
-  font-size: 10pt;
-  transform:  rotateZ(-45deg);
-}
-
-.circle {
-  position: absolute;
-  width: 24%;
-  height: 3vh;
-  background: orangered;
-  border-radius: 50%;
-  top: 3%;
-  left: 3%;
-}
-
-.hp {
-  width: 33%;
-  height: 20%;
-  background-color: green;
-  position: absolute;
-  bottom: 2%;
-  left: 2%;
-  border-radius: 20%;
-}
-
-span {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 10pt;
-  color: white;
-}
-
 </style>

@@ -1,43 +1,26 @@
 <template>
-<div class="enemy-leader"
-     :style="border(enemy_leader)"
-     @contextmenu.prevent
-     @click.right="open_card_modal"
-     v-touch:longtap="open_card_modal"
-     @dblclick="exec_enemy_leader"
->
-  
-  <img class="img" :src="enemy_leader.image" v-if="enemy_leader.hp > 0" alt="">
-  
-  <div class="diamond"
-       :style="background_color(enemy_leader)"
-       v-if="enemy_leader.damage_per_turn"
+  <div class="enemy-leader"
+    :style="border(enemy_leader)"
+    @contextmenu.prevent
+    @click.right="open_card_modal"
+    v-touch:longtap="open_card_modal"
+    @dblclick="exec_enemy_leader"
   >
-    <span class="span3">&dagger;{{ enemy_leader.damage_per_turn }}</span>
-  </div>
   
-  <div class="circle" v-if="enemy_leader.heal_self_per_turn">
-    <span>+&hearts;{{ enemy_leader.heal_self_per_turn }}</span>
-  </div>
-  
-  <div class="hp">
-    <span>&hearts;{{ enemy_leader.hp }}</span>
-  </div>
-  
-  <div class="ability" 
-  v-if="enemy_leader.ability.name==='damage-once'">
-    <span>1</span>
-  </div>  
-  <div class="ability" 
-  v-else-if="enemy_leader.ability.name==='damage-per-turn'">
-    <span>&#128337;1</span>  
-  </div>
-  <div class="ability" 
-  v-else-if="enemy_leader.ability.name==='heal-self-per-turn'">
-    <span>+&hearts;</span>  
-  </div>
+    <img class="img" :src="enemy_leader.image" v-if="enemy_leader.hp > 0" alt="">
 
-</div>
+    <card-diamond :style="background_color(enemy_leader)"
+        v-if="enemy_leader.damage_per_turn"
+    >
+      &dagger;{{ enemy_leader.damage_per_turn }}
+    </card-diamond>
+
+    <card-circle-heal v-if="enemy_leader.heal_self_per_turn">+&hearts;{{ enemy_leader.heal_self_per_turn }}</card-circle-heal>
+
+    <card-hp>&hearts;{{ enemy_leader.hp }}</card-hp>
+
+    <ability-circle-enemy-leader :enemy_leader="enemy_leader" />
+  </div>
 
   <enemy-leader-modal v-if="show_enemy_leader_modal"
     :enemy_leader='enemy_leader'
@@ -48,10 +31,16 @@
 
 <script>
 
-import {background_color, border_leader} from "@/logic/border_styles";
+import {background_color, border_leader} from "@/logic/border_styles"
+import EnemyLeaderModal from "@/components/ModalWindows/EnemyLeaderModal"
+import CardDiamond from "@/components/UI/CardDiamond"
+import CardHp from "@/components/UI/CardHp"
+import CardCircleHeal from "@/components/UI/CardCircleHeal"
+import AbilityCircleEnemyLeader from "@/components/UI/AbilityCircleEnemyLeader"
 
 export default {
   name: 'enemy-leader',
+  components: {AbilityCircleEnemyLeader, CardCircleHeal, CardHp, CardDiamond, EnemyLeaderModal},
   props: {
     enemy_leader: {
       required: true,
@@ -79,7 +68,7 @@ export default {
   },
   emits: [
       'exec_enemy_leader'
-  ]
+  ],
 }
 </script>
 
@@ -103,72 +92,4 @@ export default {
   position: absolute;
 }
 
-.diamond {
-  position: absolute;
-  top: 1%;
-  right: 6%;
-  height: 4vh;
-  width: 4vh;
-  transform: rotateX(45deg) rotateZ(45deg);
-  background-color: purple; 
-  border: solid 1px yellow;
-}
-
-.span3 {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 25%;
-  right: 2%;
-  color: black;
-  font-size: 10pt;
-  transform:  rotateZ(-45deg);
-}
-
-.circle {
-  position: absolute;
-  width: 34%;
-  height: 4vh;
-  border-radius: 50%;
-  top: 30%;
-  right: 3%;
-  background: green;
-}
-
-span {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 8pt;
-}
-
-.charges {
-  width: 20%;
-  height: 20%;
-  background-color: hotpink;
-  position: absolute;
-  bottom: 2%;
-  right: 2%;
-  border-radius: 20%;
-}
-
-.hp {
-  width: 30%;
-  height: 20%;
-  background-color: green;
-  position: absolute;
-  bottom: 2%;
-  left: 2%;
-  border-radius: 20%;
-}
-
-.ability {
-  position: absolute;
-  width: 24%;
-  height: 3vh;
-  background: orangered;
-  border-radius: 50%;
-  top: 3%;
-  left: 3%;
-}
 </style>

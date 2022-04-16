@@ -8,21 +8,26 @@ import { get, post, axios_delete } from '@/logic/requests'
 // в .js - ИМПОРТ store отсюда, и тогда store.  а дальше то же
 
 
-// let factions = 'http://127.0.0.1:8000/api/v1/factions/'
-// let leaders = 'http://127.0.0.1:8000/api/v1/leaders/'
-// let cards = 'http://127.0.0.1:8000/api/v1/cards/'
-// let decks = 'http://127.0.0.1:8000/api/v1/decks/'
-// let levels = 'http://127.0.0.1:8000/api/v1/levels/'
+// const FACTIONS = 'http://127.0.0.1:8000/api/v1/factions/'
+// const LEADERS = 'http://127.0.0.1:8000/api/v1/leaders/'
+// const CARDS = 'http://127.0.0.1:8000/api/v1/cards/'
+// const DECKS = 'http://127.0.0.1:8000/api/v1/decks/'
+// const LEVELS = 'http://127.0.0.1:8000/api/v1/levels/'
 
-let factions = 'http://194.67.109.190:82/api/v1/factions/'
-let leaders = 'http://194.67.109.190:82/api/v1/leaders/'
-let cards = 'http://194.67.109.190:82/api/v1/cards/'
-let decks = 'http://194.67.109.190:82/api/v1/decks/'
-let levels = 'http://194.67.109.190:82/api/v1/levels/'
+let FACTIONS = 'http://194.67.109.190:82/api/v1/factions/'
+let LEADERS = 'http://194.67.109.190:82/api/v1/leaders/'
+let CARDS = 'http://194.67.109.190:82/api/v1/cards/'
+let DECKS = 'http://194.67.109.190:82/api/v1/decks/'
+let LEVELS = 'http://194.67.109.190:82/api/v1/levels/'
 
 
 const store = createStore({
     state: {
+        isLoaded: false,  // загружены ли данные
+        error: "",  // сообщение об ошибке загрузки данных
+
+        play_sound: false,
+
         cards_in_deck: 12,  // СКОЛЬКО В ДЕКЕ ДОЛЖНО БЫТЬ КАРТ
         hand_size: 6,  // СКОЛЬКО КАРТ В РУКЕ
         
@@ -47,11 +52,14 @@ const store = createStore({
         all_leaders: state => {
             return state.leaders
         },
-        filtered_cards: (state) => (fac) => {
-            return state.cards.filter(f => f.faction===fac.name || f.faction==='Neutral')
+        filtered_cards: (state) => (query) => {
+            const applyFilter = (data, query) => data.filter(obj =>
+                Object.entries(query).every(([prop, find]) => find.includes(obj[prop]))
+            )
+            return applyFilter(state.cards, query)
         },
         filtered_leaders: (state) => (fac) => {
-            return state.leaders.filter(f => f.faction===fac.name)
+            return state.leaders.filter(f => f.faction===fac)
         },
     
     },
@@ -92,49 +100,95 @@ const store = createStore({
         },
         get_levels(state, result) {  // гет запрос уровни (а в них враги)
             state.levels = result
-        }
+        },
+
+        set_isLoaded(state, payload) {
+            state.isLoaded = payload
+        },
+        set_error(state, payload) {
+            state.error = payload
+        },
+        set_play_sound(state, payload) {
+            state.play_sound = payload
+        },
 
     },
 
     // вызывает мутацию, выполняясь через store.dispatch('название')
     actions: {  
         async get_data({commit}) {
-            get(factions).then((result) => commit('get_factions', result))
-            get(leaders).then((result) => commit('get_leaders', result))
-            get(cards).then((result) => commit('get_cards', result))
-            get(levels).then(
-                (result) => {
-                    commit('get_levels', result)
-                    commit('set_level', result[0])
-                    commit('set_enemy_leader', result[0].enemy_leader)
-                })
-            this.dispatch('get_decks')
+
+            const factions = get(FACTIONS)
+            const leaders = get(LEADERS)
+            const cards = get(CARDS)
+            const levels = get(LEVELS)
+            const decks = this.dispatch("get_decks")  // вот так можно, хотя там нет ретерна
+
+            try {
+                const responses = await Promise.all([
+                    factions, leaders, cards, levels, decks,
+                ])
+                commit('get_factions', responses[0])
+                commit('get_leaders', responses[1])
+                commit('get_cards', responses[2])
+
+                commit('get_levels', responses[3])
+                commit('set_level', responses[3]?.[0])
+                commit('set_enemy_leader', responses[3]?.[0]?.enemy_leader)
+
+                commit('set_isLoaded', true)
+
+            } catch (err) {
+                this.dispatch("error_action", err)
+                throw new Error("Произошла ошибка в загрузке данных")
+            }
+
         },
 
         async get_decks({commit}) {
-            get(decks).then(
-                (result) => {
-                    commit('get_decks', result)
-                    this.dispatch('set_deck_in_play', {deck: result[0]})
-                }
-            )
+            try {
+                const decks = await get(DECKS)
+                commit('get_decks', decks)
+                await this.dispatch('set_deck_in_play', decks?.[0])
+            } catch (err) {
+                this.dispatch("error_action", err)
+                throw new Error("Какая-то ошибка с загрузкой деки")
+            }
         },
 
-        set_deck_in_play({commit}, {deck}) {
+        set_deck_in_play({commit}, deck) {
             commit('set_current_deck', deck.cards)
             commit('set_health', deck.health)
             commit('set_leader', deck.leader)
         },
 
         // выполняется по добавлении новой деки со страницы DeckBuilder
-        async post_deck_get_decks({commit}, {body}) {
-            post(decks, body).then(() => this.dispatch('get_decks'))
+        async post_deck_get_decks({commit}, body) {
+            try {
+                await post(DECKS, body)
+                await this.dispatch('get_decks')
+            } catch (err) {
+                this.dispatch("error_action", err)
+                throw new Error("Какая-то ошибка при добавлении деки")
+            }
         },
 
         // выполняется по удалению деки id со страницы DeckBuilder
-        async delete_deck({commit}, {id}) {
-            let url = `${decks}${id}/`
-            axios_delete(url).then(() => this.dispatch('get_decks'))
+        async delete_deck({commit}, id) {
+            let url = `${DECKS}${id}/`
+            try {
+                await axios_delete(url)
+                await this.dispatch('get_decks')
+            } catch (err) {
+                this.dispatch("error_action", err)
+                throw new Error("Какая-то ошибка с удалением деки")
+            }
+        },
+
+        error_action({commit}, err) {
+            console.log(err)
+            commit("set_error", err.message)
+            commit('set_isLoaded', false)
         },
     }
 })

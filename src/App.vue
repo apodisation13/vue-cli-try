@@ -2,18 +2,25 @@
   
   <!-- вызов меню -->
   <menu-bar />
-  
-  <div class="app">
-    
-    <!-- вот здесь тупо отобразится тот компонент, который в роутах указан -->
+
+  <div v-if="!isLoaded && !$store.state.error">
+    ПОДОЖДИТЕ, ВЫПОЛНЯЕТСЯ ЗАГРУЗКА
+  </div>
+
+  <div v-if="$store.state.error && !isLoaded">
+    НЕТ СВЯЗИ С СЕРВЕРОМ
+    <br>
+    {{ $store.state.error }}
+  </div>
+
+  <div class="app" v-if="isLoaded">
     <router-view></router-view>
-    
   </div>
 </template>
 
 <script>
 
-import MenuBar from './components/UI/MenuBar'
+import MenuBar from '@/components/UI/MenuBar'
 
 export default {
   components: { 
@@ -22,6 +29,12 @@ export default {
   
   mounted() {  // вот так можно вызвать Экшен прям по загрузке сайта
     this.$store.dispatch('get_data')
+  },
+
+  computed: {
+    isLoaded() {
+      return this.$store.state.isLoaded
+    },
   },
 
 }

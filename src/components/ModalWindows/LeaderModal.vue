@@ -1,49 +1,58 @@
 <template>
-  <div class="field_view" v-touch:swipe="close_self">
+  <modal-window :style="{'backgroundColor': 'floralwhite'}" v-touch:swipe="close_self" >
     <button-close @close_self="close_self" />
 
-    <div class="enemy_border" :style="border(leader)">
+    <div class="leader_border" :style="border(leader)">
       <img class="img" :src="leader.image" v-if="leader.image" alt="">
     </div>
 
     <div class="damage_and_hp">
       <div class="diamond" :style="background_color(leader)"></div>
-      <h3> Урон
-        <br>&dagger;{{ leader.damage }}
+      <h3> Урон <br>
+        &dagger;{{ leader.damage }}
       </h3>
+
+
+      <div class="circle" :style="{'backgroundColor': 'orange'}"
+           v-if="leader.ability.name === 'damage-all'">
+        <span>&#9850;</span>
+      </div>
+      <div class="circle" :style="{'backgroundColor': 'orange'}"
+           v-if="leader.ability.name === 'spread-damage'">
+        <span :style="{'font-size': '14pt'}">&#9798;</span>
+      </div>
+
+      <div class="triangle" :style="background_color(leader)" v-if="leader.has_passive"></div>
+      <div class="text" :style="{'font-size': '20pt'}" v-if="leader.has_passive"><b>&#8987;</b></div>
+
 
       <div class="charges"></div>
-      <h3> Заряды
-        <br>{{ leader.charges }}&#8607;
+      <h3> Заряды <br>
+        {{ leader.charges }}&#8607;
       </h3>
     </div>
 
-    <div class="circle" :style="{'backgroundColor': 'orange'}"
-         v-if="leader.ability.name === 'damage-all'">
-      <span>&#9850;</span>
+    <div class="text">
+      <b>СПОСОБНОСТЬ</b> - {{ leader.ability.description }}
     </div>
-    <div class="circle" :style="{'backgroundColor': 'green'}"
-         v-else-if="leader.ability.name === 'heal'">
-      <span :style="{'font-size': '12pt'}">+&hearts;{{ card.heal }}</span>
-    </div>
-    <div class="circle" :style="{'backgroundColor': 'purple'}"
-         v-else-if="leader.ability.name === 'resurrect'">
-      <span>&#10014;&#8680;</span>
-    </div>
-    <br>
-    <p> {{ leader.ability.description }} </p>
 
-  </div>
+    <div class="text" v-if="leader.has_passive"><b>ПАССИВНАЯ СПОСОБНОСТЬ</b></div>
+    <div class="text" v-if="leader.has_passive">{{ leader.passive_ability.description }}</div>
+
+  </modal-window>
 </template>
 
 <script>
 import { border_leader, background_color } from '@/logic/border_styles'
+import ButtonClose from "@/components/UI/ButtonClose"
+import ModalWindow from "@/components/UI/ModalWindow"
 export default {
   name: 'leader-modal',
+  components: {ModalWindow, ButtonClose},
   props: {
-    leader: {  // объект противника по индексу поля
+    leader: {
       required: true,
-      type: Object
+      type: Object,
     },
   },
   methods: {
@@ -65,44 +74,28 @@ export default {
 
 <style scoped>
 
-.field_view {
-  background-color: floralwhite;
-  width: 100%;
-  height: 76%;
-  border-radius: 12px;
-  text-align: center;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -67%);
-  z-index: 9999;
-}
-
-h3 {
-  display: inline;
-  font-size: 14pt;
-}
-
-p {
-  font-size: 12pt;
-}
-
-.enemy_border {
+.leader_border {
   width: 65%;
-  height: 55%;
+  height: 60%;
+  border-radius: 1%;
   display: inline;
   float: left;
   margin-left: 1%;
-  border-radius: 1%;
+  margin-bottom: 1%;
 }
 
 .damage_and_hp {
   width: 30%;
-  height: 55%;
+  height: 60%;
   display: inline;
   float: right;
   margin-bottom: 3%;
   /*border: solid 2px red;*/
+}
+
+h3 {
+  font-size: 14pt;
+  display: block;
 }
 
 .img {
@@ -111,19 +104,19 @@ p {
   margin: auto;
 }
 
-.hp {
-  width: 40%;
-  height: 10%;
-  background-color: green;
-  border-radius: 20%;
-  margin: 3% auto auto;
-}
-
 .charges {
   width: 20%;
   height: 10%;
   background-color: hotpink;
   border-radius: 20%;
+  margin: 3% auto auto;
+}
+
+.triangle {
+  width: 5vh;
+  height: 5vh;
+  border-radius: 20%;
+  font-size: 10pt;
   margin: 3% auto auto;
 }
 
@@ -140,8 +133,8 @@ p {
 
 .circle {
   display: inline-grid;
-  width: 14%;
-  height: 7%;
+  width: 25%;
+  height: 15%;
   background: orangered;
   border-radius: 50%;
   margin: 3% auto;
@@ -151,7 +144,12 @@ span {
   position: relative;
   font-size: 22pt;
   color: white;
+  margin: auto;
 }
 
+.text {
+  margin-bottom: 1%;
+  font-size: 14pt;
+}
 
 </style>

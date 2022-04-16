@@ -1,6 +1,5 @@
 import { createApp } from 'vue'
 import App from '@/App.vue'
-import components from '@/components'
 import router from '@/router/router';
 import store from '@/store';
 import Toast from "vue-toastification";
@@ -9,12 +8,6 @@ import Vue3TouchEvents from "vue3-touch-events";
 
 
 const app = createApp(App);
-
-
-components.forEach(component => {
-    app.component(component.name, component)        
-});
-
 
 const toastOptions = {
     timeout: 2000

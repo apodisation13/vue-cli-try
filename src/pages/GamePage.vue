@@ -30,7 +30,8 @@
 
 <!-- возможность вытянуть карту, дро -->
 <div class="draw">
-  <draw-comp v-show="can_draw"
+  <draw-comp
+    v-show="can_draw"
     @click="draw_one_card"
   />
 </div>
@@ -63,16 +64,10 @@
 </div>
 
 <special-case-abilities
-  :grave='grave_filtered'
-  :resurrect_modal="show_resurrect_modal"
-  :hand="hand_filtered"
-  :hand_special_case_abilities="show_hand_special_case_abilities"
-  :deck="deck_filtered"
-  :play_from_deck="show_play_from_deck"
-  :show_card_from_deck="show_card_from_deck"
-  @chosen_card='confirm_card_from_grave'
-  @chosen_card_from_hsca="give_charges_to_card_in_hand"
-  @chosen_card_from_deck="chosen_card_from_deck"
+  :show_pick_a_card_selection="show_pick_a_card_selection"
+  :cards_pool="cards_pool"
+  :show_picked_card="show_picked_card"
+  @confirm_selection="confirm_selection"
 />
 
 </template>
@@ -80,17 +75,38 @@
 <script>
 
 import {appear_new_enemy} from '@/logic/place_enemies'
-import {
-  damage_ai_card,
-  damage_enemy_leader_by_card,
-  damage_enemy_leader_by_leader,
-  leader_move
-} from '@/logic/player_move'
-import {ai_move, leader_ai_move, leader_ai_move_once} from '@/logic/ai_move'
+import {damage_ai_card} from '@/logic/player_move/player_move'
+import {ai_move, leader_ai_move} from '@/logic/ai_move/ai_move'
+import {player_passive_abilities_end_turn} from "@/logic/player_move/player_passive_abilities"
+import {enemy_passive_abilities_end_turn} from "@/logic/ai_move/ai_passive_abilties"
+
 import draw from '@/mixins/GamePage/draw'
 import specialcaseabilities from "@/mixins/GamePage/specialcaseabilities"
 
+import StartGame from "@/components/StartGame"
+import FieldComp from "@/components/Pages/GamePage/FieldComp"
+import EnemyLeader from "@/components/EnemyLeader"
+import RemainingEnemies from "@/components/Pages/GamePage/EnemiesRemaining"
+import EnemiesGrave from "@/components/Pages/GamePage/EnemiesGrave"
+import DrawComp from "@/components/Pages/GamePage/DrawComp"
+import PassComp from "@/components/Pages/GamePage/PassComp"
+import GraveComp from "@/components/Pages/GamePage/GraveComp"
+import DeckComp from "@/components/Pages/GamePage/DeckComp"
+import LeaderComp from "@/components/LeaderComp"
+import HealthComp from "@/components/Pages/GamePage/HealthComp"
+import HandComp from "@/components/Pages/GamePage/HandComp"
+import SpecialCaseAbilities from "@/components/AbilitiesComponents/SpecialCaseAbilities"
+
 export default {
+  components: {
+    StartGame,
+    FieldComp,
+    EnemyLeader, RemainingEnemies, EnemiesGrave,
+    DrawComp, PassComp, DeckComp, GraveComp,
+    LeaderComp, HealthComp,
+    HandComp,
+    SpecialCaseAbilities,
+  },
   mixins: [
     draw,
     specialcaseabilities,
@@ -119,6 +135,7 @@ export default {
       enemy_leader_active: false, // активен ли лидер противника
 
       selected_card: null,  // объект выбранной карты путём дважды ЛКМ на карте в руке
+      selected_enemy: null,  // объёкт выбранного врага, по которому ткнули дважды ЛКМ, из field-comp
     }
   },
   methods: {
@@ -133,8 +150,6 @@ export default {
       // alert(this.s + 1)  // доступ к тем переменным
       // this.show()  // доступ к тем методам
       // this.f()  // из 1 миксина можно дергать параметры и методы другого!
-
-      leader_ai_move_once(this.enemy_leader)  // функция урона лидера в начале
     },
 
     // > по нажатию на карту игрока, из hand-comp, card - вся карта целиком
@@ -146,7 +161,6 @@ export default {
       this.ai_cards_active = true  // только теперь можно тыкать на карты противника!!!!!!!!!!!!!!
       this.enemy_leader_active = true  // и лидер врагов активен тоже
       this.leader_active = false // а лидер теперь неактивен
-
     },
 
     // по нажатию на лидера
@@ -158,74 +172,108 @@ export default {
       this.ai_cards_active = true
       this.enemy_leader_active = true  // и лидер врагов активен тоже
       alert(this.leader.charges + ' заряды лидера')
-
     },
 
-    // если ткнули ранее на карту игрока или лидера, а потом на поле, ходим // i - номер клетки поля!
-    exec_damage_ai_card(i) { 
+    // если ткнули ранее на карту игрока или лидера, а потом на поле, ходим // enemy - объект врага (field[i])
+    exec_damage_ai_card(enemy) {
+      this.selected_enemy = enemy
 
       this.can_draw = false  // если хотя бы раз сюда попали, то дро нельзя
       
       // если ранее ткнули на карту игрока, а потом на поле
-      if (this.player_cards_active && !this.leader_active && this.ai_cards_active && this.field[i]) {
-        
+      if (this.player_cards_active && !this.leader_active && this.ai_cards_active && this.selected_enemy) {
+
+        damage_ai_card(
+          this.selected_card, this.selected_enemy, this.field, this.enemy_leader,
+          this.hand, this.deck, this.grave,
+          this.enemies,
+          true,
+          this.leader
+        )
+
         // особие абилки, которые требуют открытия окон
         this.special_case_abilities()
-        
-        damage_ai_card(
-          i, this.field, this.selected_card, this.hand, this.deck,
-          this.grave, this.enemy_leader, this.enemies
-        )
 
         this.selected_card = null
         this.ai_cards_active = false
         this.player_cards_active = false
-        this.show_card_from_deck = false  // из specialcaseabilities.js!!!
+        this.show_picked_card = false  // из specialcaseabilities.js!!!
       }
 
       // если выбран лидер и ткнули на поле, урон наносит лидер
-      if (this.leader_active && this.ai_cards_active && this.field[i]) this.exec_leader_move(i)
+      if (this.leader_active && this.ai_cards_active && this.selected_enemy) this.exec_leader_move()
     },
     
     // только если ткнули на лидера, а потом на поле
-    exec_leader_move(i) {
-      leader_move(this.leader, i, this.field, this.enemy_leader, this.enemies)
+    exec_leader_move() {
+      damage_ai_card(
+          this.leader, this.selected_enemy, this.field, this.enemy_leader,
+          undefined, undefined, undefined,
+          this.enemies,
+          false,
+          this.leader,
+      )
       this.leader_active = false  // снова неактивен, тыкай на него опять
       this.ai_cards_active = false
     },
 
-    exec_ai_move() {
-      ai_move(this.field)
-      leader_ai_move(this.enemy_leader)
-      appear_new_enemy(this.field, this.enemies)
-      this.player_cards_active = true
-      this.can_draw = this.calc_can_draw(this.player_cards_active, this.hand, this.deck)
-    },
-
     // если ранее ткнули на карту игрока или лидера игрока, а потом на лидера врагов!
     onLeaderClick() {
-      
+
+      // ткнули на карту игрока, а потом на лидера врагов
       if (this.player_cards_active && !this.leader_active && this.enemy_leader_active && this.enemy_leader.hp > 0) {
         // особие абилки, которые требуют открытия окон
-        this.special_case_abilities()
+
         this.can_draw = false
 
-        damage_enemy_leader_by_card(
-            this.enemy_leader, this.selected_card, this.hand, this.deck,
-            this.grave, this.field, this.enemies
+        damage_ai_card(
+            this.selected_card, this.enemy_leader, this.field, this.enemy_leader,
+            this.hand, this.deck, this.grave,
+            this.enemies,
+            true,
+            this.leader
         )
+
+        this.special_case_abilities()
 
         this.player_cards_active = false
         this.selected_card = null
-        this.show_card_from_deck = false  // из specialcaseabilities.js!!!
+        this.show_picked_card = false  // из specialcaseabilities.js!!!
       }
 
+      // ткнули на лидера игрока, а потом на лидера врагов
       if (this.leader_active && this.leader.charges > 0 && this.enemy_leader_active && this.enemy_leader.hp > 0) {
         this.can_draw = false
-        damage_enemy_leader_by_leader(this.enemy_leader, this.leader, this.field, this.enemies)
+        damage_ai_card(
+            this.leader, this.enemy_leader, this.field, this.enemy_leader,
+            undefined, undefined, undefined,
+            this.enemies,
+            false,
+            this.leader
+        )
         this.leader_active = false
       }
     },
+
+    // нажал ПАС - переход хода компу
+    exec_ai_move() {
+
+      player_passive_abilities_end_turn(
+          this.hand, this.leader, this.deck, this.grave, this.field, this.enemy_leader, this.enemies
+      )
+
+      setTimeout(
+          () => {
+            ai_move(this.field)
+            leader_ai_move(this.enemy_leader)
+            enemy_passive_abilities_end_turn(this.field, this.enemy_leader, this.hand)
+            appear_new_enemy(this.field, this.enemies)
+            this.player_cards_active = true
+            this.can_draw = this.calc_can_draw(this.player_cards_active, this.hand, this.deck)
+          }, 2000
+      )
+    },
+
 
   },
 }

@@ -6,6 +6,68 @@ function border_for_hand(card, index) {
 }
 
 
+function border_for_hand_2(hand, card) {
+    if (hand.length === 6) {
+        if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon',
+            'float': 'right', 'margin-left': '-12%', 'margin-right': '0.2%'}
+        else if (card.color === 'Silver') return {'border': 'solid 3px silver',
+            'float': 'right', 'margin-left': '-12%', 'margin-right': '0.2%'}
+        else if (card.color === 'Gold') return {'border': 'solid 3px gold',
+            'float': 'right', 'margin-left': '-12%', 'margin-right': '0.2%'}
+        else return {}
+    }
+    if (hand.length === 5) {
+        if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon',
+            'float': 'right', 'margin-left': '-9%', 'margin-right': '0.8%'}
+        else if (card.color === 'Silver') return {'border': 'solid 3px silver',
+            'float': 'right', 'margin-left': '-9%', 'margin-right': '0.8%'}
+        else if (card.color === 'Gold') return {'border': 'solid 3px gold',
+            'float': 'right', 'margin-left': '-9%', 'margin-right': '0.8%' }
+        else return {}
+    }
+
+    if (hand.length === 4) {
+        if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon',
+            'float': 'right', 'margin-left': '-2%'}
+        else if (card.color === 'Silver') return {'border': 'solid 3px silver',
+            'float': 'right', 'margin-left': '-2%'}
+        else if (card.color === 'Gold') return {'border': 'solid 3px gold',
+            'float': 'right', 'margin-left': '-2%' }
+        else return {}
+    }
+
+    else if (hand.length === 3) {
+        if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon',
+            'float': 'right', 'margin-right': '5%'}
+        else if (card.color === 'Silver') return {'border': 'solid 3px silver',
+            'float': 'right', 'margin-right': '5%'}
+        else if (card.color === 'Gold') return {'border': 'solid 3px gold',
+            'float': 'right', 'margin-right': '5%' }
+        else return {}
+    }
+
+    else if (hand.length === 2) {
+        if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon',
+            'float': 'right', 'margin-right': '15%'}
+        else if (card.color === 'Silver') return {'border': 'solid 3px silver',
+            'float': 'right', 'margin-right': '15%'}
+        else if (card.color === 'Gold') return {'border': 'solid 3px gold',
+            'float': 'right', 'margin-right': '15%' }
+        else return {}
+    }
+
+    else if (hand.length === 1) {
+        if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon',
+            'float': 'right', 'margin-right': '35%'}
+        else if (card.color === 'Silver') return {'border': 'solid 3px silver',
+            'float': 'right', 'margin-right': '35%'}
+        else if (card.color === 'Gold') return {'border': 'solid 3px gold',
+            'float': 'right', 'margin-right': '35%' }
+        else return {}
+    }
+}
+
+
 function border_for_card(card) {
     if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon'}
     else if (card.color === 'Silver') return {'border': 'solid 3px silver'}
@@ -78,4 +140,4 @@ function background_color_deck(deck) {
 }
 
 
-export { border_for_hand, border_for_card, border_leader, background_color, background_color_deck }
+export { border_for_hand, border_for_card, border_leader, background_color, background_color_deck, border_for_hand_2 }

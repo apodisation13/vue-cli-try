@@ -14,8 +14,8 @@
     props: {
       visible: {
         required: true,
-        type: Boolean
-      }
+        type: Boolean,
+      },
     },
     methods: {
       confirm() {
@@ -23,7 +23,7 @@
       },
       cancel() {
         this.$emit('cancel')
-      }
+      },
     },
     emits: [
       'confirm',
@@ -67,6 +67,5 @@
   width: 50px;
   height: 50px;
 }
-
 
 </style>
