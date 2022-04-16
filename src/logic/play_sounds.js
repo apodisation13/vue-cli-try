@@ -33,6 +33,10 @@ function sound_destroy_enemy() {
   if (store.state.play_sound) new Audio(require('@/assets/audio/sounds/destroy_enemy.wav')).play()
 }
 
+function sound_passive_increase_damage() {
+  if (store.state.play_sound) new Audio(require('@/assets/audio/sounds/passive_increase_damage.wav')).play()
+}
+
 
 function sound_enemy_damage_player() {
   if (store.state.play_sound) new Audio(require('@/assets/audio/sounds/enemy_damage_player.wav')).play()
@@ -61,6 +65,7 @@ export {
   sound_damage_column,
   sound_heal,
   sound_destroy_enemy,
+  sound_passive_increase_damage,
 
   sound_enemy_damage_player,
   sound_enemy_move_down,
