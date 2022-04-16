@@ -14,7 +14,8 @@ export default {
   },
   methods: {
     style() {
-      if (isNaN(this.health)) return {'backgroundColor': 'red'}
+      if (isNaN(this.health) && this.health.includes('-')) return {'backgroundColor': 'red'}
+      else if (isNaN(this.health) && this.health.includes('+')) return {'backgroundColor': 'lime'}
       else return {'backgroundColor': 'green'}
     },
   },
