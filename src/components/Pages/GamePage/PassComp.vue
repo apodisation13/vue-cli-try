@@ -1,6 +1,6 @@
 <template>
   <div class="pass">
-    <button class="pass-btn">Пас</button>
+    <button class="pass-btn" v-show="$store.state.player_turn">Пас</button>
   </div>
 </template>
 
@@ -14,7 +14,7 @@ export default {
 .pass {
   height: 12vh;
   width: 98%;
-  /* border: solid 1px blue; */
+  /*border: solid 1px blue;*/
   margin-bottom: 1%;
   margin-top: 1%;
   position: relative;

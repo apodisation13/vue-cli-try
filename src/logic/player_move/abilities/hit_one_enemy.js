@@ -28,7 +28,7 @@ function hit_one_enemy(enemy, card, field, enemy_leader, enemies, timeout=1000) 
       }
     }
 
-    check_win(field, [], enemy_leader)
+    check_win(field, enemies, enemy_leader)
 
   }, timeout)
 
