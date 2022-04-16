@@ -7,7 +7,7 @@
     @dblclick="exec_enemy_leader"
   >
   
-    <img class="img" :src="enemy_leader.image" v-if="enemy_leader.hp > 0" alt="">
+    <img class="img" :src="enemy_leader.image" v-if="enemy_leader.hp > 0 || isNaN(enemy_leader.hp)" alt="">
 
     <card-diamond :style="background_color(enemy_leader)"
         v-if="enemy_leader.damage_per_turn"
@@ -17,7 +17,7 @@
 
     <card-circle-heal v-if="enemy_leader.heal_self_per_turn">+&hearts;{{ enemy_leader.heal_self_per_turn }}</card-circle-heal>
 
-    <card-hp>&hearts;{{ enemy_leader.hp }}</card-hp>
+    <card-hp :style="style(enemy_leader)">&hearts;{{ enemy_leader.hp }}</card-hp>
 
     <ability-circle-enemy-leader :enemy_leader="enemy_leader" />
   </div>
@@ -61,6 +61,11 @@ export default {
     },
     background_color(leader) {
       return background_color(leader)
+    },
+    style(leader) {
+      if (isNaN(leader.hp) && leader.hp.includes('-')) return {'backgroundColor': 'red'}
+      else if (isNaN(leader.hp) && leader.hp.includes('+')) return {'backgroundColor': 'lime'}
+      else return {'backgroundColor': 'green'}
     },
     exec_enemy_leader() {
       this.$emit("exec_enemy_leader")

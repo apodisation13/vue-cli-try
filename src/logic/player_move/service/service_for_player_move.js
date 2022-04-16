@@ -1,19 +1,3 @@
-import { useToast } from 'vue-toastification'
-import {sound_hit_shield} from "@/logic/play_sounds"
-
-const toast = useToast()
-
-
-function hit_one_enemy(enemy, card) {
-  if (enemy.shield) {
-    enemy.shield = false
-    toast.warning('Попали в щит!')
-    sound_hit_shield()
-  }
-  else enemy.hp -= card.damage
-}
-
-
 function remove_dead_enemies(field) {
   for (let i = 0; i < field.length; i++) {
     if (field[i].hp <= 0) {
@@ -65,6 +49,5 @@ export {
   remove_dead_enemies,
   remove_dead_card,
   get_all_enemies,
-  hit_one_enemy,
   get_random_enemy,
 }

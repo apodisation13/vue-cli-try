@@ -1,14 +1,8 @@
-import store from "@/store"
-import {useToast} from 'vue-toastification'
-import {sound_heal} from "@/logic/play_sounds"
-
-const toast = useToast()
+import {heal} from "@/logic/player_move/abilities/ability_heal"
 
 
 function passive_end_turn_heal_leader() {
-  store.commit('change_health', 1)
-  toast.success(`лечение на 1`)
-  sound_heal()
+  heal({heal: 1})
 }
 
 

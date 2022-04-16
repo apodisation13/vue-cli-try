@@ -31,7 +31,7 @@
 <!-- возможность вытянуть карту, дро -->
 <div class="draw">
   <draw-comp
-    v-show="can_draw"
+    v-show="can_draw && $store.state.player_turn"
     @click="draw_one_card"
   />
 </div>
@@ -76,9 +76,9 @@
 
 import {appear_new_enemy} from '@/logic/place_enemies'
 import {damage_ai_card} from '@/logic/player_move/player_move'
-import {ai_move, leader_ai_move} from '@/logic/ai_move/ai_move'
+import {ai_move} from '@/logic/ai_move/ai_move'
 import {player_passive_abilities_end_turn} from "@/logic/player_move/player_passive_abilities"
-import {enemy_passive_abilities_end_turn} from "@/logic/ai_move/ai_passive_abilties"
+import {enemy_passive_abilities_end_turn, passive_leader_ai_move} from "@/logic/ai_move/ai_passive_abilties"
 
 import draw from '@/mixins/GamePage/draw'
 import specialcaseabilities from "@/mixins/GamePage/specialcaseabilities"
@@ -257,21 +257,67 @@ export default {
 
     // нажал ПАС - переход хода компу
     exec_ai_move() {
+      this.$store.commit('set_player_turn', false)
 
       player_passive_abilities_end_turn(
           this.hand, this.leader, this.deck, this.grave, this.field, this.enemy_leader, this.enemies
       )
 
-      setTimeout(
-          () => {
-            ai_move(this.field)
-            leader_ai_move(this.enemy_leader)
-            enemy_passive_abilities_end_turn(this.field, this.enemy_leader, this.hand)
-            appear_new_enemy(this.field, this.enemies)
-            this.player_cards_active = true
-            this.can_draw = this.calc_can_draw(this.player_cards_active, this.hand, this.deck)
-          }, 2000
-      )
+      let await_ppa_end_turn = setInterval(() => {
+        if (!this.$store.state.ppa_end_turn) {
+          console.log('закончили ppa_end_turn, начинает ходить комп')
+          clearInterval(await_ppa_end_turn)
+          ai_move(this.field)
+
+          let await_ai_move = setInterval(() => {
+            if (!this.$store.state.ai_move) {
+              console.log('закончили ходить комп, ходит лидер врагов')
+              clearInterval(await_ai_move)
+              passive_leader_ai_move(this.enemy_leader)
+
+              let await_leader_ai_passive_move = setInterval(() => {
+                if (!this.$store.state.leader_ai_move) {
+                  console.log('закончили лидер врагов, теперь пассивки врагов')
+                  clearInterval(await_leader_ai_passive_move)
+                  enemy_passive_abilities_end_turn(this.field, this.enemy_leader, this.hand)
+
+                  let await_epa_end_turn = setInterval(() => {
+                    if (!this.$store.state.epa_end_turn) {
+                      console.log('всё закончили, щас появится новый враг и можно ходить снова')
+                      clearInterval(await_epa_end_turn)
+                      appear_new_enemy(this.field, this.enemies)
+                      this.player_cards_active = true
+                      this.can_draw = this.calc_can_draw(this.player_cards_active, this.hand, this.deck)
+                      this.$store.commit('set_player_turn', true)
+                    }
+                  }, 500)
+
+                }
+              }, 500)
+
+            }
+          }, 500)
+
+        }
+      }, 500)
+
+      // ai_move(this.field, this.enemy_leader)
+      // leader_ai_move(this.enemy_leader)
+      // enemy_passive_abilities_end_turn(this.field, this.enemy_leader, this.hand)
+      // appear_new_enemy(this.field, this.enemies)
+      // this.player_cards_active = true
+      // this.can_draw = this.calc_can_draw(this.player_cards_active, this.hand, this.deck)
+
+      // setTimeout(
+      //     () => {
+      //       ai_move(this.field)
+      //       leader_ai_move(this.enemy_leader)
+      //       // enemy_passive_abilities_end_turn(this.field, this.enemy_leader, this.hand)
+      //       appear_new_enemy(this.field, this.enemies)
+      //       this.player_cards_active = true
+      //       this.can_draw = this.calc_can_draw(this.player_cards_active, this.hand, this.deck)
+      //     }, 2000
+      // )
     },
 
 

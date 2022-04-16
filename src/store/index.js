@@ -43,6 +43,12 @@ const store = createStore({
         leaders: [],
         cards: [],
         decks: [],
+
+        ppa_end_turn: false,  // true - значит они сейчас в процессе
+        ai_move: false,  // true - значит они сейчас ходят
+        leader_ai_move: false,
+        epa_end_turn: false,
+        player_turn: true,
     },
 
     getters: {  
@@ -110,6 +116,22 @@ const store = createStore({
         },
         set_play_sound(state, payload) {
             state.play_sound = payload
+        },
+
+        set_ppa_end_turn(state, payload) {
+            state.ppa_end_turn = payload
+        },
+        set_ai_move(state, payload) {
+            state.ai_move = payload
+        },
+        set_leader_ai_move(state, payload) {
+            state.leader_ai_move = payload
+        },
+        set_epa_end_turn(state, payload) {
+            state.leader_ai_move = payload
+        },
+        set_player_turn(state, payload) {
+            state.player_turn = payload
         },
 
     },

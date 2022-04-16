@@ -1,17 +1,19 @@
+import {hit_one_enemy} from "@/logic/player_move/abilities/hit_one_enemy"
+
 import {heal} from "@/logic/player_move/abilities/ability_heal"
 import {damage_one} from "@/logic/player_move/abilities/ability_damage_one"
 import {damage_all} from "@/logic/player_move/abilities/ability_damage_all"
-
-import {remove_dead_enemies, remove_dead_card} from "@/logic/player_move/service/service_for_player_move"
-import {check_win} from "@/logic/player_move/service/check_win"
 import {spread_damage} from "@/logic/player_move/abilities/ability_spread_damage"
 import {damage_row} from "@/logic/player_move/abilities/ability_damage_row"
 import {damage_column} from "@/logic/player_move/abilities/ability_damage_column"
+import {destroy_highest_hp} from "@/logic/player_move/abilities/ability_destroy_highest_hp"
+import {destroy_highest_damage} from "@/logic/player_move/abilities/ability_destroy_highest_damage"
+import {destroy_random} from "@/logic/player_move/abilities/ability_destroy_random"
+import {destroy_all_same_hp} from "@/logic/player_move/abilities/ability_destroy_all_same_hp"
+
 import {player_passive_abilities_upon_playing_a_card} from "@/logic/player_move/player_passive_abilities"
-import {destroy_highest_hp} from "@/logic/player_move/abilities/ability_destroy_highest_hp";
-import {destroy_highest_damage} from "@/logic/player_move/abilities/ability_destroy_highest_damage";
-import {destroy_random} from "@/logic/player_move/abilities/ability_destroy_random";
-import {destroy_all_same_hp} from "@/logic/player_move/abilities/ability_destroy_all_same_hp";
+import {remove_dead_card} from "@/logic/player_move/service/service_for_player_move"
+import {check_win} from "@/logic/player_move/service/check_win"
 
 
 // сюда заходим если там есть враг
@@ -25,26 +27,26 @@ import {destroy_all_same_hp} from "@/logic/player_move/abilities/ability_destroy
 function damage_ai_card(card, enemy, field, enemy_leader, hand, deck, grave, enemies, isCard, leader) {
 
     if (card.ability.name === 'heal') {
-        damage_one(enemy, card)
+        damage_one(enemy, card, field, enemy_leader, enemies)
         heal(card)
     }
 
     else if (card.ability.name === 'damage-all') {
-        damage_all(field, card)
-        enemy_leader.hp -= card.damage
+        damage_all(field, card, enemy_leader, enemies)
+        if (enemy_leader.hp > 0) hit_one_enemy(enemy_leader, card, field, enemy_leader, enemies)
+        setTimeout(() => check_win(field, enemies, enemy_leader), 1200)
     }
 
     else if (card.ability.name === 'spread-damage') {
-        spread_damage(card, field, enemy_leader, grave, hand, deck, isCard, enemies)
-        return  // ретерн здесь, так как общие штуки в конце выполняются прям там изза sleep
+        spread_damage(card, field, enemy_leader, grave, hand, deck, enemies)
     }
 
     else if (card.ability.name === 'damage-row') {
-        damage_row(enemy, card, field)
+        damage_row(enemy, card, field, enemy_leader, enemies)
     }
 
     else if (card.ability.name === 'damage-column') {
-        damage_column(enemy, card, field)
+        damage_column(enemy, card, field, enemy_leader, enemies)
     }
 
     else if (card.ability.name === 'destroy-highest-hp') {
@@ -63,21 +65,11 @@ function damage_ai_card(card, enemy, field, enemy_leader, hand, deck, grave, ene
         destroy_all_same_hp(enemy, field, enemy_leader)
     }
 
-    else damage_one(enemy, card)
+    else damage_one(enemy, card, field, enemy_leader, enemies)
 
-
-    // если враг убит, убираем его с поля, проверять надо всех врагов, потому что есть абилки на всех
-    remove_dead_enemies(field)
-
-    // проверяем, умер ли лидер врагов
-    if (enemy_leader.hp < 0) enemy_leader.hp = 0
-   
     // убираем карту игрока, если в ней не осталось зарядов, из руки и из колоды, если играли оттуда
     card.charges -= 1
     if (isCard) remove_dead_card(card, grave, hand, deck)
-
-    // проверяем, не выиграли ли мы
-    check_win(field, enemies, enemy_leader)
 
     // пассивные абилки от хода
     // пока только лидер игрока, +заряд от спецкарты
