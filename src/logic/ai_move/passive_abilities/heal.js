@@ -4,10 +4,10 @@ import {sound_heal} from "@/logic/play_sounds"
 // ЛИДЕР ВРАГОВ лечит пассивно в конце хода сам себя
 function enemy_leader_heal_self(enemy_leader) {
   let temp = enemy_leader.hp
-  enemy_leader.hp = `${temp}+${enemy_leader.heal_per_turn}`
+  enemy_leader.hp = `${temp}+${enemy_leader.heal_self_per_turn}`
   setTimeout(() => {
     enemy_leader.hp = temp
-    enemy_leader.hp += enemy_leader.heal_per_turn
+    enemy_leader.hp += enemy_leader.heal_self_per_turn
   }, 750)
   sound_heal()
 }
