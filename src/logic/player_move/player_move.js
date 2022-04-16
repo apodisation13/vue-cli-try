@@ -13,6 +13,7 @@ import {destroy_all_same_hp} from "@/logic/player_move/abilities/ability_destroy
 
 import {player_passive_abilities_upon_playing_a_card} from "@/logic/player_move/player_passive_abilities"
 import {remove_dead_card} from "@/logic/player_move/service/service_for_player_move"
+import {check_win} from "@/logic/player_move/service/check_win"
 
 
 // сюда заходим если там есть враг
@@ -32,7 +33,8 @@ function damage_ai_card(card, enemy, field, enemy_leader, hand, deck, grave, ene
 
     else if (card.ability.name === 'damage-all') {
         damage_all(field, card, enemy_leader, enemies)
-        hit_one_enemy(enemy_leader, card, field, enemy_leader, enemies)
+        if (enemy_leader.hp > 0) hit_one_enemy(enemy_leader, card, field, enemy_leader, enemies)
+        setTimeout(() => check_win(field, enemies, enemy_leader), 1200)
     }
 
     else if (card.ability.name === 'spread-damage') {
