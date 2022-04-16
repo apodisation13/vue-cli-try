@@ -59,8 +59,9 @@ export default {
       this.show_enemy_modal = true
     },
     style(enemy) {
-      if (isNaN(enemy.hp)) return {"backgroundColor": "red"}
-      else return {"backgroundColor": "green"}
+      if (isNaN(enemy.hp) && enemy.hp.includes('-')) return {'backgroundColor': 'red'}
+      else if (isNaN(enemy.hp) && enemy.hp.includes('+')) return {'backgroundColor': 'lime'}
+      else return {'backgroundColor': 'green'}
     },
   },  
 }

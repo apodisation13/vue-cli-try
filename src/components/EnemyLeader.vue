@@ -63,8 +63,9 @@ export default {
       return background_color(leader)
     },
     style(leader) {
-      if (isNaN(leader.hp)) return {"backgroundColor": "red"}
-      else return {"backgroundColor": "green"}
+      if (isNaN(leader.hp) && leader.hp.includes('-')) return {'backgroundColor': 'red'}
+      else if (isNaN(leader.hp) && leader.hp.includes('+')) return {'backgroundColor': 'lime'}
+      else return {'backgroundColor': 'green'}
     },
     exec_enemy_leader() {
       this.$emit("exec_enemy_leader")
