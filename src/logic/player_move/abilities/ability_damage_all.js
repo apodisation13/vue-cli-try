@@ -1,15 +1,11 @@
-import { useToast } from 'vue-toastification'
-import {hit_one_enemy} from "@/logic/player_move/service/service_for_player_move"
 import {sound_damage_all} from "@/logic/play_sounds"
+import {hit_one_enemy} from "@/logic/player_move/abilities/hit_one_enemy";
 
-const toast = useToast()
 
-
-function damage_all(field, card) {
+function damage_all(field, card, enemy_leader, enemies) {
   field.forEach(enemy => {
-    if (enemy) hit_one_enemy(enemy, card)
+    if (enemy) hit_one_enemy(enemy, card, field, enemy_leader, enemies)
   })
-  toast.warning('УРОН ВСЕМ!')
   sound_damage_all()
 }
 
