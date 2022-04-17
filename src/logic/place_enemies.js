@@ -1,7 +1,5 @@
 import store from '@/store' // stote.state OR store.commit
-import { useToast } from 'vue-toastification'
-
-const toast = useToast()
+import {sound_appear_new_enemy} from "@/logic/play_sounds"
 
 
 // расставить врагов, только первые 9 клеток, + параметр из уровня, сколько в начале появляется сразу врагов
@@ -25,7 +23,7 @@ function appear_new_enemy(field, enemy_list) {
         let random2 = Math.floor(Math.random() * enemy_list.length)  
         field[random] = enemy_list[random2]  // появляется враг
         enemy_list.splice(random2, 1)  // удаляется из списка врагов
-        toast.info('враг появился')
+        sound_appear_new_enemy()
     }  
 }
 
