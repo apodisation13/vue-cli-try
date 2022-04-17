@@ -3,9 +3,12 @@ import {check_win} from "@/logic/player_move/service/check_win";
 
 
 function hit_one_enemy(enemy, card, field, enemy_leader, enemies, timeout=1000) {
+  card.damages_enemy = true
+
   if (enemy.shield) {
     enemy.shield = false
     sound_hit_shield()
+    card.damages_enemy = false
     return
   }
 
@@ -28,12 +31,10 @@ function hit_one_enemy(enemy, card, field, enemy_leader, enemies, timeout=1000) 
       }
     }
 
+    card.damages_enemy = false
     check_win(field, enemies, enemy_leader)
 
   }, timeout)
-
-
-
 }
 
 
