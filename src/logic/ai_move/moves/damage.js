@@ -7,9 +7,11 @@ function damage_player(field, i) {
   sound_enemy_damage_player()
   let temp = store.state.health  // сохраняем сколько было жизней
   store.commit('set_health', `${store.state.health}-${field[i].damage}`)  // 45-12
+  field[i].damages_player = true
   setTimeout(() => {
     store.commit('set_health', temp)
     store.commit('change_health', -field[i].damage)
+    field[i].damages_player = false
     check_lose(store.state.health)
   }, 750)
 }

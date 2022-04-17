@@ -128,7 +128,7 @@ const store = createStore({
             state.leader_ai_move = payload
         },
         set_epa_end_turn(state, payload) {
-            state.leader_ai_move = payload
+            state.epa_end_turn = payload
         },
         set_player_turn(state, payload) {
             state.player_turn = payload
