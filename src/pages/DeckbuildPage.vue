@@ -85,12 +85,16 @@ import FilterFactions from "@/components/Pages/DeckbuildPage/FilterFactions"
 import FilterTypes from "@/components/Pages/DeckbuildPage/FilterTypes"
 import FilterColors from "@/components/Pages/DeckbuildPage/FilterColors"
 import FilterPassives from "@/components/Pages/DeckbuildPage/FilterPassives"
+
+import filtering from "@/mixins/DeckbuildPage/filtering"
+
 export default {
   components: {FilterPassives, FilterColors, FilterTypes, FilterFactions, DecksListModal,  CardsList, LeaderComp},
+  mixins: [
+    filtering,
+  ],
   data() {
     return {
-      query: {},
-      faction: '',
 
       deck_is_progress: [],  // колода в процессе - целиком объкты
       leader_in_progress: null,  // лидер в процессе
@@ -106,33 +110,6 @@ export default {
   },
 
   methods: {
-    // фильтр карт и лидеров по фракции по нажатию на кнопку фракции
-    filter_factions(emit) {
-      this.query.faction = emit[0]  // для this.query.cards
-      this.faction = emit[0][0]  // для this.query.leaders
-      this.faction_selected = emit[1]  // чтобы можно было добавить лидера, онли выбрав фракцию
-      if (this.deck_is_progress.length) this.new_deck()  // если в процессе сборки переключили фракцию - ОБНУЛИЛИСЬ
-    },
-    filter_types(type) {
-      this.query.type = type
-    },
-    filter_colors(color) {
-      this.query.color = color
-    },
-    filter_passives(passive) {
-      this.query.has_passive = passive
-      console.log(this.query)
-    },
-    reset_filter_types() {
-      delete this.query.type
-    },
-    reset_filter_colors() {
-      delete this.query.color
-    },
-    reset_filter_passives() {
-      delete this.query.has_passive
-    },
-
     // новая дека, обнуляем фильтры и сбрасываем все добавления
     new_deck() {
       this.query = {}
@@ -142,7 +119,6 @@ export default {
       this.health = 0
       this.leader_selected = false
       this.faction_selected = false
-      this.leader_index = null      
     },
 
     // добавляем карты в колоду из базы карт
