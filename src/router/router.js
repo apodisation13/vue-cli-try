@@ -63,7 +63,7 @@ const router = createRouter({
 
 
 router.beforeEach((to, rom, next) => {
-
+    store.commit('set_show_menu', false)
     if (to.matched.some(record => record.meta.requireAuth)) {
         if (store.getters.isLoggedIn) next()
         else {

@@ -32,6 +32,8 @@ const store = createStore({
 
         play_sound: false,
 
+        show_menu: false,
+
         cards_in_deck: 12,  // СКОЛЬКО В ДЕКЕ ДОЛЖНО БЫТЬ КАРТ
         hand_size: 6,  // СКОЛЬКО КАРТ В РУКЕ
         
@@ -120,6 +122,9 @@ const store = createStore({
         },
         set_play_sound(state, payload) {
             state.play_sound = payload
+        },
+        set_show_menu(state, payload) {
+          state.show_menu = payload
         },
 
         set_ppa_end_turn(state, payload) {
