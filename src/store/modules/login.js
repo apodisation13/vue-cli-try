@@ -20,6 +20,12 @@ const mutations = {
   logged_in(state) {
     state.is_logged_in = true
   },
+  logged_out(state) {
+    state.is_logged_in = false
+    state.token = ''
+    state.username = ''
+    // здесь должен быть запрос на очистку токена?
+  },
   set_token(state, payload) {
     state.token = payload
   },
@@ -51,7 +57,10 @@ const actions = {
       toast.error('Произошла ошибка!')
       throw new Error('Ошибка регистрации, проверьте что почта правильная')
     }
-  }
+  },
+  logout({ commit }) {
+    commit('logged_out')
+  },
 }
 
 export default {
