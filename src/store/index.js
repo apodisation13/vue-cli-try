@@ -1,5 +1,6 @@
 import { createStore } from "vuex"
 import { get, post, axios_delete } from '@/logic/requests'
+import login from "@/store/modules/login"
 
 
 // ИНСТРУКЦИЯ:
@@ -22,6 +23,9 @@ let LEVELS = 'http://194.67.109.190:82/api/v1/levels/'
 
 
 const store = createStore({
+    modules: {
+        login,
+    },
     state: {
         isLoaded: false,  // загружены ли данные
         error: "",  // сообщение об ошибке загрузки данных
