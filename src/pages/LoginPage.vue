@@ -60,11 +60,6 @@
 
 <script>
 export default {
-  computed: {
-    isLoggedIn() {
-      return this.$store.getters['isLoggedIn']
-    },
-  },
   data() {
     return {
       username: '',
@@ -83,7 +78,6 @@ export default {
 
       try {
         await this.$store.dispatch('login', { username: this.email, password: this.password })
-        this.$store.commit('logged_in')
         await this.$router.push('/')
       } catch (err) {
         this.error = err

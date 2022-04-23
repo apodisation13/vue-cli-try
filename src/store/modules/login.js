@@ -6,9 +6,10 @@ const check_auth_url = 'http://localhost:8000/accounts/api-token-auth/'
 const register_url = 'http://localhost:8000/accounts/register/'
 
 const state = {
+  username: '',
+  user_id: undefined,
   token: '',
   is_logged_in: false,
-  username: '',
 }
 
 const getters = {
@@ -17,20 +18,18 @@ const getters = {
 }
 
 const mutations = {
-  logged_in(state) {
+  logged_in(state, { username, user_id, token }) {
+    state.username = username
+    state.user_id = user_id
+    state.token = token
     state.is_logged_in = true
   },
   logged_out(state) {
-    state.is_logged_in = false
-    state.token = ''
     state.username = ''
+    state.user_id = undefined
+    state.token = ''
+    state.is_logged_in = false
     // здесь должен быть запрос на очистку токена?
-  },
-  set_token(state, payload) {
-    state.token = payload
-  },
-  set_username(state, payload) {
-    state.username = payload
   },
 }
 
@@ -38,9 +37,11 @@ const actions = {
   async login({ commit }, userObj) {
     try {
       const response = await axios.post(check_auth_url, userObj)
-      commit('logged_in')
-      commit('set_token', response.data.token)
-      commit('set_username', userObj.username)
+      commit('logged_in', {
+        username: response.data.username,
+        user_id: response.data.user_id,
+        token: response.data.token,
+      })
       toast.success('Успешно вошли!')
       return response.data.token
     } catch (err) {
