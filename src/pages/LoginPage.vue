@@ -1,14 +1,16 @@
 <template>
-  <div class="chose_auth_or_reg">
-    <button class="chose_btn" @click="choseFormLogin">Вход</button>
-    <button class="chose_btn" @click="choseFormRegister">Регистрация</button>
-  </div>
 
-  <div class="header" v-if="formLogin">
-    АВТОРИЗАЦИЯ
+  <div class="header" @click="choseFormRegister" v-if="formLogin">
+    <div class="auth">
+      <span>ВХОД</span>
+      <span :style="{'fontSize': '10pt'}">нажмите на это поле чтобы переключиться на регистрацию</span>
+    </div>
   </div>
-  <div class="header" v-else>
-    РЕГИСТРАЦИЯ
+  <div class="header" @click="choseFormLogin" v-else>
+    <div class="auth">
+      <span>РЕГИСТРАЦИЯ</span>
+      <span :style="{'fontSize': '10pt'}">нажмите на это поле чтобы переключиться на вход</span>
+    </div>
   </div>
 
   <div class="form">
@@ -75,7 +77,10 @@ export default {
   },
   methods: {
     async login() {
-      this.error = ''
+
+      this.error = this.validate_form(false)
+      if (this.error) return
+
       try {
         await this.$store.dispatch('login', { username: this.email, password: this.password })
         this.$store.commit('logged_in')
@@ -87,11 +92,10 @@ export default {
     },
 
     async userRegister() {
-      this.error = ''
-      if (this.password !== this.confirmPassword) {
-        this.error = 'Пароли не совпадают!'
-        return
-      }
+
+      this.error = this.validate_form(true)
+      if (this.error) return
+
       try {
         await this.$store.dispatch('userRegister', {
           username: this.username,
@@ -112,38 +116,38 @@ export default {
     choseFormRegister() {
       this.error = ''
       this.formLogin = false
+      this.email = ''
+      this.password = ''
     },
+
+    validate_form(register) {
+      if (register && !this.username) return 'Поле имя не может быть пустым'
+
+      if (!this.email) return 'Поле почта не может быть пустым'
+      if (!this.email.includes('@')) return 'Почта некорректна'
+
+      if (this.password.length < 8) return 'Пароль должен быть не менее 8 символов!'
+      if (register && this.password !== this.confirmPassword) return 'Пароли не совпадают!'
+
+      return ''
+    }
   },
 }
 </script>
 
 <style scoped>
 
-.chose_auth_or_reg {
-  width: 80%;
-  height: 5vh;
-  /*border: solid 1px black;*/
-  margin: 1% auto auto;
-  display: flex;
-  justify-content: center; /* align horizontal */
-  align-items: center; /* align vertical */
-}
-
-.chose_btn {
-  width: 25%;
-  margin: 2%;
-  height: 4vh;
-  background-color: chocolate;
-}
-
 .header {
-  background-color: blue;
+  background-color: cornflowerblue;
   width: 80%;
   height: 10vh;
   margin: 1% auto auto;
   border-radius: 1%;
   border: solid 1px black;
   font-size: 14pt;
+}
+
+span {
   display: flex;
   justify-content: center; /* align horizontal */
   align-items: center; /* align vertical */
@@ -178,7 +182,7 @@ export default {
 .login {
   width: 50%;
   height: 7vh;
-  background-color: green;
+  background-color: limegreen;
   font-size: 14pt;
   border-radius: 5%;
   border: dashed;
@@ -190,6 +194,5 @@ export default {
   font-size: 14pt;
   color: red;
 }
-
 
 </style>
