@@ -5,7 +5,7 @@
       v-touch:longtap="show_modal"
   >
 
-    <img class="img" :src="card.image" v-if="card.image" alt="">
+    <img class="img" :src="`http://194.67.109.190:82${card.image}`" v-if="card.image" alt="">
 
     <card-type v-if="card.type === 'Special'">&starf;</card-type>
 

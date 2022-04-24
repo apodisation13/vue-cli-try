@@ -1,27 +1,50 @@
 <template>
 
-<div class="menu">
-    
-  <button class="menu_button"
-  @click="$router.push('/')">Гл</button>
-  
-  <button class="menu_button" style="backgroundColor: green;"
-  v-if="level"
-  @click="$router.push('/game')">И</button>
-  
-  <button class="menu_button"
-  @click="$router.push('/levelselect')">У</button>
-  
-  <button class="menu_button" 
-  @click="$router.push('/deckbuild')">ДБ</button>
-  
-  <button class="menu_button"
-  @click="$router.push('/about')">О</button>
+  <div class="menu" v-touch:swipe.left="close_menu">
 
-  <button class="switch_sound" v-if="sound" @click="turn_sound">Оn</button>
-  <button class="switch_sound" v-else @click="turn_sound">Оff</button>
+    <button class="close_button"
+            @click="close_menu"
+    >Закрыть</button>
 
-</div>
+    <button class="menu_button"
+            @click="$router.push('/')"
+    >На главную</button>
+
+    <button class="menu_button"
+            :style="{'backgroundColor': 'green'}"
+            v-if="level && isLoggedIn"
+            @click="$router.push('/game')"
+    >Играть</button>
+
+    <button class="menu_button"
+            v-if="isLoggedIn"
+            @click="$router.push('/levelselect')"
+    >Уровни и колоды</button>
+
+    <button class="menu_button"
+            v-if="isLoggedIn"
+            @click="$router.push('/deckbuild')"
+    >База данных</button>
+
+    <button class="menu_button"
+            v-if="isLoggedIn"
+            @click="$router.push('/bonus')"
+    >Бонусы</button>
+
+    <button class="menu_button"
+            @click="$router.push('/rules')"
+    >Правила игры</button>
+
+    <button class="menu_button"
+            v-if="isLoggedIn"
+            @click="$router.push('/settings')"
+    >Настройки</button>
+
+
+    <button class="switch_sound" v-if="sound" @click="turn_sound">Оn</button>
+    <button class="switch_sound" v-else @click="turn_sound">Оff</button>
+
+  </div>
 </template>
 
 <script>
@@ -34,34 +57,41 @@ export default {
     sound() {
       return this.$store.state.play_sound
     },
+    isLoggedIn() {
+      return this.$store.getters['isLoggedIn']
+    },
   },
   methods: {
     turn_sound() {
       this.$store.commit('set_play_sound', !this.$store.state.play_sound)
     },
+    close_menu() {
+      // this.$emit('close_menu')
+      this.$store.commit('set_show_menu', false)
+    },
   },
+  // emits: ['close_menu'],
 }
 </script>
 
 <style>
 
 .menu {
-  width: 100%;
-  /* height: 70px; */
-  max-height: 5vh;
-  background-color: indigo;
-  display: flex;
-  align-items: center;  /* вот эта хрень отвечает за то, чтобы посередине были элементы */  
-  /* padding: 0 15px; */
+  background-color: dodgerblue;
+  width: 30%;
+  height: 100%;
+  border-radius: 12px;
+  text-align: center;
+  position: fixed;
+  z-index: 99999;
+  font-size: 14pt;
 }
 
 .menu_button {
-  /* width: 100px; */
-  width: 15vh;
-  /* height: 50px; */
-  max-height: 3vh;
-  font-size: 6pt;
-  margin-left: 5%;
+  width: 80%;
+  height: 5vh;
+  margin-top: 5%;
+  border-radius: 3%;
 }
 
 .switch_sound {
