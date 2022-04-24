@@ -1,45 +1,56 @@
 import axios from "axios"
-import { useToast } from 'vue-toastification'
-import { check_auth_url, register_url } from "@/store/const/api_urls"
+import {useToast} from 'vue-toastification'
+import {check_auth_url, register_url} from "@/store/const/api_urls"
 
 const toast = useToast()
 
 const state = {
-  username: '',
-  user_id: undefined,
-  token: '',
+  user: JSON.parse(localStorage.getItem('user') || '{}'),
   is_logged_in: false,
+  header: '',
 }
 
 const getters = {
+  getUser: state => state.user,
   isLoggedIn: state => state.is_logged_in,
-  getUsername: state => state.username,
+  getHeader: state => state.header,
 }
 
 const mutations = {
-  logged_in(state, { username, user_id, token }) {
-    state.username = username
-    state.user_id = user_id
-    state.token = token
+  logged_in(state, user) {
+    state.user = user
     state.is_logged_in = true
+    state.header = {headers: {Authorization: `Token ${state.user.token}`}}
+    localStorage.setItem('user', JSON.stringify(user))
   },
   logged_out(state) {
-    state.username = ''
-    state.user_id = undefined
-    state.token = ''
     state.is_logged_in = false
+    state.header = ''
+    state.user = ''
+    localStorage.removeItem('user')
     // здесь должен быть запрос на очистку токена?
   },
 }
 
 const actions = {
-  async login({ commit }, userObj) {
+  async check_auth({ getters, dispatch }) {
+    try {
+      let user = getters['getUser']
+      await dispatch("login", { username: user.email, password: user.password })
+    } catch (err) {
+      toast.error('По сохранённым ранее данным юзера не получилось авторизоваться, попробуйте вручную!')
+      throw new Error('По сохранённым ранее данным юзера не получилось авторизоваться, попробуйте вручную')
+    }
+  },
+  async login({ state, commit }, userObj) {
     try {
       const response = await axios.post(check_auth_url, userObj)
       commit('logged_in', {
+        email: response.data.email,
+        token: response.data.token,
         username: response.data.username,
         user_id: response.data.user_id,
-        token: response.data.token,
+        password: userObj.password,
       })
       toast.success('Успешно вошли!')
       return response.data.token

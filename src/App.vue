@@ -1,16 +1,16 @@
 <template>
 
-  <div v-if="!isLoaded && !$store.state.error">
-    ПОДОЖДИТЕ, ВЫПОЛНЯЕТСЯ ЗАГРУЗКА
-  </div>
+<!--  <div v-if="!isLoaded && !$store.state.error">-->
+<!--    ПОДОЖДИТЕ, ВЫПОЛНЯЕТСЯ ЗАГРУЗКА-->
+<!--  </div>-->
 
-  <div v-if="$store.state.error && !isLoaded">
-    НЕТ СВЯЗИ С СЕРВЕРОМ
-    <br>
-    {{ $store.state.error }}
-  </div>
+<!--  <div v-if="$store.state.error && !isLoaded">-->
+<!--    НЕТ СВЯЗИ С СЕРВЕРОМ-->
+<!--    <br>-->
+<!--    {{ $store.state.error }}-->
+<!--  </div>-->
 
-  <div class="app" v-if="isLoaded" v-touch:swipe.right="show" v-touch:swipe.left="l">
+  <div class="app" v-touch:swipe.right="show" v-touch:swipe.left="l">
 
     <!-- вызов меню -->
     <menu-bar v-if="showMenu" />
@@ -27,7 +27,13 @@ export default {
   components: { MenuBar },
   
   async created() {  // вот так можно вызвать Экшен прям по загрузке сайта
-    await this.$store.dispatch('get_data')
+    try {
+      await this.$store.dispatch('check_auth')
+      await this.$store.dispatch('get_user_database')
+    } catch (err) {
+      console.log(err)
+      throw err
+    }
     // alert(this.$store.state.login.tt)  // доступ к этим параметрам через название модуля стора
   },
 

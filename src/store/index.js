@@ -1,7 +1,7 @@
 import { createStore } from "vuex"
-import createPersistedState from "vuex-persistedstate"
 import { get, post, axios_delete } from '@/logic/requests'
 import login from "@/store/modules/login"
+import database from "@/store/modules/database"
 
 
 // ИНСТРУКЦИЯ:
@@ -26,8 +26,8 @@ let LEVELS = 'http://194.67.109.190:82/api/v1/levels/'
 const store = createStore({
     modules: {
         login,
+        database,
     },
-    plugins: [createPersistedState()],
     state: {
         isLoaded: false,  // загружены ли данные
         error: "",  // сообщение об ошибке загрузки данных
@@ -43,14 +43,14 @@ const store = createStore({
         health: 0,  // жизни деки, из деки, deck.health
         leader: null,  // текущий лидер для игры из деки, deck.leader
         
-        levels: [],  // все уровни, из запроса
+        // levels: [],  // все уровни, из запроса
         level: null,  // объект уровня из БД, выбирается на странице LevelPage
         enemy_leader: null,  // объект лидера врагов из уровней
         
-        factions: [],
-        leaders: [],
-        cards: [],
-        decks: [],
+        // factions: [],
+        // leaders: [],
+        // cards: [],
+        // decks: [],
 
         ppa_end_turn: false,  // true - значит они сейчас в процессе
         ai_move: false,  // true - значит они сейчас ходят
@@ -60,21 +60,21 @@ const store = createStore({
     },
 
     getters: {  
-        all_cards: state => {
-            return state.cards
-        },
-        all_leaders: state => {
-            return state.leaders
-        },
-        filtered_cards: (state) => (query) => {
-            const applyFilter = (data, query) => data.filter(obj =>
-                Object.entries(query).every(([prop, find]) => find.includes(obj[prop]))
-            )
-            return applyFilter(state.cards, query)
-        },
-        filtered_leaders: (state) => (fac) => {
-            return state.leaders.filter(f => f.faction===fac)
-        },
+        // all_cards: state => {
+        //     return state.cards
+        // },
+        // all_leaders: state => {
+        //     return state.leaders
+        // },
+        // filtered_cards: (state) => (query) => {
+        //     const applyFilter = (data, query) => data.filter(obj =>
+        //         Object.entries(query).every(([prop, find]) => find.includes(obj[prop]))
+        //     )
+        //     return applyFilter(state.cards, query)
+        // },
+        // filtered_leaders: (state) => (fac) => {
+        //     return state.leaders.filter(f => f.faction===fac)
+        // },
     
     },
 
@@ -100,21 +100,21 @@ const store = createStore({
             state.health += param
         },
         
-        get_factions(state, result) {  // гет запрос на фракции
-            state.factions = result
-        },
-        get_leaders(state, result) {  // гет запрос на лидеров
-            state.leaders = result
-        },
-        get_cards(state, result) {  // гет запрос на базу карт
-            state.cards = result
-        },
-        get_decks(state, result) {  // гет запрос на сохранённые колоды
-            state.decks = result
-        },
-        get_levels(state, result) {  // гет запрос уровни (а в них враги)
-            state.levels = result
-        },
+        // get_factions(state, result) {  // гет запрос на фракции
+        //     state.factions = result
+        // },
+        // get_leaders(state, result) {  // гет запрос на лидеров
+        //     state.leaders = result
+        // },
+        // get_cards(state, result) {  // гет запрос на базу карт
+        //     state.cards = result
+        // },
+        // get_decks(state, result) {  // гет запрос на сохранённые колоды
+        //     state.decks = result
+        // },
+        // get_levels(state, result) {  // гет запрос уровни (а в них враги)
+        //     state.levels = result
+        // },
 
         set_isLoaded(state, payload) {
             state.isLoaded = payload
@@ -149,34 +149,34 @@ const store = createStore({
 
     // вызывает мутацию, выполняясь через store.dispatch('название')
     actions: {  
-        async get_data({commit}) {
-
-            const factions = get(FACTIONS)
-            const leaders = get(LEADERS)
-            const cards = get(CARDS)
-            const levels = get(LEVELS)
-            const decks = this.dispatch("get_decks")  // вот так можно, хотя там нет ретерна
-
-            try {
-                const responses = await Promise.all([
-                    factions, leaders, cards, levels, decks,
-                ])
-                commit('get_factions', responses[0])
-                commit('get_leaders', responses[1])
-                commit('get_cards', responses[2])
-
-                commit('get_levels', responses[3])
-                commit('set_level', responses[3]?.[0])
-                commit('set_enemy_leader', responses[3]?.[0]?.enemy_leader)
-
-                commit('set_isLoaded', true)
-
-            } catch (err) {
-                this.dispatch("error_action", err)
-                throw new Error("Произошла ошибка в загрузке данных")
-            }
-
-        },
+        // async get_data({commit}) {
+        //
+        //     const factions = get(FACTIONS)
+        //     const leaders = get(LEADERS)
+        //     const cards = get(CARDS)
+        //     const levels = get(LEVELS)
+        //     const decks = this.dispatch("get_decks")  // вот так можно, хотя там нет ретерна
+        //
+        //     try {
+        //         const responses = await Promise.all([
+        //             factions, leaders, cards, levels, decks,
+        //         ])
+        //         commit('get_factions', responses[0])
+        //         commit('get_leaders', responses[1])
+        //         commit('get_cards', responses[2])
+        //
+        //         commit('get_levels', responses[3])
+        //         commit('set_level', responses[3]?.[0])
+        //         commit('set_enemy_leader', responses[3]?.[0]?.enemy_leader)
+        //
+        //         commit('set_isLoaded', true)
+        //
+        //     } catch (err) {
+        //         this.dispatch("error_action", err)
+        //         throw new Error("Произошла ошибка в загрузке данных")
+        //     }
+        //
+        // },
 
         async get_decks({commit}) {
             try {
@@ -189,11 +189,11 @@ const store = createStore({
             }
         },
 
-        set_deck_in_play({commit}, deck) {
-            commit('set_current_deck', deck.cards)
-            commit('set_health', deck.health)
-            commit('set_leader', deck.leader)
-        },
+        // set_deck_in_play({commit}, deck) {
+        //     commit('set_current_deck', deck.cards)
+        //     commit('set_health', deck.health)
+        //     commit('set_leader', deck.leader)
+        // },
 
         // выполняется по добавлении новой деки со страницы DeckBuilder
         async post_deck_get_decks({commit}, body) {

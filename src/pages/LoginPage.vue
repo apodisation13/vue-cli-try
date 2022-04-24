@@ -96,6 +96,7 @@ export default {
 
       try {
         await this.$store.dispatch('login', { username: this.email, password: this.password })
+        await this.$store.dispatch('get_user_database')
         await this.$router.push('/')
       } catch (err) {
         this.error = err
