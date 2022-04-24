@@ -1,9 +1,8 @@
 import axios from "axios"
 import { useToast } from 'vue-toastification'
+import { check_auth_url, register_url } from "@/store/const/api_urls"
 
 const toast = useToast()
-const check_auth_url = 'http://localhost:8000/accounts/api-token-auth/'
-const register_url = 'http://localhost:8000/accounts/register/'
 
 const state = {
   username: '',
