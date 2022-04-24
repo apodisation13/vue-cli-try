@@ -69,7 +69,7 @@
         return this.$store.getters['isLoggedIn']
       },
       username() {
-        return this.$store.getters['getUsername']
+        return this.$store.getters['getUser'].username
       },
     },
     methods: {
