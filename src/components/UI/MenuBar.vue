@@ -10,9 +10,6 @@
             @click="$router.push('/')"
     >На главную</button>
 
-  <!--  <button class="menu_button"-->
-  <!--    @click="$router.push('/login')">Л</button>-->
-
     <button class="menu_button"
             :style="{'backgroundColor': 'green'}"
             v-if="level && isLoggedIn"
@@ -29,8 +26,20 @@
             @click="$router.push('/deckbuild')"
     >База данных</button>
 
-  <!--  <button class="menu_button"-->
-  <!--  @click="$router.push('/about')">О</button>-->
+    <button class="menu_button"
+            v-if="isLoggedIn"
+            @click="$router.push('/bonus')"
+    >Бонусы</button>
+
+    <button class="menu_button"
+            @click="$router.push('/rules')"
+    >Правила игры</button>
+
+    <button class="menu_button"
+            v-if="isLoggedIn"
+            @click="$router.push('/settings')"
+    >Настройки</button>
+
 
     <button class="switch_sound" v-if="sound" @click="turn_sound">Оn</button>
     <button class="switch_sound" v-else @click="turn_sound">Оff</button>

@@ -7,6 +7,9 @@ import AboutPage from '@/pages/AboutPage'
 import DeckbuildPage from '@/pages/DeckbuildPage'
 import LevelPage from '@/pages/LevelPage'
 import LoginPage from "@/pages/LoginPage"
+import SettingsPage from "@/pages/SettingsPage"
+import BonusPage from "@/pages/BonusPage"
+import RulesPage from "@/pages/RulesPage"
 
 
 const routes = [
@@ -48,6 +51,27 @@ const routes = [
     {
         path: '/login',
         component: LoginPage,
+        meta: {
+            requireAuth: false,
+        },
+    },
+    {
+        path: '/settings',
+        component: SettingsPage,
+        meta: {
+            requireAuth: true,
+        },
+    },
+    {
+        path: '/bonus',
+        component: BonusPage,
+        meta: {
+            requireAuth: true,
+        },
+    },
+    {
+        path: '/rules',
+        component: RulesPage,
         meta: {
             requireAuth: false,
         },
