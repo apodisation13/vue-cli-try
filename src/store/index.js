@@ -1,4 +1,5 @@
 import { createStore } from "vuex"
+import createPersistedState from "vuex-persistedstate"
 import { get, post, axios_delete } from '@/logic/requests'
 import login from "@/store/modules/login"
 
@@ -26,6 +27,7 @@ const store = createStore({
     modules: {
         login,
     },
+    plugins: [createPersistedState()],
     state: {
         isLoaded: false,  // загружены ли данные
         error: "",  // сообщение об ошибке загрузки данных

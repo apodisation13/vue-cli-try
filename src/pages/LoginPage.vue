@@ -13,30 +13,40 @@
     </div>
   </div>
 
-  <div class="form">
+  <form v-on:submit.prevent class="form">
     <div class="auth" v-if="!formLogin">
       Введите имя пользователя
     </div>
     <div v-if="!formLogin">
-      <input class="data" v-model="username">
+      <input class="data" v-model="username" autocomplete="username">
     </div>
     <div class="auth" >
       Введите адрес электронной почты
     </div>
     <div>
-      <input class="data" v-model="email">
+      <input class="data" v-model="email" autocomplete="email">
     </div>
     <div class="auth">
       Введите пароль
     </div>
     <div>
-      <input class="data" v-model="password">
+      <input class="data"
+             v-model="password"
+             type="password"
+             autocomplete="password"
+             v-on:keyup.enter="login"
+      >
     </div>
     <div class="auth" v-if="!formLogin">
       Подтвердите пароль
     </div>
     <div v-if="!formLogin">
-      <input class="data" v-model="confirmPassword">
+      <input class="data"
+             v-model="confirmPassword"
+             type="password"
+             autocomplete="confirmPassword"
+             v-on:keyup.enter="userRegister"
+      >
     </div>
 
     <div class="auth">
@@ -55,7 +65,15 @@
     <div class="error"
          v-if="error"
     > {{ error }} </div>
-  </div>
+
+<!--    <form v-on:submit.prevent class="form">-->
+<!--      <input required v-model="email" class="full-width" name="email" id="email" autocomplete="email">-->
+<!--      <input required v-model="password" class="full-width" type="password" name="password" id="password" autocomplete="password" v-on:keyup.enter="login">-->
+<!--      <button class="primary auto" @click="login">-->
+<!--        LOGIN-->
+<!--      </button>-->
+  </form>
+
 </template>
 
 <script>

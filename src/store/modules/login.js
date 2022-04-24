@@ -56,7 +56,9 @@ const actions = {
       return response.data
     } catch (err) {
       toast.error('Произошла ошибка!')
-      throw new Error('Ошибка регистрации, проверьте что почта правильная')
+      let error_message = err.response.data
+      if (error_message.length > 50) error_message = 'Ошибка регистрации'
+      throw new Error(error_message)
     }
   },
   logout({ commit }) {
