@@ -53,6 +53,11 @@ const actions = {
     let response = await axios.get(url, header)
     console.log(response.data)
 
+    alert('http://194.67.109.190:82' + response.data.locked_leaders[0].image)
+
+    commit('set_leaders', response.data.locked_leaders)
+    commit('set_cards', response.data.locked_cards)
+
     // const factions = get(FACTIONS)
     // const leaders = get(LEADERS)
     // const cards = get(CARDS)
