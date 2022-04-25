@@ -5,22 +5,22 @@
       v-touch:longtap="show_modal"
   >
 
-    <img class="img" :src="`http://194.67.109.190:82${card.image}`" v-if="card.image" alt="">
+    <img :class="card.count ? 'img' : 'img2'" :src="card.card.image" v-if="card.card.image" alt="">
 
-    <card-type v-if="card.type === 'Special'">&starf;</card-type>
+    <card-type v-if="card.card.type === 'Special'">&starf;</card-type>
 
-    <card-diamond :style="background_color(card)">&dagger;{{ card.damage }}</card-diamond>
-`   `
-    <card-ability-circle :card="card" />
+    <card-diamond :style="background_color(card.card)">&dagger;{{ card.card.damage }}</card-diamond>
 
-    <card-passive v-if="card.has_passive" :style="background_color(card)" />
+    <card-ability-circle :card="card.card" />
 
-    <card-charges>{{ card.charges }}&#8607;</card-charges>
+    <card-passive v-if="card.card.has_passive" :style="background_color(card.card)" />
 
-    <card-hp v-if="hp_needed">&hearts;{{ card.hp }}</card-hp>
+    <card-charges>{{ card.card.charges }}&#8607;</card-charges>
+
+    <card-hp v-if="hp_needed">&hearts;{{ card.card.hp }}</card-hp>
 
     <card-modal v-if="show_card_modal"
-      :card='card'
+      :card='card.card'
       :hp_needed="hp_needed"
       @close_card_modal="show_card_modal=false"
     />
@@ -49,6 +49,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    deckbuilder: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -68,11 +72,21 @@ export default {
 
 <style scoped>
 .img {
-  width: 99%;
-  height: 99%;
+  width: 99.3%;
+  height: 99.3%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   position: absolute;
+}
+
+.img2 {
+  width: 99.3%;
+  height: 99.3%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  opacity: 50%;
 }
 </style>

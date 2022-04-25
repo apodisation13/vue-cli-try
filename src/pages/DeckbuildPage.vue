@@ -6,6 +6,7 @@
       <cards-list
           :cards="pool"
           :hp_needed="true"
+          :deckbuilder="true"
           @chose_player_card="append_into_deck_in_progress" />
     </div>
 
@@ -14,6 +15,7 @@
       <cards-list
           :cards="leaders"
           :for_leaders="true"
+          :deckbuilder="true"
           @chose_player_card="chose_leader" />
     </div>
   </div>
