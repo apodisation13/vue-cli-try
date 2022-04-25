@@ -91,7 +91,7 @@ router.beforeEach((to, rom, next) => {
     if (to.matched.some(record => record.meta.requireAuth)) {
         if (store.getters.isLoggedIn) next()
         else {
-            next('/login')
+            next('/')
             // router.push({ name: 'Login', query: { redirect: to } })
         }
     }
