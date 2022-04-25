@@ -1,15 +1,16 @@
 <template>
   <div class="cards">
 
-    <div class="card_in_list" :style="border(card.card)"
+    <div class="card_in_list" :style="card.card? border(card.card) : border(card)"
          v-for="card in cards" :key='card'
          @dblclick="chose_player_card(card)"
     >
       <div class="c">
         <card-comp
-            :card="card"
+            :card="card.card"
             :hp_needed="hp_needed"
             :deckbuilder="deckbuilder"
+            :count="card.count"
         />
       </div>
       <div class="divb" v-if="deckbuilder">

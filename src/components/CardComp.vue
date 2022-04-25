@@ -5,22 +5,22 @@
       v-touch:longtap="show_modal"
   >
 
-    <img :class="card.count ? 'img' : 'img2'" :src="card.card.image" v-if="card.card.image" alt="">
+    <img :class="!deckbuilder || count > 0 ? 'img' : 'img2'" :src="card.image" v-if="card.image" alt="">
 
-    <card-type v-if="card.card.type === 'Special'">&starf;</card-type>
+    <card-type v-if="card.type === 'Special'">&starf;</card-type>
 
-    <card-diamond :style="background_color(card.card)">&dagger;{{ card.card.damage }}</card-diamond>
+    <card-diamond :style="background_color(card)">&dagger;{{ card.damage }}</card-diamond>
 
-    <card-ability-circle :card="card.card" />
+    <card-ability-circle :card="card" />
 
-    <card-passive v-if="card.card.has_passive" :style="background_color(card.card)" />
+    <card-passive v-if="card.has_passive" :style="background_color(card)" />
 
-    <card-charges>{{ card.card.charges }}&#8607;</card-charges>
+    <card-charges>{{ card.charges }}&#8607;</card-charges>
 
-    <card-hp v-if="hp_needed">&hearts;{{ card.card.hp }}</card-hp>
+    <card-hp v-if="hp_needed">&hearts;{{ card.hp }}</card-hp>
 
     <card-modal v-if="show_card_modal"
-      :card='card.card'
+      :card='card'
       :hp_needed="hp_needed"
       @close_card_modal="show_card_modal=false"
     />
@@ -52,6 +52,10 @@ export default {
     deckbuilder: {
       type: Boolean,
       default: false,
+    },
+    count: {
+      type: Number,
+      required: false,
     },
   },
   data() {
