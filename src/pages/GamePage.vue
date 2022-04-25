@@ -111,8 +111,8 @@ export default {
   ],
 
   async created() {
-    this.leader = await JSON.parse(JSON.stringify(this.$store.state.leader))
-    this.enemy_leader = await JSON.parse(JSON.stringify(this.$store.state.enemy_leader))
+    this.leader = await JSON.parse(JSON.stringify(this.$store.state.game.leader))
+    this.enemy_leader = await JSON.parse(JSON.stringify(this.$store.state.game.enemy_leader))
   },
 
   data() {
