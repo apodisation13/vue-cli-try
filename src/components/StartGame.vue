@@ -21,8 +21,8 @@ export default {
   name: 'start-game',
   components: {RedrawModal},
   async created() {
-    this.deck = await JSON.parse(JSON.stringify(this.$store.state.current_deck))
-    this.enemies = await JSON.parse(JSON.stringify(this.$store.state.level.enemies))
+    this.deck = await JSON.parse(JSON.stringify(this.$store.state.game.current_deck))
+    this.enemies = await JSON.parse(JSON.stringify(this.$store.state.game.level.enemies))
   },
   // computed: {
   //   deck() {
@@ -45,7 +45,7 @@ export default {
     // начало игры: расставить врагов, вытянуть карты в руку, открыть redraw-modal
     start_game() {
       place_enemies(this.field, this.enemies)  // рандомно расставит врагов
-      enemy_leader_ai_move_once(this.$store.state.enemy_leader, this.deck)  // АБИЛКИ ЛИДЕРА врага в самом начале
+      enemy_leader_ai_move_once(this.$store.state.game.enemy_leader, this.deck)  // АБИЛКИ ЛИДЕРА врага в самом начале
       draw_hand(this.hand, this.deck)  // вытянет руку, остальное оставит в деке
 
       this.redraw = true
