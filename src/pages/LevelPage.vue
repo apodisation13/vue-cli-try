@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     levels() {
-      return this.$store.state.levels
+      return this.$store.getters["all_levels"]
     }
   },
   methods: {
@@ -61,7 +61,7 @@ export default {
 .level {
   margin: 1%;
   width: 8vh;
-  height: 5vh;
+  height: 10vh;
   font-size: 6pt;
   border: solid 1px brown;
   display: inline-block;
@@ -69,7 +69,7 @@ export default {
 
 .level_selected {
   width: 8vh;
-  height: 5vh;
+  height: 10vh;
   font-size: 6pt;
   background-color: green;
 }
