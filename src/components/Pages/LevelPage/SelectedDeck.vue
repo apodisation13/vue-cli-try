@@ -1,7 +1,7 @@
 <template>
-  <div class="selected_deck" v-if="$store.state.current_deck.length > 0">
-    ВЫБРАННАЯ ДЕКА - Жизни {{ $store.state.health }} <br>
-    Лидер {{ $store.state.leader.name }}
+  <div class="selected_deck" v-if="$store.state.game.current_deck.length > 0">
+    ВЫБРАННАЯ ДЕКА - Жизни {{ $store.state.game.health }} <br>
+    Лидер {{ $store.state.game.leader.name }}
   </div>
 </template>
 
