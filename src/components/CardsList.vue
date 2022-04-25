@@ -7,7 +7,7 @@
     >
       <div class="c">
         <card-comp
-            :card="card.card"
+            :card="card.card? card.card : card"
             :hp_needed="hp_needed"
             :deckbuilder="deckbuilder"
             :count="card.count"
