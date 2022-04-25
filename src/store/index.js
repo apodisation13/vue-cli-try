@@ -2,6 +2,7 @@ import { createStore } from "vuex"
 import { get, post, axios_delete } from '@/logic/requests'
 import login from "@/store/modules/login"
 import database from "@/store/modules/database"
+import game from "@/store/modules/game"
 
 
 // ИНСТРУКЦИЯ:
@@ -10,23 +11,11 @@ import database from "@/store/modules/database"
 // в .js - ИМПОРТ store отсюда, и тогда store.  а дальше то же
 
 
-// const FACTIONS = 'http://127.0.0.1:8000/api/v1/factions/'
-// const LEADERS = 'http://127.0.0.1:8000/api/v1/leaders/'
-// const CARDS = 'http://127.0.0.1:8000/api/v1/cards/'
-// const DECKS = 'http://127.0.0.1:8000/api/v1/decks/'
-// const LEVELS = 'http://127.0.0.1:8000/api/v1/levels/'
-
-let FACTIONS = 'http://194.67.109.190:82/api/v1/factions/'
-let LEADERS = 'http://194.67.109.190:82/api/v1/leaders/'
-let CARDS = 'http://194.67.109.190:82/api/v1/cards/'
-let DECKS = 'http://194.67.109.190:82/api/v1/decks/'
-let LEVELS = 'http://194.67.109.190:82/api/v1/levels/'
-
-
 const store = createStore({
     modules: {
         login,
         database,
+        game,
     },
     state: {
         isLoaded: false,  // загружены ли данные
@@ -178,16 +167,16 @@ const store = createStore({
         //
         // },
 
-        async get_decks({commit}) {
-            try {
-                const decks = await get(DECKS)
-                commit('get_decks', decks)
-                await this.dispatch('set_deck_in_play', decks?.[0])
-            } catch (err) {
-                this.dispatch("error_action", err)
-                throw new Error("Какая-то ошибка с загрузкой деки")
-            }
-        },
+        // async get_decks({commit}) {
+        //     try {
+        //         const decks = await get(DECKS)
+        //         commit('get_decks', decks)
+        //         await this.dispatch('set_deck_in_play', decks?.[0])
+        //     } catch (err) {
+        //         this.dispatch("error_action", err)
+        //         throw new Error("Какая-то ошибка с загрузкой деки")
+        //     }
+        // },
 
         // set_deck_in_play({commit}, deck) {
         //     commit('set_current_deck', deck.cards)
@@ -195,28 +184,28 @@ const store = createStore({
         //     commit('set_leader', deck.leader)
         // },
 
-        // выполняется по добавлении новой деки со страницы DeckBuilder
-        async post_deck_get_decks({commit}, body) {
-            try {
-                await post(DECKS, body)
-                await this.dispatch('get_decks')
-            } catch (err) {
-                this.dispatch("error_action", err)
-                throw new Error("Какая-то ошибка при добавлении деки")
-            }
-        },
+        // // выполняется по добавлении новой деки со страницы DeckBuilder
+        // async post_deck_get_decks({commit}, body) {
+        //     try {
+        //         await post(DECKS, body)
+        //         await this.dispatch('get_decks')
+        //     } catch (err) {
+        //         this.dispatch("error_action", err)
+        //         throw new Error("Какая-то ошибка при добавлении деки")
+        //     }
+        // },
 
-        // выполняется по удалению деки id со страницы DeckBuilder
-        async delete_deck({commit}, id) {
-            let url = `${DECKS}${id}/`
-            try {
-                await axios_delete(url)
-                await this.dispatch('get_decks')
-            } catch (err) {
-                this.dispatch("error_action", err)
-                throw new Error("Какая-то ошибка с удалением деки")
-            }
-        },
+        // // выполняется по удалению деки id со страницы DeckBuilder
+        // async delete_deck({commit}, id) {
+        //     let url = `${DECKS}${id}/`
+        //     try {
+        //         await axios_delete(url)
+        //         await this.dispatch('get_decks')
+        //     } catch (err) {
+        //         this.dispatch("error_action", err)
+        //         throw new Error("Какая-то ошибка с удалением деки")
+        //     }
+        // },
 
         error_action({commit}, err) {
             console.log(err)

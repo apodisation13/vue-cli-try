@@ -10,6 +10,7 @@ const state = {
   cards: [],
   decks: [],
   levels: [],  // все уровни, из запроса
+  databaseLoaded: false,
 }
 
 const getters = {
@@ -53,15 +54,12 @@ const actions = {
     let response = await axios.get(url, header)
     console.log(response.data)
 
-    alert('http://194.67.109.190:82' + response.data.locked_leaders[0].image)
+    commit('set_leaders', response.data.leaders)
+    commit('set_cards', response.data.cards)
+    commit('set_decks', response.data.u_d)
+    commit('set_levels', response.data.levels)
 
-    commit('set_leaders', response.data.locked_leaders)
-    commit('set_cards', response.data.locked_cards)
 
-    // const factions = get(FACTIONS)
-    // const leaders = get(LEADERS)
-    // const cards = get(CARDS)
-    // const levels = get(LEVELS)
     // const decks = this.dispatch("get_decks")  // вот так можно, хотя там нет ретерна
 
     // const url = `${user_database}${id}`
