@@ -11,6 +11,7 @@ const state = {
   decks: [],
   levels: [],  // все уровни, из запроса
   databaseLoaded: false,
+  errorLoading: '',
 }
 
 const getters = {
@@ -44,46 +45,49 @@ const mutations = {
   set_levels(state, result) {  // гет запрос уровни (а в них враги)
     state.levels = result
   },
+
+  set_databaseLoaded(state, payload) {
+    state.databaseLoaded = payload
+  },
+  set_errorLoading(state, payload) {
+    state.errorLoading = payload
+  },
 }
 
 const actions = {
-  async get_user_database({ commit, getters }) {
+  async get_user_database({ commit, getters, dispatch }) {
     let user_id = getters["getUser"].user_id
     let header = getters['getHeader']
     const url = `${user_database}${user_id}`
-    let response = await axios.get(url, header)
-    console.log(response.data)
 
-    commit('set_leaders', response.data.leaders)
-    commit('set_cards', response.data.cards)
-    commit('set_decks', response.data.u_d)
-    commit('set_levels', response.data.levels)
+    try {
+      let response = await axios.get(url, header)
+      commit('set_leaders', response.data.leaders)
+      commit('set_cards', response.data.cards)
 
+      commit('set_decks', response.data.u_d)
+      dispatch('set_deck_in_play', response.data.u_d[0])
 
-    // const decks = this.dispatch("get_decks")  // вот так можно, хотя там нет ретерна
+      commit('set_levels', response.data.levels)
+      dispatch('set_level_in_play', response.data.levels[0])
 
-    // const url = `${user_database}${id}`
-    // const user_database = await axios.get(url)
-    //
-    // try {
-    //   const responses = await Promise.all([
-    //     factions, leaders, cards, levels, decks,
-    //   ])
-    //   commit('get_factions', responses[0])
-    //   commit('get_leaders', responses[1])
-    //   commit('get_cards', responses[2])
-    //
-    //   commit('get_levels', responses[3])
-    //   commit('set_level', responses[3]?.[0])
-    //   commit('set_enemy_leader', responses[3]?.[0]?.enemy_leader)
-    //
-    //   commit('set_isLoaded', true)
+      commit('set_databaseLoaded', true)
+    } catch (err) {
+      dispatch("error_action")
+      throw new Error("Ошибка загрузки базы данных!")
+    }
+
     //
     // } catch (err) {
     //   this.dispatch("error_action", err)
     //   throw new Error("Произошла ошибка в загрузке данных")
     // }
 
+  },
+
+  error_action({ commit }, err) {
+    commit("set_errorLoading", err.message)
+    commit('set_databaseLoaded', false)
   },
 }
 
