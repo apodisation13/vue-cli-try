@@ -1,12 +1,12 @@
 <template>
   <div class="hand">
 
-    <div class="card_in_hand" :style="border(card)"
+    <div class="card_in_hand" :style="border(card.card)"
       v-for="(card, ) in hand" :key='card'
       @dblclick="chose_player_card(card)"
     >
 
-      <card-comp :card="card" />
+      <card-comp :card="card.card" />
 
     </div>
   </div>
