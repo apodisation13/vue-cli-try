@@ -10,6 +10,7 @@ const state = {
   cards: [],
   decks: [],
   levels: [],  // все уровни, из запроса
+  resource: undefined,
   databaseLoaded: false,
   errorLoading: '',
 }
@@ -20,6 +21,7 @@ const getters = {
   all_cards: state => state.cards,
   all_decks: state => state.decks,
   all_levels: state => state.levels,
+  resource: state => state.resource,
 
   filtered_cards: state => (query, count) => {
     const applyFilter = (data, query) => data.filter(obj =>
@@ -49,6 +51,9 @@ const mutations = {
   set_levels(state, result) {  // гет запрос уровни (а в них враги)
     state.levels = result
   },
+  set_resource(state, result) {
+    state.resource = result
+  },
 
   set_databaseLoaded(state, payload) {
     state.databaseLoaded = payload
@@ -74,6 +79,8 @@ const actions = {
 
       commit('set_levels', response.data.levels)
       dispatch('set_level_in_play', response.data.levels[0])
+
+      commit('set_resource', response.data.resource)
 
       commit('set_databaseLoaded', true)
       toast.success("Успешно загрузили всю вашу базу данных")
