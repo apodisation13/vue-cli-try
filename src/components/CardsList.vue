@@ -14,9 +14,9 @@
         />
       </div>
       <div class="divb" v-if="deckbuilder">
-        <button class="b" @click="s(card)">mill</button>
+        <button class="b" @click="mill(card)">mill</button>
         <button class="b">{{ card.count }}</button>
-        <button class="b">craft</button>
+        <button class="b" @click="craft(card)">craft</button>
       </div>
 
       <br>
@@ -56,8 +56,13 @@ export default {
       if (!this.for_leaders) return border_for_card(card)
       else if (this.for_leaders) return border_leader(card)
     },
-    s(card) {
-      alert(card.card.name)
+    async mill(card) {
+      let result = await this.$store.dispatch("pay_resource", {card: card, process: "mill"})
+      if (result) await this.$store.dispatch("mill_card_action", card)
+    },
+    async craft(card) {
+      let result = await this.$store.dispatch("pay_resource", {card: card, process: "craft"})
+      if (result) await this.$store.dispatch("craft_card_action", card)
     },
   },
   emits: [
