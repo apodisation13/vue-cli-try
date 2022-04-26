@@ -40,10 +40,13 @@ export default {
   },
   methods: {
     set_level(index) {
-      this.toast.success(`Выбран уровень ${index + 1}! `, {timeout: 1000})
-      this.$store.commit("set_level", this.levels[index])
-      this.$store.commit('set_enemy_leader', this.levels[index].enemy_leader)
-      this.selected = index
+      if (this.levels[index].id) {
+        this.toast.success(`Выбран уровень ${index + 1}! `, {timeout: 1000})
+        this.$store.commit("set_level", this.levels[index].level)
+        this.$store.commit('set_enemy_leader', this.levels[index].level.enemy_leader)
+        this.selected = index
+      }
+      else this.toast.error('Уровень закрыт!')
     },
   },
 }
