@@ -5,7 +5,7 @@ import { user_database } from "@/store/const/api_urls"
 const toast = useToast()
 
 const state = {
-  factions: ["Neutral", "Soldiers", "Animals", "Monsters"],
+  factions: [{"name": "Neutral"}, {"name": "Soldiers"}, {"name": "Animals"}, {"name": "Monsters"}],
   leaders: [],
   cards: [],
   decks: [],
@@ -23,12 +23,12 @@ const getters = {
 
   filtered_cards: state => query => {
     const applyFilter = (data, query) => data.filter(obj =>
-      Object.entries(query).every(([prop, find]) => find.includes(obj[prop]))
+      Object.entries(query).every(([prop, find]) => find.includes(obj.card[prop]))
     )
     return applyFilter(state.cards, query)
   },
   filtered_leaders: (state) => (fac) => {
-    return state.leaders.filter(f => f.faction===fac)
+    return state.leaders.filter(f => f.card.faction===fac)
   },
 }
 
