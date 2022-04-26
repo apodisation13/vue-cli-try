@@ -1,6 +1,6 @@
 <template>
   <div class="pass">
-    <button class="pass-btn" v-show="$store.state.player_turn">Пас</button>
+    <button class="pass-btn" v-show="$store.state.game.player_turn">Пас</button>
   </div>
 </template>
 

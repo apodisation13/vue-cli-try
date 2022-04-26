@@ -52,7 +52,7 @@ export default {
   // кнопка появится только после загрузки дефолтного уровня и деки
   computed: { 
     level() {
-      return this.$store.state.level
+      return this.$store.state.game.level
     },
     sound() {
       return this.$store.state.play_sound

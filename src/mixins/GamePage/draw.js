@@ -12,7 +12,9 @@ export default {
 
     // можно ли ДРО - ход игрока, карт меньше чем {карт_в_руке}, дека не пуста
     calc_can_draw() {
-      return this.player_cards_active && this.hand.length < this.$store.state.hand_size && this.deck.length !== 0
+      return this.player_cards_active
+        && this.hand.length < this.$store.state.game.hand_size
+        && this.deck.length !== 0
     },
 
     // тянем одну карту из деки, блокируем карты игрока

@@ -51,7 +51,7 @@ function enemy_leader_ai_move_once(leader, deck) {
   if (leader.ability.name === "damage-once") {
     store.commit('change_health', -leader.damage_once)
     toast.error(`лидер ослабил вас на ${leader.damage_once}`)
-    check_lose(store.state.health)
+    check_lose()
   }
 
   else if (leader.ability.name === 'decrease-all-player-damage-1') {

@@ -5,12 +5,12 @@
       v-touch:longtap="show_modal"
   >
 
-    <img class="img" :src="`http://194.67.109.190:82${card.image}`" v-if="card.image" alt="">
+    <img :class="!deckbuilder || count > 0 ? 'img' : 'img2'" :src="card.image" v-if="card.image" alt="">
 
     <card-type v-if="card.type === 'Special'">&starf;</card-type>
 
     <card-diamond :style="background_color(card)">&dagger;{{ card.damage }}</card-diamond>
-`   `
+
     <card-ability-circle :card="card" />
 
     <card-passive v-if="card.has_passive" :style="background_color(card)" />
@@ -49,6 +49,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    deckbuilder: {
+      type: Boolean,
+      default: false,
+    },
+    count: {
+      type: Number,
+      required: false,
+    },
   },
   data() {
     return {
@@ -68,11 +76,21 @@ export default {
 
 <style scoped>
 .img {
-  width: 99%;
-  height: 99%;
+  width: 99.3%;
+  height: 99.3%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   position: absolute;
+}
+
+.img2 {
+  width: 99.3%;
+  height: 99.3%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  opacity: 50%;
 }
 </style>

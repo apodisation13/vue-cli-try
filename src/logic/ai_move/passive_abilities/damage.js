@@ -10,7 +10,7 @@ function passive_end_turn_damage(enemy) {
   store.commit('change_health', -enemy.passive_damage)
   toast.error(`враг ${enemy.name} нанёс пассивный урон ${enemy.passive_damage}`)
   sound_enemy_damage_player()
-  check_lose(store.state.health)
+  check_lose()
 }
 
 

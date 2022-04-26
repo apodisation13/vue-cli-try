@@ -3,6 +3,7 @@ export default {
     return {
       query: {},
       faction: '',
+      count: undefined,
     }
   },
   methods: {
@@ -21,7 +22,9 @@ export default {
     },
     filter_passives(passive) {
       this.query.has_passive = passive
-      console.log(this.query)
+    },
+    filter_unlocked(count) {
+      this.count = count
     },
 
     reset_filter_types() {
@@ -32,6 +35,9 @@ export default {
     },
     reset_filter_passives() {
       delete this.query.has_passive
+    },
+    reset_filter_unlocked() {
+      this.count = undefined
     },
 
   },

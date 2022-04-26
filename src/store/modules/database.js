@@ -5,11 +5,14 @@ import { user_database } from "@/store/const/api_urls"
 const toast = useToast()
 
 const state = {
-  factions: ["Neutral", "Soldiers", "Animals", "Monsters"],
+  factions: [{"name": "Neutral"}, {"name": "Soldiers"}, {"name": "Animals"}, {"name": "Monsters"}],
   leaders: [],
   cards: [],
   decks: [],
   levels: [],  // все уровни, из запроса
+  resource: undefined,
+  databaseLoaded: false,
+  errorLoading: '',
 }
 
 const getters = {
@@ -18,15 +21,20 @@ const getters = {
   all_cards: state => state.cards,
   all_decks: state => state.decks,
   all_levels: state => state.levels,
+  resource: state => state.resource,
 
-  filtered_cards: state => query => {
+  filtered_cards: state => (query, count) => {
     const applyFilter = (data, query) => data.filter(obj =>
-      Object.entries(query).every(([prop, find]) => find.includes(obj[prop]))
+      Object.entries(query).every(([prop, find]) => find.includes(obj.card[prop]))
     )
-    return applyFilter(state.cards, query)
+    if (count === undefined) return applyFilter(state.cards, query)
+    else {
+      if (count === 0) return applyFilter(state.cards.filter(card=>card.count === 0), query)
+      else return applyFilter(state.cards.filter(card=>card.count > 0), query)
+    }
   },
   filtered_leaders: (state) => (fac) => {
-    return state.leaders.filter(f => f.faction===fac)
+    return state.leaders.filter(f => f.card.faction===fac)
   },
 }
 
@@ -43,49 +51,49 @@ const mutations = {
   set_levels(state, result) {  // гет запрос уровни (а в них враги)
     state.levels = result
   },
+  set_resource(state, result) {
+    state.resource = result
+  },
+
+  set_databaseLoaded(state, payload) {
+    state.databaseLoaded = payload
+  },
+  set_errorLoading(state, payload) {
+    state.errorLoading = payload
+  },
 }
 
 const actions = {
-  async get_user_database({ commit, getters }) {
+  async get_user_database({ commit, getters, dispatch }) {
     let user_id = getters["getUser"].user_id
     let header = getters['getHeader']
     const url = `${user_database}${user_id}`
-    let response = await axios.get(url, header)
-    console.log(response.data)
 
-    alert('http://194.67.109.190:82' + response.data.locked_leaders[0].image)
+    try {
+      let response = await axios.get(url, header)
+      commit('set_leaders', response.data.leaders)
+      commit('set_cards', response.data.cards)
 
-    commit('set_leaders', response.data.locked_leaders)
-    commit('set_cards', response.data.locked_cards)
+      commit('set_decks', response.data.u_d)
+      dispatch('set_deck_in_play', response.data.u_d[0])
 
-    // const factions = get(FACTIONS)
-    // const leaders = get(LEADERS)
-    // const cards = get(CARDS)
-    // const levels = get(LEVELS)
-    // const decks = this.dispatch("get_decks")  // вот так можно, хотя там нет ретерна
+      commit('set_levels', response.data.levels)
+      dispatch('set_level_in_play', response.data.levels[0])
 
-    // const url = `${user_database}${id}`
-    // const user_database = await axios.get(url)
-    //
-    // try {
-    //   const responses = await Promise.all([
-    //     factions, leaders, cards, levels, decks,
-    //   ])
-    //   commit('get_factions', responses[0])
-    //   commit('get_leaders', responses[1])
-    //   commit('get_cards', responses[2])
-    //
-    //   commit('get_levels', responses[3])
-    //   commit('set_level', responses[3]?.[0])
-    //   commit('set_enemy_leader', responses[3]?.[0]?.enemy_leader)
-    //
-    //   commit('set_isLoaded', true)
-    //
-    // } catch (err) {
-    //   this.dispatch("error_action", err)
-    //   throw new Error("Произошла ошибка в загрузке данных")
-    // }
+      commit('set_resource', response.data.resource)
 
+      commit('set_databaseLoaded', true)
+      toast.success("Успешно загрузили всю вашу базу данных")
+    } catch (err) {
+      dispatch("error_action")
+      throw new Error("Ошибка загрузки базы данных!")
+    }
+  },
+
+  error_action({ commit }, err) {
+    commit("set_errorLoading", err.message)
+    commit('set_databaseLoaded', false)
+    toast.error("Произошла какая-то ошибка при загрузке вашей базы данных")
   },
 }
 

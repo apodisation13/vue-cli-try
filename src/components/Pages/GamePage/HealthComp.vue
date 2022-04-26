@@ -9,7 +9,7 @@ export default {
   name: 'health-comp',
   computed: {
     health() {
-      return this.$store.state.health
+      return this.$store.state.game.health
     },
   },
   methods: {

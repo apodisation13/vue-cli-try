@@ -1,16 +1,25 @@
 <template>
   <div class="cards">
 
-    <div class="card_in_list" :style="border(card)"
+    <div class="card_in_list" :style="card.card? border(card.card) : border(card)"
          v-for="card in cards" :key='card'
          @dblclick="chose_player_card(card)"
     >
+      <div class="c">
+        <card-comp
+            :card="card.card? card.card : card"
+            :hp_needed="hp_needed"
+            :deckbuilder="deckbuilder"
+            :count="card.count"
+        />
+      </div>
+      <div class="divb" v-if="deckbuilder">
+        <button class="b" @click="mill(card)">mill</button>
+        <button class="b">{{ card.count }}</button>
+        <button class="b" @click="craft(card)">craft</button>
+      </div>
 
-      <card-comp
-          :card="card"
-          :hp_needed="hp_needed"
-      />
-
+      <br>
     </div>
   </div>
 </template>
@@ -34,6 +43,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    deckbuilder: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     chose_player_card(card) {
@@ -42,6 +55,14 @@ export default {
     border(card) {
       if (!this.for_leaders) return border_for_card(card)
       else if (this.for_leaders) return border_leader(card)
+    },
+    async mill(card) {
+      let result = await this.$store.dispatch("pay_resource", {card: card, process: "mill"})
+      if (result) await this.$store.dispatch("mill_card_action", card)
+    },
+    async craft(card) {
+      let result = await this.$store.dispatch("pay_resource", {card: card, process: "craft"})
+      if (result) await this.$store.dispatch("craft_card_action", card)
     },
   },
   emits: [
@@ -53,6 +74,7 @@ export default {
 <style scoped>
 .cards {
   width: 98%;
+  height: 100%;
   overflow: scroll;
   /*position: relative;*/
   /*border: solid 2px red;*/
@@ -60,13 +82,36 @@ export default {
 
 .card_in_list {
   width: 24%;
-  height: 16vh;
+  height: 16.7vh;
   /* border: solid 3px gold; */
   border-radius: 2%;
   display: inline-block;
   margin-left: 0.5%;
-  margin-top: 0.1%;
+  margin-top: 0.2%;
   position: relative;
+}
+
+.c {
+  width: 100%;
+  height: 16vh;
+  /*border: solid 3px red;*/
+  border-radius: 2%;
+  display: inline-block;
+  margin-left: 0.5%;
+  margin-top: 0.2%;
+  position: relative;
+}
+
+.divb {
+  width: 98%;
+  height: 3vh;
+  margin-left: 0.5%;
+  margin-top: 0.2%;
+}
+
+.b {
+  width: 33%;
+  height: 100%;
 }
 
 </style>

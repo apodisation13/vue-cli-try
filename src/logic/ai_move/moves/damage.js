@@ -5,14 +5,14 @@ import {check_lose} from "@/logic/ai_move/service/check_lose"
 
 function damage_player(field, i) {
   sound_enemy_damage_player()
-  let temp = store.state.health  // сохраняем сколько было жизней
-  store.commit('set_health', `${store.state.health}-${field[i].damage}`)  // 45-12
+  let temp = store.state.game.health  // сохраняем сколько было жизней
+  store.commit('set_health', `${store.state.game.health}-${field[i].damage}`)  // 45-12
   field[i].damages_player = true
   setTimeout(() => {
     store.commit('set_health', temp)
     store.commit('change_health', -field[i].damage)
     field[i].damages_player = false
-    check_lose(store.state.health)
+    check_lose()
   }, 750)
 }
 
@@ -24,7 +24,7 @@ function damage_player_by_enemy_leader(enemy_leader) {
   setTimeout(() => {
     store.commit('set_health', temp)
     store.commit('change_health', -enemy_leader.damage_per_turn)
-    check_lose(store.state.health)
+    check_lose()
   }, 750)
 }
 

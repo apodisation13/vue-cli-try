@@ -15,7 +15,7 @@ export default {
   name: "filter-factions",
   computed: {
     factions() {
-      return this.$store.state.factions
+      return this.$store.state.database.factions
     },
   },
   methods: {

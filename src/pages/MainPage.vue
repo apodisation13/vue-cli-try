@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="user_info" v-if="isLoggedIn">
-      ПРИВЕТ {{ username }}!
+      <div>
+        ПРИВЕТ {{ username }}!
+      </div>
+      <resource-comp />
       <button
           class="exit"
           @click="logout"
@@ -63,21 +66,23 @@
 </template>
 
 <script>
-  export default {
-    computed: {
-      isLoggedIn() {
-        return this.$store.getters['isLoggedIn']
-      },
-      username() {
-        return this.$store.getters['getUser'].username
-      },
+import ResourceComp from "@/components/ResourceComp"
+export default {
+  components: {ResourceComp},
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters['isLoggedIn']
     },
-    methods: {
-      logout() {
-        this.$store.dispatch("logout")
-      },
+    username() {
+      return this.$store.getters['getUser'].username
     },
-  }
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("logout")
+    },
+  },
+}
 </script>
 
 <style>
