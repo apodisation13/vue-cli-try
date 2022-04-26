@@ -1,6 +1,6 @@
 <template>
   <div>
-    Ресурсов - {{ resource }}
+    Ресурсы - {{ resource }}
   </div>
 </template>
 

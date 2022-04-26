@@ -64,9 +64,14 @@ export default {
       this.deck_id = deck.id  // запоминаем id деки, которую надо удалить
     },
 
-    confirm_delete() {
+    async confirm_delete() {
       this.show_yesno = false
-      this.$store.dispatch("delete_deck", this.deck_id)
+      try {
+        await this.$store.dispatch("delete_deck", this.deck_id)
+      } catch (err) {
+        console.log(err)
+        throw err
+      }
     },
 
     cancel_delete() {
