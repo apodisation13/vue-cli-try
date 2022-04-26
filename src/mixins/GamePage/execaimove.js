@@ -24,25 +24,25 @@ export default {
       )
 
       let await_ppa_end_turn = setInterval(() => {
-        if (!this.$store.state.ppa_end_turn) {
+        if (!this.$store.state.game.ppa_end_turn) {
           console.log('закончили ppa_end_turn, начинает ходить комп')
           clearInterval(await_ppa_end_turn)
           ai_move(this.field)
 
           let await_ai_move = setInterval(() => {
-            if (!this.$store.state.ai_move) {
+            if (!this.$store.state.game.ai_move) {
               console.log('закончили ходить комп, ходит лидер врагов')
               clearInterval(await_ai_move)
               passive_leader_ai_move(this.enemy_leader)
 
               let await_leader_ai_passive_move = setInterval(() => {
-                if (!this.$store.state.leader_ai_move) {
+                if (!this.$store.state.game.leader_ai_move) {
                   console.log('закончили лидер врагов, теперь пассивки врагов')
                   clearInterval(await_leader_ai_passive_move)
                   enemy_passive_abilities_end_turn(this.field, this.enemy_leader, this.hand)
 
                   let await_epa_end_turn = setInterval(() => {
-                    if (!this.$store.state.epa_end_turn) {
+                    if (!this.$store.state.game.epa_end_turn) {
                       console.log('всё закончили, щас появится новый враг и можно ходить снова')
                       clearInterval(await_epa_end_turn)
                       appear_new_enemy(this.field, this.enemies)
