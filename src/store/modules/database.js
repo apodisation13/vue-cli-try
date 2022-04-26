@@ -21,11 +21,15 @@ const getters = {
   all_decks: state => state.decks,
   all_levels: state => state.levels,
 
-  filtered_cards: state => query => {
+  filtered_cards: state => (query, count) => {
     const applyFilter = (data, query) => data.filter(obj =>
       Object.entries(query).every(([prop, find]) => find.includes(obj.card[prop]))
     )
-    return applyFilter(state.cards, query)
+    if (count === undefined) return applyFilter(state.cards, query)
+    else {
+      if (count === 0) return applyFilter(state.cards.filter(card=>card.count === 0), query)
+      else return applyFilter(state.cards.filter(card=>card.count > 0), query)
+    }
   },
   filtered_leaders: (state) => (fac) => {
     return state.leaders.filter(f => f.card.faction===fac)

@@ -41,6 +41,11 @@
         @filter-passives="filter_passives"
         @reset-filter-passives="reset_filter_passives"
     />
+
+    <filter-unlocked
+        @filter-unlocked="filter_unlocked"
+        @reset-filter-unlocked="reset_filter_unlocked"
+    />
   </div>
 
   <div class="deck_in_progress">
@@ -89,9 +94,12 @@ import FilterColors from "@/components/Pages/DeckbuildPage/FilterColors"
 import FilterPassives from "@/components/Pages/DeckbuildPage/FilterPassives"
 
 import filtering from "@/mixins/DeckbuildPage/filtering"
+import FilterUnlocked from "@/components/Pages/DeckbuildPage/FilterUnlocked";
 
 export default {
-  components: {FilterPassives, FilterColors, FilterTypes, FilterFactions, DecksListModal,  CardsList, LeaderComp},
+  components: {
+    FilterUnlocked,
+    FilterPassives, FilterColors, FilterTypes, FilterFactions, DecksListModal,  CardsList, LeaderComp},
   mixins: [
     filtering,
   ],
@@ -192,7 +200,7 @@ export default {
 
   computed: {
     pool() {
-      return this.$store.getters.filtered_cards(this.query)
+      return this.$store.getters.filtered_cards(this.query, this.count)
     },
     leaders() {
       if (!this.faction) return this.$store.getters.all_leaders

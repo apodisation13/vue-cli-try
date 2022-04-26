@@ -3,19 +3,19 @@
     ВЫБЕРЕТЕ ДЕКУ (дважды ЛКМ)<br>
 
     <div class="deck"
-         :style="background_color(deck)"
+         :style="background_color(deck.deck)"
          v-for="(deck, index) in decks" :key='deck'
          @dblclick="select_deck(index)"
     >
 
-      <deck-preview-comp :deck="deck" />
+      <deck-preview-comp :deck="deck.deck" />
 
-      <button v-if="deckbuilder && deck.id !== 1"
+      <button v-if="deckbuilder && deck.deck.id !== 1"
         @click="change_deck(deck)"
       >Изменить</button>
 
-      <button v-if="deckbuilder && deck.id !== 1"
-        @click="delete_deck(deck)"
+      <button v-if="deckbuilder && deck.deck.id !== 1"
+        @click="delete_deck(deck.deck)"
       >Удалить</button>
 
     </div>
@@ -80,7 +80,7 @@ export default {
 
   computed: {
     decks() {
-      return this.$store.state.decks
+      return this.$store.getters['all_decks']
     },
   },
 
