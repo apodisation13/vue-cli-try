@@ -31,7 +31,7 @@
 <!-- возможность вытянуть карту, дро -->
 <div class="draw">
   <draw-comp
-    v-show="can_draw && $store.state.player_turn"
+    v-show="can_draw && $store.state.game.player_turn"
     @click="draw_one_card"
   />
 </div>
