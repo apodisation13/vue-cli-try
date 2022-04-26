@@ -76,22 +76,17 @@ const actions = {
       dispatch('set_level_in_play', response.data.levels[0])
 
       commit('set_databaseLoaded', true)
+      toast.success("Успешно загрузили всю вашу базу данных")
     } catch (err) {
       dispatch("error_action")
       throw new Error("Ошибка загрузки базы данных!")
     }
-
-    //
-    // } catch (err) {
-    //   this.dispatch("error_action", err)
-    //   throw new Error("Произошла ошибка в загрузке данных")
-    // }
-
   },
 
   error_action({ commit }, err) {
     commit("set_errorLoading", err.message)
     commit('set_databaseLoaded', false)
+    toast.error("Произошла какая-то ошибка при загрузке вашей базы данных")
   },
 }
 

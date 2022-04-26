@@ -22,11 +22,9 @@ export default {
     },
     filter_passives(passive) {
       this.query.has_passive = passive
-      console.log(this.query)
     },
     filter_unlocked(count) {
       this.count = count
-      alert(count)
     },
 
     reset_filter_types() {
