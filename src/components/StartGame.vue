@@ -22,11 +22,7 @@ export default {
   components: {RedrawModal},
   async created() {
     let deck = this.$store.state.game.current_deck
-    let d = []
-    deck.forEach(card => {
-      d.push(card.card)
-    })
-    console.log(d)
+    let d = deck.map(c => c.card)
     this.deck = JSON.parse(JSON.stringify(d))
     // this.deck = await JSON.parse(JSON.stringify(this.$store.state.game.current_deck))
     this.enemies = await JSON.parse(JSON.stringify(this.$store.state.game.level.enemies))
