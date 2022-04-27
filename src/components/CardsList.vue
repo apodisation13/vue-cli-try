@@ -15,7 +15,7 @@
       </div>
       <div class="divb" v-if="deckbuilder">
         <button class="b" @click="mill(card)">mill</button>
-        <button class="b">{{ card.count }}</button>
+        <button class="count">{{ card.count }}</button>
         <button class="b" @click="craft(card)">craft</button>
       </div>
 
@@ -110,7 +110,12 @@ export default {
 }
 
 .b {
-  width: 33%;
+  width: 42%;
+  height: 100%;
+}
+
+.count {
+  width: 13%;
   height: 100%;
 }
 
