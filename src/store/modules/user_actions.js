@@ -23,6 +23,8 @@ const state = {
   win_level_easy: 100,
   win_level_normal: 250,
   win_level_hard: 500,
+
+  win_redirect: false,
 }
 
 const getters = {
@@ -30,7 +32,9 @@ const getters = {
 }
 
 const mutations = {
-
+  set_win_redirect(state, payload) {
+    state.win_redirect = payload
+  },
 }
 
 const actions = {

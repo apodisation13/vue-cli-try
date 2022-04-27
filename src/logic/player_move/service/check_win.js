@@ -1,4 +1,5 @@
-import router from '@/router/router';
+import router from '@/router/router'
+import store from "@/store"
 
 // проверка выигрыша - если осталось 0 врагов и на поле никого
 function check_win(field, enemy_list, enemy_leader) {
@@ -10,7 +11,8 @@ function check_win(field, enemy_list, enemy_leader) {
   }
 
   alert('ВЫ ВЫИГРАЛИ!!!')
-  router.push('/')
+  store.commit("set_win_redirect", true)
+  router.push('win')
 }
 
 export { check_win }
