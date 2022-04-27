@@ -78,9 +78,10 @@ export default {
 
 .menu {
   background-color: dodgerblue;
+  background-image: linear-gradient(to right, rgba(130,144,255), rgba(30,250,255));
   width: 30%;
   height: 100%;
-  border-radius: 12px;
+  border-radius: 0 12px 12px 0;
   text-align: center;
   position: fixed;
   z-index: 99999;
@@ -91,15 +92,21 @@ export default {
   width: 80%;
   height: 5vh;
   margin-top: 5%;
-  border-radius: 3%;
+  border-radius: 50% 20% / 10% 40%;
+  border: dashed 2px yellow;
+  font-family: 'Brush Script MT', cursive;
+  font-size: 14pt;
 }
 
 .switch_sound {
   width: 5vh;
-  max-height: 3vh;
-  font-size: 6pt;
+  height: 5vh;
+  border-radius: 50%;
+  font-size: 10pt;
   margin-left: 5%;
   margin-right: 1%;
+  margin-top: 5%;
+  border: dashed 2px red;
 }
 
 </style>

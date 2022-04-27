@@ -10,6 +10,7 @@ import LoginPage from "@/pages/LoginPage"
 import SettingsPage from "@/pages/SettingsPage"
 import BonusPage from "@/pages/BonusPage"
 import RulesPage from "@/pages/RulesPage"
+import WinPage from "@/pages/WinPage"
 
 
 const routes = [
@@ -74,6 +75,13 @@ const routes = [
         component: RulesPage,
         meta: {
             requireAuth: false,
+        },
+    },
+    {
+        path: '/win',
+        component: WinPage,
+        meta: {
+            requireAuth: true,
         },
     },
     

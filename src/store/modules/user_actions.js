@@ -1,5 +1,5 @@
 import axios from "axios"
-import {craft_card, mill_card, pay_resource, post_deck} from "@/store/const/api_urls"
+import {craft_card, mill_card, user_resource, post_deck} from "@/store/const/api_urls"
 import { useToast } from 'vue-toastification'
 
 const toast = useToast()
@@ -23,6 +23,8 @@ const state = {
   win_level_easy: 100,
   win_level_normal: 250,
   win_level_hard: 500,
+
+  win_redirect: false,
 }
 
 const getters = {
@@ -30,7 +32,9 @@ const getters = {
 }
 
 const mutations = {
-
+  set_win_redirect(state, payload) {
+    state.win_redirect = payload
+  },
 }
 
 const actions = {
@@ -41,7 +45,7 @@ const actions = {
       toast.success("Успешно добавили колоду")
       await dispatch('get_user_database')
     } catch (err) {
-      this.dispatch("error_action", err)
+      dispatch("error_action", err)
       throw new Error("Какая-то ошибка при добавлении деки")
     }
   },
@@ -54,29 +58,26 @@ const actions = {
       toast.success("Успешно удалили колоду")
       await dispatch('get_user_database')
     } catch (err) {
-      this.dispatch("error_action", err)
+      dispatch("error_action", err)
       throw new Error("Какая-то ошибка при удалении деки")
     }
   },
 
-  async pay_resource({ getters, dispatch }, obj) {
-    let value = await dispatch("calculate_value", obj)
-    if (!value) return
-
+  async pay_resource({ getters, dispatch }, value) {
     alert(value)
     let header = getters['getHeader']
     let user_id = getters["getUser"].user_id
     let resource = getters["resource"]
     let patch_resource = resource + value
     alert(patch_resource)
-    const url = `${pay_resource}${user_id}/`
+    const url = `${user_resource}${user_id}/`
 
     try {
-      alert(obj.card.card.id)
       await axios.patch(url, {"resource": patch_resource}, header)
+      await dispatch("get_resource")
       return true
     } catch (err) {
-      this.dispatch("error_action", err)
+      dispatch("error_action", err)
       throw new Error("Какая-то ошибка при менеджменте ресурсов")
     }
   },
@@ -91,7 +92,8 @@ const actions = {
     }
 
     else if (obj.process === "mill") {
-      if (obj.card.count === 0 || obj.card.card.unlocked) {
+      // нельзя: если карт 0, или если карт 1 и при этом она в стартовом наборе (unlocked то есть)
+      if (obj.card.count === 0 || (obj.card.count === 1 && obj.card.card.unlocked)) {
         toast.error('Нельзя размиллить карту из стартового набора (или карту которой у вас и так нет, ха-ха)')
         return
       }
@@ -105,14 +107,13 @@ const actions = {
   async craft_card_action({ dispatch, getters }, card) {
     let header = getters['getHeader']
     let user_id = getters["getUser"].user_id
-    alert(card.count)
 
     if (card.count === 0) {
       try {
         await axios.post(craft_card, {"user": user_id, "card": card.card.id}, header)
         await dispatch("get_user_database")
       } catch (err) {
-        this.dispatch("error_action", err)
+        dispatch("error_action", err)
         throw new Error("Какая-то ошибка при создании карты")
       }
     }
@@ -124,7 +125,7 @@ const actions = {
         await axios.patch(url, {"user": user_id, "card": card.card.id, "count": card.count}, header)
         await dispatch("get_user_database")
       } catch (err) {
-        this.dispatch("error_action", err)
+        dispatch("error_action", err)
         throw new Error("Какая-то ошибка при создании карты")
       }
     }
@@ -139,7 +140,7 @@ const actions = {
       await axios.patch(url, {"user": user_id, "card": card.card.id, "count": card.count}, header)
       await dispatch("get_user_database")
     } catch (err) {
-      this.dispatch("error_action", err)
+      dispatch("error_action", err)
       throw new Error("Какая-то ошибка при создании карты")
     }
   },

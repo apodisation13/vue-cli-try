@@ -1,13 +1,13 @@
 <template>
-  <div
+  <div class="d"
       @click.right="open_level_modal"
       v-touch:longtap="open_level_modal"
       @contextmenu.prevent
   >
-    <div>
+    <div :style="background_color(level.level)">
       {{ level.level.name }}
     </div>
-    <div :style="background_color(level.level)">
+    <div>
       Врагов - {{ level.level.enemies.length }}
     </div>
     <div>
@@ -61,5 +61,8 @@ export default {
 </script>
 
 <style scoped>
-
+.d{
+  width: 8vh;
+  height: 10vh;
+}
 </style>

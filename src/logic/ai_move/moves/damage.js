@@ -19,8 +19,8 @@ function damage_player(field, i) {
 
 function damage_player_by_enemy_leader(enemy_leader) {
   sound_enemy_damage_player()
-  let temp = store.state.health  // сохраняем сколько было жизней
-  store.commit('set_health', `${store.state.health}-${enemy_leader.damage_per_turn}`)  // 45-12
+  let temp = store.state.game.health  // сохраняем сколько было жизней
+  store.commit('set_health', `${store.state.game.health}-${enemy_leader.damage_per_turn}`)  // 45-12
   setTimeout(() => {
     store.commit('set_health', temp)
     store.commit('change_health', -enemy_leader.damage_per_turn)

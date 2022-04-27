@@ -15,9 +15,22 @@
       </div>
       <div class="divb" v-if="deckbuilder">
         <button class="b" @click="mill(card)">mill</button>
-        <button class="b">{{ card.count }}</button>
+        <button class="count">{{ card.count }}</button>
         <button class="b" @click="craft(card)">craft</button>
       </div>
+
+      <yesno-modal
+          :visible='show_yesno_mill'
+          :resource_value="resource_value"
+          @confirm='confirm_mill'
+          @cancel='cancel'
+      />
+      <yesno-modal
+          :visible='show_yesno_craft'
+          :resource_value="resource_value"
+          @confirm='confirm_craft'
+          @cancel='cancel'
+      />
 
       <br>
     </div>
@@ -27,9 +40,10 @@
 <script>
 import { border_for_card, border_leader } from '@/logic/border_styles'
 import CardComp from "@/components/CardComp"
+import YesnoModal from "@/components/ModalWindows/YesnoModal";
 export default {
   name: "cards-list",
-  components: {CardComp},
+  components: {YesnoModal, CardComp},
   props: {
     cards: {
       required: true,
@@ -48,6 +62,14 @@ export default {
       default: false,
     },
   },
+  data() {
+    return {
+      show_yesno_mill: false,
+      show_yesno_craft: false,
+      card: undefined,
+      resource_value: undefined,
+    }
+  },
   methods: {
     chose_player_card(card) {
       this.$emit('chose_player_card', card)  // передаём this.index по эмиту
@@ -56,13 +78,33 @@ export default {
       if (!this.for_leaders) return border_for_card(card)
       else if (this.for_leaders) return border_leader(card)
     },
+    cancel() {
+      this.show_yesno_mill = false
+      this.show_yesno_craft = false
+    },
     async mill(card) {
-      let result = await this.$store.dispatch("pay_resource", {card: card, process: "mill"})
-      if (result) await this.$store.dispatch("mill_card_action", card)
+      let can_mill = await this.$store.dispatch("calculate_value", {card: card, process: "mill"})
+      if (!can_mill) return
+      this.resource_value = can_mill
+      this.show_yesno_mill = true
+      this.card = card
     },
     async craft(card) {
-      let result = await this.$store.dispatch("pay_resource", {card: card, process: "craft"})
-      if (result) await this.$store.dispatch("craft_card_action", card)
+      let can_craft = await this.$store.dispatch("calculate_value", {card: card, process: "craft"})
+      if (!can_craft) return
+      this.resource_value = can_craft
+      this.show_yesno_craft = true
+      this.card = card
+    },
+    async confirm_mill() {
+      this.show_yesno_mill = false
+      let result = await this.$store.dispatch("pay_resource", this.resource_value)
+      if (result) await this.$store.dispatch("mill_card_action", this.card)
+    },
+    async confirm_craft() {
+      this.show_yesno_craft = false
+      let result = await this.$store.dispatch("pay_resource", this.resource_value)
+      if (result) await this.$store.dispatch("craft_card_action", this.card)
     },
   },
   emits: [
@@ -110,7 +152,12 @@ export default {
 }
 
 .b {
-  width: 33%;
+  width: 42%;
+  height: 100%;
+}
+
+.count {
+  width: 13%;
   height: 100%;
 }
 

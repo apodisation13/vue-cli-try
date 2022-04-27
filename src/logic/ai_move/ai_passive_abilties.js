@@ -4,8 +4,6 @@ import {passive_end_turn_increase_damage}
   from "@/logic/ai_move/passive_abilities/increase_damage"
 import {enemy_leader_heal_self, passive_end_turn_heal_enemy_leader, passive_end_turn_heal_self}
   from "@/logic/ai_move/passive_abilities/heal"
-import {passive_end_turn_damage}
-  from "@/logic/ai_move/passive_abilities/damage"
 import {passive_end_turn_regain_shield}
   from "@/logic/ai_move/passive_abilities/regain_shield"
 import {passive_end_turn_decrease_player_damage}
@@ -17,7 +15,8 @@ import {damage_player_by_enemy_leader} from "@/logic/ai_move/moves/damage"
 function enemy_passive_abilities_end_turn(field, enemy_leader, hand) {
   store.commit('set_epa_end_turn', true)
 
-  let passive_enemies = field.filter(e => e && e.passive)
+  let passive_enemies = field.filter(e => e && e.has_passive)
+  console.log(passive_enemies)
 
   let i = 0
   let passive_time = setInterval(() => {
@@ -36,9 +35,6 @@ function enemy_passive_abilities_end_turn(field, enemy_leader, hand) {
       }
       else if (passive_enemies[i].passive_ability.name === 'heal-leader') {
         passive_end_turn_heal_enemy_leader(passive_enemies[i], enemy_leader)
-      }
-      else if (passive_enemies[i].passive_ability.name === 'damage') {
-        passive_end_turn_damage(passive_enemies[i])
       }
       else if (passive_enemies[i].passive_ability.name === 'regain-shield') {
         passive_end_turn_regain_shield(passive_enemies[i])

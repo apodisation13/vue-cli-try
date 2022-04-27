@@ -16,5 +16,8 @@ export default {
 </script>
 
 <style scoped>
-
+div {
+  font-family: 'Brush Script MT', cursive;
+  font-size: 16pt;
+}
 </style>
