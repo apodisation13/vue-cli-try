@@ -5,6 +5,9 @@
         <button class="btn_yes" @click="confirm">ДА</button>
         <button class="btn_no" @click="cancel">нет</button>
       </div>
+    <div v-if="resource_value">
+      Цена {{ resource_value }}
+    </div>
   </div>
 </template>
 
@@ -15,6 +18,10 @@
       visible: {
         required: true,
         type: Boolean,
+      },
+      resource_value: {
+        type: Number,
+        required: false
       },
     },
     methods: {
