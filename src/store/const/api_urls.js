@@ -9,7 +9,7 @@ export const user_database = 'http://194.67.109.190:82/api/v1/user_database/'
 export const post_deck = 'http://194.67.109.190:82/api/v1/decks/'
 
 // patch user_resource
-export const pay_resource = 'http://194.67.109.190:82/api/v1/user_resource/'
+export const user_resource = 'http://194.67.109.190:82/api/v1/user_resource/'
 
 // craft card, means POST user:id, card:id
 export const craft_card = 'http://194.67.109.190:82/api/v1/patchcards/craft_user_cards/'

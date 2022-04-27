@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useToast } from 'vue-toastification'
-import { user_database } from "@/store/const/api_urls"
+import {user_database, user_resource} from "@/store/const/api_urls"
 
 const toast = useToast()
 
@@ -80,13 +80,28 @@ const actions = {
       commit('set_levels', response.data.levels)
       dispatch('set_level_in_play', response.data.levels[0])
 
-      commit('set_resource', response.data.resource)
+      if (!getters['resource']) await dispatch("get_resource")
 
       commit('set_databaseLoaded', true)
       toast.success("Успешно загрузили всю вашу базу данных")
     } catch (err) {
       dispatch("error_action")
       throw new Error("Ошибка загрузки базы данных!")
+    }
+  },
+
+  async get_resource({ commit, getters, dispatch }) {
+    let header = getters['getHeader']
+    let user_id = getters["getUser"].user_id
+    const url = `${user_resource}${user_id}/`
+    try {
+      let response = await axios.get(url, header)
+      commit('set_resource', response.data.resource)
+      toast.success("Успешно загрузили ресурсы")
+      return true
+    } catch (err) {
+      dispatch("error_action", err)
+      throw new Error("Ошибка при загрузке ресурсов")
     }
   },
 

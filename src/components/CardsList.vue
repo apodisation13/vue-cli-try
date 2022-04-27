@@ -98,12 +98,12 @@ export default {
     },
     async confirm_mill() {
       this.show_yesno_mill = false
-      let result = await this.$store.dispatch("pay_resource", {card: this.card, process: "mill"})
+      let result = await this.$store.dispatch("pay_resource", this.resource_value)
       if (result) await this.$store.dispatch("mill_card_action", this.card)
     },
     async confirm_craft() {
       this.show_yesno_craft = false
-      let result = await this.$store.dispatch("pay_resource", {card: this.card, process: "craft"})
+      let result = await this.$store.dispatch("pay_resource", this.resource_value)
       if (result) await this.$store.dispatch("craft_card_action", this.card)
     },
   },

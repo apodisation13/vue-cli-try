@@ -1,5 +1,5 @@
 import axios from "axios"
-import {craft_card, mill_card, pay_resource, post_deck} from "@/store/const/api_urls"
+import {craft_card, mill_card, user_resource, post_deck} from "@/store/const/api_urls"
 import { useToast } from 'vue-toastification'
 
 const toast = useToast()
@@ -41,7 +41,7 @@ const actions = {
       toast.success("Успешно добавили колоду")
       await dispatch('get_user_database')
     } catch (err) {
-      this.dispatch("error_action", err)
+      dispatch("error_action", err)
       throw new Error("Какая-то ошибка при добавлении деки")
     }
   },
@@ -54,29 +54,26 @@ const actions = {
       toast.success("Успешно удалили колоду")
       await dispatch('get_user_database')
     } catch (err) {
-      this.dispatch("error_action", err)
+      dispatch("error_action", err)
       throw new Error("Какая-то ошибка при удалении деки")
     }
   },
 
-  async pay_resource({ getters, dispatch }, obj) {
-    let value = await dispatch("calculate_value", obj)
-    if (!value) return
-
+  async pay_resource({ getters, dispatch }, value) {
     alert(value)
     let header = getters['getHeader']
     let user_id = getters["getUser"].user_id
     let resource = getters["resource"]
     let patch_resource = resource + value
     alert(patch_resource)
-    const url = `${pay_resource}${user_id}/`
+    const url = `${user_resource}${user_id}/`
 
     try {
-      alert(obj.card.card.id)
       await axios.patch(url, {"resource": patch_resource}, header)
+      await dispatch("get_resource")
       return true
     } catch (err) {
-      this.dispatch("error_action", err)
+      dispatch("error_action", err)
       throw new Error("Какая-то ошибка при менеджменте ресурсов")
     }
   },
@@ -112,7 +109,7 @@ const actions = {
         await axios.post(craft_card, {"user": user_id, "card": card.card.id}, header)
         await dispatch("get_user_database")
       } catch (err) {
-        this.dispatch("error_action", err)
+        dispatch("error_action", err)
         throw new Error("Какая-то ошибка при создании карты")
       }
     }
@@ -124,7 +121,7 @@ const actions = {
         await axios.patch(url, {"user": user_id, "card": card.card.id, "count": card.count}, header)
         await dispatch("get_user_database")
       } catch (err) {
-        this.dispatch("error_action", err)
+        dispatch("error_action", err)
         throw new Error("Какая-то ошибка при создании карты")
       }
     }
@@ -139,7 +136,7 @@ const actions = {
       await axios.patch(url, {"user": user_id, "card": card.card.id, "count": card.count}, header)
       await dispatch("get_user_database")
     } catch (err) {
-      this.dispatch("error_action", err)
+      dispatch("error_action", err)
       throw new Error("Какая-то ошибка при создании карты")
     }
   },
