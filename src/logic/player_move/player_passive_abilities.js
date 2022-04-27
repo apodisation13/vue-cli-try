@@ -6,7 +6,7 @@ import {passive_end_turn_damage_random_enemy}
   from "@/logic/player_move/passive_abilities/damage_random_enemy"
 import {passive_end_turn_increase_damage_in_hand}
   from "@/logic/player_move/passive_abilities/increase_damage_to-card_in_hand"
-import {passive_end_turn_heal_leader}
+import {passive_end_turn_heal_leader_by_2, passive_end_turn_heal_leader_by_3}
   from "@/logic/player_move/passive_abilities/heal_leader"
 import {passive_end_turn_increase_self_damage}
   from "@/logic/player_move/passive_abilities/increase_self_damage"
@@ -32,7 +32,7 @@ function player_passive_abilities_upon_playing_a_card(player_card, leader) {
 function player_passive_abilities_end_turn(hand, leader, deck, grave, field, enemy_leader, enemies) {
   store.commit('set_ppa_end_turn', true)
 
-  let passive_hand = hand.filter(c => c.has_passive)
+  let passive_hand = hand.filter(c => c.has_passive_in_hand)
   passive_hand.reverse()  // не забываем про float right :) FIXME
   if (leader.has_passive) passive_hand.push(leader)
 
@@ -64,8 +64,11 @@ function player_passive_abilities_end_turn(hand, leader, deck, grave, field, ene
       else if (passive_hand[i].passive_ability.name === 'increase-damage-to-card-in-hand-by-1') {
         passive_end_turn_increase_damage_in_hand(hand)
       }
-      else if (passive_hand[i].passive_ability.name === 'heal-leader-by-1') {
-        passive_end_turn_heal_leader()
+      else if (passive_hand[i].passive_ability.name === 'heal-leader-by-2') {
+        passive_end_turn_heal_leader_by_2()
+      }
+      else if (passive_hand[i].passive_ability.name === 'heal-leader-by-3') {
+        passive_end_turn_heal_leader_by_3()
       }
       else if (passive_hand[i].passive_ability.name === 'increase-self-damage-by-1') {
         passive_end_turn_increase_self_damage(passive_hand[i])
