@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="img">
     <div class="user_info" v-if="isLoggedIn">
       <div>
         ПРИВЕТ {{ username }}!
@@ -85,7 +85,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+div, button {
+  font-family: 'Brush Script MT', cursive;
+  font-size: 14pt;
+}
+
 .user_info {
   position: absolute;
   top: 2%;
