@@ -23,8 +23,8 @@
         <br>&dagger;{{ enemy.damage }}
       </h3>
 
-      <div class="triangle" :style="background_color(enemy)" v-if="enemy.passive"></div>
-      <div class="text" :style="{'font-size': '20pt'}" v-if="enemy.passive"><b>&#8987;</b></div>
+      <div class="triangle" :style="background_color(enemy)" v-if="enemy.has_passive"></div>
+      <div class="text" :style="{'font-size': '20pt'}" v-if="enemy.has_passive"><b>&#8987;</b></div>
 
 
       <div v-if="enemy.shield" :style="{'font-size': '30pt'}">
@@ -46,8 +46,8 @@
 
     <div class="text"><b>ХОДИТ</b> - {{ enemy.move.description }} </div>
 
-    <div class="text" v-if="enemy.passive"><b>ПАССИВНАЯ СПОСОБНОСТЬ</b></div>
-    <div class="text" v-if="enemy.passive">{{ enemy.passive_ability.description }}</div>
+    <div class="text" v-if="enemy.has_passive"><b>ПАССИВНАЯ СПОСОБНОСТЬ</b></div>
+    <div class="text" v-if="enemy.has_passive">{{ enemy.passive_ability.description }}</div>
 
   </modal-window>
 </template>

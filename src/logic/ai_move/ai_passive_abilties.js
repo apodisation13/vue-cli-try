@@ -17,7 +17,8 @@ import {damage_player_by_enemy_leader} from "@/logic/ai_move/moves/damage"
 function enemy_passive_abilities_end_turn(field, enemy_leader, hand) {
   store.commit('set_epa_end_turn', true)
 
-  let passive_enemies = field.filter(e => e && e.passive)
+  let passive_enemies = field.filter(e => e && e.has_passive)
+  console.log(passive_enemies)
 
   let i = 0
   let passive_time = setInterval(() => {

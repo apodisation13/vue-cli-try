@@ -10,7 +10,7 @@
 
     <card-diamond :style="background_color(enemy)">&dagger;{{ enemy.damage }}</card-diamond>
 
-    <card-passive v-if="enemy.passive" :style="background_color(enemy)"/>
+    <card-passive v-if="enemy.has_passive" :style="background_color(enemy)"/>
 
     <enemy-shield v-if="enemy.shield"/>
 

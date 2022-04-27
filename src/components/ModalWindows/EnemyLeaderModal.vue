@@ -33,7 +33,7 @@
       </h3>
     </div>
 
-    <div class="text" v-if="enemy_leader.passive"> ПАССИВНАЯ СПОСОБНОСТЬ </div>
+    <div class="text" v-if="enemy_leader.has_passive"> ПАССИВНАЯ СПОСОБНОСТЬ </div>
     <div class="text"> <b>СПОСОБНОСТЬ</b> - {{ enemy_leader.ability.description }} </div>
 
   </modal-window>
