@@ -88,7 +88,8 @@ const actions = {
     }
 
     else if (obj.process === "mill") {
-      if (obj.card.count === 0 || obj.card.card.unlocked) {
+      // нельзя: если карт 0, или если карт 1 и при этом она в стартовом наборе (unlocked то есть)
+      if (obj.card.count === 0 || (obj.card.count === 1 && obj.card.card.unlocked)) {
         toast.error('Нельзя размиллить карту из стартового набора (или карту которой у вас и так нет, ха-ха)')
         return
       }
@@ -102,7 +103,6 @@ const actions = {
   async craft_card_action({ dispatch, getters }, card) {
     let header = getters['getHeader']
     let user_id = getters["getUser"].user_id
-    alert(card.count)
 
     if (card.count === 0) {
       try {
