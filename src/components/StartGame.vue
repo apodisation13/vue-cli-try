@@ -6,7 +6,7 @@
     </div>
 
     <div class="play_price">
-      Для этой игры надо заплатить <b>{{ play_price }}</b> ресурсов!
+      Для этой игры надо заплатить <b>{{ play_price }}</b> wood!
     </div>
 
     <button class="btn_start" v-if="deck.length" @click="start_game">
@@ -66,7 +66,8 @@ export default {
     // начало игры: расставить врагов, вытянуть карты в руку, открыть redraw-modal
     async start_game() {
 
-      let result = await this.$store.dispatch("pay_resource", -this.play_price)
+      let result = await this.$store.dispatch("pay_resource",
+          {"wood": this.$store.getters['resource'].wood - this.play_price})
       if (!result) {
         alert('Что-то пошло не так, сыграть невозможно')
         return
@@ -124,7 +125,7 @@ export default {
 }
 
 .resource {
-  top: 5%;
+  top: 15%;
   left: 50%;
   transform: translate(-50%, -50%);
   position: absolute;
@@ -133,7 +134,7 @@ export default {
 .play_price {
   width: 100%;
   text-align: center;
-  top: 25%;
+  top: 35%;
   left: 50%;
   transform: translate(-50%, -50%);
   position: relative;

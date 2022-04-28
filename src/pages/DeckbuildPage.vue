@@ -21,7 +21,7 @@
   </div>
 
   <div class="filters">
-    <resource-comp />
+    <resource-comp style="font-size: 12pt" />
 
     <button class="new" @click="new_deck()">NEW+</button>
 

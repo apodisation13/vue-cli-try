@@ -6,23 +6,28 @@ const toast = useToast()
 
 
 const state = {
-  open_level_easy: 500,
+  open_level_easy: 500,  // pay SCRAPS
   open_level_normal: 1000,
   open_level_hard: 2000,
-  craft_bronze: 200,
-  craft_silver: 1000,
-  craft_gold: 2000,
-  craft_leader: 5000,
-  mill_bronze: 20,
-  mill_silver: 100,
-  mill_gold: 200,
-  mill_leader: 200,
-  play_level_easy: 50,
-  play_level_normal: 100,
-  play_level_hard: 200,
-  win_level_easy: 100,
-  win_level_normal: 250,
-  win_level_hard: 500,
+  craft_bronze: 200,  // pay SCRAPS
+  craft_silver: 1000,  // pay SCRAPS
+  craft_gold: 2000,  // pay SCRAPS
+  craft_leader: 5000,  // pay SCRAPS
+  mill_bronze: 20,  // receive SCRAPS
+  mill_silver: 100,   // receive SCRAPS
+  mill_gold: 200,   // receive SCRAPS
+  mill_leader: 200,   // receive SCRAPS
+
+  pay_for_kegs: 200,   // pay WOOD
+  pay_for_big_kegs: 400,  // pay WOOD
+  pay_for_chests: 2000,  // pay WOOD
+
+  play_level_easy: 50,  // pay WOOD
+  play_level_normal: 100,  // pay WOOD
+  play_level_hard: 200,  // pay WOOD
+  win_level_easy: 100,  // receive WOOD, SCRAP
+  win_level_normal: 250,   // receive WOOD, SCRAP
+  win_level_hard: 500,   // receive WOOD, SCRAP
 
   win_redirect: false,
 }
@@ -63,17 +68,13 @@ const actions = {
     }
   },
 
-  async pay_resource({ getters, dispatch }, value) {
-    alert(value)
+  async pay_resource({ getters, dispatch }, body) {
     let header = getters['getHeader']
     let user_id = getters["getUser"].user_id
-    let resource = getters["resource"]
-    let patch_resource = resource + value
-    alert(patch_resource)
     const url = `${user_resource}${user_id}/`
 
     try {
-      await axios.patch(url, {"resource": patch_resource}, header)
+      await axios.patch(url, body, header)
       await dispatch("get_resource")
       return true
     } catch (err) {

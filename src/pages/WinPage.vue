@@ -6,7 +6,7 @@
     </div>
 
     <div class="win_price">
-      ВЫ ВЫИГРАЛИ <b>{{ win_price }}</b> ресурсов!
+      ВЫ ВЫИГРАЛИ <b>{{ pay_data }}</b> ресурсов!
     </div>
 
   </div>
@@ -25,10 +25,31 @@ export default {
       else return 'Уровень не выбран!'
     },
   },
+  data() {
+    return {
+      pay_data: {},
+    }
+  },
   async created() {
     if (!this.$store.state.user_actions.win_redirect) return
 
-    await this.$store.dispatch("pay_resource", this.win_price)
+    this.pay_data.wood = this.win_price
+    this.pay_data.scraps = this.win_price
+    let kegs = [0,0,0,0,1]  // 20%!!!
+    let chance = kegs[Math.floor(Math.random() * kegs.length)]
+    if (chance === 1) this.pay_data.kegs = 1
+    else this.pay_data.kegs = 0
+    let big_kegs = [0,0,0,0,0,0,0,0,0,1]  // 10%!!!
+    let chance2 = big_kegs[Math.floor(Math.random() * big_kegs.length)]
+    if (chance2 === 1) this.pay_data.big_kegs = 1
+    else this.pay_data.big_kegs = 0
+
+    await this.$store.dispatch("pay_resource", {
+      "wood": this.$store.getters['resource'].wood + this.pay_data.wood,
+      "scraps": this.$store.getters['resource'].scraps + this.pay_data.scraps,
+      "kegs": this.$store.getters['resource'].kegs + this.pay_data.kegs,
+      "big_kegs": this.$store.getters['resource'].big_kegs + this.pay_data.big_kegs,
+    })
     this.$store.commit("set_win_redirect", false)
   }
 }
@@ -46,7 +67,7 @@ export default {
 }
 
 .resource {
-  top: 5%;
+  top: 15%;
   left: 50%;
   transform: translate(-50%, -50%);
   position: absolute;
@@ -55,7 +76,7 @@ export default {
 .win_price {
   width: 100%;
   text-align: center;
-  top: 25%;
+  top: 35%;
   left: 50%;
   transform: translate(-50%, -50%);
   position: relative;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    Ресурсы - {{ resource }}
+    {{ resource }}
   </div>
 </template>
 
@@ -18,6 +18,6 @@ export default {
 <style scoped>
 div {
   font-family: 'Brush Script MT', cursive;
-  font-size: 16pt;
+  font-size: 14pt;
 }
 </style>

@@ -10,7 +10,7 @@ const state = {
   cards: [],
   decks: [],
   levels: [],  // все уровни, из запроса
-  resource: undefined,
+  resource: {},
   databaseLoaded: false,
   errorLoading: '',
 }
@@ -52,6 +52,7 @@ const mutations = {
     state.levels = result
   },
   set_resource(state, result) {
+    // {scraps, wood, kegs, big_kegs, chests}
     state.resource = result
   },
 
@@ -80,7 +81,7 @@ const actions = {
       commit('set_levels', response.data.levels)
       dispatch('set_level_in_play', response.data.levels[0])
 
-      if (!getters['resource']) await dispatch("get_resource")
+      if (!getters['resource'].scraps) await dispatch("get_resource")
 
       commit('set_databaseLoaded', true)
       toast.success("Успешно загрузили всю вашу базу данных")
@@ -96,7 +97,7 @@ const actions = {
     const url = `${user_resource}${user_id}/`
     try {
       let response = await axios.get(url, header)
-      commit('set_resource', response.data.resource)
+      commit('set_resource', response.data)
       toast.success("Успешно загрузили ресурсы")
       return true
     } catch (err) {
