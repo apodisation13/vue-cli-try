@@ -33,7 +33,7 @@
     </div>
 
     <div class="inlines">
-      <div class="chests">
+      <div class="chests" @dblclick="open_chest">
         chests: {{ resource.chests }}
       </div>
       <div class="add_chests" @dblclick="add_chests">
@@ -53,8 +53,10 @@
     <div class="cards_list" style="height: 20vh" v-if="show_chest">
       <cards-list
           :cards="random_cards"
+          :deckbuilder="true"
+          :bonus="true"
       />
-      <button v-if="show_chest">Принять!</button>
+      <button v-if="show_chest" @click="accept_chest">Принять!</button>
     </div>
 
   </div>
@@ -146,9 +148,30 @@ export default {
 
     async add_chests() {
       await this.$store.dispatch("pay_resource", {
-        "wood": this.resource.wood - this.$store.state.user_actions.pay_for_kegs,
-        "kegs": this.resource.kegs + 1
+        "wood": this.resource.wood - this.$store.state.user_actions.pay_for_chests,
+        "chests": this.resource.chests + 1
       })
+    },
+    async open_chest() {
+      this.keg_len = 3
+      this.random_cards = []
+      this.show_keg = false
+      this.show_chest = true
+      for (let i = 0; i < this.keg_len; i++) {
+        let random = Math.floor(Math.random() * this.pool.length)
+        this.random_cards.push(this.pool[random])
+      }
+      await this.$store.dispatch("pay_resource", {
+        "chests": this.resource.chests -1
+      })
+    },
+    async accept_chest() {
+      await this.$store.dispatch("craft_card_action", this.random_cards[0])
+      await this.$store.dispatch("craft_card_action", this.random_cards[1])
+      await this.$store.dispatch("craft_card_action", this.random_cards[2])
+      this.show_keg = false
+      this.show_chest = false
+      this.random_cards = []
     },
   },
 }
