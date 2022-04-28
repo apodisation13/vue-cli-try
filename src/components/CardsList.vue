@@ -14,9 +14,10 @@
         />
       </div>
       <div class="divb" v-if="deckbuilder">
-        <button class="b" @click="mill(card)">mill</button>
-        <button class="count">{{ card.count }}</button>
-        <button class="b" @click="craft(card)">craft</button>
+        <button class="b" @click="mill(card)" v-if="!bonus">mill</button>
+        <button class="count" v-if="!bonus">{{ card.count }}</button>
+        <button class="bonus_count" v-if="bonus">У вас {{ card.count }}</button>
+        <button class="b" @click="craft(card)" v-if="!bonus">craft</button>
       </div>
 
       <yesno-modal
@@ -61,6 +62,11 @@ export default {
       type: Boolean,
       default: false,
     },
+    bonus: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
   },
   data() {
     return {
@@ -98,12 +104,14 @@ export default {
     },
     async confirm_mill() {
       this.show_yesno_mill = false
-      let result = await this.$store.dispatch("pay_resource", this.resource_value)
+      let result = await this.$store.dispatch("pay_resource",
+          {"scraps": this.$store.getters['resource'].scraps + this.resource_value})
       if (result) await this.$store.dispatch("mill_card_action", this.card)
     },
     async confirm_craft() {
       this.show_yesno_craft = false
-      let result = await this.$store.dispatch("pay_resource", this.resource_value)
+      let result = await this.$store.dispatch("pay_resource",
+          {"scraps": this.$store.getters['resource'].scraps + this.resource_value})
       if (result) await this.$store.dispatch("craft_card_action", this.card)
     },
   },
@@ -158,6 +166,11 @@ export default {
 
 .count {
   width: 13%;
+  height: 100%;
+}
+
+.bonus_count {
+  width: 90%;
   height: 100%;
 }
 

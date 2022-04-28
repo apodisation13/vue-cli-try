@@ -23,6 +23,9 @@ const state = {
   win_level_easy: 100,
   win_level_normal: 250,
   win_level_hard: 500,
+  pay_for_kegs: 200,
+  pay_for_big_kegs: 400,
+  pay_for_chests: 2000,
 
   win_redirect: false,
 }
@@ -63,17 +66,13 @@ const actions = {
     }
   },
 
-  async pay_resource({ getters, dispatch }, value) {
-    alert(value)
+  async pay_resource({ getters, dispatch }, body) {
     let header = getters['getHeader']
     let user_id = getters["getUser"].user_id
-    let resource = getters["resource"]
-    let patch_resource = resource + value
-    alert(patch_resource)
     const url = `${user_resource}${user_id}/`
 
     try {
-      await axios.patch(url, {"resource": patch_resource}, header)
+      await axios.patch(url, body, header)
       await dispatch("get_resource")
       return true
     } catch (err) {

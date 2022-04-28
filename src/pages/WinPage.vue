@@ -28,7 +28,9 @@ export default {
   async created() {
     if (!this.$store.state.user_actions.win_redirect) return
 
-    await this.$store.dispatch("pay_resource", this.win_price)
+    await this.$store.dispatch("pay_resource", {
+      "wood": this.$store.getters['resource'].wood + this.win_price,
+    })
     this.$store.commit("set_win_redirect", false)
   }
 }
@@ -46,7 +48,7 @@ export default {
 }
 
 .resource {
-  top: 5%;
+  top: 15%;
   left: 50%;
   transform: translate(-50%, -50%);
   position: absolute;
@@ -55,7 +57,7 @@ export default {
 .win_price {
   width: 100%;
   text-align: center;
-  top: 25%;
+  top: 35%;
   left: 50%;
   transform: translate(-50%, -50%);
   position: relative;
