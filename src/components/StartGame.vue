@@ -67,7 +67,7 @@ export default {
     async start_game() {
 
       let result = await this.$store.dispatch("pay_resource",
-          {"wood": this.$store.getters['resource'].wood - this.play_price})
+          {"wood": this.$store.getters['resource'].wood + this.play_price})
       if (!result) {
         alert('Что-то пошло не так, сыграть невозможно')
         return

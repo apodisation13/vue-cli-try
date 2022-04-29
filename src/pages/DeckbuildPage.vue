@@ -1,4 +1,5 @@
 <template>
+  <resource-comp />
   <div class="database">
 
     <!-- база карт -->
@@ -21,7 +22,6 @@
   </div>
 
   <div class="filters">
-    <resource-comp style="font-size: 12pt" />
 
     <button class="new" @click="new_deck()">NEW+</button>
 
@@ -67,7 +67,7 @@
 
   Лидер: {{ leader_selected }}
   Размер: {{ deck_is_progress.length }}/{{ $store.state.game.cards_in_deck }}
-  Жизни: {{ health }} <br>
+  Жизни: {{ health }}
   <input class="input" :disabled="cant_save_deck" v-model="deck_name"><br><br>
   <button class="btn_save_deck"
     :disabled="cant_save_deck"
@@ -97,14 +97,15 @@ import FilterColors from "@/components/Pages/DeckbuildPage/FilterColors"
 import FilterPassives from "@/components/Pages/DeckbuildPage/FilterPassives"
 
 import filtering from "@/mixins/DeckbuildPage/filtering"
-import FilterUnlocked from "@/components/Pages/DeckbuildPage/FilterUnlocked";
+import FilterUnlocked from "@/components/Pages/DeckbuildPage/FilterUnlocked"
 import ResourceComp from "@/components/ResourceComp";
 
 export default {
   components: {
     ResourceComp,
-    FilterUnlocked,
-    FilterPassives, FilterColors, FilterTypes, FilterFactions, DecksListModal,  CardsList, LeaderComp},
+    FilterUnlocked, FilterPassives, FilterColors, FilterTypes, FilterFactions,
+    DecksListModal,  CardsList, LeaderComp
+  },
   mixins: [
     filtering,
   ],
@@ -308,8 +309,6 @@ export default {
 .input {
   width: 23%;
   height: 3vh;
-  float: left;
-  margin-top: 1%;
 }
 
 /*кнопка КОЛОДЫ*/

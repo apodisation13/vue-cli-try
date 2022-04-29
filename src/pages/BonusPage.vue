@@ -19,7 +19,7 @@
         kegs: {{ resource.kegs }}
       </div>
       <div class="add_kegs" @dblclick="add_kegs">
-        + {{ $store.state.user_actions.pay_for_kegs }}
+        {{ $store.state.user_actions.pay_for_kegs }}
       </div>
 
       <div class="add_kegs" style="border: 0"></div>
@@ -28,7 +28,7 @@
         big kegs: {{ resource.big_kegs }}
       </div>
       <div class="add_kegs" @dblclick="add_big_kegs">
-        + {{ $store.state.user_actions.pay_for_big_kegs }}
+        {{ $store.state.user_actions.pay_for_big_kegs }}
       </div>
     </div>
 
@@ -37,7 +37,7 @@
         chests: {{ resource.chests }}
       </div>
       <div class="add_chests" @dblclick="add_chests">
-        + {{ $store.state.user_actions.pay_for_chests }}
+        {{ $store.state.user_actions.pay_for_chests }}
       </div>
     </div>
 
@@ -110,7 +110,7 @@ export default {
 
     async add_kegs() {
       await this.$store.dispatch("pay_resource", {
-        "wood": this.resource.wood - this.$store.state.user_actions.pay_for_kegs,
+        "wood": this.resource.wood + this.$store.state.user_actions.pay_for_kegs,
         "kegs": this.resource.kegs + 1
       })
     },
@@ -123,13 +123,13 @@ export default {
         this.random_cards.push(this.pool[random])
       }
       await this.$store.dispatch("pay_resource", {
-        "kegs": this.resource.kegs -1
+        "kegs": this.resource.kegs - 1
       })
     },
 
     async add_big_kegs() {
       await this.$store.dispatch("pay_resource", {
-        "wood": this.resource.wood - this.$store.state.user_actions.pay_for_big_kegs,
+        "wood": this.resource.wood + this.$store.state.user_actions.pay_for_big_kegs,
         "big_kegs": this.resource.big_kegs + 1
       })
     },
@@ -142,13 +142,13 @@ export default {
         this.random_cards.push(this.pool[random])
       }
       await this.$store.dispatch("pay_resource", {
-        "big_kegs": this.resource.big_kegs -1
+        "big_kegs": this.resource.big_kegs - 1
       })
     },
 
     async add_chests() {
       await this.$store.dispatch("pay_resource", {
-        "wood": this.resource.wood - this.$store.state.user_actions.pay_for_chests,
+        "wood": this.resource.wood + this.$store.state.user_actions.pay_for_chests,
         "chests": this.resource.chests + 1
       })
     },
@@ -162,7 +162,7 @@ export default {
         this.random_cards.push(this.pool[random])
       }
       await this.$store.dispatch("pay_resource", {
-        "chests": this.resource.chests -1
+        "chests": this.resource.chests - 1
       })
     },
     async accept_chest() {
