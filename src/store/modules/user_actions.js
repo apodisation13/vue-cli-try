@@ -1,5 +1,12 @@
 import axios from "axios"
-import {craft_card, mill_card, user_resource, post_deck} from "@/store/const/api_urls"
+import {
+  craft_card,
+  mill_card,
+  craft_leader,
+  mill_leader,
+  user_resource,
+  post_deck
+} from "@/store/const/api_urls"
 import { useToast } from 'vue-toastification'
 
 const toast = useToast()
@@ -105,7 +112,12 @@ const actions = {
     }
   },
 
-  async craft_card_action({ dispatch, getters }, card) {
+  async craft_card_action({ dispatch }, card) {
+    if (card.card.color) await dispatch("craft_card", card)
+    else await dispatch("craft_leader", card)
+  },
+
+  async craft_card({ dispatch, getters }, card) {
     let header = getters['getHeader']
     let user_id = getters["getUser"].user_id
 
@@ -132,7 +144,39 @@ const actions = {
     }
   },
 
-  async mill_card_action({ dispatch, getters }, card) {
+  async craft_leader({ dispatch, getters }, card) {
+    let header = getters['getHeader']
+    let user_id = getters["getUser"].user_id
+
+    if (card.count === 0) {
+      try {
+        await axios.post(craft_leader, {"user": user_id, "leader": card.card.id}, header)
+        await dispatch("get_user_database")
+      } catch (err) {
+        dispatch("error_action", err)
+        throw new Error("Какая-то ошибка при создании лидера")
+      }
+    }
+
+    else if (card.count >= 1) {
+      try {
+        // card.id - id записи, которую надо патчить (usercard), card.card.id - id самой карты
+        let url = `${craft_leader}${card.id}/`
+        await axios.patch(url, {"user": user_id, "leader": card.card.id, "count": card.count}, header)
+        await dispatch("get_user_database")
+      } catch (err) {
+        dispatch("error_action", err)
+        throw new Error("Какая-то ошибка при создании лидера")
+      }
+    }
+  },
+
+  async mill_card_action({ dispatch }, card) {
+    if (card.card.color) await dispatch("mill_card", card)
+    else await dispatch("mill_leader", card)
+  },
+
+  async mill_card({ dispatch, getters }, card) {
     let header = getters['getHeader']
     let user_id = getters["getUser"].user_id
     let url = `${mill_card}${card.id}/`
@@ -142,7 +186,21 @@ const actions = {
       await dispatch("get_user_database")
     } catch (err) {
       dispatch("error_action", err)
-      throw new Error("Какая-то ошибка при создании карты")
+      throw new Error("Какая-то ошибка при размалывании карты")
+    }
+  },
+
+  async mill_leader({ dispatch, getters }, card) {
+    let header = getters['getHeader']
+    let user_id = getters["getUser"].user_id
+    let url = `${mill_leader}${card.id}/`
+
+    try {
+      await axios.patch(url, {"user": user_id, "leader": card.card.id, "count": card.count}, header)
+      await dispatch("get_user_database")
+    } catch (err) {
+      dispatch("error_action", err)
+      throw new Error("Какая-то ошибка при размалывании лидера")
     }
   },
 
