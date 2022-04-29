@@ -6,25 +6,25 @@ const toast = useToast()
 
 
 const state = {
-  open_level_easy: 500,  // pay SCRAPS
-  open_level_normal: 1000,
-  open_level_hard: 2000,
-  craft_bronze: 200,  // pay SCRAPS
-  craft_silver: 1000,  // pay SCRAPS
-  craft_gold: 2000,  // pay SCRAPS
-  craft_leader: 5000,  // pay SCRAPS
+  open_level_easy: -500,  // pay SCRAPS
+  open_level_normal: -1000,
+  open_level_hard: -2000,
+  craft_bronze: -200,  // pay SCRAPS
+  craft_silver: -1000,  // pay SCRAPS
+  craft_gold: -2000,  // pay SCRAPS
+  craft_leader: -5000,  // pay SCRAPS
   mill_bronze: 20,  // receive SCRAPS
   mill_silver: 100,   // receive SCRAPS
   mill_gold: 200,   // receive SCRAPS
   mill_leader: 200,   // receive SCRAPS
 
-  pay_for_kegs: 200,   // pay WOOD
-  pay_for_big_kegs: 400,  // pay WOOD
-  pay_for_chests: 2000,  // pay WOOD
+  pay_for_kegs: -200,   // pay WOOD
+  pay_for_big_kegs: -400,  // pay WOOD
+  pay_for_chests: -2000,  // pay WOOD
 
-  play_level_easy: 50,  // pay WOOD
-  play_level_normal: 100,  // pay WOOD
-  play_level_hard: 200,  // pay WOOD
+  play_level_easy: -50,  // pay WOOD
+  play_level_normal: -100,  // pay WOOD
+  play_level_hard: -200,  // pay WOOD
   win_level_easy: 100,  // receive WOOD, SCRAP
   win_level_normal: 250,   // receive WOOD, SCRAP
   win_level_hard: 500,   // receive WOOD, SCRAP
@@ -86,9 +86,9 @@ const actions = {
   calculate_value({ state }, obj) {
 
     if (obj.process === "craft") {
-      if (obj.card.card.color === "Bronze") return -state.craft_bronze
-      else if (obj.card.card.color === "Silver") return -state.craft_silver
-      else if (obj.card.card.color === "Gold") return -state.craft_gold
+      if (obj.card.card.color === "Bronze") return state.craft_bronze
+      else if (obj.card.card.color === "Silver") return state.craft_silver
+      else if (obj.card.card.color === "Gold") return state.craft_gold
       else return state.craft_leader
     }
 
