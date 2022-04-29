@@ -1,14 +1,26 @@
 <template>
   <div class="levels" >
-    ВЫБЕРИТЕ УРОВЕНЬ (дважды ЛКМ) <br>
+    <div>
+      ВЫБЕРИТЕ УРОВЕНЬ (дважды ЛКМ)
+    </div>
 
+    <div>
+      Базовые уровни игры
+    </div>
     <div class="level" :class="{'level_selected': index === selected}"
       v-for="(level, index) in levels" :key="level"
       @dblclick="set_level(index)"
     >
-
       <level-preview-comp :level="level" />
+    </div> <br><br>
 
+
+    <div>РАНДОМНЫЕ УРОВНИ!</div>
+    <div class="level" :class="{'level_selected': index === selected}"
+         v-for="(level, index) in random_levels" :key="level"
+         @dblclick="set_random_level(index)"
+    >
+      <level-preview-comp :level="level" />
     </div>
   </div>
 
@@ -24,15 +36,20 @@ import LevelPreviewComp from "@/components/Pages/LevelPage/LevelPreviewComp"
 import DeckSelection from "@/components/DeckSelection"
 import SelectedDeck from "@/components/Pages/LevelPage/SelectedDeck"
 import ResourceComp from "@/components/ResourceComp"
+import {random_level_generator} from "@/logic/random_level"
 export default {
   components: {ResourceComp, SelectedDeck, DeckSelection, LevelPreviewComp},
   setup() {
     const toast = useToast()
     return { toast }
   },
+  async created() {
+    this.random_levels = random_level_generator()
+  },
   data() {
     return {
       selected: undefined,  // для подсветки выбранного уровня
+      random_levels: [],
     }
   },
   computed: {
@@ -50,6 +67,12 @@ export default {
       }
       else this.toast.error('Уровень закрыт!')
     },
+    set_random_level(index) {
+      this.toast.success(`Выбран рандомный уровень!`, {timeout: 1000})
+      this.$store.commit("set_level", this.random_levels[index].level)
+      this.$store.commit('set_enemy_leader', this.random_levels[index].level.enemy_leader)
+      this.selected = index
+    },
   },
 }
 </script>
@@ -61,6 +84,7 @@ export default {
   width: 95%;
   height: 50vh;
   border: solid 1px orchid;
+  overflow: scroll;
 }
 
 .level {

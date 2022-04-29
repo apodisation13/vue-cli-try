@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useToast } from 'vue-toastification'
-import {user_database, user_resource} from "@/store/const/api_urls"
+import {all_enemies, all_enemy_leaders, user_database, user_resource} from "@/store/const/api_urls"
 
 const toast = useToast()
 
@@ -13,6 +13,9 @@ const state = {
   resource: {},
   databaseLoaded: false,
   errorLoading: '',
+
+  enemies: [],
+  enemy_leaders: [],
 }
 
 const getters = {
@@ -36,6 +39,12 @@ const getters = {
   filtered_leaders: (state) => (fac) => {
     return state.leaders.filter(f => f.card.faction===fac)
   },
+
+  all_enemies: state => state.enemies,
+  bronze_enemies: state => state.enemies.filter(e => e.color === "Bronze"),
+  silver_enemies: state => state.enemies.filter(e => e.color === "Silver"),
+  gold_enemies: state => state.enemies.filter(e => e.color === "Gold"),
+  all_enemy_leaders: state => state.enemy_leaders,
 }
 
 const mutations = {
@@ -62,6 +71,13 @@ const mutations = {
   set_errorLoading(state, payload) {
     state.errorLoading = payload
   },
+
+  set_enemies(state, payload) {
+    state.enemies = payload
+  },
+  set_enemy_leaders(state, payload) {
+    state.enemy_leaders = payload
+  },
 }
 
 const actions = {
@@ -83,6 +99,8 @@ const actions = {
 
       if (!getters['resource'].scraps) await dispatch("get_resource")
 
+      await dispatch("get_enemies_for_random_level")
+
       commit('set_databaseLoaded', true)
       toast.success("Успешно загрузили всю вашу базу данных")
     } catch (err) {
@@ -103,6 +121,21 @@ const actions = {
     } catch (err) {
       dispatch("error_action", err)
       throw new Error("Ошибка при загрузке ресурсов")
+    }
+  },
+
+  async get_enemies_for_random_level({ commit, getters, dispatch }) {
+    let header = getters['getHeader']
+
+    try {
+      let response_e = await axios.get(all_enemies, header)
+      let response_e_l = await axios.get(all_enemy_leaders, header)
+      commit("set_enemies", response_e.data)
+      commit("set_enemy_leaders", response_e_l.data)
+      toast.success("Успешно загрузились враги для рандомных уровней")
+    } catch (err) {
+      dispatch("error_action", err)
+      throw new Error("Ошибка при загрузке рандомных уровней")
     }
   },
 
