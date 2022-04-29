@@ -6,7 +6,11 @@
     </div>
 
     <div class="win_price">
-      ВЫ ВЫИГРАЛИ <b>{{ pay_data }}</b> ресурсов!
+      ВАШ ВЫИГРЫШ <br>
+      scraps: <b>{{ pay_data.scraps }}</b><br>
+      wood: <b>{{ pay_data.wood }}</b><br>
+      kegs: <b>{{ pay_data.kegs }}</b><br>
+      big kegs: <b>{{ pay_data.big_kegs }}</b><br>
     </div>
 
   </div>
@@ -76,7 +80,7 @@ export default {
 .win_price {
   width: 100%;
   text-align: center;
-  top: 35%;
+  top: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
   position: relative;
