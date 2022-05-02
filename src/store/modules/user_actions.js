@@ -32,8 +32,8 @@ const state = {
   play_level_easy: -50,  // pay WOOD
   play_level_normal: -100,  // pay WOOD
   play_level_hard: -200,  // pay WOOD
-  win_level_easy: 100,  // receive WOOD, SCRAP
-  win_level_normal: 250,   // receive WOOD, SCRAP
+  win_level_easy: 125,  // receive WOOD, SCRAP
+  win_level_normal: 275,   // receive WOOD, SCRAP
   win_level_hard: 500,   // receive WOOD, SCRAP
 
   win_redirect: false,

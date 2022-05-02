@@ -50,19 +50,19 @@ function damage_ai_card(card, enemy, field, enemy_leader, hand, deck, grave, ene
     }
 
     else if (card.ability.name === 'destroy-highest-hp') {
-        destroy_highest_hp(field, enemy_leader)
+        destroy_highest_hp(field, enemy_leader, enemies)
     }
 
     else if (card.ability.name === 'destroy-highest-damage') {
-        destroy_highest_damage(field, enemy_leader)
+        destroy_highest_damage(field, enemy_leader, enemies)
     }
 
     else if (card.ability.name === 'destroy-random') {
-        destroy_random(field, enemy_leader)
+        destroy_random(field, enemy_leader, enemies)
     }
 
     else if (card.ability.name === 'destroy-all-same-hp') {
-        destroy_all_same_hp(enemy, field, enemy_leader)
+        destroy_all_same_hp(enemy, field, enemy_leader, enemies)
     }
 
     else damage_one(enemy, card, field, enemy_leader, enemies)
