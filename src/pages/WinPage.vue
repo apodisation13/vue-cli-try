@@ -39,11 +39,11 @@ export default {
 
     this.pay_data.wood = this.win_price
     this.pay_data.scraps = this.win_price
-    let kegs = [0,0,0,0,1]  // 20%!!!
+    let kegs = [0,0,0,1]  // 25%!!!
     let chance = kegs[Math.floor(Math.random() * kegs.length)]
     if (chance === 1) this.pay_data.kegs = 1
     else this.pay_data.kegs = 0
-    let big_kegs = [0,0,0,0,0,0,0,0,0,1]  // 10%!!!
+    let big_kegs = [0,0,0,0,0,0,0,1]  // 18%!!!
     let chance2 = big_kegs[Math.floor(Math.random() * big_kegs.length)]
     if (chance2 === 1) this.pay_data.big_kegs = 1
     else this.pay_data.big_kegs = 0
