@@ -2,8 +2,8 @@ import store from "@/store"
 
 
 const easy = {"Bronzes": [5,6,7], "Silvers": [2,3], "Golds": [1,2], "diff": "easy"}
-const normal = {"Bronzes": [7,8,9,10], "Silvers": [2,3,4,5], "Golds": [2,3,4], "diff": "normal"}
-const hard = {"Bronzes": [10,11,12,13,14,15], "Silvers": [4,5,6,7], "Golds": [3,4,5,6], "diff": "hard"}
+const normal = {"Bronzes": [6,7,8,9], "Silvers": [2,3,4], "Golds": [2,3,4], "diff": "normal"}
+const hard = {"Bronzes": [9,10,11,12,13,14], "Silvers": [3,4,5,6], "Golds": [3,4,5,6], "diff": "hard"}
 const diff = [easy, normal, hard]
 
 
