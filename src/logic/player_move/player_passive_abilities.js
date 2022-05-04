@@ -14,6 +14,9 @@ import {if_in_deck_increase_self_damage}
   from "@/logic/player_move/passive_abilities/if_in_deck_increase_self_damage"
 import {if_in_grave_increase_self_damage}
   from "@/logic/player_move/passive_abilities/if_in_grave_increase_self_damage"
+import {
+  passive_end_turn_destroy_2_enemies_after_3_turns
+} from "@/logic/player_move/passive_abilities/destroy_2_enemies_after_3_turns";
 
 
 function player_passive_abilities_upon_playing_a_card(player_card, leader) {
@@ -73,6 +76,10 @@ function player_passive_abilities_end_turn(hand, leader, deck, grave, field, ene
       else if (passive_hand[i].passive_ability.name === 'increase-self-damage-by-1') {
         passive_end_turn_increase_self_damage(passive_hand[i])
       }
+      else if (passive_hand[i].passive_ability.name === 'destroy-2-enemies-after-3-turns') {
+        passive_end_turn_destroy_2_enemies_after_3_turns(passive_hand[i], field, enemy_leader, enemies, grave, hand)
+      }
+
       i += 1
     }
   }, 1000)

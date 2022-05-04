@@ -2,7 +2,12 @@ import store from "@/store"
 
 import {passive_end_turn_increase_damage}
   from "@/logic/ai_move/passive_abilities/increase_damage"
-import {enemy_leader_heal_self, passive_end_turn_heal_enemy_leader, passive_end_turn_heal_self}
+import {
+  enemy_leader_heal_self,
+  passive_end_turn_heal_all,
+  passive_end_turn_heal_enemy_leader,
+  passive_end_turn_heal_self
+}
   from "@/logic/ai_move/passive_abilities/heal"
 import {passive_end_turn_regain_shield}
   from "@/logic/ai_move/passive_abilities/regain_shield"
@@ -35,6 +40,9 @@ function enemy_passive_abilities_end_turn(field, enemy_leader, hand) {
       }
       else if (passive_enemies[i].passive_ability.name === 'heal-leader') {
         passive_end_turn_heal_enemy_leader(passive_enemies[i], enemy_leader)
+      }
+      else if (passive_enemies[i].passive_ability.name === 'heal-all-by-1') {
+        passive_end_turn_heal_all(field, enemy_leader)
       }
       else if (passive_enemies[i].passive_ability.name === 'regain-shield') {
         passive_end_turn_regain_shield(passive_enemies[i])
