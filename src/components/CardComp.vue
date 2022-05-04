@@ -13,7 +13,7 @@
 
     <card-ability-circle :card="card" />
 
-    <card-passive v-if="card.has_passive" :style="background_color(card)" />
+    <card-passive :card="card" v-if="card.has_passive" :style="background_color(card)" />
 
     <card-charges>{{ card.charges }}&#8607;</card-charges>
 
