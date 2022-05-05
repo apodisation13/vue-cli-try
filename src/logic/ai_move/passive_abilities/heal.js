@@ -54,7 +54,7 @@ function passive_end_turn_heal_all(field, enemy_leader) {
     for (let i = 0; i < all_enemies.length ; i++) {
       all_enemies[i].hp = e_hps[i] + 1
     }
-  }, 1000)
+  }, 750)
 }
 
 

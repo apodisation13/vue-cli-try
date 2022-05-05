@@ -19,11 +19,11 @@ const state = {
   craft_bronze: -200,  // pay SCRAPS
   craft_silver: -1000,  // pay SCRAPS
   craft_gold: -2000,  // pay SCRAPS
-  craft_leader: -5000,  // pay SCRAPS
+  craft_leader: -3000,  // pay SCRAPS
   mill_bronze: 20,  // receive SCRAPS
   mill_silver: 100,   // receive SCRAPS
   mill_gold: 200,   // receive SCRAPS
-  mill_leader: 200,   // receive SCRAPS
+  mill_leader: 300,   // receive SCRAPS
 
   pay_for_kegs: -200,   // pay WOOD
   pay_for_big_kegs: -400,  // pay WOOD
@@ -75,6 +75,20 @@ const actions = {
     }
   },
 
+  async patch_deck({ getters, dispatch }, deck) {
+    // ВНИМАНИЕ: в PATCH методе не забыть поставть слэш в конце!
+    try {
+      let header = getters['getHeader']
+      let url = `${post_deck}${deck.id}/`
+      await axios.patch(url, deck, header)
+      toast.success("Успешно изменили колоду")
+      await dispatch('get_user_database')
+    } catch (err) {
+      dispatch("error_action", err)
+      throw new Error("Какая-то ошибка при изменении деки")
+    }
+  },
+
   async pay_resource({ getters, dispatch }, body) {
     let header = getters['getHeader']
     let user_id = getters["getUser"].user_id
@@ -113,6 +127,7 @@ const actions = {
   },
 
   async craft_card_action({ dispatch }, card) {
+    // если у карты есть цвет, значит это карта, идём на экшен craft_card, иначе это лидер и идём на craft_leader
     if (card.card.color) await dispatch("craft_card", card)
     else await dispatch("craft_leader", card)
   },

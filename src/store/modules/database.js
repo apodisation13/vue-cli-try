@@ -33,7 +33,7 @@ const getters = {
     if (count === undefined) return applyFilter(state.cards, query)
     else {
       if (count === 0) return applyFilter(state.cards.filter(card=>card.count === 0), query)
-      else return applyFilter(state.cards.filter(card=>card.count > 0), query)
+      else return applyFilter(state.cards.filter(card=>card.count >= count), query)
     }
   },
   filtered_leaders: (state) => (fac) => {
@@ -97,8 +97,7 @@ const actions = {
       commit('set_levels', response.data.levels)
       dispatch('set_level_in_play', response.data.levels[0])
 
-      if (!getters['resource'].scraps) await dispatch("get_resource")
-
+      await dispatch("get_resource")
       await dispatch("get_enemies_for_random_level")
 
       commit('set_databaseLoaded', true)
@@ -137,6 +136,19 @@ const actions = {
       dispatch("error_action", err)
       throw new Error("Ошибка при загрузке рандомных уровней")
     }
+  },
+
+  async get_cards() {
+    let header = getters['getHeader']
+  },
+  async get_leaders() {
+    let header = getters['getHeader']
+  },
+  async get_decks() {
+    let header = getters['getHeader']
+  },
+  async get_levels() {
+    let header = getters['getHeader']
   },
 
   error_action({ commit }, err) {

@@ -2,6 +2,10 @@
   <modal-window :style="{'backgroundColor': 'floralwhite'}" v-touch:swipe="close_self" >
     <button-close @close_self="close_self" />
 
+    <div>
+      {{ leader.name }}
+    </div>
+
     <div class="leader_border" :style="border(leader)">
       <img class="img" :src="leader.image" v-if="leader.image" alt="">
     </div>
