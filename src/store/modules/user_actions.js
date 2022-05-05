@@ -19,11 +19,11 @@ const state = {
   craft_bronze: -200,  // pay SCRAPS
   craft_silver: -1000,  // pay SCRAPS
   craft_gold: -2000,  // pay SCRAPS
-  craft_leader: -5000,  // pay SCRAPS
+  craft_leader: -3000,  // pay SCRAPS
   mill_bronze: 20,  // receive SCRAPS
   mill_silver: 100,   // receive SCRAPS
   mill_gold: 200,   // receive SCRAPS
-  mill_leader: 200,   // receive SCRAPS
+  mill_leader: 300,   // receive SCRAPS
 
   pay_for_kegs: -200,   // pay WOOD
   pay_for_big_kegs: -400,  // pay WOOD
