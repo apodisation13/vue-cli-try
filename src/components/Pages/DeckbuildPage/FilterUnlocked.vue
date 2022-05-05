@@ -1,7 +1,7 @@
 <template>
   <div class="filter_unlocked">
     <div @click="reset_filter_types">Наличие</div>
-    <div class="types" v-for="count in [1, 0]" :key="count">
+    <div class="types" v-for="count in [1, 2, 0]" :key="count">
 
       <button class="type" @click="filtering(count)">
         {{ count }}
@@ -35,7 +35,7 @@ export default {
 }
 .type {
   height: 4vh;
-  width: 45%;
+  width: 31%;
   margin: 1%;
 }
 </style>
