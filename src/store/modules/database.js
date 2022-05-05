@@ -97,8 +97,7 @@ const actions = {
       commit('set_levels', response.data.levels)
       dispatch('set_level_in_play', response.data.levels[0])
 
-      if (!getters['resource'].scraps) await dispatch("get_resource")  // TODO: вот здесь косяк при регистрации
-
+      await dispatch("get_resource")
       await dispatch("get_enemies_for_random_level")
 
       commit('set_databaseLoaded', true)
