@@ -2,47 +2,68 @@
 
   <div class="menu" v-touch:swipe.left="close_menu">
 
-    <button class="close_button"
-            @click="close_menu"
-    >Закрыть</button>
+    <div>
+      <button class="close_button"
+              @click="close_menu"
+      >
+        <span class="material-symbols-outlined">cancel</span>
+      </button>
+    </div>
+
 
     <button class="menu_button"
             @click="$router.push('/')"
-    >На главную</button>
+    >
+      <span class="material-symbols-outlined">cottage</span>
+    </button>
 
     <button class="menu_button"
             :style="{'backgroundColor': 'green'}"
             v-if="level && isLoggedIn"
             @click="$router.push('/game')"
-    >Играть</button>
+    >
+      <span class="material-symbols-outlined">sports_esports</span>
+    </button>
 
     <button class="menu_button"
             v-if="isLoggedIn"
             @click="$router.push('/levelselect')"
-    >Уровни и колоды</button>
+    >Уровни</button>
 
     <button class="menu_button"
             v-if="isLoggedIn"
             @click="$router.push('/deckbuild')"
-    >База данных</button>
+    >
+      <span class="material-symbols-outlined">note_addnote_addnote_add</span>
+    </button>
 
     <button class="menu_button"
             v-if="isLoggedIn"
             @click="$router.push('/bonus')"
-    >Бонусы</button>
+    >
+     Бонус
+    </button>
 
     <button class="menu_button"
             @click="$router.push('/rules')"
-    >Правила игры</button>
+    >
+      <span class="material-symbols-outlined">quiz</span>
+    </button>
 
     <button class="menu_button"
             v-if="isLoggedIn"
             @click="$router.push('/settings')"
-    >Настройки</button>
+    >
+      <span class="material-symbols-outlined">settings</span>
+    </button>
 
 
-    <button class="switch_sound" v-if="sound" @click="turn_sound">Оn</button>
-    <button class="switch_sound" v-else @click="turn_sound">Оff</button>
+    <button class="switch_sound" v-if="sound" @click="turn_sound">
+      <span class="material-symbols-outlined">volume_up</span>
+    </button>
+    <button class="switch_sound" v-else @click="turn_sound">
+      <span class="material-symbols-outlined">volume_off</span>
+    </button>
 
   </div>
 </template>
@@ -86,6 +107,7 @@ export default {
   position: fixed;
   z-index: 99999;
   font-size: 14pt;
+  display: block;
 }
 
 .menu_button {
