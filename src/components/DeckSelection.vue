@@ -11,7 +11,7 @@
       <deck-preview-comp :deck="deck.deck" />
 
       <button v-if="deckbuilder && deck.deck.id !== 1"
-        @click="change_deck(deck)"
+        @click="change_deck(index)"
       >Изменить</button>
 
       <button v-if="deckbuilder && deck.deck.id !== 1"
@@ -78,8 +78,8 @@ export default {
       this.show_yesno = false
     },
 
-    change_deck(deck) {
-      alert(deck.id)
+    change_deck(index) {
+      this.$emit('emit_state_deck_index', index)
     },
   },
 

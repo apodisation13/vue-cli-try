@@ -69,11 +69,22 @@
   Размер: {{ deck_is_progress.length }}/{{ $store.state.game.cards_in_deck }}
   Жизни: {{ health }}
   <input class="input" :disabled="cant_save_deck" v-model="deck_name"><br><br>
-  <button class="btn_save_deck"
-    :disabled="cant_save_deck"
-    @click="save_deck"
+
+  <button
+      class="btn_save_deck"
+      v-if="!patch"
+      :disabled="cant_save_deck"
+      @click="save_deck"
   >
     СОХРАНИТЬ ДЕКУ
+  </button>
+  <button
+      class="btn_save_deck"
+      v-if="patch"
+      :disabled="cant_save_deck"
+      @click="patch_deck"
+  >
+    ИЗМЕНИТЬ ДЕКУ
   </button>
 
   <div class="decks_btn" @click="open_decks_list_modal">
@@ -83,6 +94,7 @@
   <decks-list-modal
       v-if="show_decks_list_modal"
       @close_decks_list_modal="show_decks_list_modal=false"
+      @change_deck="show_deck"
   />
 
 </template>
@@ -122,6 +134,9 @@ export default {
       leader: null,  // сам выбранный лидер
 
       show_decks_list_modal: false,  // показать окно с колодами
+
+      patch: false,
+      deck_id: null,
     }
   },
 
@@ -133,8 +148,11 @@ export default {
       this.deck_is_progress = []
       this.deck_body = []
       this.health = 0
+      this.deck_name = ''
       this.leader_selected = false
       this.faction_selected = false
+      this.patch = false
+      this.deck_id = null
     },
 
     // добавляем карты в колоду из базы карт
@@ -151,7 +169,7 @@ export default {
     delete_from_deck_in_progress(card) {
       this.health -= card.card.hp
       this.deck_is_progress.splice(this.deck_is_progress.indexOf(card), 1)
-      this.deck_body.splice(this.deck_body.indexOf(card), 1)
+      this.deck_body.splice(this.deck_body.findIndex(c => c.card === card.card.id), 1)
     },
 
     // выбираем лидера для деки
@@ -192,19 +210,46 @@ export default {
       }
     },
 
-    // show_deck(index) {
-    //   this.deck_is_progress = this.$store.state.decks[index].cards
-    //   this.health = this.$store.state.decks[index].health
-    //   this.leader_in_progress = this.$store.state.decks[index].leader
-    //   this.leader_selected = true
-    // },
+    show_deck(index) {
+      this.new_deck()
+      let deck = JSON.parse(JSON.stringify(this.$store.getters['all_decks'][index]))
+      this.deck_is_progress = deck.deck.cards
+      this.deck_body = deck.deck.d
+      this.leader = deck.deck.leader
+      this.leader_selected = true
+      this.health = deck.deck.health
+      this.deck_name = deck.deck.name
+      this.query.faction = [deck.deck.leader.faction, "Neutral"]
+      this.faction = deck.deck.leader.faction
+      this.faction_selected = true
+      this.patch = true
+      this.deck_id = deck.deck.id
+    },
+
+    async patch_deck() {
+      let body = {
+        name: this.deck_name,
+        health: this.health,
+        d: this.deck_body,
+        leader_id: this.leader.id,
+        id: this.deck_id,
+      }
+
+      try {
+        await this.$store.dispatch('patch_deck', body)
+        this.new_deck()  // всё обнуляем!
+      } catch (err) {
+        console.log(err)
+        throw err
+      }
+    },
 
     open_decks_list_modal() {
       this.show_decks_list_modal = true
     },
 
     can_add_card(card) {
-      return !this.deck_is_progress.includes(card)
+      return !this.deck_is_progress.filter(c => c.card.id === card.card.id).length
           && card.count !== 0
           && this.deck_is_progress.length < this.$store.state.game.cards_in_deck
           && this.faction_selected
