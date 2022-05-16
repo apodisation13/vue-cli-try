@@ -2,6 +2,9 @@
   <modal-window :style="{'backgroundColor': 'floralwhite'}" v-touch:swipe="close_self">
     <button-close @close_self="close_self" />
 
+    <div>
+      {{ enemy_leader.name }}
+    </div>
     <div class="enemy_border" :style="border(enemy_leader)">
       <img class="img" :src="enemy_leader.image" v-if="enemy_leader.image" alt="">
     </div>
@@ -33,7 +36,7 @@
       </h3>
     </div>
 
-    <div class="text" v-if="enemy_leader.passive"> ПАССИВНАЯ СПОСОБНОСТЬ </div>
+    <div class="text" v-if="enemy_leader.has_passive"> ПАССИВНАЯ СПОСОБНОСТЬ </div>
     <div class="text"> <b>СПОСОБНОСТЬ</b> - {{ enemy_leader.ability.description }} </div>
 
   </modal-window>

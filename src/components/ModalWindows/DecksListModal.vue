@@ -22,12 +22,14 @@ export default {
     close_self() {
       this.$emit('close_decks_list_modal')
     },
-    show_deck() {
-
+    show_deck(index) {
+      this.$emit('change_deck', index)
+      this.close_self()
     },
   },
   emits: [
       'close_decks_list_modal',
+      'change_deck'
   ],
 }
 </script>

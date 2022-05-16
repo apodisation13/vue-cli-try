@@ -1,3 +1,4 @@
+// CURRENTLY NOT USED, использовалась в HAND-COMP
 function border_for_hand(card, index) {
     if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon', 'z-index': 6 - index}
     else if (card.color === 'Silver') return {'border': 'solid 3px silver', 'z-index': 6 - index}
@@ -8,71 +9,92 @@ function border_for_hand(card, index) {
 
 function border_for_hand_2(hand, card) {
     if (hand.length === 6) {
-        if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon',
-            'float': 'right', 'margin-left': '-12%', 'margin-right': '0.2%'}
-        else if (card.color === 'Silver') return {'border': 'solid 3px silver',
-            'float': 'right', 'margin-left': '-12%', 'margin-right': '0.2%'}
-        else if (card.color === 'Gold') return {'border': 'solid 3px gold',
-            'float': 'right', 'margin-left': '-12%', 'margin-right': '0.2%'}
-        else return {}
+        if (!card.damages_enemy) {
+            if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon',
+                'float': 'right', 'margin-left': '-12%', 'margin-right': '0.2%'}
+            else if (card.color === 'Silver') return {'border': 'solid 3px silver',
+                'float': 'right', 'margin-left': '-12%', 'margin-right': '0.2%'}
+            else if (card.color === 'Gold') return {'border': 'solid 3px gold',
+                'float': 'right', 'margin-left': '-12%', 'margin-right': '0.2%'}
+            else return {}
+        }
+        else return {'border': 'solid 3px lime', 'float': 'right', 'margin-left': '-12%', 'margin-right': '0.2%'}
     }
     if (hand.length === 5) {
-        if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon',
-            'float': 'right', 'margin-left': '-9%', 'margin-right': '0.8%'}
-        else if (card.color === 'Silver') return {'border': 'solid 3px silver',
-            'float': 'right', 'margin-left': '-9%', 'margin-right': '0.8%'}
-        else if (card.color === 'Gold') return {'border': 'solid 3px gold',
-            'float': 'right', 'margin-left': '-9%', 'margin-right': '0.8%' }
-        else return {}
+        if (!card.damages_enemy) {
+            if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon',
+                'float': 'right', 'margin-left': '-9%', 'margin-right': '0.8%'}
+            else if (card.color === 'Silver') return {'border': 'solid 3px silver',
+                'float': 'right', 'margin-left': '-9%', 'margin-right': '0.8%'}
+            else if (card.color === 'Gold') return {'border': 'solid 3px gold',
+                'float': 'right', 'margin-left': '-9%', 'margin-right': '0.8%' }
+            else return {}
+        }
+        else return {'border': 'solid 3px lime', 'float': 'right', 'margin-left': '-9%', 'margin-right': '0.8%'}
     }
 
     if (hand.length === 4) {
-        if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon',
-            'float': 'right', 'margin-left': '-2%'}
-        else if (card.color === 'Silver') return {'border': 'solid 3px silver',
-            'float': 'right', 'margin-left': '-2%'}
-        else if (card.color === 'Gold') return {'border': 'solid 3px gold',
-            'float': 'right', 'margin-left': '-2%' }
-        else return {}
+        if (!card.damages_enemy) {
+            if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon',
+                'float': 'right', 'margin-left': '-2%'}
+            else if (card.color === 'Silver') return {'border': 'solid 3px silver',
+                'float': 'right', 'margin-left': '-2%'}
+            else if (card.color === 'Gold') return {'border': 'solid 3px gold',
+                'float': 'right', 'margin-left': '-2%' }
+            else return {}
+        }
+        else return {'border': 'solid 3px lime', 'float': 'right', 'margin-left': '-2%'}
     }
 
     else if (hand.length === 3) {
-        if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon',
-            'float': 'right', 'margin-right': '5%'}
-        else if (card.color === 'Silver') return {'border': 'solid 3px silver',
-            'float': 'right', 'margin-right': '5%'}
-        else if (card.color === 'Gold') return {'border': 'solid 3px gold',
-            'float': 'right', 'margin-right': '5%' }
-        else return {}
+        if (!card.damages_enemy) {
+            if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon',
+                'float': 'right', 'margin-right': '5%'}
+            else if (card.color === 'Silver') return {'border': 'solid 3px silver',
+                'float': 'right', 'margin-right': '5%'}
+            else if (card.color === 'Gold') return {'border': 'solid 3px gold',
+                'float': 'right', 'margin-right': '5%' }
+            else return {}
+        }
+        else return {'border': 'solid 3px lime', 'float': 'right', 'margin-right': '5%'}
     }
 
     else if (hand.length === 2) {
-        if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon',
-            'float': 'right', 'margin-right': '15%'}
-        else if (card.color === 'Silver') return {'border': 'solid 3px silver',
-            'float': 'right', 'margin-right': '15%'}
-        else if (card.color === 'Gold') return {'border': 'solid 3px gold',
-            'float': 'right', 'margin-right': '15%' }
-        else return {}
+        if (!card.damages_enemy) {
+            if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon',
+                'float': 'right', 'margin-right': '15%'}
+            else if (card.color === 'Silver') return {'border': 'solid 3px silver',
+                'float': 'right', 'margin-right': '15%'}
+            else if (card.color === 'Gold') return {'border': 'solid 3px gold',
+                'float': 'right', 'margin-right': '15%' }
+            else return {}
+        }
+        else return {'border': 'solid 3px lime', 'float': 'right', 'margin-right': '15%'}
     }
 
     else if (hand.length === 1) {
-        if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon',
-            'float': 'right', 'margin-right': '35%'}
-        else if (card.color === 'Silver') return {'border': 'solid 3px silver',
-            'float': 'right', 'margin-right': '35%'}
-        else if (card.color === 'Gold') return {'border': 'solid 3px gold',
-            'float': 'right', 'margin-right': '35%' }
-        else return {}
+        if (!card.damages_enemy) {
+            if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon',
+                'float': 'right', 'margin-right': '35%'}
+            else if (card.color === 'Silver') return {'border': 'solid 3px silver',
+                'float': 'right', 'margin-right': '35%'}
+            else if (card.color === 'Gold') return {'border': 'solid 3px gold',
+                'float': 'right', 'margin-right': '35%' }
+            else return {}
+        }
+        else return {'border': 'solid 3px lime', 'float': 'right', 'margin-right': '35%'}
     }
 }
 
 
 function border_for_card(card) {
-    if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon'}
-    else if (card.color === 'Silver') return {'border': 'solid 3px silver'}
-    else if (card.color === 'Gold') return {'border': 'solid 3px gold'}
-    else return {}
+    if (card.damages_player) return {'border': 'outset 4px red'}
+    else {
+        if (card.color === 'Bronze') return {'border': 'solid 1px lightsalmon'}
+        else if (card.color === 'Silver') return {'border': 'solid 3px silver'}
+        else if (card.color === 'Gold') return {'border': 'solid 3px gold'}
+        else return {}
+    }
 }
 
 
@@ -84,6 +106,7 @@ function border_leader(leader) {
 }
 
 
+// задний фон значка урона для всех карт и значка пассивок
 function background_color(card) {
     if (card.faction === 'Soldiers') {
         if (card.color === 'Bronze') return {'backgroundColor': 'blue'}

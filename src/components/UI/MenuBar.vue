@@ -1,27 +1,71 @@
 <template>
 
-<div class="menu">
-    
-  <button class="menu_button"
-  @click="$router.push('/')">Гл</button>
-  
-  <button class="menu_button" style="backgroundColor: green;"
-  v-if="level"
-  @click="$router.push('/game')">И</button>
-  
-  <button class="menu_button"
-  @click="$router.push('/levelselect')">У</button>
-  
-  <button class="menu_button" 
-  @click="$router.push('/deckbuild')">ДБ</button>
-  
-  <button class="menu_button"
-  @click="$router.push('/about')">О</button>
+  <div class="menu" v-touch:swipe.left="close_menu">
 
-  <button class="switch_sound" v-if="sound" @click="turn_sound">Оn</button>
-  <button class="switch_sound" v-else @click="turn_sound">Оff</button>
+    <div>
+      <button class="close_button"
+              @click="close_menu"
+      >
+        <span class="material-symbols-outlined">cancel</span>
+      </button>
+    </div>
 
-</div>
+
+    <button class="menu_button"
+            @click="$router.push('/')"
+    >
+      <span class="material-symbols-outlined">cottage</span>
+    </button>
+
+    <button class="menu_button"
+            :style="{'backgroundColor': 'green'}"
+            v-if="level && isLoggedIn"
+            @click="$router.push('/game')"
+    >
+      <span class="material-symbols-outlined">sports_esports</span>
+    </button>
+
+    <button class="menu_button"
+            v-if="isLoggedIn"
+            @click="$router.push('/levelselect')"
+    >Уровни</button>
+
+    <button class="menu_button"
+            v-if="isLoggedIn"
+            @click="$router.push('/deckbuild')"
+    >
+      <span class="material-symbols-outlined">note_addnote_addnote_add</span>
+    </button>
+
+    <button class="menu_button"
+            v-if="isLoggedIn"
+            @click="$router.push('/bonus')"
+    >
+     Бонус
+    </button>
+
+    <button class="menu_button"
+            @click="$router.push('/rules')"
+    >
+      <span class="material-symbols-outlined">quiz</span>
+    </button>
+
+    <button class="menu_button"
+            v-if="isLoggedIn"
+            @click="$router.push('/settings')"
+    >
+      <span class="material-symbols-outlined">settings</span>
+    </button>
+
+
+    <button class="switch_sound" v-if="sound" @click="turn_sound">
+      <span class="material-symbols-outlined">volume_up</span>
+    </button>
+    <button class="switch_sound" v-else @click="turn_sound">
+      <span class="material-symbols-outlined">volume_off</span>
+    </button>
+
+  </div>
 </template>
 
 <script>
@@ -29,47 +73,62 @@ export default {
   // кнопка появится только после загрузки дефолтного уровня и деки
   computed: { 
     level() {
-      return this.$store.state.level
+      return this.$store.state.game.level
     },
     sound() {
       return this.$store.state.play_sound
+    },
+    isLoggedIn() {
+      return this.$store.getters['isLoggedIn']
     },
   },
   methods: {
     turn_sound() {
       this.$store.commit('set_play_sound', !this.$store.state.play_sound)
     },
+    close_menu() {
+      // this.$emit('close_menu')
+      this.$store.commit('set_show_menu', false)
+    },
   },
+  // emits: ['close_menu'],
 }
 </script>
 
 <style>
 
 .menu {
-  width: 100%;
-  /* height: 70px; */
-  max-height: 5vh;
-  background-color: indigo;
-  display: flex;
-  align-items: center;  /* вот эта хрень отвечает за то, чтобы посередине были элементы */  
-  /* padding: 0 15px; */
+  background-color: dodgerblue;
+  background-image: linear-gradient(to right, rgba(130,144,255), rgba(30,250,255));
+  width: 30%;
+  height: 100%;
+  border-radius: 0 12px 12px 0;
+  text-align: center;
+  position: fixed;
+  z-index: 99999;
+  font-size: 14pt;
+  display: block;
 }
 
 .menu_button {
-  /* width: 100px; */
-  width: 15vh;
-  /* height: 50px; */
-  max-height: 3vh;
-  font-size: 6pt;
-  margin-left: 5%;
+  width: 80%;
+  height: 5vh;
+  margin-top: 5%;
+  border-radius: 50% 20% / 10% 40%;
+  border: dashed 2px yellow;
+  font-family: 'Brush Script MT', cursive;
+  font-size: 14pt;
 }
 
 .switch_sound {
   width: 5vh;
-  max-height: 3vh;
-  font-size: 6pt;
+  height: 5vh;
+  border-radius: 50%;
+  font-size: 10pt;
   margin-left: 5%;
   margin-right: 1%;
+  margin-top: 5%;
+  border: dashed 2px red;
 }
 
 </style>

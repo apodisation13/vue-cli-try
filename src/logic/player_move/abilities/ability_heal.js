@@ -1,13 +1,14 @@
 import store from "@/store"
-import { useToast } from 'vue-toastification'
 import {sound_heal} from "@/logic/play_sounds"
-
-const toast = useToast()
 
 
 function heal(card) {
-  store.commit('change_health', card.heal)
-  toast.success(`лечение на ${card.heal}`)
+  let temp = store.state.game.health  // сохраняем сколько было жизней
+  store.commit('set_health', `${store.state.game.health}+${card.heal}`)  // 45+12
+  setTimeout(() => {
+    store.commit('set_health', temp)
+    store.commit('change_health', card.heal)
+  }, 750)
   sound_heal()
 }
 

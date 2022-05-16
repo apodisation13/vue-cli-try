@@ -3,19 +3,19 @@
     ВЫБЕРЕТЕ ДЕКУ (дважды ЛКМ)<br>
 
     <div class="deck"
-         :style="background_color(deck)"
+         :style="background_color(deck.deck)"
          v-for="(deck, index) in decks" :key='deck'
          @dblclick="select_deck(index)"
     >
 
-      <deck-preview-comp :deck="deck" />
+      <deck-preview-comp :deck="deck.deck" />
 
-      <button v-if="deckbuilder && deck.id !== 1"
-        @click="change_deck(deck)"
+      <button v-if="deckbuilder && deck.deck.id !== 1"
+        @click="change_deck(index)"
       >Изменить</button>
 
-      <button v-if="deckbuilder && deck.id !== 1"
-        @click="delete_deck(deck)"
+      <button v-if="deckbuilder && deck.deck.id !== 1"
+        @click="delete_deck(deck.deck)"
       >Удалить</button>
 
     </div>
@@ -64,23 +64,28 @@ export default {
       this.deck_id = deck.id  // запоминаем id деки, которую надо удалить
     },
 
-    confirm_delete() {
+    async confirm_delete() {
       this.show_yesno = false
-      this.$store.dispatch("delete_deck", this.deck_id)
+      try {
+        await this.$store.dispatch("delete_deck", this.deck_id)
+      } catch (err) {
+        console.log(err)
+        throw err
+      }
     },
 
     cancel_delete() {
       this.show_yesno = false
     },
 
-    change_deck(deck) {
-      alert(deck.id)
+    change_deck(index) {
+      this.$emit('emit_state_deck_index', index)
     },
   },
 
   computed: {
     decks() {
-      return this.$store.state.decks
+      return this.$store.getters['all_decks']
     },
   },
 

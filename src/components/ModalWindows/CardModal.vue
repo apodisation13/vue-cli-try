@@ -2,6 +2,10 @@
   <modal-window :style="{'backgroundColor': 'floralwhite'}" v-touch:swipe="close_self">
     <button-close @close_self="close_self" />
 
+    <div>
+      {{ card.name }}
+    </div>
+
     <div class="enemy_border" :style="border(card)">
       <img class="img" :src="card.image" v-if="card.image" alt="">
     </div>

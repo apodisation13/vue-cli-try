@@ -1,11 +1,17 @@
-import { useToast } from 'vue-toastification'
-
-const toast = useToast()
+import {sound_passive_increase_damage} from "@/logic/play_sounds"
 
 
 function passive_end_turn_increase_self_damage(card) {
-  card.damage += 1
-  toast.info(`Карта ${card.name} увеличила у себя урон`)
+  let temp = card.damage
+
+  card.damage = `${card.damage}+1`
+
+  setTimeout(() => {
+    card.damage = temp
+    card.damage += 1
+  }, 750)
+
+  sound_passive_increase_damage()
 }
 
 

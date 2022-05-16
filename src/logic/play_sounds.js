@@ -33,6 +33,10 @@ function sound_destroy_enemy() {
   if (store.state.play_sound) new Audio(require('@/assets/audio/sounds/destroy_enemy.wav')).play()
 }
 
+function sound_passive_increase_damage() {
+  if (store.state.play_sound) new Audio(require('@/assets/audio/sounds/passive_increase_damage.wav')).play()
+}
+
 
 function sound_enemy_damage_player() {
   if (store.state.play_sound) new Audio(require('@/assets/audio/sounds/enemy_damage_player.wav')).play()
@@ -50,6 +54,14 @@ function sound_enemy_decrease_player_damage() {
   if (store.state.play_sound) new Audio(require('@/assets/audio/sounds/enemy_decrease_player_damage.wav')).play()
 }
 
+function sound_appear_new_enemy() {
+  if (store.state.play_sound) new Audio(require('@/assets/audio/sounds/appear_new_enemy.wav')).play()
+}
+
+
+function sound_lose_game() {
+  if (store.state.play_sound) new Audio(require('@/assets/audio/sounds/lose_game.wav')).play()
+}
 
 
 export {
@@ -61,9 +73,13 @@ export {
   sound_damage_column,
   sound_heal,
   sound_destroy_enemy,
+  sound_passive_increase_damage,
 
   sound_enemy_damage_player,
   sound_enemy_move_down,
   sound_enemy_regain_shield,
   sound_enemy_decrease_player_damage,
+  sound_appear_new_enemy,
+
+  sound_lose_game,
 }

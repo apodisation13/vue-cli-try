@@ -10,11 +10,11 @@
 
     <card-diamond :style="background_color(enemy)">&dagger;{{ enemy.damage }}</card-diamond>
 
-    <card-passive v-if="enemy.passive" :style="background_color(enemy)"/>
+    <card-passive v-if="enemy.has_passive" :style="background_color(enemy)"/>
 
     <enemy-shield v-if="enemy.shield"/>
 
-    <card-hp>&hearts;{{ enemy.hp }}</card-hp>
+    <card-hp :style="style(enemy)">&hearts;{{ enemy.hp }}</card-hp>
     
     <ability-circle-enemy :enemy="enemy"/>
   </div>
@@ -57,6 +57,11 @@ export default {
     },
     show_modal() {
       this.show_enemy_modal = true
+    },
+    style(enemy) {
+      if (isNaN(enemy.hp) && enemy.hp.includes('-')) return {'backgroundColor': 'red'}
+      else if (isNaN(enemy.hp) && enemy.hp.includes('+')) return {'backgroundColor': 'lime'}
+      else return {'backgroundColor': 'green'}
     },
   },  
 }

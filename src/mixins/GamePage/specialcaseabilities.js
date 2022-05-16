@@ -22,7 +22,7 @@ export default {
         if (this.cards_pool.length) this.show_pick_a_card_selection = true
       }
 
-      else if (this.selected_card.ability.name === 'draw-one-card') {
+      else if (this.selected_card.ability.name === 'draw-two-cards') {
         if (this.deck.length !== 0 && this.hand.length < 6) this.draw_one_card()
         if (this.deck.length !== 0 && this.hand.length < 6) this.draw_one_card()
       }

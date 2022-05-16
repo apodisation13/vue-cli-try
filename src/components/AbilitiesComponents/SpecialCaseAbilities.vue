@@ -62,7 +62,7 @@ export default {
   height: 22%;
   text-align: center;
   position: fixed;
-  top: 30%;
+  top: 28%;
   right: 1%;
   /*transform: translate(-23%, -3%);*/
   z-index: 999999;

@@ -31,7 +31,7 @@
 <!-- возможность вытянуть карту, дро -->
 <div class="draw">
   <draw-comp
-    v-show="can_draw"
+    v-show="can_draw && $store.state.game.player_turn"
     @click="draw_one_card"
   />
 </div>
@@ -74,14 +74,11 @@
 
 <script>
 
-import {appear_new_enemy} from '@/logic/place_enemies'
 import {damage_ai_card} from '@/logic/player_move/player_move'
-import {ai_move, leader_ai_move} from '@/logic/ai_move/ai_move'
-import {player_passive_abilities_end_turn} from "@/logic/player_move/player_passive_abilities"
-import {enemy_passive_abilities_end_turn} from "@/logic/ai_move/ai_passive_abilties"
 
 import draw from '@/mixins/GamePage/draw'
 import specialcaseabilities from "@/mixins/GamePage/specialcaseabilities"
+import execaimove from "@/mixins/GamePage/execaimove"
 
 import StartGame from "@/components/StartGame"
 import FieldComp from "@/components/Pages/GamePage/FieldComp"
@@ -110,11 +107,12 @@ export default {
   mixins: [
     draw,
     specialcaseabilities,
+    execaimove,
   ],
 
   async created() {
-    this.leader = await JSON.parse(JSON.stringify(this.$store.state.leader))
-    this.enemy_leader = await JSON.parse(JSON.stringify(this.$store.state.enemy_leader))
+    this.leader = await JSON.parse(JSON.stringify(this.$store.state.game.leader))
+    this.enemy_leader = await JSON.parse(JSON.stringify(this.$store.state.game.enemy_leader))
   },
 
   data() {
@@ -253,27 +251,8 @@ export default {
         )
         this.leader_active = false
       }
+
     },
-
-    // нажал ПАС - переход хода компу
-    exec_ai_move() {
-
-      player_passive_abilities_end_turn(
-          this.hand, this.leader, this.deck, this.grave, this.field, this.enemy_leader, this.enemies
-      )
-
-      setTimeout(
-          () => {
-            ai_move(this.field)
-            leader_ai_move(this.enemy_leader)
-            enemy_passive_abilities_end_turn(this.field, this.enemy_leader, this.hand)
-            appear_new_enemy(this.field, this.enemies)
-            this.player_cards_active = true
-            this.can_draw = this.calc_can_draw(this.player_cards_active, this.hand, this.deck)
-          }, 2000
-      )
-    },
-
 
   },
 }
