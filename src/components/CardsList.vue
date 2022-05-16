@@ -139,6 +139,8 @@ export default {
   margin-left: 0.5%;
   margin-top: 0.2%;
   position: relative;
+  border-width: 3px 4px 3px 5px;
+  border-radius:95% 4% 92% 5%/4% 95% 6% 95%;
 }
 
 .c {
