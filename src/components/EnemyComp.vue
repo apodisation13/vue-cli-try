@@ -71,19 +71,25 @@ export default {
 .enemy {
   width: 98%;
   height: 17vh;
-  border-radius: 2%;
+  /*border-radius: 2%;*/
   position: relative;
-  top: 48%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  /*top: 48%;*/
+  /*left: 50%;*/
+  /*transform: translate(-50%, -50%);*/
+  border-width: 3px 4px 3px 5px;
+  border-radius:95% 4% 92% 5%/4% 95% 6% 95%;
+  transform: rotate(2deg);
 }
 
 .img {
   width: 99%;
   height: 99%;
-  top: 50%; 
-  left: 50%;
-  transform: translate(-50%, -50%);
+  /*top: 50%; */
+  /*left: 50%;*/
+  /*transform: translate(-50%, -50%);*/
   position: absolute;
+  border-width: 3px 4px 3px 5px;
+  border-radius:95% 4% 92% 5%/4% 95% 6% 95%;
+  transform: rotate(2deg);
 }
 </style>
