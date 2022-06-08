@@ -93,7 +93,7 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   position: absolute;
-  opacity: 50%;
+  opacity: 0.5;
   border-width: 3px 4px 3px 5px;
   border-radius:95% 4% 92% 5%/4% 95% 6% 95%;
 }
