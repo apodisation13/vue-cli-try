@@ -3,6 +3,7 @@ export default {
     return {
       can_draw: false,  // возможность вытянуть карту
       s: 1,  // тестовая переменная, её можно дёргать отсюда, из компонента, из другого миксина!
+      draw: false,
     }
   },
   methods: {
@@ -19,11 +20,19 @@ export default {
 
     // тянем одну карту из деки, блокируем карты игрока
     draw_one_card() {
+      this.draw = true
       let random = Math.floor(Math.random() * this.deck.length);
       this.hand.unshift(this.deck[random])  // добавить в список на 1е место )))) потому что там в руке float:right
       this.deck.splice(random, 1)  // удалить этот 0й элемент
       this.player_cards_active = false
       this.can_draw = false
+    },
+
+    redraw_finished(dict) {
+      this.draw = false
+      this.hand = dict.hand
+      this.deck = dict.deck
+      alert(111)
     },
 
   },

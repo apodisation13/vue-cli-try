@@ -69,6 +69,11 @@
   :show_picked_card="show_picked_card"
   @confirm_selection="confirm_selection"
 />
+  <redraw-modal v-if="draw"
+    :deck="deck"
+    :hand="hand"
+    @redraw_finished="redraw_finished"
+  />
 
 </template>
 
@@ -93,9 +98,11 @@ import LeaderComp from "@/components/LeaderComp"
 import HealthComp from "@/components/Pages/GamePage/HealthComp"
 import HandComp from "@/components/Pages/GamePage/HandComp"
 import SpecialCaseAbilities from "@/components/AbilitiesComponents/SpecialCaseAbilities"
+import RedrawModal from "@/components/RedrawModal";
 
 export default {
   components: {
+    RedrawModal,
     StartGame,
     FieldComp,
     EnemyLeader, RemainingEnemies, EnemiesGrave,
