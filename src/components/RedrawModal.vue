@@ -11,7 +11,7 @@
 
     <div><h1>Изменить карту можно ещё {{ redraws }} раз</h1></div>
     <h2>В колоде осталось ещё {{ deck_current.length }} карт</h2>
-
+    <cards-list :cards="deck_current" />
   </modal-window>
 </template>
 
