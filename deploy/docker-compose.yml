@@ -12,7 +12,6 @@ services:
       - proxy
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./media/:/var/www/media/
     environment:
       - MODE=${MODE}
     ports:
