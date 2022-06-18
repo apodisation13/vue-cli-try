@@ -10,7 +10,7 @@ function sound_damage_all() {
 }
 
 function sound_damage_one() {
-  if (store.state.play_sound) new Audio(require('./../../public/audio/d_one.wav')).play()
+  if (store.state.play_sound) new Audio('./../../audio/d_one.wav').play()
 }
 
 function sound_spread_damage() {
