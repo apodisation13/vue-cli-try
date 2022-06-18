@@ -15,4 +15,4 @@ services:
     environment:
       - MODE=${MODE}
     ports:
-      - "8080:443"
+      - "8080:8080"
