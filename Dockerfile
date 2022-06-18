@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:16-alpine as build-stage
 
 # устанавливаем простой HTTP-сервер для статики
 # RUN npm install -g http-server
