@@ -33,17 +33,21 @@ const mutations = {
 }
 
 const actions = {
-  async check_auth({ getters, dispatch }) {
+  async check_auth({ getters, dispatch, commit }) {
     try {
       let user = getters['getUser']
+      console.log("Юзер,", user)
+      console.log(localStorage)
       await dispatch("login", { username: user.email, password: user.password })
     } catch (err) {
+      commit('logged_out')
       toast.error('По сохранённым ранее данным юзера не получилось авторизоваться, попробуйте вручную!')
       throw new Error('По сохранённым ранее данным юзера не получилось авторизоваться, попробуйте вручную')
     }
   },
   async login({ state, commit }, userObj) {
     try {
+      console.log("ЛОГИН: ", userObj)
       const response = await axios.post(check_auth_url, userObj)
       commit('logged_in', {
         email: response.data.email,
@@ -55,6 +59,7 @@ const actions = {
       toast.success('Успешно вошли!')
       return response.data.token
     } catch (err) {
+      commit('logged_out')
       toast.error('Произошла ошибка!')
       throw new Error('Ошибка авторизации, проверьте пароль')
     }

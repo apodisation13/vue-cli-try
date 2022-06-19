@@ -6,7 +6,7 @@
       <button class="close_button"
               @click="close_menu"
       >
-        <span class="material-symbols-outlined">cancel</span>
+        <span>Закрыть</span>
       </button>
     </div>
 
@@ -14,7 +14,7 @@
     <button class="menu_button"
             @click="$router.push('/')"
     >
-      <span class="material-symbols-outlined">cottage</span>
+      <span>На гл</span>
     </button>
 
     <button class="menu_button"
@@ -22,7 +22,7 @@
             v-if="level && isLoggedIn"
             @click="$router.push('/game')"
     >
-      <span class="material-symbols-outlined">sports_esports</span>
+      <span>Играть</span>
     </button>
 
     <button class="menu_button"
@@ -34,7 +34,7 @@
             v-if="isLoggedIn"
             @click="$router.push('/deckbuild')"
     >
-      <span class="material-symbols-outlined">note_addnote_addnote_add</span>
+      <span>БД</span>
     </button>
 
     <button class="menu_button"
@@ -47,22 +47,22 @@
     <button class="menu_button"
             @click="$router.push('/rules')"
     >
-      <span class="material-symbols-outlined">quiz</span>
+      <span>Правила</span>
     </button>
 
     <button class="menu_button"
             v-if="isLoggedIn"
             @click="$router.push('/settings')"
     >
-      <span class="material-symbols-outlined">settings</span>
+      <span>Настройки</span>
     </button>
 
 
     <button class="switch_sound" v-if="sound" @click="turn_sound">
-      <span class="material-symbols-outlined">volume_up</span>
+      <span>ON</span>
     </button>
     <button class="switch_sound" v-else @click="turn_sound">
-      <span class="material-symbols-outlined">volume_off</span>
+      <span>OFF</span>
     </button>
 
   </div>
