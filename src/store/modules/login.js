@@ -36,8 +36,6 @@ const actions = {
   async check_auth({ getters, dispatch, commit }) {
     try {
       let user = getters['getUser']
-      console.log("Юзер,", user)
-      console.log(localStorage)
       await dispatch("login", { username: user.email, password: user.password })
     } catch (err) {
       commit('logged_out')
@@ -47,7 +45,6 @@ const actions = {
   },
   async login({ state, commit }, userObj) {
     try {
-      console.log("ЛОГИН: ", userObj)
       const response = await axios.post(check_auth_url, userObj)
       commit('logged_in', {
         email: response.data.email,

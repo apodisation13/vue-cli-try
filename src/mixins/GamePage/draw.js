@@ -32,7 +32,6 @@ export default {
       this.draw = false
       this.hand = dict.hand
       this.deck = dict.deck
-      alert(111)
     },
 
   },
