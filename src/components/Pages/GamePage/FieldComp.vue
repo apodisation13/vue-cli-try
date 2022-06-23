@@ -59,6 +59,10 @@ export default {
   width: 75%;
   height: 74vh;
   overflow: hidden;
+  /*background-image: url("~@/assets/field.png");*/
+  /*background-position: center;*/
+  /*background-repeat: no-repeat;*/
+  /*background-size: cover;*/
 }
 
 .table {

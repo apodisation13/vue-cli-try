@@ -33,11 +33,12 @@ const mutations = {
 }
 
 const actions = {
-  async check_auth({ getters, dispatch }) {
+  async check_auth({ getters, dispatch, commit }) {
     try {
       let user = getters['getUser']
       await dispatch("login", { username: user.email, password: user.password })
     } catch (err) {
+      commit('logged_out')
       toast.error('По сохранённым ранее данным юзера не получилось авторизоваться, попробуйте вручную!')
       throw new Error('По сохранённым ранее данным юзера не получилось авторизоваться, попробуйте вручную')
     }
@@ -55,6 +56,7 @@ const actions = {
       toast.success('Успешно вошли!')
       return response.data.token
     } catch (err) {
+      commit('logged_out')
       toast.error('Произошла ошибка!')
       throw new Error('Ошибка авторизации, проверьте пароль')
     }

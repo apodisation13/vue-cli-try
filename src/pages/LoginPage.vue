@@ -93,7 +93,7 @@ export default {
 
       this.error = this.validate_form(false)
       if (this.error) return
-
+      console.log(this.email, this.password, 'из формы логина')
       try {
         await this.$store.dispatch('login', { username: this.email, password: this.password })
         await this.$store.dispatch('get_user_database')

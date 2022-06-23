@@ -12,7 +12,7 @@
     </div>
 
     <div class="not_logged_in" v-if="!isLoggedIn">
-      <div>Вы пока не вошли или не зарегистрированы. Перейдите по ссылке</div>
+      <div>Перейдите по ссылке</div>
       <router-link to='/login'>Регистрация\Вход</router-link>
     </div>
     <div class="logged_in" v-else>

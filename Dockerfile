@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:16-alpine as build-stage
 
 # устанавливаем простой HTTP-сервер для статики
 # RUN npm install -g http-server
@@ -20,11 +20,10 @@ RUN npm run build
 
 EXPOSE 8080
 # CMD [ "http-server", "dist" ]
-CMD [ "npm", "run", "serve" ]
+#CMD [ "npm", "run", "serve" ]
 
 
 # этап production (production-stage)
-# FROM nginx:stable-alpine as production-stage
-# COPY --from=build-stage /app/dist /usr/share/nginx/html
-# EXPOSE 80
-# CMD ["nginx", "-g", "daemon off;"]
+FROM nginx:stable-alpine as production-stage
+COPY --from=build-stage /app/dist /var/www
+CMD ["nginx", "-g", "daemon off;"]

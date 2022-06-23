@@ -11,7 +11,7 @@
 
     <div><h1>Изменить карту можно ещё {{ redraws }} раз</h1></div>
     <h2>В колоде осталось ещё {{ deck_current.length }} карт</h2>
-
+    <cards-list :cards="deck_current" />
   </modal-window>
 </template>
 
@@ -40,7 +40,9 @@ export default {
       required: true,
       type: Array,
     },
-
+  },
+  created() {
+    if (!this.deck.length) this.close_self()
   },
   methods: {
     close_self() {
@@ -64,7 +66,7 @@ export default {
       this.hand_current.splice(this.hand_current.indexOf(card), 1, this.deck_current[random])  // обновить
       this.deck_current.splice(random, 1)  // удалить этот i-й элемент
       
-      if (this.redraws === 0) this.close_self()
+      if (this.redraws === 0 || !this.deck_current.length) this.close_self()
     },
 
   },
