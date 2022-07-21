@@ -162,7 +162,7 @@ export default {
       if (!this.player_cards_active) return
 
       this.selected_card = card  // ВОТ ЗДЕСЬ МЫ ЗАПОМНИЛИ КАРТУ ИЗ РУКИ НА КОТОРУЮ ТКНУЛИ
-      alert('УРОН ' + this.selected_card.damage + '  заряды ' + this.selected_card.charges)
+      // alert('УРОН ' + this.selected_card.damage + '  заряды ' + this.selected_card.charges)
       this.ai_cards_active = true  // только теперь можно тыкать на карты противника!!!!!!!!!!!!!!
       this.enemy_leader_active = true  // и лидер врагов активен тоже
       this.leader_active = false // а лидер теперь неактивен
