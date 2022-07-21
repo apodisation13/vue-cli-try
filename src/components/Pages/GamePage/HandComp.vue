@@ -8,7 +8,7 @@
       @dragstart="onDragStart($event, card, index)"
     >
 
-      <card-comp :card="card" :id="`card_${index}`"/>
+      <card-comp :card="card" :id="`card_${index}`" v-touch:drag.once="go" @click="onDragStart(_, card, index)"/>
 
     </div>
   </div>
@@ -26,6 +26,11 @@ export default {
       type: Array,
     },
   },
+  data() {
+    return {
+      card: null
+    }
+  },
   methods: {
     chose_player_card(card) {
       this.$emit('chose_player_card', card)  // передаём card по эмиту
@@ -36,13 +41,17 @@ export default {
       return border_for_hand_2(this.hand, card)
     },
     onDragStart(e, card, index) {
-      e.dataTransfer.dropEffect = 'move'
-      e.dataTransfer.effectAllowed = 'move'
-      e.dataTransfer.setData('card', JSON.stringify(card))
-      console.log('МЫ ТУТ, ТЯНЕМ ЗА КАРТУ', card)
-      // this.drawIt(index)
-      // this.draw2()
+      alert(e)
+      // e.dataTransfer.dropEffect = 'move'
+      // e.dataTransfer.effectAllowed = 'move'
+      // e.dataTransfer.setData('card', JSON.stringify(card))
+      // console.log('МЫ ТУТ, ТЯНЕМ ЗА КАРТУ', card)
+      this.card = card
       this.$emit('chose_player_card', card)
+    },
+    go() {
+      console.log(this.card)
+      this.$emit('chose_player_card', this.card)
     },
     // drawIt(index) {
     //   var canvas = document.createElement('canvas');
