@@ -11,10 +11,12 @@
           @dragover.prevent
           @dragenter.prevent
             @drop.stop.prevent
+            v-touch:release="oD(get_index(i,j))"
         >
 
-          <enemy-comp v-if="field[get_index(i,j)]"
-            :enemy='field[get_index(i,j)]'
+          <enemy-comp
+              v-if="field[get_index(i,j)]"
+              :enemy='field[get_index(i,j)]'
           />
 
         </td>
@@ -49,12 +51,17 @@ export default {
     },
     onDrop(e, index) {
       const card = e.dataTransfer.getData('card')
-      alert(e)
       // console.log(JSON.parse(card))
       // console.log(index)
       // console.log(this.field[index])
       this.$emit('exec_damage_ai_card', this.field[index])
-    }
+    },
+    oD(index) {
+      var self = this
+      return function (a, b) {
+        self.$emit('exec_damage_ai_card', self.field[index])
+      }
+    },
   },
   emits: [
     'exec_damage_ai_card',
