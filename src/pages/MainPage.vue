@@ -69,6 +69,9 @@
 import ResourceComp from "@/components/ResourceComp"
 export default {
   components: {ResourceComp},
+  created() {
+    this.$store.commit('set_show_menu', true)
+  },
   computed: {
     isLoggedIn() {
       return this.$store.getters['isLoggedIn']

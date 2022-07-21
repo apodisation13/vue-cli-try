@@ -1,0 +1,6 @@
+{
+  "appId": "com.cardgame.app",
+  "appName": "cardgame",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}

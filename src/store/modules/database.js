@@ -156,6 +156,39 @@ const actions = {
     commit('set_databaseLoaded', false)
     toast.error("Произошла какая-то ошибка при загрузке вашей базы данных")
   },
+
+  async render_all_images({ getters, commit }) {
+    commit('set_images_rendered', false)
+    const cards = getters['all_cards']
+    const leaders = getters['all_leaders']
+    const enemies = getters['all_enemies']
+    const enemy_leaders = getters['all_enemy_leaders']
+
+    const all_cards = cards.concat(leaders).concat(enemies).concat(enemy_leaders)
+    if (all_cards.length === 0) {
+      commit('set_images_rendered', true)
+      return
+    }
+
+    toast.info("мы вообще тут")
+    const images = all_cards.map(imageSrc => {
+      return new Promise((resolve, reject) => {
+        const img = new Image()
+        img.src = imageSrc.card ? imageSrc.card.image : imageSrc.image
+        img.onload = resolve
+        img.onerror = reject
+      })
+    })
+
+    Promise.all(images).then(() => {
+      console.log("Images loaded!")
+      toast.success("Успешно отрендерили картинки")
+      commit('set_images_rendered', true)
+    }).catch(error => {
+      console.error("Some image(s) failed loading!")
+      console.error(error.message)
+    })
+  },
 }
 
 export default {

@@ -95,9 +95,10 @@ export default {
       if (this.error) return
       console.log(this.email, this.password, 'из формы логина')
       try {
+        await this.$router.push('/')
         await this.$store.dispatch('login', { username: this.email, password: this.password })
         await this.$store.dispatch('get_user_database')
-        await this.$router.push('/')
+        await this.$store.dispatch('render_all_images')
       } catch (err) {
         this.error = err
         throw err

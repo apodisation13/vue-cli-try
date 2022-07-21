@@ -7,6 +7,10 @@
           @close_field_modal="show_enemy_modal=false"
           @dblclick="exec_damage_ai_card(get_index(i,j))"
           @contextmenu.prevent
+          @drop="onDrop($event, get_index(i,j))"
+          @dragover.prevent
+          @dragenter.prevent
+            @drop.stop.prevent
         >
 
           <enemy-comp v-if="field[get_index(i,j)]"
@@ -43,6 +47,13 @@ export default {
     exec_damage_ai_card(i) {  // эмиттим ВСЕГО врага
       this.$emit('exec_damage_ai_card', this.field[i])
     },
+    onDrop(e, index) {
+      const card = e.dataTransfer.getData('card')
+      // console.log(JSON.parse(card))
+      // console.log(index)
+      // console.log(this.field[index])
+      this.$emit('exec_damage_ai_card', this.field[index])
+    }
   },
   emits: [
     'exec_damage_ai_card',
