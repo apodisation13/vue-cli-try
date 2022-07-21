@@ -49,6 +49,7 @@ export default {
     },
     onDrop(e, index) {
       const card = e.dataTransfer.getData('card')
+      alert(e)
       // console.log(JSON.parse(card))
       // console.log(index)
       // console.log(this.field[index])
