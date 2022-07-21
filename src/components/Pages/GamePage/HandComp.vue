@@ -241,9 +241,9 @@ export default {
   overflow: auto;
   /*white-space: nowrap;*/
   /*ВОТ БЛЯТЬ ИЗЗА ЭТОЙ ЕБАНОЙ ПОЕБНИ БЛЯТЬ ВЫШЕ Я ЕБАЛСЯ ЕБАНЫЕ 3 ЧАСА БЛЯТЬ*/
-  position: absolute;
-  top: 75%;
-  left: 0;
+  /*position: absolute;*/
+  /*top: 75%;*/
+  /*left: 0;*/
 }
 
 .card_in_hand {
