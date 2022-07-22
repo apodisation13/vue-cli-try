@@ -11,7 +11,7 @@
           @dragover.prevent
           @dragenter.prevent
             @drop.stop.prevent
-            v-touch:release="oD(get_index(i,j))"
+
         >
 
           <enemy-comp
@@ -50,17 +50,13 @@ export default {
       this.$emit('exec_damage_ai_card', this.field[i])
     },
     onDrop(e, index) {
-      const card = e.dataTransfer.getData('card')
+      // const card = e.dataTransfer.getData('card')
+      alert(index)
+      console.log(e)
       // console.log(JSON.parse(card))
       // console.log(index)
       // console.log(this.field[index])
       this.$emit('exec_damage_ai_card', this.field[index])
-    },
-    oD(index) {
-      var self = this
-      return function (a, b) {
-        self.$emit('exec_damage_ai_card', self.field[index])
-      }
     },
   },
   emits: [
