@@ -58,7 +58,9 @@
 
 <hand-comp
   :hand='hand'
+  :field="field"
   @chose_player_card='chose_player_card'
+  @target_enemy="exec_damage_ai_card"
 />
 
 </div>

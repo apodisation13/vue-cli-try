@@ -1,35 +1,60 @@
 <template>
   <div class="hand">
 
-    <div class="card_in_hand" :style="border(card)"
-      v-for="(card, index ) in hand" :key='card'
-      @dblclick="chose_player_card(card)"
-      draggable="true"
-      v-on:touchmove="onDragStart($event, card, index)"
-      v-on:touchstart="onDragStart($event, card, index)"
-      @dragstart="onDragStart($event, card, index)"
-    >
+<!--    <div class="card_in_hand" :style="border(card)"-->
+<!--      v-for="(card, index ) in hand" :key='card'-->
+<!--      @dblclick="chose_player_card(card)"-->
+<!--      draggable="true"-->
+<!--      v-on:touchmove="onDragStart($event, card, index)"-->
+<!--      v-on:touchstart="onDragStart($event, card, index)"-->
+<!--      @dragstart="onDragStart($event, card, index)"-->
+<!--         @dragend="onDragEnd"-->
+<!--    >-->
+<!--      <card-comp :card="card" />-->
+      <draggable v-model="draggableHand" @start="onDragStart" @end="onDragEnd($event)" item-key="id"
+      >
+        <template #item="{element}">
+          <card-comp
+              :card="element"
+              class="card_in_hand"
+              :style="border(element)"
+          />
+        </template>
+      </draggable>
 
-      <card-comp
-          :card="card"
-          :id="`card_${index}`"
-      />
 
-    </div>
+<!--    </div>-->
   </div>
 </template>
 
 <script>
 import { border_for_hand, border_for_card, border_for_hand_2 } from '@/logic/border_styles'
+import draggable from 'vuedraggable'
 import CardComp from "@/components/CardComp"
 export default {
   name: 'hand-comp',
-  components: {CardComp},
+  components: {
+    CardComp,
+    draggable
+  },
   props: {
     hand: {
       required: true,
       type: Array,
     },
+    field: {
+      required: true,
+    },
+  },
+  computed: {
+    draggableHand: {
+      get() {
+        return this.hand
+      },
+      set(val) {
+        alert(val)
+      }
+    }
   },
   methods: {
     chose_player_card(card) {
@@ -40,23 +65,38 @@ export default {
       // return border_for_card(card)
       return border_for_hand_2(this.hand, card)
     },
-    onDragStart(e, card, index) {
-
-      // var self = this
-      // return function (a, b) {
-      //   console.log('ТАЩИМ КАРТУ', card, index)
-      //   self.$emit('chose_player_card', card)
-      // }
+    onDragStart(event) {
+      console.log(event.originalEvent.clientX, event.originalEvent.clientY)
+      const elem = document.elementFromPoint(event.originalEvent.clientX, event.originalEvent.clientY)
+      this.hand.forEach(card => {
+        if (card.image === elem.src) {
+          console.log(`Выбрали карту ${card}`)
+          this.$emit('chose_player_card', card)
+          return
+        }
+      })
       // alert(index)
       // e.dataTransfer.dropEffect = 'move'
       // e.dataTransfer.effectAllowed = 'move'
       // e.dataTransfer.setData('card', JSON.stringify(card))
-      console.log('МЫ ТУТ, ТЯНЕМ ЗА КАРТУ', card)
-      this.$emit('chose_player_card', card)
+      // console.log('МЫ ТУТ, ТЯНЕМ ЗА КАРТУ', card)
+      // this.$emit('chose_player_card', card)
+    },
+    onDragEnd(event) {
+      console.log(event.originalEvent.clientX, event.originalEvent.clientY)
+      const elem = document.elementFromPoint(event.originalEvent.clientX, event.originalEvent.clientY)
+      this.field.forEach(enemy => {
+        if (enemy && enemy.image === elem.src) {
+          console.log(`Ткнули во врага ${enemy}`)
+          this.$emit('target_enemy', enemy)
+          return
+        }
+      })
     },
   },
   emits: [
-    'chose_player_card', 
+    'chose_player_card',
+    'target_enemy',
   ],
 }
 </script>
