@@ -6,6 +6,7 @@
       @dblclick="chose_player_card(card)"
       draggable="true"
       v-on:touchmove="onDragStart($event, card, index)"
+      v-on:touchstart="onDragStart($event, card, index)"
       @dragstart="onDragStart($event, card, index)"
     >
 
@@ -46,7 +47,7 @@ export default {
       //   console.log('ТАЩИМ КАРТУ', card, index)
       //   self.$emit('chose_player_card', card)
       // }
-      alert(index)
+      // alert(index)
       // e.dataTransfer.dropEffect = 'move'
       // e.dataTransfer.effectAllowed = 'move'
       // e.dataTransfer.setData('card', JSON.stringify(card))
@@ -73,6 +74,7 @@ export default {
   /*position: absolute;*/
   /*top: 75%;*/
   /*left: 0;*/
+  touch-action: none;
 }
 
 .card_in_hand {
@@ -82,6 +84,7 @@ export default {
   border-radius: 2%;
   display: table-row;
   overflow: hidden;
+  touch-action: none;
   /*вот так было через жопу*/
   /*margin-right: -12%;*/
   /*margin-left: 0.5%;*/

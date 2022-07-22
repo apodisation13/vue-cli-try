@@ -11,6 +11,7 @@
           @dragover.prevent
           @dragenter.prevent
             @drop.stop.prevent
+            @touchend="onDrop($event, get_index(i,j))"
 
         >
 
