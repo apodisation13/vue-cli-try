@@ -3,15 +3,13 @@
     <table class="table">
       <tr v-for="i in 4" :key="i">
         <td v-for="j in 3" :key="j"
-          @click.right="index=get_index(i,j); show_enemy_modal=true" 
-          @close_field_modal="show_enemy_modal=false"
           @dblclick="exec_damage_ai_card(get_index(i,j))"
           @contextmenu.prevent
-          :id="make_id(get_index(i,j))"
         >
           <enemy-comp
               v-if="field[get_index(i,j)]"
               :enemy='field[get_index(i,j)]'
+              :index="get_index(i,j)"
           />
         </td>
       </tr>
@@ -30,36 +28,21 @@ export default {
       type: Array,
     },
   },
-  data() {
-    return {
-      index: null,  // номер (индекс) клетки поля
-      show_enemy_modal: false,  // показать модальное окно с врагом
-    }
-  },
   methods: {
     get_index(i, j) {  // расчёт индекса клетки поля
       return (i-1) * 3 + (j-1)
     },
-    make_id(i) {
-      if (this.field[i]) return `field_${i}`
-      else return ''
-    },
     exec_damage_ai_card(i) {  // эмиттим ВСЕГО врага
       this.$emit('exec_damage_ai_card', this.field[i])
     },
-    onDrop(e, index) {
-      // const card = e.dataTransfer.getData('card')
-      // alert(index)
-      // console.log(e)
-      // console.log(JSON.parse(card))
-      // console.log(index)
-      // console.log(this.field[index])
-      // this.$emit('exec_damage_ai_card', this.field[index])
-    },
-    tr(event) {
-      console.log(event)
-      console.log(event.changedTouches[0].screenX, event.changedTouches[0].screenY)
-    },
+    // onDrop(e, index) {
+    //   const card = e.dataTransfer.getData('card')
+    //   console.log(e)
+    //   console.log(JSON.parse(card))
+    //   console.log(index)
+    //   console.log(this.field[index])
+    //   this.$emit('exec_damage_ai_card', this.field[index])
+    // },
   },
   emits: [
     'exec_damage_ai_card',

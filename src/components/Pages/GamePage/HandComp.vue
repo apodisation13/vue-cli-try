@@ -11,15 +11,17 @@
 <!--         @dragend="onDragEnd"-->
 <!--    >-->
 <!--      <card-comp :card="card" />-->
-      <draggable v-model="draggableHand"
-                 @start="onDragStart"
-                 @end="onDragEnd($event)"
-                 item-key="id"
-                 @touchend="onDragEndMobile($event)"
+      <draggable
+        v-model="draggableHand"
+        item-key="id"
+        @start="onDragStart"
+        @end="onDragEnd($event)"
+        @touchend="onDragEndMobile($event)"
       >
-        <template #item="{element}">
+        <template #item="{element, index}">
           <card-comp
               :card="element"
+              :index="index"
               class="card_in_hand"
               :style="border(element)"
           />
@@ -32,7 +34,7 @@
 </template>
 
 <script>
-import { border_for_hand, border_for_card, border_for_hand_2 } from '@/logic/border_styles'
+import { border_for_hand_2 } from '@/logic/border_styles'
 import draggable from 'vuedraggable'
 import CardComp from "@/components/CardComp"
 export default {
@@ -64,21 +66,25 @@ export default {
     chose_player_card(card) {
       this.$emit('chose_player_card', card)  // передаём card по эмиту
     },
-    border(card, index) {
-      // return border_for_hand(card, index)
-      // return border_for_card(card)
+    border(card) {
       return border_for_hand_2(this.hand, card)
     },
     onDragStart(event) {
-      // console.log(event.originalEvent.clientX, event.originalEvent.clientY)
+      console.log('ПОТЯНУЛИ ЗА КАРТУ')
       const elem = document.elementFromPoint(event.originalEvent.clientX, event.originalEvent.clientY)
-      this.hand.forEach(card => {
-        if (card.image === elem.src) {
-          console.log(`Выбрали карту ${card.damage}`)
-          this.$emit('chose_player_card', card)
-          return
-        }
-      })
+      const id = elem?.id
+      console.log('КАРТА В РУКЕ', id)
+      if (!id) return
+      const index = parseInt(id.slice(id.indexOf('_') + 1))
+      console.log('ИНДЕКС КАРТЫ В РУКЕ', index, this.hand[index].name)
+      this.$emit('chose_player_card', this.hand[index])
+      // this.hand.forEach(card => {
+      //   if (card.image === elem.src) {
+      //     console.log(`Выбрали карту ${card.damage}`)
+      //     this.$emit('chose_player_card', card)
+      //     return
+      //   }
+      // })
       // alert(index)
       // e.dataTransfer.dropEffect = 'move'
       // e.dataTransfer.effectAllowed = 'move'
@@ -91,29 +97,23 @@ export default {
       console.log('МЫ С КОМПА!!!!')
       console.log(event.originalEvent.clientX, event.originalEvent.clientY)
       const elem = document.elementFromPoint(event.originalEvent.clientX, event.originalEvent.clientY)
-      console.log(elem)
-      this.field.forEach(enemy => {
-        if (enemy && enemy.image === elem.src) {
-          console.log(`Ткнули во врага ${enemy}`)
-          this.$emit('target_enemy', enemy)
-          return
-        }
-      })
+      const id = elem?.id
+      console.log('ВРАГ', id)
+      if (!id) return
+      const index = parseInt(id.slice(id.indexOf('_') + 1))
+      console.log('ИНДЕКС КЛЕТКИ ПОЛЯ ВРАГА', index)
+      this.$emit('target_enemy', this.field[index])
     },
     onDragEndMobile(event) {
       console.log('МЫ С ТЕЛЕФОНА!!!')
-      console.log(event)
       console.log(event.changedTouches[0].screenX, event.changedTouches[0].screenY)
       const elem = document.elementFromPoint(event.changedTouches[0].clientX, event.changedTouches[0].clientY)
-      console.log(elem)
-      console.log(elem?.id)  //ВОТ ВИДИМО ЭТО НЕ РАБОТАЕТ ХЗ
-      this.field.forEach(enemy => {
-        if (enemy && enemy.image === elem.src) {
-          console.log(`Ткнули во врага ${enemy}`)
-          this.$emit('target_enemy', enemy)
-          return
-        }
-      })
+      const id = elem?.id
+      console.log('ВРАГ', id)
+      if (!id) return
+      const index = parseInt(id.slice(id.indexOf('_') + 1))
+      console.log('ИНДЕКС КЛЕТКИ ПОЛЯ ВРАГА', index)
+      this.$emit('target_enemy', this.field[index])
     },
   },
   emits: [
