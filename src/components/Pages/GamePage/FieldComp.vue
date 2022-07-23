@@ -7,8 +7,10 @@
           @close_field_modal="show_enemy_modal=false"
           @dblclick="exec_damage_ai_card(get_index(i,j))"
           @contextmenu.prevent
+          :id="make_id(get_index(i,j))"
         >
-          <enemy-comp v-if="field[get_index(i,j)]"
+          <enemy-comp
+              v-if="field[get_index(i,j)]"
               :enemy='field[get_index(i,j)]'
           />
         </td>
@@ -38,6 +40,10 @@ export default {
     get_index(i, j) {  // расчёт индекса клетки поля
       return (i-1) * 3 + (j-1)
     },
+    make_id(i) {
+      if (this.field[i]) return `field_${i}`
+      else return ''
+    },
     exec_damage_ai_card(i) {  // эмиттим ВСЕГО врага
       this.$emit('exec_damage_ai_card', this.field[i])
     },
@@ -49,6 +55,10 @@ export default {
       // console.log(index)
       // console.log(this.field[index])
       // this.$emit('exec_damage_ai_card', this.field[index])
+    },
+    tr(event) {
+      console.log(event)
+      console.log(event.changedTouches[0].screenX, event.changedTouches[0].screenY)
     },
   },
   emits: [

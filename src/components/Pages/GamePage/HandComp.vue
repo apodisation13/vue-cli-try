@@ -11,7 +11,11 @@
 <!--         @dragend="onDragEnd"-->
 <!--    >-->
 <!--      <card-comp :card="card" />-->
-      <draggable v-model="draggableHand" @start="onDragStart" @end="onDragEnd($event)" item-key="id"
+      <draggable v-model="draggableHand"
+                 @start="onDragStart"
+                 @end="onDragEnd($event)"
+                 item-key="id"
+                 @touchend="onDragEndMobile($event)"
       >
         <template #item="{element}">
           <card-comp
@@ -52,7 +56,7 @@ export default {
         return this.hand
       },
       set(val) {
-        alert(val)
+        console.log(val)
       }
     }
   },
@@ -66,11 +70,11 @@ export default {
       return border_for_hand_2(this.hand, card)
     },
     onDragStart(event) {
-      console.log(event.originalEvent.clientX, event.originalEvent.clientY)
+      // console.log(event.originalEvent.clientX, event.originalEvent.clientY)
       const elem = document.elementFromPoint(event.originalEvent.clientX, event.originalEvent.clientY)
       this.hand.forEach(card => {
         if (card.image === elem.src) {
-          console.log(`Выбрали карту ${card}`)
+          console.log(`Выбрали карту ${card.damage}`)
           this.$emit('chose_player_card', card)
           return
         }
@@ -83,8 +87,26 @@ export default {
       // this.$emit('chose_player_card', card)
     },
     onDragEnd(event) {
+      if (!event.originalEvent.clientX) return
+      console.log('МЫ С КОМПА!!!!')
       console.log(event.originalEvent.clientX, event.originalEvent.clientY)
       const elem = document.elementFromPoint(event.originalEvent.clientX, event.originalEvent.clientY)
+      console.log(elem)
+      this.field.forEach(enemy => {
+        if (enemy && enemy.image === elem.src) {
+          console.log(`Ткнули во врага ${enemy}`)
+          this.$emit('target_enemy', enemy)
+          return
+        }
+      })
+    },
+    onDragEndMobile(event) {
+      console.log('МЫ С ТЕЛЕФОНА!!!')
+      console.log(event)
+      console.log(event.changedTouches[0].screenX, event.changedTouches[0].screenY)
+      const elem = document.elementFromPoint(event.changedTouches[0].clientX, event.changedTouches[0].clientY)
+      console.log(elem)
+      console.log(elem?.id)  //ВОТ ВИДИМО ЭТО НЕ РАБОТАЕТ ХЗ
       this.field.forEach(enemy => {
         if (enemy && enemy.image === elem.src) {
           console.log(`Ткнули во врага ${enemy}`)
@@ -114,7 +136,7 @@ export default {
   /*position: absolute;*/
   /*top: 75%;*/
   /*left: 0;*/
-  touch-action: none;
+  /*touch-action: none;*/
 }
 
 .card_in_hand {
@@ -124,7 +146,7 @@ export default {
   border-radius: 2%;
   display: table-row;
   overflow: hidden;
-  touch-action: none;
+  /*touch-action: none;*/
   /*вот так было через жопу*/
   /*margin-right: -12%;*/
   /*margin-left: 0.5%;*/
@@ -144,19 +166,5 @@ export default {
   border-width: 3px 4px 3px 5px;
   border-color: red;
   border-style: solid;
-}
-* {
-  -webkit-touch-callout: none;
-  /* iOS Safari */
-  -webkit-user-select: none;
-  /* Safari */
-  -khtml-user-select: none;
-  /* Konqueror HTML */
-  -moz-user-select: none;
-  /* Firefox */
-  -ms-user-select: none;
-  /* Internet Explorer/Edge */
-  user-select: none;
-  /* Non-prefixed version, currently supported by Chrome and Opera */
 }
 </style>
