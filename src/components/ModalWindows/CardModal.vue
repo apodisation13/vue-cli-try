@@ -93,6 +93,7 @@ export default {
   },
   methods: {
     close_self() {
+      alert('закрываем модальное окно с картой')
       this.$emit('close_card_modal')
     },
     border(e) {
