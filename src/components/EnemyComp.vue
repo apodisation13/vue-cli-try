@@ -6,7 +6,7 @@
        v-touch:longtap="show_modal"
   >
 
-    <img class="img" :src="enemy.image" v-if="enemy.image" alt="">
+    <img class="img" :src="enemy.image" v-if="enemy.image" alt="" :id="make_id(enemy, index)">
 
     <card-diamond :style="background_color(enemy)">&dagger;{{ enemy.damage }}</card-diamond>
 
@@ -42,6 +42,9 @@ export default {
     enemy: {
       required: true,
     },
+    index: {
+      type: Number,
+    },
   },
   data() {
     return {
@@ -62,6 +65,9 @@ export default {
       if (isNaN(enemy.hp) && enemy.hp.includes('-')) return {'backgroundColor': 'red'}
       else if (isNaN(enemy.hp) && enemy.hp.includes('+')) return {'backgroundColor': 'lime'}
       else return {'backgroundColor': 'green'}
+    },
+    make_id(enemy, index) {
+      return `${enemy.name}_${index}`
     },
   },  
 }

@@ -5,7 +5,7 @@
       v-touch:longtap="show_modal"
   >
 
-    <img :class="!deckbuilder || count > 0 ? 'img' : 'img2'" :src="card.image" v-if="card.image" alt="">
+    <img :class="!deckbuilder || count > 0 ? 'img' : 'img2'" :src="card.image" v-if="card.image" alt="" :id="make_id(card, index)">
 
     <card-type v-if="card.type === 'Special'">&starf;</card-type>
 
@@ -57,6 +57,10 @@ export default {
       type: Number,
       required: false,
     },
+    index: {
+      type: Number,
+      required: false,
+    },
   },
   data() {
     return {
@@ -69,6 +73,10 @@ export default {
     },
     show_modal() {
       this.show_card_modal = true
+    },
+    make_id(card, index) {
+      if (!index && index !== 0) return ''
+      return `${card.name}_${index}`
     },
   },
 }

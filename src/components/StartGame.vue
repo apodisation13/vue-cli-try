@@ -66,12 +66,12 @@ export default {
     // начало игры: расставить врагов, вытянуть карты в руку, открыть redraw-modal
     async start_game() {
 
-      let result = await this.$store.dispatch("pay_resource",
-          {"wood": this.$store.getters['resource'].wood + this.play_price})
-      if (!result) {
-        alert('Что-то пошло не так, сыграть невозможно')
-        return
-      }
+      // let result = await this.$store.dispatch("pay_resource",
+      //     {"wood": this.$store.getters['resource'].wood + this.play_price})
+      // if (!result) {
+      //   alert('Что-то пошло не так, сыграть невозможно')
+      //   return
+      // }
       setTimeout(() => {
         place_enemies(this.field, this.enemies)  // рандомно расставит врагов
         enemy_leader_ai_move_once(this.$store.state.game.enemy_leader, this.deck)  // АБИЛКИ ЛИДЕРА врага в самом начале

@@ -58,7 +58,9 @@
 
 <hand-comp
   :hand='hand'
+  :field="field"
   @chose_player_card='chose_player_card'
+  @target_enemy="exec_damage_ai_card"
 />
 
 </div>
@@ -176,7 +178,7 @@ export default {
       // this.player_cards_active = false  // вот так нельзя, карты игрока д.б. всегда активны пока не сходил
       this.ai_cards_active = true
       this.enemy_leader_active = true  // и лидер врагов активен тоже
-      alert(this.leader.charges + ' заряды лидера')
+      // alert(this.leader.charges + ' заряды лидера')
     },
 
     // если ткнули ранее на карту игрока или лидера, а потом на поле, ходим // enemy - объект врага (field[i])
