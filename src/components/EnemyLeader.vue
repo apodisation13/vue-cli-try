@@ -7,7 +7,11 @@
     @dblclick="exec_enemy_leader"
   >
   
-    <img class="img" :src="enemy_leader.image" v-if="enemy_leader.hp > 0 || isNaN(enemy_leader.hp)" alt="">
+    <img class="img"
+         :src="enemy_leader.image" alt=""
+         v-if="enemy_leader.hp > 0 || isNaN(enemy_leader.hp)"
+         :id="`enemy_leader_${enemy_leader.name}`"
+    >
 
     <card-diamond :style="background_color(enemy_leader)"
         v-if="enemy_leader.damage_per_turn"

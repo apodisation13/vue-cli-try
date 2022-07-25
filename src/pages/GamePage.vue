@@ -59,8 +59,10 @@
 <hand-comp
   :hand='hand'
   :field="field"
+  :enemy_leader="enemy_leader"
   @chose_player_card='chose_player_card'
   @target_enemy="exec_damage_ai_card"
+  @target_enemy_leader="onLeaderClick"
 />
 
 </div>

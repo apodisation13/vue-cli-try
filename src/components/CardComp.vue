@@ -5,7 +5,12 @@
       v-touch:longtap="show_modal"
   >
 
-    <img :class="!deckbuilder || count > 0 ? 'img' : 'img2'" :src="card.image" v-if="card.image" alt="" :id="make_id(card, index)">
+    <img
+        :class="!deckbuilder || count > 0 ? 'img' : 'img2'"
+        :src="card.image" alt=""
+        v-if="card.image"
+        :id="make_id(card, index)"
+    >
 
     <card-type v-if="card.type === 'Special'">&starf;</card-type>
 
