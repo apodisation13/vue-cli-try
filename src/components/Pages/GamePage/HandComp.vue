@@ -1,35 +1,21 @@
 <template>
   <div class="hand">
+    <draggable
+      v-model="draggableHand"
+      item-key="id"
+      @start="onDragStart"
+      @end="onDragEnd($event)"
 
-<!--    <div class="card_in_hand" :style="border(card)"-->
-<!--      v-for="(card, index ) in hand" :key='card'-->
-<!--      @dblclick="chose_player_card(card)"-->
-<!--      draggable="true"-->
-<!--      v-on:touchmove="onDragStart($event, card, index)"-->
-<!--      v-on:touchstart="onDragStart($event, card, index)"-->
-<!--      @dragstart="onDragStart($event, card, index)"-->
-<!--         @dragend="onDragEnd"-->
-<!--    >-->
-<!--      <card-comp :card="card" />-->
-      <draggable
-        v-model="draggableHand"
-        item-key="id"
-        @start="onDragStart"
-        @end="onDragEnd($event)"
-
-      >
-        <template #item="{element, index}">
-          <card-comp
-              :card="element"
-              :index="index"
-              class="card_in_hand"
-              :style="border(element)"
-          />
-        </template>
-      </draggable>
-
-
-<!--    </div>-->
+    >
+      <template #item="{element, index}">
+        <card-comp
+            :card="element"
+            :index="index"
+            class="card_in_hand"
+            :style="border(element)"
+        />
+      </template>
+    </draggable>
   </div>
 </template>
 
@@ -39,10 +25,7 @@ import draggable from 'vuedraggable'
 import CardComp from "@/components/CardComp"
 export default {
   name: 'hand-comp',
-  components: {
-    CardComp,
-    draggable
-  },
+  components: { CardComp, draggable },
   props: {
     hand: {
       required: true,
@@ -50,6 +33,11 @@ export default {
     },
     field: {
       required: true,
+      type: Array,
+    },
+    enemy_leader: {
+      required: true,
+      type: Object,
     },
   },
   computed: {
@@ -78,59 +66,33 @@ export default {
       const index = parseInt(id.slice(id.indexOf('_') + 1))
       console.log('ИНДЕКС КАРТЫ В РУКЕ', index, this.hand[index].name)
       this.$emit('chose_player_card', this.hand[index])
-      // this.hand.forEach(card => {
-      //   if (card.image === elem.src) {
-      //     console.log(`Выбрали карту ${card.damage}`)
-      //     this.$emit('chose_player_card', card)
-      //     return
-      //   }
-      // })
-      // alert(index)
-      // e.dataTransfer.dropEffect = 'move'
-      // e.dataTransfer.effectAllowed = 'move'
-      // e.dataTransfer.setData('card', JSON.stringify(card))
-      // console.log('МЫ ТУТ, ТЯНЕМ ЗА КАРТУ', card)
-      // this.$emit('chose_player_card', card)
     },
     onDragEnd(event) {
-      // console.log(event)
       const event_type = event.originalEvent.type  // если мы с компа, то там есть этот параметр
 
       if (event_type === 'dragend') {
         console.log('МЫ С КОМПА!!!!')
         console.log(event.originalEvent.clientX, event.originalEvent.clientY)
         const elem = document.elementFromPoint(event.originalEvent.clientX, event.originalEvent.clientY)
-        const id = elem?.id
-        console.log('ВРАГ', id)
-        if (!id) return
-        const index = parseInt(id.slice(id.indexOf('_') + 1))
-        console.log('ИНДЕКС КЛЕТКИ ПОЛЯ ВРАГА', index)
-        this.$emit('target_enemy', this.field[index])
+        this.target_emit(elem)
       }
       else {
-        console.log(event)
         console.log('МЫ С ТЕЛЕФОНА!!!')
         console.log(event.originalEvent.changedTouches[0].clientX, event.originalEvent.changedTouches[0].clientY)
         const elem = document.elementFromPoint(event.originalEvent.changedTouches[0].clientX, event.originalEvent.changedTouches[0].clientY)
-        console.log(elem)
-        const id = elem?.id
-        console.log('ВРАГ', id)
-        if (!id) return
-        const index = parseInt(id.slice(id.indexOf('_') + 1))
-        console.log('ИНДЕКС КЛЕТКИ ПОЛЯ ВРАГА', index)
-        this.$emit('target_enemy', this.field[index])
+        this.target_emit(elem)
       }
-
     },
-    onDragEndMobile(event) {
-      console.log(event)
-      console.log('МЫ С ТЕЛЕФОНА!!!')
-      console.log(event.changedTouches[0].clientX, event.changedTouches[0].clientY)
-      const elem = document.elementFromPoint(event.changedTouches[0].clientX, event.changedTouches[0].clientY)
+    target_emit(elem) {
       const id = elem?.id
       console.log('ВРАГ', id)
       if (!id) return
-      const index = parseInt(id.slice(id.indexOf('_') + 1))
+      if (id.includes('enemy_leader')) {
+        console.log('ЭТО ЛИДЕР ВРАГА')
+        this.$emit('target_enemy_leader')
+        return
+      }
+      const index = parseInt(id.slice(id.indexOf('_') + 1)) // card.name_index - вот поэтому ищем _ +1, чтоб индекс поля
       console.log('ИНДЕКС КЛЕТКИ ПОЛЯ ВРАГА', index)
       this.$emit('target_enemy', this.field[index])
     },
@@ -138,6 +100,7 @@ export default {
   emits: [
     'chose_player_card',
     'target_enemy',
+    'target_enemy_leader',
   ],
 }
 </script>
