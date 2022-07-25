@@ -16,7 +16,7 @@
         item-key="id"
         @start="onDragStart"
         @end="onDragEnd($event)"
-        @touchend="onDragEndMobile($event)"
+
       >
         <template #item="{element, index}">
           <card-comp
@@ -93,20 +93,40 @@ export default {
       // this.$emit('chose_player_card', card)
     },
     onDragEnd(event) {
-      if (!event.originalEvent.clientX) return
-      console.log('МЫ С КОМПА!!!!')
-      console.log(event.originalEvent.clientX, event.originalEvent.clientY)
-      const elem = document.elementFromPoint(event.originalEvent.clientX, event.originalEvent.clientY)
-      const id = elem?.id
-      console.log('ВРАГ', id)
-      if (!id) return
-      const index = parseInt(id.slice(id.indexOf('_') + 1))
-      console.log('ИНДЕКС КЛЕТКИ ПОЛЯ ВРАГА', index)
-      this.$emit('target_enemy', this.field[index])
+      // console.log(event)
+      const event_type = event.originalEvent.type  // если мы с компа, то там есть этот параметр
+
+      if (event_type === 'dragend') {
+        console.log('МЫ С КОМПА!!!!')
+        console.log(event.originalEvent.clientX, event.originalEvent.clientY)
+        const elem = document.elementFromPoint(event.originalEvent.clientX, event.originalEvent.clientY)
+        const id = elem?.id
+        console.log('ВРАГ', id)
+        if (!id) return
+        const index = parseInt(id.slice(id.indexOf('_') + 1))
+        console.log('ИНДЕКС КЛЕТКИ ПОЛЯ ВРАГА', index)
+        this.$emit('target_enemy', this.field[index])
+      }
+      else {
+        console.log(event)
+        console.log('МЫ С ТЕЛЕФОНА!!!')
+        console.log(event.originalEvent.changedTouches[0].clientX, event.originalEvent.changedTouches[0].clientY)
+        const elem = document.elementFromPoint(event.originalEvent.changedTouches[0].clientX, event.originalEvent.changedTouches[0].clientY)
+        console.log(elem)
+        const id = elem?.id
+        console.log('ВРАГ', id)
+        alert('ВРАГ ' + id)
+        if (!id) return
+        const index = parseInt(id.slice(id.indexOf('_') + 1))
+        console.log('ИНДЕКС КЛЕТКИ ПОЛЯ ВРАГА', index)
+        this.$emit('target_enemy', this.field[index])
+      }
+
     },
     onDragEndMobile(event) {
+      console.log(event)
       console.log('МЫ С ТЕЛЕФОНА!!!')
-      console.log(event.changedTouches[0].screenX, event.changedTouches[0].screenY)
+      console.log(event.changedTouches[0].clientX, event.changedTouches[0].clientY)
       const elem = document.elementFromPoint(event.changedTouches[0].clientX, event.changedTouches[0].clientY)
       const id = elem?.id
       console.log('ВРАГ', id)
