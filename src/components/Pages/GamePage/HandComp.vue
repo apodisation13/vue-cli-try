@@ -115,7 +115,6 @@ export default {
         console.log(elem)
         const id = elem?.id
         console.log('ВРАГ', id)
-        alert('ВРАГ ' + id)
         if (!id) return
         const index = parseInt(id.slice(id.indexOf('_') + 1))
         console.log('ИНДЕКС КЛЕТКИ ПОЛЯ ВРАГА', index)
