@@ -75,7 +75,7 @@ export default {
       this.show_card_modal = true
     },
     make_id(card, index) {
-      if (!index) return ''
+      if (!index && index !== 0) return ''
       return `${card.name}_${index}`
     },
   },
