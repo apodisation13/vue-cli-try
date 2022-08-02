@@ -48,7 +48,11 @@
 <!-- лидер игрока -->
 <leader-comp 
   :leader='leader'
+  :field="field"
+  :enemy_leader="enemy_leader"
   @exec_leader="chose_leader"
+  @target_enemy="exec_damage_ai_card"
+  @target_enemy_leader="onLeaderClick"
 />
 
 <!-- Просто полоска с жизнями (пока что) -->
@@ -59,8 +63,10 @@
 <hand-comp
   :hand='hand'
   :field="field"
+  :enemy_leader="enemy_leader"
   @chose_player_card='chose_player_card'
   @target_enemy="exec_damage_ai_card"
+  @target_enemy_leader="onLeaderClick"
 />
 
 </div>
