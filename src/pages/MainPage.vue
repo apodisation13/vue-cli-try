@@ -16,7 +16,7 @@
       <router-link to='/login'>Регистрация\Вход</router-link>
     </div>
     <div class="logged_in" v-else>
-      <div>Отлично! Вы вошли! Проведите пальцем вправо для открытия меню</div>
+      <div>Отлично! Вы вошли!</div>
     </div>
 
     <div class="info">
@@ -66,12 +66,7 @@
 </template>
 
 <script>
-import ResourceComp from "@/components/ResourceComp"
 export default {
-  // components: {ResourceComp},
-  // created() {
-  //   this.$store.commit('set_show_menu', true)
-  // },
   computed: {
     isLoggedIn() {
       return this.$store.getters['isLoggedIn']

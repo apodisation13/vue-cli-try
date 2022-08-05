@@ -5,10 +5,9 @@
       @contextmenu.prevent
   >
 
-    {{ deck.name }}
-    Жизни -- {{ deck.health }}<br>
-    Лидер {{ deck.leader.name }}
-    {{ deck.leader.ability.name}}
+    {{ deck.name }}, жизни {{ deck.health }}
+<!--    Лидер {{ deck.leader.name }}-->
+<!--    {{ deck.leader.ability.name}}-->
 
     <deck-modal
       v-if="show_deck"
