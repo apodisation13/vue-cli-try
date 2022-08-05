@@ -1,7 +1,7 @@
 <template>
 
   <div v-if="loading || (!imagesRendered && loggedIn)">
-    ПОДОЖДИТЕ, ВЫПОЛНЯЕТСЯ ЗАГРУЗКА
+    <loading-comp />
   </div>
 
   <div
@@ -9,17 +9,27 @@
       class="app"
       v-touch:swipe.right="show"
   >
+    <menu-header />
     <menu-bar v-if="showMenu" />
-    <router-view></router-view>
+    <router-view ></router-view>
+    <menu-footer />
   </div>
 </template>
 
 <script>
 
-import MenuBar from '@/components/UI/MenuBar'
+import MenuBar from '@/components/UI/Menu/MenuBar'
+import MenuFooter from "@/components/UI/Menu/MenuFooter";
+import MenuHeader from "@/components/UI/Menu/MenuHeader";
+import LoadingComp from "@/components/LoadingComp";
 
 export default {
-  components: { MenuBar },
+  components: {
+    LoadingComp,
+    MenuHeader,
+    MenuFooter,
+    MenuBar
+  },
   
   async created() {
     // проверяем логин, если успешно, грузим базу данных и рендерим ВСЕ картинки
