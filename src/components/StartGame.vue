@@ -1,10 +1,6 @@
 <template>
   <div class="start">
 
-    <div class="resource">
-      <b><resource-comp /></b>
-    </div>
-
     <div class="play_price">
       Для этой игры надо заплатить <b>{{ play_price }}</b> wood!
     </div>
@@ -12,7 +8,6 @@
     <button class="btn_start" v-if="deck.length" @click="start_game">
       НАЧАТЬ
     </button>
-
 
   </div>
   <redraw-modal v-if="redraw" 
@@ -23,15 +18,13 @@
 </template>
 
 <script>
-
 import { place_enemies } from '@/logic/place_enemies'
 import { draw_hand } from '@/logic/draw_hand'
 import {enemy_leader_ai_move_once} from "@/logic/ai_move/ai_move"
 import RedrawModal from "@/components/RedrawModal"
-import ResourceComp from "@/components/ResourceComp";
 export default {
   name: 'start-game',
-  components: {ResourceComp, RedrawModal},
+  components: { RedrawModal },
   async created() {
     let deck = this.$store.state.game.current_deck
     let d = deck.map(c => c.card)
@@ -66,12 +59,12 @@ export default {
     // начало игры: расставить врагов, вытянуть карты в руку, открыть redraw-modal
     async start_game() {
 
-      // let result = await this.$store.dispatch("pay_resource",
-      //     {"wood": this.$store.getters['resource'].wood + this.play_price})
-      // if (!result) {
-      //   alert('Что-то пошло не так, сыграть невозможно')
-      //   return
-      // }
+      let result = await this.$store.dispatch("pay_resource",
+          {"wood": this.$store.getters['resource'].wood + this.play_price})
+      if (!result) {
+        alert('Что-то пошло не так, сыграть невозможно')
+        return
+      }
       setTimeout(() => {
         place_enemies(this.field, this.enemies)  // рандомно расставит врагов
         enemy_leader_ai_move_once(this.$store.state.game.enemy_leader, this.deck)  // АБИЛКИ ЛИДЕРА врага в самом начале
@@ -110,8 +103,8 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50%;
-  height: 40vh;
+  width: 70%;
+  height: 50vh;
   border: solid 2px black;
 }
 
@@ -121,13 +114,6 @@ export default {
   transform: translate(-50%, -50%);
   width: 60%;
   height: 20%;
-  position: absolute;
-}
-
-.resource {
-  top: 15%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   position: absolute;
 }
 

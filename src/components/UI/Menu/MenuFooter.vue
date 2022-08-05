@@ -1,5 +1,5 @@
 <template>
-<div class="footer" v-if="cond !== '/game'">
+<div class="footer" v-if="!IN_GAME">
   <button class="levels" @click="$router.push('/levelselect')">
     Уровни
   </button>
@@ -16,8 +16,8 @@
 export default {
   name: "MenuFooter",
   computed: {
-    cond() {
-      return this.$router.currentRoute.value.fullPath
+    IN_GAME() {
+      return this.$store.state.game.GAME
     }
   },
 }
