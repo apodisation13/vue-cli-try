@@ -1,5 +1,5 @@
 <template>
-<div class="header" v-if="cond !== '/game'">
+<div class="header" v-if="!IN_GAME">
   <button class="menuu" @click="$router.push('/')">
     Аватарка
   </button>
@@ -13,8 +13,8 @@ export default {
   name: "MenuHeader",
   components: {ResourceComp},
   computed: {
-    cond() {
-      return this.$router.currentRoute.value.fullPath
+    IN_GAME() {
+      return this.$store.state.game.GAME
     }
   },
 }

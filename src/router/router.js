@@ -94,14 +94,20 @@ const router = createRouter({
 })
 
 
-router.beforeEach((to, rom, next) => {
+router.beforeEach((to, from, next) => {
+
+    // прячем боковое меню по переходу в любую вкладку
     store.commit('set_show_menu', false)
+
+    // если мы ушли со страницы игры, ставим флажок что мы в игре на фолс, меню хэдер и футер показываем тогда
+    if (from.fullPath === '/game') {
+        store.commit('SET_GAME', false)
+    }
+
+    // если требуется АУФ, и мы залогинены, все ок. Если не залогинены, идем на главную. Если не требуется АУФ - все ок
     if (to.matched.some(record => record.meta.requireAuth)) {
         if (store.getters.isLoggedIn) next()
-        else {
-            next('/')
-            // router.push({ name: 'Login', query: { redirect: to } })
-        }
+        else next('/')
     }
     else next()
 })
