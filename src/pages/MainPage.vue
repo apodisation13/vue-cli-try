@@ -1,26 +1,13 @@
 <template>
-  <div class="img">
-    <div class="user_info" v-if="isLoggedIn">
-      <div>
-        ПРИВЕТ {{ username }}!
-      </div>
-<!--      <resource-comp />-->
-      <button
-          class="exit"
-          @click="logout"
-      >Выход</button>
-    </div>
+  <div>
 
     <div class="not_logged_in" v-if="!isLoggedIn">
       <div>Перейдите по ссылке</div>
       <router-link to='/login'>Регистрация\Вход</router-link>
     </div>
-    <div class="logged_in" v-else>
-      <div>Отлично! Вы вошли!</div>
-    </div>
 
     <div class="info">
-      <b>НУ А ВОТ ТУТ БУДЕТ ЧТО-ТО</b>
+      <b>Тут будут новости</b>
       <div v-if="isLoggedIn">
         <div class="info_block">
           Если провести пальцем вправо, откроется меню, попробуйте.
@@ -71,14 +58,6 @@ export default {
     isLoggedIn() {
       return this.$store.getters['isLoggedIn']
     },
-    username() {
-      return this.$store.getters['getUser'].username
-    },
-  },
-  methods: {
-    logout() {
-      this.$store.dispatch("logout")
-    },
   },
 }
 </script>
@@ -89,47 +68,19 @@ div, button {
   font-size: 14pt;
 }
 
-.user_info {
-  position: absolute;
-  top: 7%;
-  right: 2%;
-  width: 30%;
-  height: 20vh;
-  border: solid 2px blueviolet;
-}
-
-.exit {
-  width: 60%;
-  height: 5vh;
-  position: absolute;
-  bottom: 2%;
-  right: 2%;
-}
-
 .not_logged_in {
   position: absolute;
-  top: 7%;
-  left: 31%;
-  width: 36%;
-  height: 20vh;
+  top: 7vh;
+  margin-top: 1vh;
+  width: 99%;
+  height: 15vh;
   border: solid 2px red;
-}
-
-.logged_in {
-  position: absolute;
-  top: 7%;
-  left: 31%;
-  width: 36%;
-  height: 20vh;
-  border: solid 2px darkorange;
-  background-color: lime;
 }
 
 .info {
   position: absolute;
-  left: 31%;
-  top: 31%;
-  width: 68%;
+  bottom: 12%;
+  width: 99%;
   height: 60vh;
   background-color: darkgrey;
 }
