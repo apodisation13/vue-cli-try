@@ -98,7 +98,7 @@ export default {
 .deck_pool {
   margin: 1%;
   width: 95%;
-  height: 30vh;
+  height: 26vh;
   border: solid 1px orchid;
   overflow: scroll;
 }

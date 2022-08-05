@@ -24,7 +24,7 @@
     </div>
   </div>
 
-  <resource-comp />
+<!--  <resource-comp />-->
   <selected-deck />
   <deck-selection />
 
@@ -38,7 +38,12 @@ import SelectedDeck from "@/components/Pages/LevelPage/SelectedDeck"
 import ResourceComp from "@/components/ResourceComp"
 import {random_level_generator} from "@/logic/random_level"
 export default {
-  components: {ResourceComp, SelectedDeck, DeckSelection, LevelPreviewComp},
+  components: {
+    // ResourceComp,
+    SelectedDeck,
+    DeckSelection,
+    LevelPreviewComp
+  },
   setup() {
     const toast = useToast()
     return { toast }

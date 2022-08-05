@@ -4,7 +4,7 @@
       <div>
         ПРИВЕТ {{ username }}!
       </div>
-      <resource-comp />
+<!--      <resource-comp />-->
       <button
           class="exit"
           @click="logout"
@@ -68,10 +68,10 @@
 <script>
 import ResourceComp from "@/components/ResourceComp"
 export default {
-  components: {ResourceComp},
-  created() {
-    this.$store.commit('set_show_menu', true)
-  },
+  // components: {ResourceComp},
+  // created() {
+  //   this.$store.commit('set_show_menu', true)
+  // },
   computed: {
     isLoggedIn() {
       return this.$store.getters['isLoggedIn']
@@ -96,7 +96,7 @@ div, button {
 
 .user_info {
   position: absolute;
-  top: 2%;
+  top: 7%;
   right: 2%;
   width: 30%;
   height: 20vh;
@@ -113,7 +113,7 @@ div, button {
 
 .not_logged_in {
   position: absolute;
-  top: 2%;
+  top: 7%;
   left: 31%;
   width: 36%;
   height: 20vh;
@@ -122,7 +122,7 @@ div, button {
 
 .logged_in {
   position: absolute;
-  top: 2%;
+  top: 7%;
   left: 31%;
   width: 36%;
   height: 20vh;
@@ -133,7 +133,7 @@ div, button {
 .info {
   position: absolute;
   left: 31%;
-  top: 24%;
+  top: 31%;
   width: 68%;
   height: 60vh;
   background-color: darkgrey;

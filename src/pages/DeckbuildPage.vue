@@ -1,5 +1,5 @@
 <template>
-  <resource-comp />
+<!--  <resource-comp />-->
   <div class="database">
 
     <!-- база карт -->
@@ -114,7 +114,7 @@ import ResourceComp from "@/components/ResourceComp";
 
 export default {
   components: {
-    ResourceComp,
+    // ResourceComp,
     FilterUnlocked, FilterPassives, FilterColors, FilterTypes, FilterFactions,
     DecksListModal,  CardsList, LeaderComp
   },
@@ -317,7 +317,7 @@ export default {
   /* два дива в один ряд! */
   margin: 0.05%;
   clear: both;
-  height: 22vh;
+  height: 18vh;
   /*border: solid 2px yellow;*/
   width: 99%;
   margin-bottom: 1%;
@@ -344,11 +344,11 @@ export default {
 
 .btn_save_deck {
   width: 23%;
-  height: 6vh;
+  height: 3vh;
   /*background-color: green;*/
   display: inline;
   float: left;
-  margin-top: 1%;
+  /*margin-top: 1%;*/
 }
 
 .input {
@@ -358,14 +358,14 @@ export default {
 
 /*кнопка КОЛОДЫ*/
 .decks_btn {
-  height: 6vh;
+  height: 3vh;
   width: 70%;
   border: solid 2px green;
   text-align: center;
   display: inline;
   float: right;
   margin-right: 2%;
-  margin-top: 1%;
+  /*margin-top: 1%;*/
 }
 
 </style>
