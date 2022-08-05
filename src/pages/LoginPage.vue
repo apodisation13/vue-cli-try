@@ -93,7 +93,6 @@ export default {
 
       this.error = this.validate_form(false)
       if (this.error) return
-      console.log(this.email, this.password, 'из формы логина')
       try {
         await this.$router.push('/')
         await this.$store.dispatch('login', { username: this.email, password: this.password })
