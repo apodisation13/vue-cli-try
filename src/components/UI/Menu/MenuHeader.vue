@@ -1,32 +1,32 @@
 <template>
-<div class="header" v-if="!IN_GAME">
+  <div class="header" v-if="!IN_GAME">
 
-  <button class="menuu" @click="showExpandedMenu">
-    Аватарка
-  </button>
-
-  <resource-comp @click="$router.push('/bonus')" />
-
-  <div class="expand_dialog" v-if="expanded" >
-    <button class="menu_btn"
-      @click="push(button.path)"
-      v-for="button in routes" :key="button"
-    >
-      {{ button.title }}
+    <button class="avatar" @click="showExpandedMenu" v-touch:swipe.bottom="showExpandedMenu">
+      Аватарка
     </button>
 
-    <div v-if="isLoggedIn">Привет, {{ username }}!</div>
-    <button
-        class="menu_btn"
-        @click="logout"
-        style="float: right"
-        v-if="isLoggedIn"
-    >
-      ВЫХОД
-    </button>
+    <resource-comp @click="$router.push('/bonus')" />
+
+    <div class="expand_menu" v-if="expanded" v-touch:swipe.top="showExpandedMenu" >
+      <button class="menu_btn"
+        @click="push(button.path)"
+        v-for="button in routes" :key="button"
+      >
+        {{ button.title }}
+      </button>
+
+      <div v-if="isLoggedIn">Привет, {{ username }}!</div>
+      <button
+          class="menu_btn"
+          @click="logout"
+          style="float: right"
+          v-if="isLoggedIn"
+      >
+        ВЫХОД
+      </button>
+    </div>
+
   </div>
-
-</div>
 </template>
 
 <script>
@@ -75,7 +75,7 @@ export default {
 <style scoped>
 @media screen and (max-width: 1000px) {
   .header {
-    border: solid 1px yellow;
+    /*border: solid 1px yellow;*/
     width: 99%;
     height: 7vh;
   }
@@ -83,22 +83,23 @@ export default {
 
 @media screen and (max-width: 500px) {
   .header {
-    border: solid 1px red;
+    /*border: solid 1px red;*/
     width: 99%;
     height: 7vh;
   }
 }
 
-.menuu {
-  width: 13vw;
+.avatar {
+  width: 17vw;
   height: 90%;
   border-radius: 50%;
+  float: left;
 }
 
-.expand_dialog {
+.expand_menu {
   top: 7vh;
-  border: solid 1px brown;
-  width: 99%;
+  /*border: solid 2px blue;*/
+  width: 100%;
   height: 14vh;
   position: absolute;
   z-index: 999;
@@ -108,5 +109,6 @@ export default {
 .menu_btn {
   width: 19vw;
   height: 4vh;
+  margin: 1px;
 }
 </style>

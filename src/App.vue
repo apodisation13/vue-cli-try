@@ -9,6 +9,7 @@
       class="app"
       v-touch:swipe.right="show"
   >
+    <page-image />
     <menu-header />
     <menu-bar v-if="showMenu" />
     <router-view ></router-view>
@@ -22,9 +23,11 @@ import MenuBar from '@/components/UI/Menu/MenuBar'
 import MenuFooter from "@/components/UI/Menu/MenuFooter";
 import MenuHeader from "@/components/UI/Menu/MenuHeader";
 import LoadingComp from "@/components/LoadingComp";
+import PageImage from "@/components/PageImage";
 
 export default {
   components: {
+    PageImage,
     LoadingComp,
     MenuHeader,
     MenuFooter,
