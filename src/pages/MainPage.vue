@@ -10,7 +10,9 @@
       <b>Тут будут новости</b>
       <div v-if="isLoggedIn">
         <div class="info_block">
-          Если провести пальцем вправо, откроется меню, попробуйте.
+          Если провести пальцем вниз по кнопке аватарка, откроется подменю.<br>
+          Если провести по подменю пальцем вверх,подменю закроется.<br>
+          Если провести пальцем вправо, откроется меню.<br>
         </div>
         <div class="info_block" v-if="$store.state.show_menu">
           <div>
@@ -80,9 +82,9 @@ div, button {
 .info {
   position: absolute;
   bottom: 12%;
-  width: 99%;
+  width: 100%;
   height: 60vh;
-  background-color: darkgrey;
+  /*background-color: darkgrey;*/
 }
 
 .info_block {
