@@ -43,7 +43,7 @@ div {
 .resource {
   float: right;
   /*border: solid 1px green;*/
-  width: 65%;
+  width: 73%;
   height: 100%;
 }
 
