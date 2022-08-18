@@ -11,7 +11,7 @@ export default {
   name: "PageImage",
   created() {
     // если в роутере картинки не указаны, ничего делать не будем тут
-    if (!this.$router.currentRoute.value.meta.image_day) return
+    if (!this.$router.currentRoute.value.meta.image) return
     setInterval(() => {
       this.date = new Date().getMinutes()
     }, 1000)
@@ -24,10 +24,10 @@ export default {
   },
   methods: {
     path() {
-      const image = this.$router.currentRoute.value.meta
+      const image = this.$router.currentRoute.value.meta.image
       // если в роутере картинки не указаны, то картинку не рисуем
-      if (!image.image_day) return ''
-      return this.day ? require('@/assets/' + image.image_day) : require('@/assets/' + image.image_night)
+      if (!image) return ''
+      return this.day ? require('@/assets/' + image.day) : require('@/assets/' + image.night)
     },
   },
   watch: {

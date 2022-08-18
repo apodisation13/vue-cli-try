@@ -1,5 +1,5 @@
 <template>
-  <div class="header" v-if="!IN_GAME">
+  <div class="header" v-if="menuNeeded">
 
     <button class="avatar" @click="showExpandedMenu" v-touch:swipe.bottom="showExpandedMenu">
       Аватарка
@@ -30,13 +30,14 @@
 </template>
 
 <script>
-import ResourceComp from "@/components/ResourceComp";
+import ResourceComp from "@/components/ResourceComp"
 export default {
   name: "MenuHeader",
   components: {ResourceComp},
   computed: {
-    IN_GAME() {
-      return this.$store.state.game.GAME
+    // меню не нужны, если в роутере есть notRequireMenu (страницы загрузки, игры)
+    menuNeeded() {
+      return !this.$router.currentRoute.value.meta.notRequireMenu
     },
     username() {
       return this.$store.getters['getUser'].username

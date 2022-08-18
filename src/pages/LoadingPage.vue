@@ -1,10 +1,10 @@
 <template>
-  <div>Тренировка!</div>
+  <div>ЗАГРУЗКА</div>
 </template>
 
 <script>
 export default {
-
+  name: "LoadingPage",
 }
 </script>
 

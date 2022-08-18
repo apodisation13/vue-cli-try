@@ -1,23 +1,23 @@
 <template>
   <div class="resource">
     <div class="resources">
-      <img :src="require('@/assets/'+ 'ico.png')" alt="" class="image"/> <br/>
+      <img :src="require('@/assets/icons/resources/'+ 'ico.png')" alt="" class="image"/> <br/>
       {{ resource.scraps }}
     </div>
     <div class="resources">
-      <img :src="require('@/assets/'+ 'ico.png')" alt="" class="image"/><br/>
+      <img :src="require('@/assets/icons/resources/'+ 'ico.png')" alt="" class="image"/><br/>
       {{ resource.wood }}
     </div>
     <div class="resources">
-      <img :src="require('@/assets/'+ 'ico.png')" alt="" class="image"/><br/>
+      <img :src="require('@/assets/icons/resources/'+ 'ico.png')" alt="" class="image"/><br/>
       {{ resource.kegs }}
     </div>
     <div class="resources">
-      <img :src="require('@/assets/'+ 'ico.png')" alt="" class="image"/><br/>
+      <img :src="require('@/assets/icons/resources/'+ 'ico.png')" alt="" class="image"/><br/>
       {{ resource.big_kegs }}
     </div>
     <div class="resources">
-      <img :src="require('@/assets/'+ 'ico.png')" alt="" class="image"/><br/>
+      <img :src="require('@/assets/icons/resources/'+ 'ico.png')" alt="" class="image"/><br/>
       {{ resource.chests }}
     </div>
   </div>

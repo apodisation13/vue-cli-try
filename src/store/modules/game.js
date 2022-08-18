@@ -14,8 +14,6 @@ const state = {
   leader_ai_move: false,
   epa_end_turn: false,
   player_turn: true,
-
-  GAME: false, // флаг, что мы игре, чтобы спрятать меню хедер и футер
 }
 
 const getters = {
@@ -58,10 +56,6 @@ const mutations = {
   },
   set_player_turn(state, payload) {
     state.player_turn = payload
-  },
-
-  SET_GAME(state, payload) {
-    state.GAME = payload
   },
 
 }
