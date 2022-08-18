@@ -1,24 +1,25 @@
 <template>
-<div class="footer" v-if="!IN_GAME">
-  <button class="levels" @click="$router.push('/levelselect')">
-    Уровни
-  </button>
-  <button class="game" @click="$router.push('/game')">
-    Игра
-  </button>
-  <button class="deckbuilder" @click="$router.push('/deckbuild')">
-    Колоды
-  </button>
-</div>
+  <div class="footer" v-if="menuNeeded">
+    <button class="levels" @click="$router.push('/levelselect')">
+      Уровни
+    </button>
+    <button class="game" @click="$router.push('/game')">
+      Игра
+    </button>
+    <button class="deckbuilder" @click="$router.push('/deckbuild')">
+      Колоды
+    </button>
+  </div>
 </template>
 
 <script>
 export default {
   name: "MenuFooter",
   computed: {
-    IN_GAME() {
-      return this.$store.state.game.GAME
-    }
+    // меню не нужны, если в роутере есть notRequireMenu (страницы загрузки, игры)
+    menuNeeded() {
+      return !this.$router.currentRoute.value.meta.notRequireMenu
+    },
   },
 }
 </script>
