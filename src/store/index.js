@@ -19,22 +19,13 @@ const store = createStore({
         user_actions,
     },
     state: {
-        loading: false,
-        images_rendered: false,
         play_sound: false,
         show_menu: true,
     },
     getters: {
-        loading: state => state.loading,
-        images_rendered: state => state.images_rendered,
+
     },
     mutations: {
-        set_loading(state, payload) {
-            state.loading = payload
-        },
-        set_images_rendered(state, payload) {
-            state.images_rendered = payload
-        },
         set_play_sound(state, payload) {
             state.play_sound = payload
         },
