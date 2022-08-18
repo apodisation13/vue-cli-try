@@ -103,7 +103,7 @@ const actions = {
       commit('set_databaseLoaded', true)
       toast.success("Успешно загрузили всю вашу базу данных")
     } catch (err) {
-      dispatch("error_action")
+      dispatch("error_action", err)
       throw new Error("Ошибка загрузки базы данных!")
     }
   },
@@ -158,7 +158,6 @@ const actions = {
   },
 
   async render_all_images({ getters, commit }) {
-    commit('set_images_rendered', false)
     const cards = getters['all_cards']
     const leaders = getters['all_leaders']
     const enemies = getters['all_enemies']
@@ -183,7 +182,6 @@ const actions = {
     Promise.all(images).then(() => {
       console.log("Images loaded!")
       toast.success("Успешно отрендерили картинки")
-      commit('set_images_rendered', true)
     }).catch(error => {
       console.error("Some image(s) failed loading!")
       console.error(error.message)
