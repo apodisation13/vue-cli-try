@@ -62,18 +62,9 @@
       >Регистрация</button>
     </div>
 
-    <div class="error"
-         v-if="error"
-    > {{ error }} </div>
+    <div class="error" v-if="error"> {{ error }} </div>
 
-<!--    <form v-on:submit.prevent class="form">-->
-<!--      <input required v-model="email" class="full-width" name="email" id="email" autocomplete="email">-->
-<!--      <input required v-model="password" class="full-width" type="password" name="password" id="password" autocomplete="password" v-on:keyup.enter="login">-->
-<!--      <button class="primary auto" @click="login">-->
-<!--        LOGIN-->
-<!--      </button>-->
   </form>
-
 </template>
 
 <script>
@@ -90,17 +81,19 @@ export default {
   },
   methods: {
     async login() {
-
       this.error = this.validate_form(false)
       if (this.error) return
+
+      await this.$router.push('/loading')
       try {
-        await this.$router.push('/')
         await this.$store.dispatch('login', { username: this.email, password: this.password })
         await this.$store.dispatch('get_user_database')
         await this.$store.dispatch('render_all_images')
       } catch (err) {
         this.error = err
         throw err
+      } finally {
+        await this.$router.push('/')
       }
     },
 
