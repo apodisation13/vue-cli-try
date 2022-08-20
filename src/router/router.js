@@ -11,9 +11,13 @@ import SettingsPage from "@/pages/SettingsPage"
 import BonusPage from "@/pages/BonusPage"
 import RulesPage from "@/pages/RulesPage"
 import WinPage from "@/pages/WinPage"
-
+import TestPageYushkevich from "@/pages/TestPageYushkevich"
 
 const routes = [
+    {
+        path: '/yu_page',
+        component: TestPageYushkevich,
+    },
     {
         path: '/',
         component: MainPage,
@@ -83,7 +87,7 @@ const routes = [
         meta: {
             requireAuth: true,
         },
-    },
+    }
     
 ]
 
