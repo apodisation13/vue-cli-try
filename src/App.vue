@@ -1,68 +1,57 @@
 <template>
+  <div class="app" v-touch:swipe.right="show">
 
-  <div v-if="loading || (!imagesRendered && loggedIn)">
-    <loading-comp />
-  </div>
-
-  <div
-      v-if="(!loading && imagesRendered) || (!loading && !loggedIn)"
-      class="app"
-      v-touch:swipe.right="show"
-  >
+    <!--картинка страницы по параметрам из роутера-->
     <page-image />
+
+    <!--верхняя часть меню, хэдер-->
     <menu-header />
+
+    <!--боковое меню слева, TODO: убрать это на страницу GAME-->
     <menu-bar v-if="showMenu" />
-    <router-view ></router-view>
+
+    <!--собственно рендер самого приложения через роутер, формат {путь(роут): компонент}-->
+    <router-view />
+
+    <!--нижняя часть меню, в футере-->
     <menu-footer />
+
   </div>
 </template>
 
 <script>
-
 import MenuBar from '@/components/UI/Menu/MenuBar'
-import MenuFooter from "@/components/UI/Menu/MenuFooter";
-import MenuHeader from "@/components/UI/Menu/MenuHeader";
-import LoadingComp from "@/components/LoadingComp";
-import PageImage from "@/components/PageImage";
-
+import MenuFooter from "@/components/UI/Menu/MenuFooter"
+import MenuHeader from "@/components/UI/Menu/MenuHeader"
+import PageImage from "@/components/PageImage"
 export default {
   components: {
     PageImage,
-    LoadingComp,
     MenuHeader,
     MenuFooter,
     MenuBar
   },
-  
   async created() {
-    // проверяем логин, если успешно, грузим базу данных и рендерим ВСЕ картинки
-    this.$store.commit('set_loading', true)
+    // СРАБАТЫВАЕТ ПО ОТКРЫТИЮ САЙТА: вначале прыгаем на загрузку,
+    // Далее проверяем логин из локалсторадж, если успешно, грузим базу данных и рендерим ВСЕ картинки
+    // в любом случае идем на главную потом
+    await this.$router.push('/loading')
     try {
-      await this.$store.dispatch('check_auth')
+      await this.$store.dispatch('check_auth') // пытаемся послать запрос на логин с данными из локалсторадж
       await this.$store.dispatch('get_user_database')
-      await this.$store.dispatch('render_all_images')
-      this.$store.commit('set_loading', false)
+      await this.$store.dispatch('render_all_images') // принудительный рендер всех картинок
     } catch (err) {
       console.log(err)
-      this.$store.commit('set_loading', false)
       throw err
+    } finally {
+      await this.$router.push('/')
     }
   },
   computed: {
-    loading() {
-      return this.$store.getters['loading']
-    },
-    imagesRendered() {
-      return this.$store.getters['images_rendered']
-    },
-    loggedIn() {
-     return this.$store.getters['isLoggedIn']
-    },
     showMenu() {
       return this.$store.state.show_menu
     },
   },
-
   methods: {
     show() {
       this.$store.commit('set_show_menu', true)
@@ -71,9 +60,7 @@ export default {
       this.show_menu = false
     },
   },
-
 }
-
 </script>
 
 <style>
@@ -88,10 +75,6 @@ export default {
 .app {
   padding: 0;
 }
-
-/* body {
-  background-image: url('~@/assets/grass.jpg');
-} */
 
 /*заблокировать перезагрузку страницы на мобилке по прокрутке вверх*/
 html, body {

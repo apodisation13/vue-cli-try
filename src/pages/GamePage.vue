@@ -159,7 +159,6 @@ export default {
       this.field = dict.field
       this.enemies = dict.enemies
       this.beginning = false  // убираем кнопку с экрана после этого
-      this.$store.commit('SET_GAME', true) // флажок что мы в игре чтобы спрятать хэдер и футер меню
 
       // alert(this.s + 1)  // доступ к тем переменным
       // this.show()  // доступ к тем методам
