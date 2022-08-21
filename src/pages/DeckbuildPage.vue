@@ -1,5 +1,5 @@
 <template>
-  <resource-comp />
+<!--  <resource-comp />-->
   <div class="database">
 
     <!-- база карт -->
@@ -68,7 +68,7 @@
   Лидер: {{ leader_selected }}
   Размер: {{ deck_is_progress.length }}/{{ $store.state.game.cards_in_deck }}
   Жизни: {{ health }}
-  <input class="input" :disabled="cant_save_deck" v-model="deck_name"><br><br>
+  <input class="input" :disabled="cant_save_deck" v-model="deck_name"><br>
 
   <button
       class="btn_save_deck"
@@ -76,7 +76,7 @@
       :disabled="cant_save_deck"
       @click="save_deck"
   >
-    СОХРАНИТЬ ДЕКУ
+    СОХРАНИТЬ
   </button>
   <button
       class="btn_save_deck"
@@ -84,7 +84,7 @@
       :disabled="cant_save_deck"
       @click="patch_deck"
   >
-    ИЗМЕНИТЬ ДЕКУ
+    ИЗМЕНИТЬ
   </button>
 
   <div class="decks_btn" @click="open_decks_list_modal">
@@ -110,11 +110,9 @@ import FilterPassives from "@/components/Pages/DeckbuildPage/FilterPassives"
 
 import filtering from "@/mixins/DeckbuildPage/filtering"
 import FilterUnlocked from "@/components/Pages/DeckbuildPage/FilterUnlocked"
-import ResourceComp from "@/components/ResourceComp";
 
 export default {
   components: {
-    ResourceComp,
     FilterUnlocked, FilterPassives, FilterColors, FilterTypes, FilterFactions,
     DecksListModal,  CardsList, LeaderComp
   },
@@ -286,14 +284,14 @@ export default {
   float: right;
   /*border: solid 1px black;*/
   width: 18%;
-  height: 58vh;
+  height: 50vh;
   margin-right: 1%;
   margin-top: 0.05%;
 }
 
 /*база карт*/
 .card_pool_view {
-  height: 40vh;
+  height: 35vh;
   border: solid 1px black;
   margin: 0.05%;
   overflow: scroll;
@@ -301,7 +299,7 @@ export default {
 
 /*база лидеров*/
 .leader_pool_view {
-  height: 18vh;
+  height: 15vh;
   border: solid 1px black;
   /*margin: 1px;*/
   overflow: scroll;
@@ -317,7 +315,7 @@ export default {
   /* два дива в один ряд! */
   margin: 0.05%;
   clear: both;
-  height: 22vh;
+  height: 18vh;
   /*border: solid 2px yellow;*/
   width: 99%;
   margin-bottom: 1%;
@@ -344,11 +342,11 @@ export default {
 
 .btn_save_deck {
   width: 23%;
-  height: 6vh;
+  height: 3vh;
   /*background-color: green;*/
   display: inline;
   float: left;
-  margin-top: 1%;
+  /*margin-top: 1%;*/
 }
 
 .input {
@@ -358,14 +356,14 @@ export default {
 
 /*кнопка КОЛОДЫ*/
 .decks_btn {
-  height: 6vh;
+  height: 3vh;
   width: 70%;
   border: solid 2px green;
   text-align: center;
   display: inline;
   float: right;
   margin-right: 2%;
-  margin-top: 1%;
+  /*margin-top: 1%;*/
 }
 
 </style>

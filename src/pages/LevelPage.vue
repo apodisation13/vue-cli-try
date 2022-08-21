@@ -24,7 +24,6 @@
     </div>
   </div>
 
-  <resource-comp />
   <selected-deck />
   <deck-selection />
 
@@ -35,10 +34,13 @@ import { useToast } from "vue-toastification"
 import LevelPreviewComp from "@/components/Pages/LevelPage/LevelPreviewComp"
 import DeckSelection from "@/components/DeckSelection"
 import SelectedDeck from "@/components/Pages/LevelPage/SelectedDeck"
-import ResourceComp from "@/components/ResourceComp"
 import {random_level_generator} from "@/logic/random_level"
 export default {
-  components: {ResourceComp, SelectedDeck, DeckSelection, LevelPreviewComp},
+  components: {
+    SelectedDeck,
+    DeckSelection,
+    LevelPreviewComp
+  },
   setup() {
     const toast = useToast()
     return { toast }

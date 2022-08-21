@@ -12,102 +12,116 @@ import BonusPage from "@/pages/BonusPage"
 import RulesPage from "@/pages/RulesPage"
 import WinPage from "@/pages/WinPage"
 import TestPageYushkevich from "@/pages/TestPageYushkevich"
+import LoadingPage from "@/pages/LoadingPage"
+import {images} from "@/router/const/images"
 
 const routes = [
-    {
-        path: '/yu_page',
-        component: TestPageYushkevich,
+  {
+    path: '/yu_page',
+    component: TestPageYushkevich,
+  },
+  {
+    path: '/',
+    component: MainPage,
+    meta: {
+      requireAuth: false,
+      image: images.main,
     },
-    {
-        path: '/',
-        component: MainPage,
-        meta: {
-           requireAuth: false,
-        },
+  },
+  {
+    path: '/loading',
+    component: LoadingPage,
+    meta: {
+      requireAuth: false,
+      notRequireMenu: true,
+      image: images.loading,
     },
-    {
-        path: '/game',
-        component: GamePage,
-        meta: {
-            requireAuth: true,
-        },
+  },
+  {
+    path: '/login',
+    component: LoginPage,
+    meta: {
+      requireAuth: false,
+      image: images.login,
     },
-    {
-        path: '/about',
-        component: AboutPage,
-        meta: {
-            requireAuth: false,
-        },
+  },
+  {
+    path: '/game',
+    component: GamePage,
+    meta: {
+      requireAuth: true,
+      notRequireMenu: true,
     },
-    {
-        path: '/deckbuild',
-        component: DeckbuildPage,
-        meta: {
-            requireAuth: true,
-        },
+  },
+  {
+    path: '/about',
+    component: AboutPage,
+    meta: {
+      requireAuth: false,
     },
-    {
-        path: '/levelselect',
-        component: LevelPage,
-        meta: {
-            requireAuth: true,
-        },
+  },
+  {
+    path: '/deckbuild',
+    component: DeckbuildPage,
+    meta: {
+      requireAuth: true,
     },
-    {
-        path: '/login',
-        component: LoginPage,
-        meta: {
-            requireAuth: false,
-        },
+  },
+  {
+    path: '/levelselect',
+    component: LevelPage,
+    meta: {
+      requireAuth: true,
     },
-    {
-        path: '/settings',
-        component: SettingsPage,
-        meta: {
-            requireAuth: true,
-        },
+  },
+  {
+    path: '/settings',
+    component: SettingsPage,
+    meta: {
+      requireAuth: true,
     },
-    {
-        path: '/bonus',
-        component: BonusPage,
-        meta: {
-            requireAuth: true,
-        },
+  },
+  {
+    path: '/bonus',
+    component: BonusPage,
+    meta: {
+      requireAuth: true,
     },
-    {
-        path: '/rules',
-        component: RulesPage,
-        meta: {
-            requireAuth: false,
-        },
+  },
+  {
+    path: '/rules',
+    component: RulesPage,
+    meta: {
+      requireAuth: false,
     },
-    {
-        path: '/win',
-        component: WinPage,
-        meta: {
-            requireAuth: true,
-        },
-    }
-    
+  },
+  {
+    path: '/win',
+    component: WinPage,
+    meta: {
+      requireAuth: true,
+    },
+  },
 ]
 
 const router = createRouter({
-    routes,
-    mode: 'history',
-    history: createWebHistory()
+  routes,
+  mode: 'history',
+  history: createWebHistory()
 })
 
 
-router.beforeEach((to, rom, next) => {
-    store.commit('set_show_menu', false)
-    if (to.matched.some(record => record.meta.requireAuth)) {
-        if (store.getters.isLoggedIn) next()
-        else {
-            next('/')
-            // router.push({ name: 'Login', query: { redirect: to } })
-        }
-    }
-    else next()
+router.beforeEach((to, from, next) => {
+
+  // прячем боковое меню по переходу в любую вкладку
+  store.commit('set_show_menu', false)
+
+  // если требуется АУФ, и мы залогинены, все ок. Если не залогинены, идем на главную. Если не требуется АУФ - все ок
+  if (to.matched.some(record => record.meta.requireAuth)) {
+    if (store.getters.isLoggedIn) next()
+    else next('/')
+  }
+  else next()
 })
 
 export default router

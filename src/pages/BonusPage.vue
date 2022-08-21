@@ -180,7 +180,7 @@ export default {
 <style scoped>
 .d {
   width: 98%;
-  height: 90vh;
+  height: 80vh;
   border: solid 1px blueviolet;
   margin: 1%;
   /*background-image: url('~@/assets/brick.jpg');*/

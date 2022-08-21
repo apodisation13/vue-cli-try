@@ -1,10 +1,6 @@
 <template>
   <div class="start">
 
-    <div class="resource">
-      <b><resource-comp /></b>
-    </div>
-
     <div class="win_price">
       ВАШ ВЫИГРЫШ <br>
       scraps: <b>{{ pay_data.scraps }}</b><br>
@@ -17,10 +13,8 @@
 </template>
 
 <script>
-import ResourceComp from "@/components/ResourceComp";
 export default {
   name: "win-page",
-  components: {ResourceComp},
   computed: {
     win_price() {
       if (this.$store.state.game.level.difficulty === "easy") return this.$store.state.user_actions.win_level_easy
@@ -68,13 +62,6 @@ export default {
   width: 50%;
   height: 40vh;
   border: solid 2px black;
-}
-
-.resource {
-  top: 15%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
 }
 
 .win_price {
