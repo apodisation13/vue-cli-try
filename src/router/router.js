@@ -12,18 +12,27 @@ import BonusPage from "@/pages/BonusPage"
 import RulesPage from "@/pages/RulesPage"
 import WinPage from "@/pages/WinPage"
 import LoadingPage from "@/pages/LoadingPage"
+import GlebTestPage from "@/pages/GlebTestPage"
 
 import {images} from "@/router/const/images"
 
 
 const routes = [
   {
-    path: '/',
+    path: '/tttt',
     component: MainPage,
     meta: {
       requireAuth: false,
       image: images.main,
     },
+  },
+  {
+    path: '/',
+    component: GlebTestPage,
+    // meta: {
+    //   requireAuth: false,
+    //   image: images.main,
+    // },
   },
   {
     path: '/loading',
