@@ -34,4 +34,11 @@
     height: 35px;
     margin-bottom: 5px;
   }
+
+  @media (max-width: 640px) {
+    .resource-image {
+      width: 25px;
+      height: 25px;
+    }
+  }
 </style>
