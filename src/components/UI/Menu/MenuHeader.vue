@@ -1,11 +1,13 @@
 <template>
   <div class="header" v-if="!IN_GAME">
-
-    <button class="avatar" @click="showExpandedMenu" v-touch:swipe.bottom="showExpandedMenu">
-      Аватарка
-    </button>
-
-    <resource-comp @click="$router.push('/bonus')" />
+    <div class="wrapper__avatar-resources">
+      <button class="avatar" @click="showExpandedMenu" v-touch:swipe.bottom="showExpandedMenu">
+        Аватарка
+      </button>
+      <resource-comp 
+        @click="$router.push('/bonus')" 
+      />
+    </div>
 
     <div class="expand_menu" v-if="expanded" v-touch:swipe.top="showExpandedMenu" >
       <button class="menu_btn"
@@ -87,6 +89,12 @@ export default {
     width: 99%;
     height: 7vh;
   }
+}
+
+.wrapper__avatar-resources {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .avatar {

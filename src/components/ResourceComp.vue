@@ -47,9 +47,10 @@ div {
 }
 
 .resource-list {
+  max-width: 270px;
   display: flex;
   align-items: flex-start;
   justify-content: space-around;
-  padding: 15px;
+  padding: 5px;
 }
 </style>
