@@ -50,7 +50,7 @@ div {
   max-width: 270px;
   width: 100%;
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
   justify-content: space-around;
   margin-left: 5px;
 }

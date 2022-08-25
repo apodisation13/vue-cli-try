@@ -1,6 +1,8 @@
 <template>
   <div class="resource-item">
-    <img :src="require(`@/assets/icons/resources/${name}.png`)" :alt="name" class="resource-image"/>
+    <div class="wrapper__resource-image">
+      <img :src="require(`@/assets/icons/resources/${name}.png`)" :alt="name" class="resource-image"/>
+    </div>
     <div class="resource-count">{{ count }}</div>
   </div>
 </template>
@@ -28,17 +30,28 @@
     align-items: center;
   }
 
-  .resource-image {
-    display: block;
+  .wrapper__resource-image {
     width: 35px;
     height: 35px;
     margin-bottom: 5px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .resource-image {
+    display: block;
+    max-width: 35px;
+    max-height: 35px;
   }
 
   @media (max-width: 640px) {
-    .resource-image {
-      width: 25px;
-      height: 25px;
-    }
+  .wrapper__resource-image {
+    width: 25px;
+    height: 25px;
+  }
+  .resource-image {
+    max-width: 25px;
+    max-height: 25px;
+  }
   }
 </style>
