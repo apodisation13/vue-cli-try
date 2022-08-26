@@ -97,10 +97,8 @@ export default {
 }
 
 .avatar {
-  width: 17vw;
-  height: 90%;
+  height: 60px;
   border-radius: 50%;
-  float: left;
 }
 
 .expand_menu {
