@@ -1,30 +1,36 @@
 <template>
-  <div class="resource">
-    <div class="resources">
-      <img :src="require('@/assets/icons/resources/'+ 'ico.png')" alt="" class="image"/> <br/>
+  <div class="resource-list">
+    <resource-item v-for="(count, name) in resource" :key="name" :name="name" :count="count"/>
+    <!-- не удаляю на случай если придется хардкодить -->
+    <!-- <div class="resource-item">
+      <img :src="require('@/assets/'+ 'ico.png')" alt="" class="resource-image"/> <br/>
       {{ resource.scraps }}
     </div>
-    <div class="resources">
-      <img :src="require('@/assets/icons/resources/'+ 'ico.png')" alt="" class="image"/><br/>
+    <div class="resource-item">
+      <img :src="require('@/assets/'+ 'ico.png')" alt="" class="resource-image"/><br/>
       {{ resource.wood }}
     </div>
-    <div class="resources">
-      <img :src="require('@/assets/icons/resources/'+ 'ico.png')" alt="" class="image"/><br/>
+    <div class="resource-item">
+      <img :src="require('@/assets/'+ 'ico.png')" alt="" class="resource-image"/><br/>
       {{ resource.kegs }}
     </div>
-    <div class="resources">
-      <img :src="require('@/assets/icons/resources/'+ 'ico.png')" alt="" class="image"/><br/>
+    <div class="resource-item">
+      <img :src="require('@/assets/'+ 'ico.png')" alt="" class="resource-image"/><br/>
       {{ resource.big_kegs }}
     </div>
-    <div class="resources">
-      <img :src="require('@/assets/icons/resources/'+ 'ico.png')" alt="" class="image"/><br/>
+    <div class="resource-item">
+      <img :src="require('@/assets/'+ 'ico.png')" alt="" class="resource-image"/><br/>
       {{ resource.chests }}
-    </div>
+    </div> -->
+    <!-- не удаляю на случай если придется хардкодить -->
   </div>
 </template>
 
 <script>
+import ResourceItem from '@/components/UI/ResourceItem';
+
 export default {
+  components: { ResourceItem },
   name: "resource-comp",
   computed: {
     resource() {
@@ -40,23 +46,12 @@ div {
   font-size: 14pt;
 }
 
-.resource {
-  float: right;
-  /*border: solid 1px green;*/
-  width: 73%;
-  height: 100%;
-}
-
-.resources {
-  display: inline-block;
-  /*border: solid 1px black;*/
-  margin: 1px 5px 1px 1px;
-  height: 99%;
-  width: 17%;
-}
-
-.image {
-  width: 25px;
-  height: 25px;
+.resource-list {
+  max-width: 270px;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  margin-left: 5px;
 }
 </style>
