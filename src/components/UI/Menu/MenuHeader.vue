@@ -1,12 +1,11 @@
 <template>
   <div class="header" v-if="menuNeeded">
-
-    <button class="avatar" @click="showExpandedMenu" v-touch:swipe.bottom="showExpandedMenu">
-      Аватарка
-    </button>
-
-    <resource-comp @click="$router.push('/bonus')" />
-
+    <div class="wrapper__avatar-resources">
+      <button class="avatar" @click="showExpandedMenu" v-touch:swipe.bottom="showExpandedMenu">
+        Аватарка
+      </button>
+      <resource-list @click="$router.push('/bonus')" />
+    </div>
     <div class="expand_menu" v-if="expanded" v-touch:swipe.top="showExpandedMenu" >
       <button class="menu_btn"
         @click="push(button.path)"
@@ -30,10 +29,10 @@
 </template>
 
 <script>
-import ResourceComp from "@/components/ResourceComp"
+import ResourceList from "@/components/ResourceList"
 export default {
   name: "MenuHeader",
-  components: {ResourceComp},
+  components: {ResourceList},
   computed: {
     // меню не нужны, если в роутере есть notRequireMenu (страницы загрузки, игры)
     menuNeeded() {
@@ -90,11 +89,16 @@ export default {
   }
 }
 
+.wrapper__avatar-resources {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+}
+
 .avatar {
-  width: 17vw;
-  height: 90%;
+  height: 60px;
   border-radius: 50%;
-  float: left;
 }
 
 .expand_menu {
