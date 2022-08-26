@@ -12,7 +12,7 @@
     name: 'resource-item',
     props: {
       name: {
-        typr: String,
+        type: String,
         required: true,
       },
       count: {
