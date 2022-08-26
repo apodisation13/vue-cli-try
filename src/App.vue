@@ -1,21 +1,23 @@
 <template>
-  <div class="app" v-touch:swipe.right="show">
+  <div class="wrapper__bg">
+    <div class="app" v-touch:swipe.right="show">
 
-    <!--картинка страницы по параметрам из роутера-->
-    <page-image />
+      <!--картинка страницы по параметрам из роутера-->
+      <page-image />
 
-    <!--верхняя часть меню, хэдер-->
-    <menu-header />
+      <!--верхняя часть меню, хэдер-->
+      <menu-header />
 
-    <!--боковое меню слева, TODO: убрать это на страницу GAME-->
-    <menu-bar v-if="showMenu" />
+      <!--боковое меню слева, TODO: убрать это на страницу GAME-->
+      <menu-bar v-if="showMenu" />
 
-    <!--собственно рендер самого приложения через роутер, формат {путь(роут): компонент}-->
-    <router-view />
+      <!--собственно рендер самого приложения через роутер, формат {путь(роут): компонент}-->
+      <router-view />
 
-    <!--нижняя часть меню, в футере-->
-    <menu-footer />
+      <!--нижняя часть меню, в футере-->
+      <menu-footer />
 
+    </div>
   </div>
 </template>
 
@@ -72,16 +74,16 @@ export default {
   /* font-family: Arial, Helvetica, sans-serif; единый на всё */
 }
 
+/*заблокировать перезагрузку страницы на мобилке по прокрутке вверх*/
+html, body {
+  overscroll-behavior-y: contain;
+}
+
 .app {
   padding: 0;
   position: relative;
   width: 100%;
   height: 100vh;
-}
-
-/*заблокировать перезагрузку страницы на мобилке по прокрутке вверх*/
-html, body {
-  overscroll-behavior-y: contain;
 }
 
 @media (min-width: 376px) {
@@ -92,6 +94,14 @@ html, body {
     border: 8px solid rgba(0, 0, 0, 0.5);
     border-radius: 8px;
     margin: 0 auto;
+  }
+
+  .wrapper__bg {
+    position: relative;
+    z-index: -2;
+    background-color: #000;
+    width: 100%;
+    height: 100vh;
   }
 }
 </style>
