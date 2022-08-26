@@ -4,7 +4,7 @@
       <button class="avatar" @click="showExpandedMenu" v-touch:swipe.bottom="showExpandedMenu">
         Аватарка
       </button>
-      <resource-comp @click="$router.push('/bonus')" />
+      <resource-list @click="$router.push('/bonus')" />
     </div>
     <div class="expand_menu" v-if="expanded" v-touch:swipe.top="showExpandedMenu" >
       <button class="menu_btn"
@@ -29,10 +29,10 @@
 </template>
 
 <script>
-import ResourceComp from "@/components/ResourceComp"
+import ResourceList from "@/components/ResourceList"
 export default {
   name: "MenuHeader",
-  components: {ResourceComp},
+  components: {ResourceList},
   computed: {
     // меню не нужны, если в роутере есть notRequireMenu (страницы загрузки, игры)
     menuNeeded() {
