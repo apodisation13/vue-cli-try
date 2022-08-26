@@ -74,10 +74,24 @@ export default {
 
 .app {
   padding: 0;
+  position: relative;
+  width: 100%;
+  height: 100vh;
 }
 
 /*заблокировать перезагрузку страницы на мобилке по прокрутке вверх*/
 html, body {
   overscroll-behavior-y: contain;
+}
+
+@media (min-width: 376px) {
+  .app {
+    max-width: 375px;
+    width: 100%;
+    height: 100vh;
+    border: 8px solid rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    margin: 0 auto;
+  }
 }
 </style>
