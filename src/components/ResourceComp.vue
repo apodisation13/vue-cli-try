@@ -1,28 +1,6 @@
 <template>
   <div class="resource-list">
     <resource-item v-for="(count, name) in resource" :key="name" :name="name" :count="count"/>
-    <!-- не удаляю на случай если придется хардкодить -->
-    <!-- <div class="resource-item">
-      <img :src="require('@/assets/'+ 'ico.png')" alt="" class="resource-image"/> <br/>
-      {{ resource.scraps }}
-    </div>
-    <div class="resource-item">
-      <img :src="require('@/assets/'+ 'ico.png')" alt="" class="resource-image"/><br/>
-      {{ resource.wood }}
-    </div>
-    <div class="resource-item">
-      <img :src="require('@/assets/'+ 'ico.png')" alt="" class="resource-image"/><br/>
-      {{ resource.kegs }}
-    </div>
-    <div class="resource-item">
-      <img :src="require('@/assets/'+ 'ico.png')" alt="" class="resource-image"/><br/>
-      {{ resource.big_kegs }}
-    </div>
-    <div class="resource-item">
-      <img :src="require('@/assets/'+ 'ico.png')" alt="" class="resource-image"/><br/>
-      {{ resource.chests }}
-    </div> -->
-    <!-- не удаляю на случай если придется хардкодить -->
   </div>
 </template>
 
