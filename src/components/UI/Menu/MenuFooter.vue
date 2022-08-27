@@ -1,12 +1,12 @@
 <template>
   <div class="footer" v-if="menuNeeded">
-    <button class="levels" @click="$router.push('/levelselect')">
+    <button class="levels footer__btn" @click="$router.push('/levelselect')">
       Уровни
     </button>
-    <button class="game" @click="$router.push('/game')">
+    <button class="game footer__btn" @click="$router.push('/game')">
       Игра
     </button>
-    <button class="deckbuilder" @click="$router.push('/deckbuild')">
+    <button class="deckbuilder footer__btn" @click="$router.push('/deckbuild')">
       Колоды
     </button>
   </div>
@@ -33,29 +33,34 @@ export default {
   width: 98%;
   height: 5vh;
   display: flex;
+  justify-content: space-between;
   text-align: center;
   margin: auto;
 }
 
 .game {
-  margin: auto;
-  width: 25vw;
+  width: 50%;
   height: 100%;
-  border-radius: 50%;
 }
 
 .levels {
-  position: absolute;
-  left: 5%;
-  width: 25vw;
+  width: 20%;
   height: 100%;
 }
 
 .deckbuilder {
-  position: absolute;
-  right: 5%;
-  width: 25vw;
+  width: 20%;
   height: 100%;
+}
+
+.footer__btn{
+  background: #667080;
+  border-radius: 6px;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+  height: 48px;
 }
 
 </style>
