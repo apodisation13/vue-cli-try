@@ -5,6 +5,7 @@ import MainPage from '@/pages/MainPage'
 import GamePage from '@/pages/GamePage'
 import AboutPage from '@/pages/AboutPage'
 import DeckbuildPage from '@/pages/DeckbuildPage'
+
 import LevelPage from '@/pages/LevelPage'
 import LoginPage from "@/pages/LoginPage"
 import SettingsPage from "@/pages/SettingsPage"
@@ -60,8 +61,10 @@ const routes = [
   {
     path: '/deckbuild',
     component: DeckbuildPage,
+
     meta: {
       requireAuth: true,
+      image: images.deckbuild,
     },
   },
   {
