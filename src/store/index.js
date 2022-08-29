@@ -21,6 +21,7 @@ const store = createStore({
     state: {
         play_sound: false,
         show_menu: true,
+        isGame:false,
     },
     getters: {
 
@@ -32,6 +33,9 @@ const store = createStore({
         set_show_menu(state, payload) {
           state.show_menu = payload
         },
+        set_isGame(state, payload){
+            state.isGame = payload
+        }
     },
     actions: {},
 })

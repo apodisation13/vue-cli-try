@@ -71,7 +71,10 @@ export default {
         draw_hand(this.hand, this.deck)  // вытянет руку, остальное оставит в деке
 
         this.redraw = true
+        this.$store.commit('set_isGame', true)
+        
       }, 1000)
+
 
     },
 

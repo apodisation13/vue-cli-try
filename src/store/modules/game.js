@@ -14,6 +14,7 @@ const state = {
   leader_ai_move: false,
   epa_end_turn: false,
   player_turn: true,
+
 }
 
 const getters = {
