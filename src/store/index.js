@@ -21,7 +21,7 @@ const store = createStore({
     state: {
         play_sound: false,
         show_menu: true,
-        isGame:false,
+        isGame: false,
     },
     getters: {
 

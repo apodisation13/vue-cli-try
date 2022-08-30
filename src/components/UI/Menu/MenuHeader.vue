@@ -105,7 +105,6 @@ export default {
 
 .expand-menu__content {
   position:fixed;
-  top: 1px;
   left: 15px;
   top:15px;
   display:flex;
