@@ -106,8 +106,8 @@ export default {
 .expand-menu__content {
   position:fixed;
   left: 15px;
-  top:15px;
-  display:flex;
+  top: 15px;
+  display: flex;
   flex-direction: column;
   justify-content: space-around;
   width: 156px;
