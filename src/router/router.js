@@ -40,6 +40,7 @@ const routes = [
     meta: {
       requireAuth: false,
       image: images.login,
+      notRequireMenu: true,
     },
   },
   {
@@ -47,7 +48,6 @@ const routes = [
     component: GamePage,
     meta: {
       requireAuth: true,
-      notRequireMenu: true,
     },
   },
   {
@@ -108,13 +108,12 @@ const router = createRouter({
   history: createWebHistory()
 })
 
-
 router.beforeEach((to, from, next) => {
 
   // прячем боковое меню по переходу в любую вкладку
   store.commit('set_show_menu', false)
 
-  if (from.path == '/game'){
+  if (from.path == '/game') {
     store.commit('set_isGame', false)
   }
 

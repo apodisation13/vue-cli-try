@@ -18,22 +18,12 @@
             </button>
             <span>$</span>
           </div>
-
-          <!-- <div v-if="isLoggedIn">Привет, {{ username }}!</div> -->
           <div class="expand-menu__action bordered" @click="showExpandedMenu">
             <button class="menu-btn">
               Закрыть
             </button>
             <span>X</span>
           </div>
-          <!-- <button
-              class="menu_btn"
-              @click="logout"
-              style="float: right"
-              v-if="isLoggedIn"
-          >
-            ВЫХОД
-          </button> -->
         </div>
       </div>
 
@@ -48,7 +38,7 @@ export default {
   computed: {
     // меню не нужны, если в роутере есть notRequireMenu (страницы загрузки, игры)
     menuNeeded() {
-      return !this.$store.state.isGame
+      return (!this.$store.state.isGame && !this.$router.currentRoute.value.meta.notRequireMenu)
     },
     username() {
       return this.$store.getters['getUser'].username
