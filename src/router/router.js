@@ -23,6 +23,7 @@ const routes = [
     meta: {
       requireAuth: false,
       image: images.main,
+      notRequireMenu: true,
     },
   },
   {
