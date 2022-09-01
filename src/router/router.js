@@ -40,6 +40,7 @@ const routes = [
     meta: {
       requireAuth: false,
       image: images.login,
+      notRequireMenu: true,
     },
   },
   {
@@ -47,7 +48,6 @@ const routes = [
     component: GamePage,
     meta: {
       requireAuth: true,
-      notRequireMenu: true,
     },
   },
   {
@@ -108,11 +108,14 @@ const router = createRouter({
   history: createWebHistory()
 })
 
-
 router.beforeEach((to, from, next) => {
 
   // прячем боковое меню по переходу в любую вкладку
   store.commit('set_show_menu', false)
+
+  if (from.path === '/game') {
+    store.commit('set_isGame', false)
+  }
 
   // если требуется АУФ, и мы залогинены, все ок. Если не залогинены, идем на главную. Если не требуется АУФ - все ок
   if (to.matched.some(record => record.meta.requireAuth)) {
@@ -120,6 +123,8 @@ router.beforeEach((to, from, next) => {
     else next('/')
   }
   else next()
+
+  
 })
 
 export default router

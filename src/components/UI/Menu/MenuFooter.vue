@@ -1,12 +1,12 @@
 <template>
   <div class="footer" v-if="menuNeeded">
-    <button class=" btn-footer levels" @click="$router.push('/levelselect')">
+    <button class="levels footer__btn" @click="$router.push('/levelselect')">
       Уровни
     </button>
-    <button class="btn-footer game" @click="$router.push('/game')">
+    <button class="game footer__btn" @click="$router.push('/game')">
       Игра
     </button>
-    <button class="btn-footer deckbuilder" @click="$router.push('/deckbuild')">
+    <button class="deckbuilder footer__btn" @click="$router.push('/deckbuild')">
       Колоды
     </button>
   </div>
@@ -18,7 +18,7 @@ export default {
   computed: {
     // меню не нужны, если в роутере есть notRequireMenu (страницы загрузки, игры)
     menuNeeded() {
-      return !this.$router.currentRoute.value.meta.notRequireMenu
+      return (!this.$store.state.isGame && !this.$router.currentRoute.value.meta.notRequireMenu)
     },
   },
 }
@@ -30,17 +30,20 @@ export default {
   width: 100%;
   padding: 0 10px 10px;
   display: flex;
+  justify-content: space-between;
   text-align: center;
   justify-content: space-around;
   bottom: 0;
 }
 
-.btn-footer {
+.footer__btn{
+  background: #667080;
+  border-radius: 6px;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
   padding: 5px 15px;
-}
-
-.game {
-  border-radius: 50%;
 }
 
 </style>
