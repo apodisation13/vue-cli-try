@@ -13,6 +13,8 @@ const toastOptions = {
     timeout: 2000
 };
 
+// screen.orientation.lock('portrait')
+
 
 app    
     .use(router)

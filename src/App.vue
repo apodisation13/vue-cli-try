@@ -80,8 +80,9 @@ html, body {
 }
 
 .app {
-  padding: 0;
+  padding: 10px;
   position: relative;
+  z-index: -2;
   width: 100%;
   height: 100vh;
 }
@@ -89,19 +90,19 @@ html, body {
 @media (min-width: 376px) {
   .app {
     max-width: 375px;
-    width: 100%;
-    height: 100vh;
-    border: 8px solid rgba(0, 0, 0, 0.5);
+    background: #fff;
     border-radius: 8px;
     margin: 0 auto;
   }
 
   .wrapper__bg {
-    position: relative;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     z-index: -2;
     background-color: #000;
-    width: 100%;
-    height: 100vh;
   }
 }
 </style>
