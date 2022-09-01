@@ -146,7 +146,6 @@ export default {
 .header {
   background-color: cornflowerblue;
   width: 80%;
-  height: 10vh;
   margin: 1% auto auto;
   border-radius: 1%;
   border: solid 1px black;

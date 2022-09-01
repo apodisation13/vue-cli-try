@@ -71,11 +71,7 @@ div, button {
 }
 
 .not_logged_in {
-  position: absolute;
-  top: 7vh;
-  margin-top: 1vh;
-  width: 99%;
-  height: 15vh;
+  padding: 10px;
   border: solid 2px red;
 }
 
