@@ -79,17 +79,19 @@ html, body {
   overscroll-behavior-y: contain;
 }
 
+/* body {
+  height: 100vh;
+} */
+
 .app {
-  padding: 10px;
   position: relative;
-  z-index: -2;
   width: 100%;
   height: 100vh;
 }
 
-@media (min-width: 376px) {
+@media (min-width: 426px) {
   .app {
-    max-width: 375px;
+    max-width: 425px;
     background: #fff;
     border-radius: 8px;
     margin: 0 auto;
@@ -97,11 +99,10 @@ html, body {
 
   .wrapper__bg {
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
+    top: 0.5px;
     left: 0;
-    z-index: -2;
+    right: 0;
+    bottom: 0.5px;
     background-color: #000;
   }
 }
