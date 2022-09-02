@@ -92,7 +92,7 @@ export default {
 }
 
 .header {
-  padding: 10px;
+  padding: 0 10px;
 }
 
 .avatar{
