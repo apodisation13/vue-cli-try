@@ -11,7 +11,9 @@
 </script>
 
 <style scoped>
-.btn {
+.base-btn {
   display: block;
+  width: 100%;
+  border: none;
 }
 </style>
