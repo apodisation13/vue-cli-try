@@ -2,15 +2,20 @@
   <div class="settings">
     <h1 class="setting-title">Настройки</h1>
     <div class="settings-list">
-      <base-button class="setting-button">logout</base-button>
+      <setting-logout>
+        <base-button class="setting-button">logout</base-button>
+      </setting-logout>
     </div>
+    <yesno-modal />
   </div>
 </template>
 
 <script>
+import YesnoModal from '../components/ModalWindows/YesnoModal.vue'
+import SettingLogout from '../components/SettingLogout.vue'
 import BaseButton from '../components/UI/BaseButton.vue'
 export default {
-  components: { BaseButton },
+  components: { BaseButton, YesnoModal, SettingLogout },
 }
 </script>
 
