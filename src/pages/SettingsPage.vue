@@ -11,11 +11,10 @@
 </template>
 
 <script>
-import YesnoModal from '../components/ModalWindows/YesnoModal.vue'
 import SettingLogout from '../components/SettingLogout.vue'
 import BaseButton from '../components/UI/BaseButton.vue'
 export default {
-  components: { BaseButton, YesnoModal, SettingLogout },
+  components: { BaseButton, SettingLogout },
 }
 </script>
 
