@@ -43,6 +43,10 @@ export default {
   color: #EEF1F4;
   background: #667080;
 }
+.setting-button:focus {
+  color: #EEF1F4;
+  background: #667080;
+}
 
 .setting-button:nth-child(n + 2) {
   margin-top: 13px;
