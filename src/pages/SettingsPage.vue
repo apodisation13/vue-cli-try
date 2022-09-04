@@ -6,7 +6,6 @@
         <base-button class="setting-button">logout</base-button>
       </setting-logout>
     </div>
-    <yesno-modal />
   </div>
 </template>
 
@@ -26,25 +25,6 @@ export default {
 .setting-title {
   text-align: center;
   margin: 75px;
-}
-
-.setting-button {
-  padding: 13px;
-  text-align: center;
-  background: #EEF1F4;
-  border-radius: 6px;
-  color: #667080;
-  font-weight: 700;
-  font-size: 1rem;
-}
-
-.setting-button:hover {
-  color: #EEF1F4;
-  background: #667080;
-}
-.setting-button:focus {
-  color: #EEF1F4;
-  background: #667080;
 }
 
 .setting-button:nth-child(n + 2) {

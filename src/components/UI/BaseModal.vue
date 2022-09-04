@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper_modal" @click.stop="hideModal" v-if="modelValue" >
+  <div class="wrapper_modal" @click.stop="hideModal" >
     <div @click.stop class="modal">
       <slot></slot>
     </div>
@@ -8,15 +8,9 @@
 
 <script>
   export default {
-    props: {
-      modelValue: {
-        type: Boolean,
-        required: true,
-      }
-    },
     methods: {
       hideModal() {
-        this.$emit('update:modelValue', false);
+        this.$emit('close-modal');
       }
     },
 
