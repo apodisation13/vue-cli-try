@@ -13,7 +13,7 @@ env:
 
 jobs:
   tests:
-    name: Lint
+    name: Lint Checker
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,8 +24,9 @@ jobs:
           node-version: 16
       - name: Install Packages
         run: npm install
-      - name: Lint
+      - name: lint check
         run: npm run lint -- --no-fix
+        continue-on-error: false
 
   build-push:
     if: github.event_name == 'push'
