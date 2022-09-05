@@ -3,6 +3,7 @@ import login from "@/store/modules/login"
 import database from "@/store/modules/database"
 import game from "@/store/modules/game"
 import user_actions from "@/store/modules/user_actions"
+import news from "@/store/modules/news"
 
 // ИНСТРУКЦИЯ:
 // в шаблонах $store. state, getters['name'], commit('name', чё) для мутаций
@@ -15,11 +16,7 @@ const store = createStore({
     database,
     game,
     user_actions,
-  },
-  state: {
-    play_sound: false,
-    show_menu: true,
-    isGame: false,
+    news,
   },
   getters: {},
   mutations: {
