@@ -6,8 +6,7 @@
       <leader-comp :leader="leader" />
     </div>
 
-    <cards-list :cards='deck' />
-
+    <cards-list :cards="deck" />
   </modal-window>
 </template>
 
@@ -18,7 +17,7 @@ import LeaderComp from "@/components/LeaderComp"
 import CardsList from "@/components/CardsList"
 export default {
   name: "deck-modal",
-  components: {CardsList, LeaderComp, ButtonClose, ModalWindow},
+  components: { CardsList, LeaderComp, ButtonClose, ModalWindow },
   props: {
     deck: {
       type: Object,
@@ -31,12 +30,10 @@ export default {
   },
   methods: {
     close_self() {
-      this.$emit('close_deck_modal')
+      this.$emit("close_deck_modal")
     },
   },
-  emits: [
-    'close_deck_modal',
-  ],
+  emits: ["close_deck_modal"],
 }
 </script>
 
