@@ -1,102 +1,91 @@
 <template>
-<!--  <resource-comp />-->
-  <div class="database">
-
-    <!-- база карт -->
-    <div class="card_pool_view">
-      <cards-list
+  <div>
+    <div class="database">
+      <!-- база карт -->
+      <div class="card_pool_view">
+        <cards-list
           :cards="pool"
           :hp_needed="true"
           :deckbuilder="true"
-          @chose_player_card="append_into_deck_in_progress" />
-    </div>
-
-    <!-- список всех лидеров из базы -->
-    <div class="leader_pool_view">
-      <cards-list
+          @chose_player_card="append_into_deck_in_progress"
+        />
+      </div>
+      <!-- список всех лидеров из базы -->
+      <div class="leader_pool_view">
+        <cards-list
           :cards="leaders"
           :for_leaders="true"
           :deckbuilder="true"
-          @chose_player_card="chose_leader" />
+          @chose_player_card="chose_leader"
+        />
+      </div>
     </div>
-  </div>
-
-  <div class="filters">
-
-    <button class="new" @click="new_deck()">NEW+</button>
-
-    <filter-factions
-        @filter-factions="filter_factions"
-    />
-
-    <filter-types
+    <div class="filters">
+      <button class="new" @click="new_deck()">NEW+</button>
+      <filter-factions @filter-factions="filter_factions" />
+      <filter-types
         @filter-types="filter_types"
         @reset-filter-types="reset_filter_types"
-    />
-
-    <filter-colors
+      />
+      <filter-colors
         @filter-colors="filter_colors"
         @reset-filter-colors="reset_filter_colors"
-    />
-
-    <filter-passives
+      />
+      <filter-passives
         @filter-passives="filter_passives"
         @reset-filter-passives="reset_filter_passives"
-    />
-
-    <filter-unlocked
+      />
+      <filter-unlocked
         @filter-unlocked="filter_unlocked"
         @reset-filter-unlocked="reset_filter_unlocked"
-    />
-  </div>
-
-  <div class="deck_in_progress">
-
-    <div class="leader">
-      <leader-comp v-if="leader_selected" :leader=leader  />
-    </div>
-
-    <div class="deck_build_view">
-      <cards-list
-        :cards='deck_is_progress'
-        :hp_needed=true
-        @chose_player_card='delete_from_deck_in_progress'
       />
     </div>
-  </div>
-
-  Лидер: {{ leader_selected }}
-  Размер: {{ deck_is_progress.length }}/{{ $store.state.game.cards_in_deck }}
-  Жизни: {{ health }}
-  <input class="input" :disabled="cant_save_deck" v-model="deck_name"><br>
-
-  <button
+    <div class="deck_in_progress">
+      <div class="leader">
+        <leader-comp v-if="leader_selected" :leader="leader" />
+      </div>
+      <div class="deck_build_view">
+        <cards-list
+          :cards="deck_is_progress"
+          :hp_needed="true"
+          @chose_player_card="delete_from_deck_in_progress"
+        />
+      </div>
+    </div>
+    <div>
+      Лидер: {{ leader_selected }} Размер: {{ deck_is_progress.length }}/{{
+        $store.state.game.cards_in_deck
+      }}
+      Жизни: {{ health }}
+      <input
+        class="input"
+        :disabled="cant_save_deck"
+        v-model="deck_name"
+      /><br />
+    </div>
+    <button
       class="btn_save_deck"
       v-if="!patch"
       :disabled="cant_save_deck"
       @click="save_deck"
-  >
-    СОХРАНИТЬ
-  </button>
-  <button
+    >
+      СОХРАНИТЬ
+    </button>
+    <button
       class="btn_save_deck"
       v-if="patch"
       :disabled="cant_save_deck"
       @click="patch_deck"
-  >
-    ИЗМЕНИТЬ
-  </button>
-
-  <div class="decks_btn" @click="open_decks_list_modal">
-    КОЛОДЫ!
-  </div>
-
-  <decks-list-modal
+    >
+      ИЗМЕНИТЬ
+    </button>
+    <div class="decks_btn" @click="open_decks_list_modal">КОЛОДЫ!</div>
+    <decks-list-modal
       v-if="show_decks_list_modal"
-      @close_decks_list_modal="show_decks_list_modal=false"
+      @close_decks_list_modal="show_decks_list_modal = false"
       @change_deck="show_deck"
-  />
-
+    />
+  </div>
 </template>
 
 <script>
@@ -107,31 +96,33 @@ import FilterFactions from "@/components/Pages/DeckbuildPage/FilterFactions"
 import FilterTypes from "@/components/Pages/DeckbuildPage/FilterTypes"
 import FilterColors from "@/components/Pages/DeckbuildPage/FilterColors"
 import FilterPassives from "@/components/Pages/DeckbuildPage/FilterPassives"
-
 import filtering from "@/mixins/DeckbuildPage/filtering"
 import FilterUnlocked from "@/components/Pages/DeckbuildPage/FilterUnlocked"
 
 export default {
   components: {
-    FilterUnlocked, FilterPassives, FilterColors, FilterTypes, FilterFactions,
-    DecksListModal,  CardsList, LeaderComp
+    FilterUnlocked,
+    FilterPassives,
+    FilterColors,
+    FilterTypes,
+    FilterFactions,
+    DecksListModal,
+    CardsList,
+    LeaderComp,
   },
-  mixins: [
-    filtering,
-  ],
+  mixins: [filtering],
   data() {
     return {
+      deck_is_progress: [], // колода в процессе - целиком объкты
+      health: 0, // жизни текущей деки
+      deck_body: [], // только {card: id} для пост-запроса
+      deck_name: "",
 
-      deck_is_progress: [],  // колода в процессе - целиком объкты
-      health: 0,  // жизни текущей деки
-      deck_body: [],  // только {card: id} для пост-запроса
-      deck_name: '',
-      
-      faction_selected: false,  // выбрана ли фракция, можно ли добавить лидера в деку
-      leader_selected: false,  // выбран лидер или нет
-      leader: null,  // сам выбранный лидер
+      faction_selected: false, // выбрана ли фракция, можно ли добавить лидера в деку
+      leader_selected: false, // выбран лидер или нет
+      leader: null, // сам выбранный лидер
 
-      show_decks_list_modal: false,  // показать окно с колодами
+      show_decks_list_modal: false, // показать окно с колодами
 
       patch: false,
       deck_id: null,
@@ -142,11 +133,11 @@ export default {
     // новая дека, обнуляем фильтры и сбрасываем все добавления
     new_deck() {
       this.query = {}
-      this.faction = ''
+      this.faction = ""
       this.deck_is_progress = []
       this.deck_body = []
       this.health = 0
-      this.deck_name = ''
+      this.deck_name = ""
       this.leader_selected = false
       this.faction_selected = false
       this.patch = false
@@ -156,28 +147,33 @@ export default {
     // добавляем карты в колоду из базы карт
     append_into_deck_in_progress(card) {
       if (this.can_add_card(card)) {
-          this.deck_is_progress.push(card)
-          this.deck_body.push({"card": card.card.id})
-          this.health = this.health + card.card.hp
-      }
-      else alert('нельзя карту добавить закрытую карту, или карту ещё раз или карт больше 12')
+        this.deck_is_progress.push(card)
+        this.deck_body.push({ card: card.card.id })
+        this.health = this.health + card.card.hp
+      } else
+        alert(
+          "нельзя карту добавить закрытую карту, или карту ещё раз или карт больше 12"
+        )
     },
 
     // удалить из деки в процессе по нажатию дважды ЛКМ
     delete_from_deck_in_progress(card) {
       this.health -= card.card.hp
       this.deck_is_progress.splice(this.deck_is_progress.indexOf(card), 1)
-      this.deck_body.splice(this.deck_body.findIndex(c => c.card === card.card.id), 1)
+      this.deck_body.splice(
+        this.deck_body.findIndex(c => c.card === card.card.id),
+        1
+      )
     },
 
     // выбираем лидера для деки
     chose_leader(leader) {
       if (!this.faction_selected) {
-        alert('выберете фракцию!')
+        alert("выберете фракцию!")
         return
       }
       if (leader.count === 0) {
-        alert('нельзя выбрать закрытого лидера')
+        alert("нельзя выбрать закрытого лидера")
         return
       }
 
@@ -188,7 +184,7 @@ export default {
     async save_deck() {
       // карт ровно 12 и лидер выбран
       if (this.cant_save_deck || !this.deck_name) {
-        alert('Введите имя колоды')
+        alert("Введите имя колоды")
         return
       }
 
@@ -196,12 +192,12 @@ export default {
         name: this.deck_name,
         health: this.health,
         d: this.deck_body,
-        leader_id: this.leader.id
+        leader_id: this.leader.id,
       }
 
       try {
-        await this.$store.dispatch('post_deck', body)
-        this.new_deck()  // всё обнуляем!
+        await this.$store.dispatch("post_deck", body)
+        this.new_deck() // всё обнуляем!
       } catch (err) {
         console.log(err)
         throw err
@@ -210,7 +206,9 @@ export default {
 
     show_deck(index) {
       this.new_deck()
-      let deck = JSON.parse(JSON.stringify(this.$store.getters['all_decks'][index]))
+      let deck = JSON.parse(
+        JSON.stringify(this.$store.getters["all_decks"][index])
+      )
       this.deck_is_progress = deck.deck.cards
       this.deck_body = deck.deck.d
       this.leader = deck.deck.leader
@@ -234,8 +232,8 @@ export default {
       }
 
       try {
-        await this.$store.dispatch('patch_deck', body)
-        this.new_deck()  // всё обнуляем!
+        await this.$store.dispatch("patch_deck", body)
+        this.new_deck() // всё обнуляем!
       } catch (err) {
         console.log(err)
         throw err
@@ -247,10 +245,12 @@ export default {
     },
 
     can_add_card(card) {
-      return !this.deck_is_progress.filter(c => c.card.id === card.card.id).length
-          && card.count !== 0
-          && this.deck_is_progress.length < this.$store.state.game.cards_in_deck
-          && this.faction_selected
+      return (
+        !this.deck_is_progress.filter(c => c.card.id === card.card.id).length &&
+        card.count !== 0 &&
+        this.deck_is_progress.length < this.$store.state.game.cards_in_deck &&
+        this.faction_selected
+      )
     },
   },
 
@@ -263,15 +263,16 @@ export default {
       else return this.$store.getters.filtered_leaders(this.faction)
     },
     cant_save_deck() {
-      return this.deck_is_progress.length !== this.$store.state.game.cards_in_deck || !this.leader_selected
+      return (
+        this.deck_is_progress.length !== this.$store.state.game.cards_in_deck ||
+        !this.leader_selected
+      )
     },
   },
-
 }
 </script>
 
 <style scoped>
-
 .database {
   display: inline;
   float: left;
@@ -313,12 +314,11 @@ export default {
 
 .deck_in_progress {
   /* два дива в один ряд! */
-  margin: 0.05%;
   clear: both;
   height: 18vh;
   /*border: solid 2px yellow;*/
   width: 99%;
-  margin-bottom: 1%;
+  margin: 0.05% 0.05% 1%;
 }
 
 .leader {
@@ -365,5 +365,4 @@ export default {
   margin-right: 2%;
   /*margin-top: 1%;*/
 }
-
 </style>

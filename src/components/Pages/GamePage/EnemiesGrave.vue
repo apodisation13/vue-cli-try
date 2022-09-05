@@ -1,9 +1,5 @@
 <template>
-  
-  <button class="enemy-grave-btn"> 
-    КлВр(WiP)
-  </button>
-  
+  <button class="enemy-grave-btn">КлВр(WiP)</button>
 </template>
 
 <script>

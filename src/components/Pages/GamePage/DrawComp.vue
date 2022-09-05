@@ -1,5 +1,5 @@
 <template>
-    <button class="draw-btn">ДРО</button>
+  <button class="draw-btn">ДРО</button>
 </template>
 
 <script>
@@ -9,7 +9,6 @@ export default {
 </script>
 
 <style scoped>
-
 .draw-btn {
   height: 70%;
   width: 98%;
@@ -19,5 +18,4 @@ export default {
   position: relative;
   border-radius: 50%;
 }
-
 </style>

@@ -2,20 +2,19 @@
   <modal-window>
     <button-close @close_self="close_self" />
 
-    {{ level.name }} - {{ level.difficulty }} <br>
+    {{ level.name }} - {{ level.difficulty }} <br />
 
     Лидер - {{ level.enemy_leader.ability.name }}
     <div class="enemy_leader">
       <enemy-leader :enemy_leader="level.enemy_leader" />
     </div>
 
-    Врагов - {{ level.enemies.length }} <br>
+    Врагов - {{ level.enemies.length }} <br />
     <div class="enemies">
       <div class="enemy" v-for="enemy in level.enemies" :key="enemy">
         <enemy-comp :enemy="enemy" />
       </div>
     </div>
-
   </modal-window>
 </template>
 
@@ -26,20 +25,18 @@ import EnemyLeader from "@/components/EnemyLeader"
 import EnemyComp from "@/components/EnemyComp"
 export default {
   name: "level-modal",
-  components: {EnemyComp, EnemyLeader, ButtonClose, ModalWindow},
+  components: { EnemyComp, EnemyLeader, ButtonClose, ModalWindow },
   props: {
     level: {
-      required: true
+      required: true,
     },
   },
   methods: {
     close_self() {
-      this.$emit('close_level_modal')
+      this.$emit("close_level_modal")
     },
   },
-  emits: [
-    'close_level_modal',
-  ],
+  emits: ["close_level_modal"],
 }
 </script>
 

@@ -1,8 +1,6 @@
 <template>
   <div class="shield">
-    <span>
-      &#128737;
-    </span>
+    <span> &#128737; </span>
   </div>
 </template>
 

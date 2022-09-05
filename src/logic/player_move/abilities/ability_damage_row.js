@@ -1,6 +1,5 @@
-import {sound_damage_row} from "@/logic/play_sounds"
-import {hit_one_enemy} from "@/logic/player_move/abilities/hit_one_enemy"
-
+import { sound_damage_row } from "@/logic/play_sounds"
+import { hit_one_enemy } from "@/logic/player_move/abilities/hit_one_enemy"
 
 function damage_row(enemy, card, field, enemy_leader, enemies) {
   let index = field.indexOf(enemy)
@@ -12,6 +11,5 @@ function damage_row(enemy, card, field, enemy_leader, enemies) {
     if (enemy) hit_one_enemy(enemy, card, field, enemy_leader, enemies)
   })
 }
-
 
 export { damage_row }

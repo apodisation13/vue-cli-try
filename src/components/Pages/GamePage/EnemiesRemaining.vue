@@ -1,8 +1,6 @@
 <template>
   <!-- показать количество врагов, которое осталось на уровне -->
-  <button class="remaining-enemies-btn"> 
-    Враги {{ enemies.length }}
-  </button>
+  <button class="remaining-enemies-btn">Враги {{ enemies.length }}</button>
 </template>
 
 <script>

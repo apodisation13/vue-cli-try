@@ -2,14 +2,16 @@
   <div class="field">
     <table class="table">
       <tr v-for="i in 4" :key="i">
-        <td v-for="j in 3" :key="j"
-          @dblclick="exec_damage_ai_card(get_index(i,j))"
+        <td
+          v-for="j in 3"
+          :key="j"
+          @dblclick="exec_damage_ai_card(get_index(i, j))"
           @contextmenu.prevent
         >
           <enemy-comp
-              v-if="field[get_index(i,j)]"
-              :enemy='field[get_index(i,j)]'
-              :index="get_index(i,j)"
+            v-if="field[get_index(i, j)]"
+            :enemy="field[get_index(i, j)]"
+            :index="get_index(i, j)"
           />
         </td>
       </tr>
@@ -20,8 +22,8 @@
 <script>
 import EnemyComp from "@/components/EnemyComp"
 export default {
-  name: 'field-comp',
-  components: {EnemyComp},
+  name: "field-comp",
+  components: { EnemyComp },
   props: {
     field: {
       required: true,
@@ -29,11 +31,13 @@ export default {
     },
   },
   methods: {
-    get_index(i, j) {  // расчёт индекса клетки поля
-      return (i-1) * 3 + (j-1)
+    get_index(i, j) {
+      // расчёт индекса клетки поля
+      return (i - 1) * 3 + (j - 1)
     },
-    exec_damage_ai_card(i) {  // эмиттим ВСЕГО врага
-      this.$emit('exec_damage_ai_card', this.field[i])
+    exec_damage_ai_card(i) {
+      // эмиттим ВСЕГО врага
+      this.$emit("exec_damage_ai_card", this.field[i])
     },
     // onDrop(e, index) {
     //   const card = e.dataTransfer.getData('card')
@@ -44,9 +48,7 @@ export default {
     //   this.$emit('exec_damage_ai_card', this.field[index])
     // },
   },
-  emits: [
-    'exec_damage_ai_card',
-  ],
+  emits: ["exec_damage_ai_card"],
 }
 </script>
 
@@ -62,16 +64,16 @@ export default {
 }
 
 .table {
-  table-layout:fixed;
+  table-layout: fixed;
   width: 100%;
 }
 
-table tr, td {
+table tr,
+td {
   /* width: 50%; */
   height: 18vh;
   border: dashed 0.5px black;
   overflow: hidden;
   /*position: relative;*/
 }
-
 </style>
