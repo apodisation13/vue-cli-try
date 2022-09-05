@@ -1,12 +1,14 @@
 <template>
-  <div class="start">
-    <div class="play_price">
-      Для этой игры надо заплатить <b>{{ play_price }}</b> wood!
-    </div>
+  <div>
+    <div class="start">
+      <div class="play_price">
+        Для этой игры надо заплатить <b>{{ play_price }}</b> wood!
+      </div>
 
-    <button class="btn_start" v-if="deck.length" @click="start_game">
-      НАЧАТЬ
-    </button>
+      <button class="btn_start" v-if="deck.length" @click="start_game">
+        НАЧАТЬ
+      </button>
+    </div>
     <redraw-modal
       v-if="redraw"
       :deck="deck"
