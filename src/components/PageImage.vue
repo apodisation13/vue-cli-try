@@ -1,9 +1,5 @@
 <template>
-  <img
-      class="page_img"
-      :src="path()"
-      alt=""
-  />
+  <img class="page_img" :src="path()" alt="" />
 </template>
 
 <script>
@@ -26,15 +22,17 @@ export default {
     path() {
       const image = this.$router.currentRoute.value.meta.image
       // если в роутере картинки не указаны, то картинку не рисуем
-      if (!image) return ''
-      return this.day ? require('@/assets/' + image.day) : require('@/assets/' + image.night)
+      if (!image) return ""
+      return this.day
+        ? require("@/assets/" + image.day)
+        : require("@/assets/" + image.night)
     },
   },
   watch: {
     // если часы нечетные - ставим день, четные - ставим ночь
-    async date(newVal, oldVal) {
+    async date(newVal) {
       this.day = newVal % 2 !== 0
-    }
+    },
   },
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="selected_deck" v-if="$store.state.game.current_deck.length > 0">
-    Жизни {{ $store.state.game.health }};
-    Лидер {{ $store.state.game.leader.name }}
+    Жизни {{ $store.state.game.health }}; Лидер
+    {{ $store.state.game.leader.name }}
   </div>
 </template>
 
