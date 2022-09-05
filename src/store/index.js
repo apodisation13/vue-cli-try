@@ -11,41 +11,23 @@ import news from "@/store/modules/news"
 // в .js - ИМПОРТ store отсюда, и тогда store.  а дальше то же
 
 const store = createStore({
-<<<<<<< HEAD
-    modules: {
-        login,
-        database,
-        game,
-        user_actions,
-        news,
-=======
   modules: {
     login,
     database,
     game,
     user_actions,
-  },
-  state: {
-    play_sound: false,
-    show_menu: true,
-    isGame: false,
+    news,
   },
   getters: {},
   mutations: {
     set_play_sound(state, payload) {
       state.play_sound = payload
->>>>>>> origin/dev
     },
     set_show_menu(state, payload) {
       state.show_menu = payload
     },
-<<<<<<< HEAD
-    getters: {
-        
-=======
     set_isGame(state, payload) {
       state.isGame = payload
->>>>>>> origin/dev
     },
   },
   actions: {},

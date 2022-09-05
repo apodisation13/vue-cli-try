@@ -35,10 +35,10 @@ export default {
     // в любом случае идем на главную потом
     await this.$router.push("/loading")
     try {
-      await this.$store.dispatch('fetchNews')
-      await this.$store.dispatch('check_auth') // пытаемся послать запрос на логин с данными из локалсторадж
-      await this.$store.dispatch('get_user_database')
-      await this.$store.dispatch('render_all_images') // принудительный рендер всех картинок
+      await this.$store.dispatch("fetchNews")
+      await this.$store.dispatch("check_auth") // пытаемся послать запрос на логин с данными из локалсторадж
+      await this.$store.dispatch("get_user_database")
+      await this.$store.dispatch("render_all_images") // принудительный рендер всех картинок
     } catch (err) {
       console.log(err)
       throw err
