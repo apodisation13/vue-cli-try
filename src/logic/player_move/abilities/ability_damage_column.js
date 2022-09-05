@@ -1,6 +1,5 @@
-import {sound_damage_column} from "@/logic/play_sounds"
-import {hit_one_enemy} from "@/logic/player_move/abilities/hit_one_enemy"
-
+import { sound_damage_column } from "@/logic/play_sounds"
+import { hit_one_enemy } from "@/logic/player_move/abilities/hit_one_enemy"
 
 function damage_column(enemy, card, field, enemy_leader, enemies) {
   let index = field.indexOf(enemy) % 3
