@@ -3,6 +3,7 @@ import login from "@/store/modules/login"
 import database from "@/store/modules/database"
 import game from "@/store/modules/game"
 import user_actions from "@/store/modules/user_actions"
+import news from "@/store/modules/news"
 
 
 // ИНСТРУКЦИЯ:
@@ -17,6 +18,7 @@ const store = createStore({
         database,
         game,
         user_actions,
+        news,
     },
     state: {
         play_sound: false,
@@ -24,7 +26,7 @@ const store = createStore({
         isGame: false,
     },
     getters: {
-
+        
     },
     mutations: {
         set_play_sound(state, payload) {
