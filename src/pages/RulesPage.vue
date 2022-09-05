@@ -1,15 +1,9 @@
 <template>
-  <div>
-    Rules
-  </div>
+  <div>Rules</div>
 </template>
 
 <script>
-export default {
-
-}
+export default {}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

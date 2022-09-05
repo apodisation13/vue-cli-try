@@ -1,11 +1,11 @@
 <template>
-  <div @click="reset_filter_passives">Пассив</div>
-  <div class="passives" v-for="passive in passives" :key="passive">
-
-    <button class="passive" @click="filtering(passive)">
-      {{ passive }}
-    </button>
-
+  <div>
+    <div @click="reset_filter_passives">Пассив</div>
+    <div class="passives" v-for="passive in passives" :key="passive">
+      <button class="passive" @click="filtering(passive)">
+        {{ passive }}
+      </button>
+    </div>
   </div>
 </template>
 
@@ -14,18 +14,18 @@ export default {
   name: "filter-passives",
   data() {
     return {
-      passives: [true, false]
+      passives: [true, false],
     }
   },
   methods: {
     filtering(passive) {
-      this.$emit('filter-passives', [passive,])
+      this.$emit("filter-passives", [passive])
     },
     reset_filter_passives() {
-      this.$emit('reset-filter-passives')
+      this.$emit("reset-filter-passives")
     },
   },
-  emits: ['filter-passives', 'reset-filter-passives']
+  emits: ["filter-passives", "reset-filter-passives"],
 }
 </script>
 

@@ -2,11 +2,9 @@
   <div class="filter_unlocked">
     <div @click="reset_filter_types">Наличие</div>
     <div class="types" v-for="count in [1, 2, 0]" :key="count">
-
       <button class="type" @click="filtering(count)">
         {{ count }}
       </button>
-
     </div>
   </div>
 </template>
@@ -16,13 +14,13 @@ export default {
   name: "filter-unlocked",
   methods: {
     filtering(count) {
-      this.$emit('filter-unlocked', count)
+      this.$emit("filter-unlocked", count)
     },
     reset_filter_types() {
-      this.$emit('reset-filter-unlocked')
+      this.$emit("reset-filter-unlocked")
     },
   },
-  emits: ['filter-unlocked', 'reset-filter-unlocked'],
+  emits: ["filter-unlocked", "reset-filter-unlocked"],
 }
 </script>
 

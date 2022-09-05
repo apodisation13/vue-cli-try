@@ -1,11 +1,16 @@
 <template>
   <div class="resource-list">
-    <resource-item v-for="(count, name) in resource" :key="name" :name="name" :count="count"/>
+    <resource-item
+      v-for="(count, name) in resource"
+      :key="name"
+      :name="name"
+      :count="count"
+    />
   </div>
 </template>
 
 <script>
-import ResourceItem from '@/components/UI/ResourceItem';
+import ResourceItem from "@/components/UI/ResourceItem"
 
 export default {
   components: { ResourceItem },
@@ -20,7 +25,7 @@ export default {
 
 <style scoped>
 div {
-  font-family: 'Brush Script MT', cursive;
+  font-family: "Brush Script MT", cursive;
   font-size: 14pt;
 }
 

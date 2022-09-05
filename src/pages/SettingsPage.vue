@@ -30,6 +30,5 @@ export default {
 .setting-button:nth-child(n + 2) {
   margin-top: 13px;
 }
-
-
 </style>
+

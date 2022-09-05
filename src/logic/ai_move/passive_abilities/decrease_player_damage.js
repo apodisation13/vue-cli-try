@@ -1,5 +1,4 @@
-import {sound_enemy_decrease_player_damage} from "@/logic/play_sounds"
-
+import { sound_enemy_decrease_player_damage } from "@/logic/play_sounds"
 
 function passive_end_turn_decrease_player_damage(enemy, hand) {
   let random = Math.floor(Math.random() * hand.length)
@@ -16,5 +15,4 @@ function passive_end_turn_decrease_player_damage(enemy, hand) {
   sound_enemy_decrease_player_damage()
 }
 
-
-export {passive_end_turn_decrease_player_damage}
+export { passive_end_turn_decrease_player_damage }
