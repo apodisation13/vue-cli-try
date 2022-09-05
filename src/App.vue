@@ -1,7 +1,9 @@
 <template>
   <div class="app" v-touch:swipe.right="show">
+
     <!--картинка страницы по параметрам из роутера-->
     <page-image />
+
 
     <!--верхняя часть меню, хэдер-->
     <menu-header />
