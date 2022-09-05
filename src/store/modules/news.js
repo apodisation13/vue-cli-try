@@ -16,11 +16,10 @@ const mutations = {
 }
 
 const actions = {
-  async fetchNews({ commit, getters }) {
+  async fetchNews({ commit }) {
     const url = all_news
-    let header = getters["getHeader"]
     try {
-      let response = await axios.get(url, header)
+      let response = await axios.get(url)
       commit("set_news", response.data)
     } catch (err) {
       throw new Error("Ошибка при загрузке новостей")
