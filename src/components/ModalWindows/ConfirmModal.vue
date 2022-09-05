@@ -17,6 +17,7 @@
 <script>
 import BaseButton from "@/components/UI/BaseButton"
 import BaseModal from "@/components/UI/BaseModal"
+
 export default {
   components: { BaseModal, BaseButton },
   methods: {
