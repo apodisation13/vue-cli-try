@@ -1,6 +1,6 @@
 <template>
   <div @click.stop="toggleVisibleDialog">
-    <slot></slot>
+    <base-button>logout</base-button>
     <confirm-modal
       v-if="show_dialog"
       @confirm="logoutProcess"
@@ -13,10 +13,12 @@
 
 <script>
 import ConfirmModal from "@/components/ModalWindows/ConfirmModal"
+import BaseButton from "@/components/UI/BaseButton"
 
 export default {
   components: {
     ConfirmModal,
+    BaseButton,
   },
   data() {
     return {

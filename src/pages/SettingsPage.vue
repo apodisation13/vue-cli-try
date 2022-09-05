@@ -2,19 +2,16 @@
   <div class="settings">
     <h1 class="setting-title">Настройки</h1>
     <div class="settings-list">
-      <setting-logout>
-        <base-button class="setting-button">logout</base-button>
-      </setting-logout>
+      <setting-logout class="setting-item" />
     </div>
   </div>
 </template>
 
 <script>
 import SettingLogout from "@/components/SettingLogout"
-import BaseButton from "@/components/UI/BaseButton"
 
 export default {
-  components: { BaseButton, SettingLogout },
+  components: { SettingLogout },
 }
 </script>
 
@@ -28,7 +25,7 @@ export default {
   margin: 75px;
 }
 
-.setting-button:nth-child(n + 2) {
+.setting-item:nth-child(n + 2) {
   margin-top: 13px;
 }
 </style>
