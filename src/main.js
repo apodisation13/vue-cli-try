@@ -12,8 +12,6 @@ const toastOptions = {
   timeout: 2000,
 }
 
-
-
 app
   .use(router)
   .use(store)
