@@ -1,6 +1,8 @@
 name: ci-cd
 
 on:
+  pull_request:
+    branches: [ master, dev ]
   push:
     branches: [ master, dev ] 
 
@@ -10,7 +12,25 @@ env:
   MODE: dev
 
 jobs:
+  tests:
+    name: Lint Checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install Packages
+        run: npm install
+      - name: lint check
+        run: npm run lint -- --no-fix
+        continue-on-error: false
+
   build-push:
+    if: github.event_name == 'push'
+    needs: tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
