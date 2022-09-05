@@ -10,8 +10,9 @@
 </template>
 
 <script>
-import SettingLogout from '../components/SettingLogout.vue'
-import BaseButton from '../components/UI/BaseButton.vue'
+import SettingLogout from "@/components/SettingLogout"
+import BaseButton from "@/components/UI/BaseButton"
+
 export default {
   components: { BaseButton, SettingLogout },
 }
@@ -31,4 +32,3 @@ export default {
   margin-top: 13px;
 }
 </style>
-

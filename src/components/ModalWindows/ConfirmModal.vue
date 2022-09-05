@@ -1,43 +1,33 @@
 <template>
-  <base-modal 
-    @close-modal="closeModal"
-  >
+  <base-modal @close-modal="closeModal">
     <div class="confirm-modal">
       <div class="confirm-modal-title-block">
         <slot></slot>
       </div>
       <div class="confirm-modal-buttons">
-        <base-button 
-          class="confirm-btn"
-          @click="confirmAction"
-        >
+        <base-button class="confirm-btn" @click="confirmAction">
           Да
         </base-button>
-        <base-button  
-          class="confirm-btn"
-          @click="closeModal"
-        >
-          Нет
-        </base-button>
+        <base-button class="confirm-btn" @click="closeModal"> Нет </base-button>
       </div>
     </div>
   </base-modal>
 </template>
 
 <script>
-import BaseButton from '../UI/BaseButton.vue';
-import BaseModal from '../UI/BaseModal.vue'
-  export default {
+import BaseButton from "@/components/UI/BaseButton"
+import BaseModal from "@/components/UI/BaseModal"
+export default {
   components: { BaseModal, BaseButton },
-    methods: {
-      closeModal() {
-        this.$emit('close');
-      },
-      confirmAction() {
-        this.$emit('confirm');
-      }
-    }
-  }
+  methods: {
+    closeModal() {
+      this.$emit("close")
+    },
+    confirmAction() {
+      this.$emit("confirm")
+    },
+  },
+}
 </script>
 
 <style scoped>
@@ -55,5 +45,4 @@ import BaseModal from '../UI/BaseModal.vue'
 .confirm-btn {
   max-width: 120px;
 }
-
 </style>

@@ -5,9 +5,7 @@
 </template>
 
 <script>
-  export default {
-    
-  }
+export default {}
 </script>
 
 <style scoped>
@@ -17,7 +15,7 @@
   border: none;
   padding: 13px;
   text-align: center;
-  background: #EEF1F4;
+  background: #eef1f4;
   border-radius: 6px;
   color: #667080;
   font-weight: 700;
@@ -25,11 +23,11 @@
 }
 
 .base-btn:hover {
-  color: #EEF1F4;
+  color: #eef1f4;
   background: #667080;
 }
 .base-btn:focus {
-  color: #EEF1F4;
+  color: #eef1f4;
   background: #667080;
 }
 </style>

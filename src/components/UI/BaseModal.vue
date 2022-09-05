@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper_modal" @click.stop="hideModal" >
+  <div class="wrapper_modal" @click.stop="hideModal">
     <div @click.stop class="modal">
       <slot></slot>
     </div>
@@ -7,14 +7,13 @@
 </template>
 
 <script>
-  export default {
-    methods: {
-      hideModal() {
-        this.$emit('close-modal');
-      }
+export default {
+  methods: {
+    hideModal() {
+      this.$emit("close-modal")
     },
-
-  }
+  },
+}
 </script>
 
 <style scoped>

@@ -1,42 +1,38 @@
 <template>
-  <div
-    @click.stop="toggleVisibleDialog"
-  >
+  <div @click.stop="toggleVisibleDialog">
     <slot></slot>
-    <confirm-modal 
+    <confirm-modal
       v-if="show_dialog"
       @confirm="logoutProcess"
       @close="toggleVisibleDialog"
     >
-      <div class="title-modal">
-        Вы уверены что хотите выйти?
-      </div>
+      <div class="title-modal">Вы уверены что хотите выйти?</div>
     </confirm-modal>
   </div>
 </template>
 
 <script>
-import ConfirmModal from './ModalWindows/ConfirmModal.vue';
+import ConfirmModal from "@/components/ModalWindows/ConfirmModal"
 
-  export default {
-    components: {
-      ConfirmModal
-    },
-    data() {
-      return {
-        show_dialog: false,
-      }
-    },
-    methods: {
-      toggleVisibleDialog() {
-        this.show_dialog = !this.show_dialog 
-      },
-      logoutProcess() {
-        this.$store.dispatch('logout')
-        this.$router.push('/')
-      }
+export default {
+  components: {
+    ConfirmModal,
+  },
+  data() {
+    return {
+      show_dialog: false,
     }
-  }
+  },
+  methods: {
+    toggleVisibleDialog() {
+      this.show_dialog = !this.show_dialog
+    },
+    logoutProcess() {
+      this.$store.dispatch("logout")
+      this.$router.push("/")
+    },
+  },
+}
 </script>
 
 <style scoped>
