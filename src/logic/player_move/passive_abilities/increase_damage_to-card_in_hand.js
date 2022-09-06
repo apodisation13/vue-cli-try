@@ -1,5 +1,4 @@
-import {sound_passive_increase_damage} from "@/logic/play_sounds"
-
+import { sound_passive_increase_damage } from "@/logic/play_sounds"
 
 function passive_end_turn_increase_damage_in_hand(hand) {
   let random = Math.floor(Math.random() * hand.length)
@@ -16,5 +15,4 @@ function passive_end_turn_increase_damage_in_hand(hand) {
   sound_passive_increase_damage()
 }
 
-
-export {passive_end_turn_increase_damage_in_hand}
+export { passive_end_turn_increase_damage_in_hand }

@@ -1,81 +1,68 @@
 <template>
-
-  <div class="header" @click="choseFormRegister" v-if="formLogin">
-    <div class="auth">
-      <span>ВХОД</span>
-      <span :style="{'fontSize': '10pt'}">нажмите на это поле чтобы переключиться на регистрацию</span>
+  <div>
+    <div class="header" @click="choseFormRegister" v-if="formLogin">
+      <div class="auth">
+        <span>ВХОД</span>
+        <span :style="{ fontSize: '10pt' }"
+          >нажмите на это поле чтобы переключиться на регистрацию</span
+        >
+      </div>
     </div>
+    <div class="header" @click="choseFormLogin" v-else>
+      <div class="auth">
+        <span>РЕГИСТРАЦИЯ</span>
+        <span :style="{ fontSize: '10pt' }"
+          >нажмите на это поле чтобы переключиться на вход</span
+        >
+      </div>
+    </div>
+    <form v-on:submit.prevent class="form">
+      <div class="auth" v-if="!formLogin">Введите имя пользователя</div>
+      <div v-if="!formLogin">
+        <input class="data" v-model="username" autocomplete="username" />
+      </div>
+      <div class="auth">Введите адрес электронной почты</div>
+      <div>
+        <input class="data" v-model="email" autocomplete="email" />
+      </div>
+      <div class="auth">Введите пароль</div>
+      <div>
+        <input
+          class="data"
+          v-model="password"
+          type="password"
+          autocomplete="password"
+          v-on:keyup.enter="login"
+        />
+      </div>
+      <div class="auth" v-if="!formLogin">Подтвердите пароль</div>
+      <div v-if="!formLogin">
+        <input
+          class="data"
+          v-model="confirmPassword"
+          type="password"
+          autocomplete="confirmPassword"
+          v-on:keyup.enter="userRegister"
+        />
+      </div>
+      <div class="auth">
+        <button class="login" v-if="formLogin" @click="login">ВХОД</button>
+        <button class="login" v-else @click="userRegister">Регистрация</button>
+      </div>
+      <div class="error" v-if="error">{{ error }}</div>
+    </form>
   </div>
-  <div class="header" @click="choseFormLogin" v-else>
-    <div class="auth">
-      <span>РЕГИСТРАЦИЯ</span>
-      <span :style="{'fontSize': '10pt'}">нажмите на это поле чтобы переключиться на вход</span>
-    </div>
-  </div>
-
-  <form v-on:submit.prevent class="form">
-    <div class="auth" v-if="!formLogin">
-      Введите имя пользователя
-    </div>
-    <div v-if="!formLogin">
-      <input class="data" v-model="username" autocomplete="username">
-    </div>
-    <div class="auth" >
-      Введите адрес электронной почты
-    </div>
-    <div>
-      <input class="data" v-model="email" autocomplete="email">
-    </div>
-    <div class="auth">
-      Введите пароль
-    </div>
-    <div>
-      <input class="data"
-             v-model="password"
-             type="password"
-             autocomplete="password"
-             v-on:keyup.enter="login"
-      >
-    </div>
-    <div class="auth" v-if="!formLogin">
-      Подтвердите пароль
-    </div>
-    <div v-if="!formLogin">
-      <input class="data"
-             v-model="confirmPassword"
-             type="password"
-             autocomplete="confirmPassword"
-             v-on:keyup.enter="userRegister"
-      >
-    </div>
-
-    <div class="auth">
-      <button
-          class="login"
-          v-if="formLogin"
-          @click="login"
-      >ВХОД</button>
-      <button
-          class="login"
-          v-else
-          @click="userRegister"
-      >Регистрация</button>
-    </div>
-
-    <div class="error" v-if="error"> {{ error }} </div>
-
-  </form>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      username: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      error: '',
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      error: "",
       formLogin: true,
     }
   },
@@ -84,26 +71,28 @@ export default {
       this.error = this.validate_form(false)
       if (this.error) return
 
-      await this.$router.push('/loading')
+      await this.$router.push("/loading")
       try {
-        await this.$store.dispatch('login', { username: this.email, password: this.password })
-        await this.$store.dispatch('get_user_database')
-        await this.$store.dispatch('render_all_images')
+        await this.$store.dispatch("login", {
+          username: this.email,
+          password: this.password,
+        })
+        await this.$store.dispatch("get_user_database")
+        await this.$store.dispatch("render_all_images")
       } catch (err) {
         this.error = err
         throw err
       } finally {
-        await this.$router.push('/')
+        await this.$router.push("/")
       }
     },
 
     async userRegister() {
-
       this.error = this.validate_form(true)
       if (this.error) return
 
       try {
-        await this.$store.dispatch('userRegister', {
+        await this.$store.dispatch("userRegister", {
           username: this.username,
           email: this.email,
           password: this.password,
@@ -116,33 +105,34 @@ export default {
     },
 
     choseFormLogin() {
-      this.error = ''
+      this.error = ""
       this.formLogin = true
     },
     choseFormRegister() {
-      this.error = ''
+      this.error = ""
       this.formLogin = false
-      this.email = ''
-      this.password = ''
+      this.email = ""
+      this.password = ""
     },
 
     validate_form(register) {
-      if (register && !this.username) return 'Поле имя не может быть пустым'
+      if (register && !this.username) return "Поле имя не может быть пустым"
 
-      if (!this.email) return 'Поле почта не может быть пустым'
-      if (!this.email.includes('@')) return 'Почта некорректна'
+      if (!this.email) return "Поле почта не может быть пустым"
+      if (!this.email.includes("@")) return "Почта некорректна"
 
-      if (this.password.length < 8) return 'Пароль должен быть не менее 8 символов!'
-      if (register && this.password !== this.confirmPassword) return 'Пароли не совпадают!'
+      if (this.password.length < 8)
+        return "Пароль должен быть не менее 8 символов!"
+      if (register && this.password !== this.confirmPassword)
+        return "Пароли не совпадают!"
 
-      return ''
-    }
+      return ""
+    },
   },
 }
 </script>
 
 <style scoped>
-
 .header {
   background-color: cornflowerblue;
   width: 80%;
@@ -199,5 +189,4 @@ span {
   font-size: 14pt;
   color: red;
 }
-
 </style>

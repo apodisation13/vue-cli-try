@@ -18,7 +18,10 @@ export default {
   computed: {
     // меню не нужны, если в роутере есть notRequireMenu (страницы загрузки, игры)
     menuNeeded() {
-      return (!this.$store.state.isGame && !this.$router.currentRoute.value.meta.notRequireMenu)
+      return (
+        !this.$store.state.isGame &&
+        !this.$router.currentRoute.value.meta.notRequireMenu
+      )
     },
   },
 }
@@ -36,14 +39,13 @@ export default {
   bottom: 0;
 }
 
-.footer__btn{
+.footer__btn {
   background: #667080;
   border-radius: 6px;
-  color: #FFFFFF;
+  color: #ffffff;
   font-weight: 700;
   font-size: 16px;
   line-height: 22px;
   padding: 5px 15px;
 }
-
 </style>

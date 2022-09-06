@@ -1,6 +1,5 @@
-import {sound_damage_all} from "@/logic/play_sounds"
-import {hit_one_enemy} from "@/logic/player_move/abilities/hit_one_enemy";
-
+import { sound_damage_all } from "@/logic/play_sounds"
+import { hit_one_enemy } from "@/logic/player_move/abilities/hit_one_enemy"
 
 function damage_all(field, card, enemy_leader, enemies) {
   field.forEach(enemy => {

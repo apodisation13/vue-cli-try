@@ -1,14 +1,11 @@
 <template>
-
-  <button class="deck-btn" @click="flag=true">
-    Колода {{ deck_len }}
-  </button>
-
-  <modal-window v-if="flag" v-touch:swipe="close_self">
-    <button-close @close_self="close_self" />
-    <cards-list :cards='deck' />
-  </modal-window>
-
+  <div>
+    <button class="deck-btn" @click="flag = true">Колода {{ deck_len }}</button>
+    <modal-window v-if="flag" v-touch:swipe="close_self">
+      <button-close @close_self="close_self" />
+      <cards-list :cards="deck" />
+    </modal-window>
+  </div>
 </template>
 
 <script>
@@ -16,12 +13,12 @@ import ModalWindow from "@/components/UI/ModalWindow"
 import ButtonClose from "@/components/UI/ButtonClose"
 import CardsList from "@/components/CardsList"
 export default {
-  name: 'deck-comp',
-  components: {CardsList, ButtonClose, ModalWindow},
+  name: "deck-comp",
+  components: { CardsList, ButtonClose, ModalWindow },
   props: {
     deck: {
       required: true,
-      type: Array
+      type: Array,
     },
   },
   data() {
@@ -30,7 +27,9 @@ export default {
     }
   },
   computed: {
-    deck_len() {return this.deck.length}
+    deck_len() {
+      return this.deck.length
+    },
   },
   methods: {
     close_self() {

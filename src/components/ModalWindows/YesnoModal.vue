@@ -1,42 +1,37 @@
 <template>
   <div class="yes_no_modal" v-if="visible">
-      Подтвердить? <br>
-      <div class="content">
-        <button class="btn_yes" @click="confirm">ДА</button>
-        <button class="btn_no" @click="cancel">нет</button>
-      </div>
-    <div v-if="resource_value">
-      Цена {{ resource_value }}
+    Подтвердить? <br />
+    <div class="content">
+      <button class="btn_yes" @click="confirm">ДА</button>
+      <button class="btn_no" @click="cancel">нет</button>
     </div>
+    <div v-if="resource_value">Цена {{ resource_value }}</div>
   </div>
 </template>
 
 <script>
-  export default {
-    name: "yesno-modal",
-    props: {
-      visible: {
-        required: true,
-        type: Boolean,
-      },
-      resource_value: {
-        type: Number,
-        required: false
-      },
+export default {
+  name: "yesno-modal",
+  props: {
+    visible: {
+      required: true,
+      type: Boolean,
     },
-    methods: {
-      confirm() {
-        this.$emit('confirm')
-      },
-      cancel() {
-        this.$emit('cancel')
-      },
+    resource_value: {
+      type: Number,
+      required: false,
     },
-    emits: [
-      'confirm',
-      'cancel',
-    ],
-  }
+  },
+  methods: {
+    confirm() {
+      this.$emit("confirm")
+    },
+    cancel() {
+      this.$emit("cancel")
+    },
+  },
+  emits: ["confirm", "cancel"],
+}
 </script>
 
 <style scoped>
@@ -52,7 +47,6 @@
   transform: translate(-50%, -50%);
   font-size: 15pt;
   z-index: 99999;
-
 }
 
 .content {
@@ -74,5 +68,4 @@
   width: 50px;
   height: 50px;
 }
-
 </style>

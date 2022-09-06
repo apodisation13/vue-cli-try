@@ -1,7 +1,6 @@
 <template>
   <div class="wrapper__bg">
     <div class="app" v-touch:swipe.right="show">
-
       <!--картинка страницы по параметрам из роутера-->
       <page-image />
 
@@ -16,13 +15,12 @@
 
       <!--нижняя часть меню, в футере-->
       <menu-footer />
-
     </div>
   </div>
 </template>
 
 <script>
-import MenuBar from '@/components/UI/Menu/MenuBar'
+import MenuBar from "@/components/UI/Menu/MenuBar"
 import MenuFooter from "@/components/UI/Menu/MenuFooter"
 import MenuHeader from "@/components/UI/Menu/MenuHeader"
 import PageImage from "@/components/PageImage"
@@ -31,22 +29,23 @@ export default {
     PageImage,
     MenuHeader,
     MenuFooter,
-    MenuBar
+    MenuBar,
   },
   async created() {
     // СРАБАТЫВАЕТ ПО ОТКРЫТИЮ САЙТА: вначале прыгаем на загрузку,
     // Далее проверяем логин из локалсторадж, если успешно, грузим базу данных и рендерим ВСЕ картинки
     // в любом случае идем на главную потом
-    await this.$router.push('/loading')
+    await this.$router.push("/loading")
     try {
-      await this.$store.dispatch('check_auth') // пытаемся послать запрос на логин с данными из локалсторадж
-      await this.$store.dispatch('get_user_database')
-      await this.$store.dispatch('render_all_images') // принудительный рендер всех картинок
+      await this.$store.dispatch("fetchNews")
+      await this.$store.dispatch("check_auth") // пытаемся послать запрос на логин с данными из локалсторадж
+      await this.$store.dispatch("get_user_database")
+      await this.$store.dispatch("render_all_images") // принудительный рендер всех картинок
     } catch (err) {
       console.log(err)
       throw err
     } finally {
-      await this.$router.push('/')
+      await this.$router.push("/")
     }
   },
   computed: {
@@ -56,7 +55,7 @@ export default {
   },
   methods: {
     show() {
-      this.$store.commit('set_show_menu', true)
+      this.$store.commit("set_show_menu", true)
     },
     close_menu() {
       this.show_menu = false
@@ -66,7 +65,6 @@ export default {
 </script>
 
 <style>
-
 * {
   margin: 0;
   padding: 0;
@@ -75,13 +73,10 @@ export default {
 }
 
 /*заблокировать перезагрузку страницы на мобилке по прокрутке вверх*/
-html, body {
+html,
+body {
   overscroll-behavior-y: contain;
 }
-
-/* body {
-  height: 100vh;
-} */
 
 .app {
   position: relative;

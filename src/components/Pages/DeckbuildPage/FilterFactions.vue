@@ -1,11 +1,13 @@
 <template>
   <div class="filter_factions">
     <div class="factions" v-for="faction in factions" :key="faction">
-
-      <button class="faction" @click="filtering(faction)" :style="{'backgroundColor': faction.color}">
+      <button
+        class="faction"
+        @click="filtering(faction)"
+        :style="{ backgroundColor: faction.color }"
+      >
         {{ faction.name[0] }}
       </button>
-
     </div>
   </div>
 </template>
@@ -20,10 +22,11 @@ export default {
   },
   methods: {
     filtering(faction) {
-      this.$emit('filter-factions', [[faction.name, "Neutral"], true])  // выбранная фракция и флаг что выбрано ТРУ
+      // выбранная фракция и флаг что выбрано ТРУ
+      this.$emit("filter-factions", [[faction.name, "Neutral"], true])
     },
   },
-  emits: ['filter-factions'],
+  emits: ["filter-factions"],
 }
 </script>
 

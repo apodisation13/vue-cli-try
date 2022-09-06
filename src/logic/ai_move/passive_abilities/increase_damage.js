@@ -1,5 +1,4 @@
-import {sound_passive_increase_damage} from "@/logic/play_sounds"
-
+import { sound_passive_increase_damage } from "@/logic/play_sounds"
 
 function passive_end_turn_increase_damage(enemy) {
   let temp = enemy.damage
@@ -12,8 +11,6 @@ function passive_end_turn_increase_damage(enemy) {
   }, 750)
 
   sound_passive_increase_damage()
-
 }
 
-
-export {passive_end_turn_increase_damage}
+export { passive_end_turn_increase_damage }
