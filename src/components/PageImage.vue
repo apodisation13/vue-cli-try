@@ -48,10 +48,4 @@ export default {
   height: 100%;
   z-index: -1;
 }
-<<<<<<< HEAD
-
-
 </style>
-=======
-</style>
->>>>>>> dev

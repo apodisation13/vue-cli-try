@@ -95,15 +95,11 @@ export default {
   }
 }
 
-<<<<<<< HEAD
 .header {
   padding: 0 10px;
 }
 
-.avatar{
-=======
 .avatar {
->>>>>>> dev
   background: none;
   border: none;
 }
