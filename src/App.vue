@@ -1,4 +1,7 @@
 <template>
+
+
+
   <div class="wrapper__bg">
     <div class="app" v-touch:swipe.right="show">
       <!--картинка страницы по параметрам из роутера-->
