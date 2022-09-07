@@ -63,8 +63,6 @@ button {
 }
 
 .not_logged_in {
-  position: absolute;
-  top: 7vh;
   margin-top: 1vh;
   width: 99%;
   height: 15vh;
@@ -72,8 +70,6 @@ button {
 }
 
 .info {
-  position: absolute;
-  bottom: 12%;
   width: 100%;
   height: 60vh;
   /*background-color: darkgrey;*/

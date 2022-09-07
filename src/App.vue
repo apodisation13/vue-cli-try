@@ -1,18 +1,20 @@
 <template>
-  <div class="app" v-touch:swipe.right="show">
-    <!--картинка страницы по параметрам из роутера-->
-    <page-image />
-    <!--верхняя часть меню, хэдер-->
-    <menu-header />
+  <div class="wrapper__bg">
+    <div class="app" v-touch:swipe.right="show">
+      <!--картинка страницы по параметрам из роутера-->
+      <page-image />
+      <!--верхняя часть меню, хэдер-->
+      <menu-header />
 
-    <!--боковое меню слева, TODO: убрать это на страницу GAME-->
-    <menu-bar v-if="showMenu" />
+      <!--боковое меню слева, TODO: убрать это на страницу GAME-->
+      <menu-bar v-if="showMenu" />
 
-    <!--собственно рендер самого приложения через роутер, формат {путь(роут): компонент}-->
-    <router-view />
+      <!--собственно рендер самого приложения через роутер, формат {путь(роут): компонент}-->
+      <router-view />
 
-    <!--нижняя часть меню, в футере-->
-    <menu-footer />
+      <!--нижняя часть меню, в футере-->
+      <menu-footer />
+    </div>
   </div>
 </template>
 
@@ -77,5 +79,37 @@ export default {
 html,
 body {
   overscroll-behavior-y: contain;
+}
+
+.body {
+  height: 100%;
+}
+
+.app {
+  position: relative;
+  z-index: -2;
+  background: #fff;
+  width: 100%;
+  height: 100%;
+}
+
+.wrapper__bg {
+  position: absolute;
+  z-index: -3;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #000;
+}
+
+@media (min-width: 900px) {
+  .app {
+    position: relative;
+    max-width: 425px;
+    max-height: 800px;
+    border-radius: 8px;
+    margin: 0 auto;
+  }
 }
 </style>
