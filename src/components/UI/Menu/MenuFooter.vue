@@ -28,24 +28,24 @@ export default {
 </script>
 
 <style scoped>
-  .footer {
-    position: absolute;
-    width: 100%;
-    padding: 0 10px 10px;
-    display: flex;
-    justify-content: space-between;
-    text-align: center;
-    justify-content: space-around;
-    bottom: 0;
-  }
-  
-  .footer__btn {
-    background: #667080;
-    border-radius: 6px;
-    color: #ffffff;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 22px;
-    padding: 5px 15px;
-  }
-  </style>
+.footer {
+  position: absolute;
+  width: 100%;
+  padding: 0 10px 10px;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  justify-content: space-around;
+  bottom: 0;
+}
+
+.footer__btn {
+  background: #667080;
+  border-radius: 6px;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+  padding: 5px 15px;
+}
+</style>
