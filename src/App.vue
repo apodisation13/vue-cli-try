@@ -78,29 +78,35 @@ body {
   overscroll-behavior-y: contain;
 }
 
+.body {
+  height: 100%;
+}
+
 .app {
   position: relative;
   z-index: -2;
+  background: #fff;
   width: 100%;
-  height: 100vh;
+  height: 100%;
 }
 
-@media (min-width: 426px) {
+.wrapper__bg {
+  position: absolute;
+  z-index: -3;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #000;
+}
+
+@media (min-width: 769px) {
   .app {
+    position: relative;
     max-width: 425px;
-    background: #fff;
+    max-height: 800px;
     border-radius: 8px;
     margin: 0 auto;
-  }
-
-  .wrapper__bg {
-    position: absolute;
-    z-index: -3;
-    top: 0.5px;
-    left: 0;
-    right: 0;
-    bottom: 0.5px;
-    background-color: #000;
   }
 }
 </style>
