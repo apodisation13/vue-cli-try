@@ -95,6 +95,10 @@ export default {
   }
 }
 
+.header {
+  padding: 0 10px;
+}
+
 .avatar {
   background: none;
   border: none;

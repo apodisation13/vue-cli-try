@@ -29,31 +29,14 @@ export default {
 
 <style scoped>
 .footer {
-  position: fixed;
-  bottom: 1%;
-  left: 1%;
-  /*border: solid 1px red;*/
-  width: 98%;
-  height: 5vh;
+  position: absolute;
+  width: 100%;
+  padding: 0 10px 10px;
   display: flex;
   justify-content: space-between;
   text-align: center;
-  margin: auto;
-}
-
-.game {
-  width: 50%;
-  height: 100%;
-}
-
-.levels {
-  width: 20%;
-  height: 100%;
-}
-
-.deckbuilder {
-  width: 20%;
-  height: 100%;
+  justify-content: space-around;
+  bottom: 0;
 }
 
 .footer__btn {
@@ -63,6 +46,6 @@ export default {
   font-weight: 700;
   font-size: 16px;
   line-height: 22px;
-  height: 48px;
+  padding: 5px 15px;
 }
 </style>
