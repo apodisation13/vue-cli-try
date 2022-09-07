@@ -103,7 +103,7 @@ body {
   background-color: #000;
 }
 
-@media (min-width: 769px) {
+@media (min-width: 900px) {
   .app {
     position: relative;
     max-width: 425px;
