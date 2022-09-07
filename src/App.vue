@@ -1,12 +1,8 @@
 <template>
-
-
-
   <div class="wrapper__bg">
     <div class="app" v-touch:swipe.right="show">
       <!--картинка страницы по параметрам из роутера-->
       <page-image />
-
       <!--верхняя часть меню, хэдер-->
       <menu-header />
 
@@ -73,6 +69,10 @@ export default {
   padding: 0;
   box-sizing: border-box;
   /* font-family: Arial, Helvetica, sans-serif; единый на всё */
+}
+
+.app {
+  padding: 0;
 }
 
 /*заблокировать перезагрузку страницы на мобилке по прокрутке вверх*/

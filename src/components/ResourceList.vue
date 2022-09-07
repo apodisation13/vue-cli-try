@@ -14,7 +14,7 @@ import ResourceItem from "@/components/UI/ResourceItem"
 
 export default {
   components: { ResourceItem },
-  name: "resource-list",
+  name: "resource-comp",
   computed: {
     resource() {
       return this.$store.getters["resource"]
