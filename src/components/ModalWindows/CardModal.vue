@@ -1,5 +1,8 @@
 <template>
-  <modal-window :style="{'backgroundColor': 'floralwhite'}" v-touch:swipe="close_self">
+  <modal-window
+    :style="{ backgroundColor: 'floralwhite' }"
+    v-touch:swipe="close_self"
+  >
     <button-close @close_self="close_self" />
 
     <div>
@@ -7,93 +10,120 @@
     </div>
 
     <div class="enemy_border" :style="border(card)">
-      <img class="img" :src="card.image" v-if="card.image" alt="">
+      <img class="img" :src="card.image" v-if="card.image" alt="" />
     </div>
 
     <div class="damage_and_hp">
       <div class="diamond" :style="background_color(card)"></div>
-      <h3> Урон <br>
+      <h3>
+        Урон <br />
         &dagger;{{ card.damage }}
       </h3>
 
-      <div class="circle" :style="{'backgroundColor': 'orange'}"
-           v-if="card.ability.name === 'damage-all'">
+      <div
+        class="circle"
+        :style="{ backgroundColor: 'orange' }"
+        v-if="card.ability.name === 'damage-all'"
+      >
         <span>&#9850;</span>
       </div>
-      <div class="circle" :style="{'backgroundColor': 'orange'}"
-           v-if="card.ability.name === 'spread-damage'">
-        <span :style="{'font-size': '18pt'}">&#9798;</span>
+      <div
+        class="circle"
+        :style="{ backgroundColor: 'orange' }"
+        v-if="card.ability.name === 'spread-damage'"
+      >
+        <span :style="{ 'font-size': '18pt' }">&#9798;</span>
       </div>
-      <div class="circle" :style="{'backgroundColor': 'green'}"
-           v-else-if="card.ability.name === 'heal'">
-        <span :style="{'font-size': '12pt'}">+&hearts;{{ card.heal }}</span>
+      <div
+        class="circle"
+        :style="{ backgroundColor: 'green' }"
+        v-else-if="card.ability.name === 'heal'"
+      >
+        <span :style="{ 'font-size': '12pt' }">+&hearts;{{ card.heal }}</span>
       </div>
-      <div class="circle" :style="{'backgroundColor': 'purple'}"
-           v-else-if="card.ability.name === 'resurrect'">
+      <div
+        class="circle"
+        :style="{ backgroundColor: 'purple' }"
+        v-else-if="card.ability.name === 'resurrect'"
+      >
         <span>&#10014;&#8680;</span>
       </div>
-      <div class="circle" :style="{'backgroundColor': 'purple'}"
-           v-else-if="
-            card.ability.name === 'draw-one-card' ||
-            card.ability.name === 'play-from-deck' ||
-            card.ability.name === 'play-from-grave'
-         ">
+      <div
+        class="circle"
+        :style="{ backgroundColor: 'purple' }"
+        v-else-if="
+          card.ability.name === 'draw-one-card' ||
+          card.ability.name === 'play-from-deck' ||
+          card.ability.name === 'play-from-grave'
+        "
+      >
         <span>&#127136;</span>
       </div>
-      <div class="circle" :style="{'backgroundColor': 'purple'}"
-           v-else-if="card.ability.name === 'give-charges-to-card-in-hand-1'">
+      <div
+        class="circle"
+        :style="{ backgroundColor: 'purple' }"
+        v-else-if="card.ability.name === 'give-charges-to-card-in-hand-1'"
+      >
         <span>+1&#8607;</span>
       </div>
 
-
-      <div class="triangle" :style="background_color(card)" v-if="card.has_passive"></div>
-      <div class="text" :style="{'font-size': '20pt'}" v-if="card.has_passive"><b>&#8987;</b></div>
-
+      <div
+        class="triangle"
+        :style="background_color(card)"
+        v-if="card.has_passive"
+      ></div>
+      <div
+        class="text"
+        :style="{ 'font-size': '20pt' }"
+        v-if="card.has_passive"
+      >
+        <b>&#8987;</b>
+      </div>
 
       <div class="charges"></div>
-      <h3> Заряды <br>
+      <h3>
+        Заряды <br />
         {{ card.charges }}&#8607;
       </h3>
 
-
       <div class="hp" v-if="hp_needed"></div>
-      <h3 v-if="hp_needed"> Жизни <br>
+      <h3 v-if="hp_needed">
+        Жизни <br />
         &hearts;{{ card.hp }}
       </h3>
-
     </div>
 
-    <div class="text">
-      <b>СПОСОБНОСТЬ</b> - {{ card.ability.description }}
-    </div>
+    <div class="text"><b>СПОСОБНОСТЬ</b> - {{ card.ability.description }}</div>
 
     <div class="text" v-if="card.has_passive"><b>ПАССИВНАЯ СПОСОБНОСТЬ</b></div>
-    <div class="text" v-if="card.has_passive">{{ card.passive_ability.description }}</div>
-
-
+    <div class="text" v-if="card.has_passive">
+      {{ card.passive_ability.description }}
+    </div>
   </modal-window>
 </template>
 
 <script>
-import { border_for_card, background_color } from '@/logic/border_styles'
+import { border_for_card, background_color } from "@/logic/border_styles"
 import ButtonClose from "@/components/UI/ButtonClose"
 import ModalWindow from "@/components/UI/ModalWindow"
 export default {
-  name: 'card-modal',
-  components: {ModalWindow, ButtonClose},
+  name: "card-modal",
+  components: { ModalWindow, ButtonClose },
   props: {
-    card: {  // объект противника по индексу поля
+    card: {
+      // объект противника по индексу поля
       required: true,
-      type: Object
+      type: Object,
     },
-    hp_needed: {  // hp только для декбилдера, для игры не нужно оно
+    hp_needed: {
+      // hp только для декбилдера, для игры не нужно оно
       type: Boolean,
-      default: false
+      default: false,
     },
   },
   methods: {
     close_self() {
-      this.$emit('close_card_modal')
+      this.$emit("close_card_modal")
     },
     border(e) {
       return border_for_card(e)
@@ -102,14 +132,11 @@ export default {
       return background_color(e)
     },
   },
-  emits: [
-    'close_card_modal'
-  ],
+  emits: ["close_card_modal"],
 }
 </script>
 
 <style scoped>
-
 .enemy_border {
   width: 65%;
   height: 60%;
@@ -195,5 +222,4 @@ span {
   margin-bottom: 1%;
   font-size: 14pt;
 }
-
 </style>

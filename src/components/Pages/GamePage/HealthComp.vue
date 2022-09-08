@@ -1,12 +1,10 @@
 <template>
-  <button class="health-btn" :style="style()">
-    &hearts;{{ health }}
-  </button>
+  <button class="health-btn" :style="style()">&hearts;{{ health }}</button>
 </template>
 
 <script>
 export default {
-  name: 'health-comp',
+  name: "health-comp",
   computed: {
     health() {
       return this.$store.state.game.health
@@ -14,16 +12,17 @@ export default {
   },
   methods: {
     style() {
-      if (isNaN(this.health) && this.health.includes('-')) return {'backgroundColor': 'red'}
-      else if (isNaN(this.health) && this.health.includes('+')) return {'backgroundColor': 'lime'}
-      else return {'backgroundColor': 'green'}
+      if (isNaN(this.health) && this.health.includes("-"))
+        return { backgroundColor: "red" }
+      else if (isNaN(this.health) && this.health.includes("+"))
+        return { backgroundColor: "lime" }
+      else return { backgroundColor: "green" }
     },
   },
 }
 </script>
 
 <style scoped>
-
 .health-btn {
   height: 4vh;
   width: 98%;
@@ -33,5 +32,4 @@ export default {
   margin-top: 1%;
   position: relative;
 }
-
 </style>

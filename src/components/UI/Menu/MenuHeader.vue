@@ -1,30 +1,33 @@
 <template>
   <div class="header" v-if="menuNeeded">
     <div class="wrapper__avatar-resources">
-      <button class="avatar" @click="showExpandedMenu" v-touch:swipe.bottom="showExpandedMenu">
-        Аватарка
+      <button
+        class="avatar"
+        @click="showExpandedMenu"
+        v-touch:swipe.bottom="showExpandedMenu"
+      >
+        <img :src="require('@/assets/icons/' + 'Avatar.svg')" alt="" />
       </button>
       <resource-list @click="$router.push('/bonus')" />
     </div>
-    <div class="expand_menu" v-if="expanded" v-touch:swipe.top="showExpandedMenu" >
-      <button class="menu_btn"
-        @click="push(button.path)"
-        v-for="button in routes" :key="button"
-      >
-        {{ button.title }}
-      </button>
-
-      <div v-if="isLoggedIn">Привет, {{ username }}!</div>
-      <button
-          class="menu_btn"
-          @click="logout"
-          style="float: right"
-          v-if="isLoggedIn"
-      >
-        ВЫХОД
-      </button>
+    <div
+      class="expand-menu"
+      v-if="expanded"
+      v-touch:swipe.top="showExpandedMenu"
+    >
+      <div class="expand-menu__content">
+        <div class="expand-menu__action" v-for="button in routes" :key="button">
+          <button class="menu-btn" @click="push(button.path)">
+            {{ button.title }}
+          </button>
+          <span>$</span>
+        </div>
+        <div class="expand-menu__action bordered" @click="showExpandedMenu">
+          <button class="menu-btn">Закрыть</button>
+          <span>X</span>
+        </div>
+      </div>
     </div>
-
   </div>
 </template>
 
@@ -32,17 +35,20 @@
 import ResourceList from "@/components/ResourceList"
 export default {
   name: "MenuHeader",
-  components: {ResourceList},
+  components: { ResourceList },
   computed: {
     // меню не нужны, если в роутере есть notRequireMenu (страницы загрузки, игры)
     menuNeeded() {
-      return !this.$router.currentRoute.value.meta.notRequireMenu
+      return (
+        !this.$store.state.isGame &&
+        !this.$router.currentRoute.value.meta.notRequireMenu
+      )
     },
     username() {
-      return this.$store.getters['getUser'].username
+      return this.$store.getters["getUser"].username
     },
     isLoggedIn() {
-      return this.$store.getters['isLoggedIn']
+      return this.$store.getters["isLoggedIn"]
     },
   },
   data() {
@@ -89,6 +95,11 @@ export default {
   }
 }
 
+.avatar {
+  background: none;
+  border: none;
+}
+
 .wrapper__avatar-resources {
   display: flex;
   align-items: center;
@@ -96,24 +107,49 @@ export default {
   padding: 5px;
 }
 
-.avatar {
-  height: 60px;
-  border-radius: 50%;
+.expand-menu__content {
+  position: fixed;
+  left: 15px;
+  top: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 156px;
+  height: 198px;
+  background: #ffffff;
+  border-radius: 8px;
 }
 
-.expand_menu {
-  top: 7vh;
-  /*border: solid 2px blue;*/
+.expand-menu {
+  content: "";
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  left: 0;
+  top: 0;
   width: 100%;
-  height: 14vh;
-  position: absolute;
-  z-index: 999;
-  background-color: darkorange;
+  height: 100%;
+  z-index: 2;
 }
 
-.menu_btn {
-  width: 19vw;
-  height: 4vh;
+.menu-btn {
   margin: 1px;
+  border: none;
+  background-color: #ffffff;
+}
+
+.menu-btn:active {
+  color: #263238;
+}
+
+.expand-menu__action {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 16px;
+  padding-right: 11px;
+}
+
+.bordered {
+  border-top: 1px solid rgba(38, 50, 56, 0.16);
+  padding-top: 11px;
 }
 </style>

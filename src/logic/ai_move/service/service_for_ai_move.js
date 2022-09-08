@@ -7,5 +7,4 @@ function set_already_jumped(field) {
   }
 }
 
-
 export { set_already_jumped }

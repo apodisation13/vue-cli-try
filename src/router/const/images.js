@@ -1,4 +1,4 @@
-const path = 'page_images'
+const path = "page_images"
 
 export const images = {
   main: {
