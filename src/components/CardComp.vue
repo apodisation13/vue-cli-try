@@ -1,16 +1,19 @@
 <template>
   <div
+    class="card-item"
+    :style="{backgroundImage: `url(${this.card.image})` }"
+    :id="make_id(card, index)"
     @contextmenu.prevent
     @click.right="show_modal"
     v-touch:longtap="show_modal"
   >
-    <img
+    <!-- <img
       :class="!deckbuilder || count > 0 ? 'img' : 'img2'"
       :src="card.image"
       alt=""
       v-if="card.image"
       :id="make_id(card, index)"
-    />
+    /> -->
 
     <card-type v-if="card.type === 'Special'">&starf;</card-type>
 
@@ -98,12 +101,24 @@ export default {
       if (!index && index !== 0) return ""
       return `${card.name}_${index}`
     },
-  },
+  }
 }
 </script>
 
 <style scoped>
-.img {
+.card-item {
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  height: 100%;
+  /* border-width: 3px 4px 3px 5px;
+  border-radius: 95% 4% 92% 5%/4% 95% 6% 95%; */
+}
+
+
+
+/* .img {
   width: 99.3%;
   height: 99.3%;
   top: 50%;
@@ -124,5 +139,5 @@ export default {
   opacity: 0.5;
   border-width: 3px 4px 3px 5px;
   border-radius: 95% 4% 92% 5%/4% 95% 6% 95%;
-}
+} */
 </style>

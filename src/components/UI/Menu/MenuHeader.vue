@@ -79,22 +79,6 @@ export default {
 </script>
 
 <style scoped>
-@media screen and (max-width: 1000px) {
-  .header {
-    /*border: solid 1px yellow;*/
-    width: 99%;
-    height: 7vh;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .header {
-    /*border: solid 1px red;*/
-    width: 99%;
-    height: 7vh;
-  }
-}
-
 .avatar {
   background: none;
   border: none;

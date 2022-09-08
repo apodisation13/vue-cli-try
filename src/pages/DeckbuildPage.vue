@@ -11,16 +11,16 @@
         />
       </div>
       <!-- список всех лидеров из базы -->
-      <div class="leader_pool_view">
+      <!-- <div class="leader_pool_view">
         <cards-list
           :cards="leaders"
           :for_leaders="true"
           :deckbuilder="true"
           @chose_player_card="chose_leader"
         />
-      </div>
+      </div> -->
     </div>
-    <div class="filters">
+    <!-- <div class="filters">
       <button class="new" @click="new_deck()">NEW+</button>
       <filter-factions @filter-factions="filter_factions" />
       <filter-types
@@ -84,7 +84,7 @@
       v-if="show_decks_list_modal"
       @close_decks_list_modal="show_decks_list_modal = false"
       @change_deck="show_deck"
-    />
+    /> -->
   </div>
 </template>
 
@@ -274,9 +274,7 @@ export default {
 
 <style scoped>
 .database {
-  display: inline;
-  float: left;
-  width: 80%;
+  /* width: 80%; */
   /*border: solid 1px red;*/
 }
 
@@ -292,7 +290,7 @@ export default {
 
 /*база карт*/
 .card_pool_view {
-  height: 35vh;
+  /* height: 35vh; */
   border: solid 1px black;
   margin: 0.05%;
   overflow: scroll;
