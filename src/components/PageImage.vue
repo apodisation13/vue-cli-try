@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import moment from "moment";
+
 
 export default {
   name: "PageImage",
@@ -42,7 +42,7 @@ export default {
     updateTime() {
       console.log(this.$router.currentRoute.value.meta.image);
       if (this.isWorking) {
-        this.time = moment().format("HH");
+        this.time = new Date().getHours();
       }
     },
   },
