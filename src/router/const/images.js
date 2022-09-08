@@ -21,5 +21,5 @@ export const images = {
   },
   deckbuild: {
     default: `${path}/deckbuild_default.png`,
-  }
+  },
 }

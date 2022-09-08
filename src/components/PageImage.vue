@@ -3,8 +3,6 @@
 </template>
 
 <script>
-
-
 export default {
   name: "PageImage",
 
@@ -14,7 +12,7 @@ export default {
       intervalId: null,
       isWorking: true,
       defaultImg: null,
-    };
+    }
   },
 
   created() {
@@ -28,52 +26,52 @@ export default {
     // https://v3.router.vuejs.org/ru/guide/advanced/lazy-loading.html#группировка-компонентов-в-одном-фрагменте
     // const image = this.$router.currentRoute.value.meta.image;
     // console.log(image)
-    this.updateTime();
+    this.updateTime()
     this.intervalId = setInterval(() => {
-      this.updateTime();
-    }, 1000);
+      this.updateTime()
+    }, 1000)
   },
 
   beforeUnmount() {
-    clearInterval(this.intervalId);
+    clearInterval(this.intervalId)
   },
 
   methods: {
     updateTime() {
-      console.log(this.$router.currentRoute.value.meta.image);
+      console.log(this.$router.currentRoute.value.meta.image)
       if (this.isWorking) {
-        this.time = new Date().getHours();
+        this.time = new Date().getHours()
       }
     },
   },
 
   computed: {
     path() {
-      const image = this.$router.currentRoute.value.meta.image;
-      if (!image) return "";
+      const image = this.$router.currentRoute.value.meta.image
+      if (!image) return ""
 
       if (Object.prototype.hasOwnProperty.call(image, "default")) {
-        clearInterval(this.intervalId);
-        return require("@/assets/" + image.default);
+        clearInterval(this.intervalId)
+        return require("@/assets/" + image.default)
       }
 
-      if (this.time === "") return null;
-      let actualtime = parseInt(this.time);
+      if (this.time === "") return null
+      let actualtime = parseInt(this.time)
       // actualtime = 22 проверка ручками
       if (actualtime >= 5 && actualtime < 11) {
-        return require("@/assets/" + image.morning);
+        return require("@/assets/" + image.morning)
       } else if (actualtime >= 11 && actualtime < 18) {
-        return require("@/assets/" + image.day);
+        return require("@/assets/" + image.day)
       } else if (actualtime >= 18 && actualtime < 22) {
-        return require("@/assets/" + image.evening);
+        return require("@/assets/" + image.evening)
       } else if (actualtime >= 22 || actualtime < 5) {
-        return require("@/assets/" + image.night);
+        return require("@/assets/" + image.night)
       } else {
-        return "";
+        return ""
       }
     },
   },
-};
+}
 </script>
 
 <style scoped>
