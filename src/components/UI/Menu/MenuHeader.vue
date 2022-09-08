@@ -1,38 +1,51 @@
 <template>
   <div class="header" v-if="menuNeeded">
-    <div class="wrapper__avatar-resources">
+    <div class="header-fixed">
       <button class="avatar" @click="showExpandedMenu" v-touch:swipe.bottom="showExpandedMenu">
-        Аватарка
-      </button>
-      <resource-list @click="$router.push('/bonus')" />
-    </div>
-    <div class="expand_menu" v-if="expanded" v-touch:swipe.top="showExpandedMenu" >
-      <button class="menu_btn"
-        @click="push(button.path)"
-        v-for="button in routes" :key="button"
-      >
-        {{ button.title }}
+       <img :src="require('@/assets/icons/'+ 'avatar.svg')" alt="">
       </button>
 
-      <div v-if="isLoggedIn">Привет, {{ username }}!</div>
-      <button
-          class="menu_btn"
-          @click="logout"
-          style="float: right"
-          v-if="isLoggedIn"
-      >
-        ВЫХОД
-      </button>
-    </div>
+      <resource-comp @click="$router.push('/bonus')" />
 
+      <div class="expand-menu" v-if="expanded" v-touch:swipe.top="showExpandedMenu" >
+        <div class="expand-menu__content" >
+
+          <div class="expand-menu__action" v-for="button in routes" :key="button">
+            <button class="menu-btn"
+            @click="push(button.path)"
+            >
+              {{ button.title }}
+            </button>
+            <span>$</span>
+          </div>
+
+          <!-- <div v-if="isLoggedIn">Привет, {{ username }}!</div> -->
+          <div class="expand-menu__action bordered" @click="showExpandedMenu">
+            <button class="menu-btn">
+              Закрыть
+            </button>
+            <span>X</span>
+          </div>
+          <!-- <button
+              class="menu_btn"
+              @click="logout"
+              style="float: right"
+              v-if="isLoggedIn"
+          >
+            ВЫХОД
+          </button> -->
+        </div>
+      </div>
+
+    </div>
   </div>
 </template>
 
 <script>
-import ResourceList from "@/components/ResourceList"
+//import ResourceComp from "@/components/ResourceComp"
 export default {
   name: "MenuHeader",
-  components: {ResourceList},
+  components: {ResourceComp},
   computed: {
     // меню не нужны, если в роутере есть notRequireMenu (страницы загрузки, игры)
     menuNeeded() {
@@ -50,8 +63,8 @@ export default {
       routes: [
         { title: "Главная", path: "/" },
         { title: "Правила", path: "/rules" },
-        { title: "Настройки", path: "/settings" },
         { title: "О нас", path: "/about" },
+        { title: "Настройки", path: "/settings" },
       ],
       expanded: false,
     }
@@ -74,7 +87,7 @@ export default {
 
 <style scoped>
 @media screen and (max-width: 1000px) {
-  .header {
+  .header-fixed {
     /*border: solid 1px yellow;*/
     width: 99%;
     height: 7vh;
@@ -82,38 +95,73 @@ export default {
 }
 
 @media screen and (max-width: 500px) {
-  .header {
+  .header-fixed {
     /*border: solid 1px red;*/
     width: 99%;
     height: 7vh;
   }
 }
 
-.wrapper__avatar-resources {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 5px;
+.header{
+  height: 50px;
 }
 
-.avatar {
-  height: 60px;
-  border-radius: 50%;
+.header-fixed{
+  position: fixed;
 }
 
-.expand_menu {
-  top: 7vh;
-  /*border: solid 2px blue;*/
-  width: 100%;
-  height: 14vh;
-  position: absolute;
-  z-index: 999;
-  background-color: darkorange;
+.avatar{
+  background: none;
+  border: none;
+  margin-left: 16px;
+  margin-top: 12px;
 }
 
-.menu_btn {
-  width: 19vw;
-  height: 4vh;
+
+.expand-menu__content {
+  position:fixed;
+  top: 1px;
+  left: 15px;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 156px;
+  height: 198px;
+  background: #FFFFFF;
+  border-radius: 8px;
+}
+
+.expand-menu {
+    content: '';
+    background-color: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.menu-btn {
   margin: 1px;
+  border: none;
+  background-color:#FFFFFF;
 }
+
+.menu-btn:active{
+  color: #263238;
+}
+
+.expand-menu__action{
+  display: flex;
+  justify-content: space-between;
+  padding-left: 16px;
+  padding-right: 11px;
+}
+
+.bordered{
+  border-top: 1px solid rgba(38, 50, 56, 0.16);
+  padding-top: 11px;
+}
+
 </style>
