@@ -38,7 +38,6 @@ export default {
 
   methods: {
     updateTime() {
-      console.log(this.$router.currentRoute.value.meta.image)
       if (this.isWorking) {
         this.time = new Date().getHours()
       }
@@ -77,12 +76,12 @@ export default {
 <style scoped>
 .page_img {
   position: absolute;
-  width: 100vw;
-  /* height: 100vh; */
-  z-index: -1;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  z-index: -1;
 }
 </style>
