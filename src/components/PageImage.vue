@@ -16,16 +16,6 @@ export default {
   },
 
   created() {
-    // console.log(this.$router.currentRoute.value.meta.image);
-    // несколько раз в начале вернет indefined
-    // if (!this.$router.currentRoute.value.meta.image) return '';
-    // при маршрутизации meta объект не успевает подгрузиться и возвращает undefined
-    // проверка на 23 строке ломает код, т.к. единожды вернув false код не будет пытаться больше
-    // подгрузить картинку.
-    // есть мысли что тут как-то виновата фишка с ленивой подгрузкой в маршрутизации
-    // https://v3.router.vuejs.org/ru/guide/advanced/lazy-loading.html#группировка-компонентов-в-одном-фрагменте
-    // const image = this.$router.currentRoute.value.meta.image;
-    // console.log(image)
     this.updateTime()
     this.intervalId = setInterval(() => {
       this.updateTime()
@@ -49,7 +39,7 @@ export default {
       const image = this.$router.currentRoute.value.meta.image
       if (!image) return ""
 
-      if (Object.prototype.hasOwnProperty.call(image, "default")) {
+      if (image.default) {
         clearInterval(this.intervalId)
         return require("@/assets/" + image.default)
       }
