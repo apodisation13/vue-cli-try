@@ -59,8 +59,10 @@ const routes = [
   {
     path: "/deckbuild",
     component: DeckbuildPage,
+
     meta: {
       requireAuth: true,
+      image: images.deckbuild,
     },
   },
   {

@@ -1,37 +1,63 @@
 <template>
-  <img class="page_img" :src="path()" alt="" />
+  <img class="page_img" :src="path" alt="#" />
 </template>
 
 <script>
 export default {
   name: "PageImage",
-  created() {
-    // если в роутере картинки не указаны, ничего делать не будем тут
-    if (!this.$router.currentRoute.value.meta.image) return
-    setInterval(() => {
-      this.date = new Date().getMinutes()
-    }, 1000)
-  },
+
   data() {
     return {
-      date: 0,
-      day: false,
+      time: "",
+      intervalId: null,
+      isWorking: true,
+      defaultImg: null,
     }
   },
+
+  created() {
+    this.updateTime()
+    this.intervalId = setInterval(() => {
+      this.updateTime()
+    }, 1000)
+  },
+
+  beforeUnmount() {
+    clearInterval(this.intervalId)
+  },
+
   methods: {
-    path() {
-      const image = this.$router.currentRoute.value.meta.image
-      // если в роутере картинки не указаны, то картинку не рисуем
-      if (!image) return ""
-      return this.day
-        ? require("@/assets/" + image.day)
-        : require("@/assets/" + image.night)
+    updateTime() {
+      if (this.isWorking) {
+        this.time = new Date().getHours()
+      }
     },
   },
-  watch: {
-    // если часы нечетные - ставим день, четные - ставим ночь
-    async date(newVal) {
-      this.day = newVal % 2 !== 0
+
+  computed: {
+    path() {
+      const image = this.$router.currentRoute.value.meta.image
+      if (!image) return ""
+
+      if (image.default) {
+        clearInterval(this.intervalId)
+        return require("@/assets/" + image.default)
+      }
+
+      if (this.time === "") return null
+      let actualtime = parseInt(this.time)
+      // actualtime = 22 проверка ручками
+      if (actualtime >= 5 && actualtime < 11) {
+        return require("@/assets/" + image.morning)
+      } else if (actualtime >= 11 && actualtime < 18) {
+        return require("@/assets/" + image.day)
+      } else if (actualtime >= 18 && actualtime < 22) {
+        return require("@/assets/" + image.evening)
+      } else if (actualtime >= 22 || actualtime < 5) {
+        return require("@/assets/" + image.night)
+      } else {
+        return ""
+      }
     },
   },
 }
