@@ -1,8 +1,37 @@
 <template>
   <div>
+    <!-- Зона кнопок - новая, карты\лидеры, фильтры -->
+    <div>
+      <button
+        class="btn_save_deck"
+        v-if="!showNewDeckFactionSelect && !deckBuilding"
+        @click="startDeckBuilding"
+      >
+        Новая
+      </button>
+      <button class="btn_save_deck" v-else @click="cancelDeckBuilding">
+        Отмена
+      </button>
+      <button class="btn_save_deck" @click="showLeaders = false">cards</button>
+      <button class="btn_save_deck" @click="showLeaders = true">leaders</button>
+      <button
+        :class="filters_enabled ? 'filters_enabled' : 'filters_disabled'"
+        @click="showFilters = !showFilters"
+      >
+        filters
+      </button>
+    </div>
+    <div class="new_deck_faction_select" v-if="showNewDeckFactionSelect">
+      <div>Выберете фракцию!</div>
+      <filter-factions @filter-factions="filter_factions" />
+    </div>
+    <!-- Зона базы карт: или показывать карты, или лидеров -->
     <div class="database">
       <!-- база карт -->
-      <div class="card_pool_view">
+      <div
+        :class="deckBuilding ? 'pool_deckbuild' : 'pool_full'"
+        v-if="!showLeaders"
+      >
         <cards-list
           :cards="pool"
           :hp_needed="true"
@@ -11,7 +40,10 @@
         />
       </div>
       <!-- список всех лидеров из базы -->
-      <div class="leader_pool_view">
+      <div
+        :class="deckBuilding ? 'pool_deckbuild' : 'pool_full'"
+        v-if="showLeaders"
+      >
         <cards-list
           :cards="leaders"
           :for_leaders="true"
@@ -20,9 +52,14 @@
         />
       </div>
     </div>
-    <div class="filters">
-      <button class="new" @click="new_deck()">NEW+</button>
-      <filter-factions @filter-factions="filter_factions" />
+    <!-- Окно с фильтрами -->
+    <div class="filters" v-if="showFilters">
+      <button class="new" @click="showFilters = false">Закрыть</button>
+      <button class="new" @click="cancelFilters">Сброс фильтров</button>
+      <filter-factions
+        @filter-factions="filter_factions"
+        v-if="!deckBuilding"
+      />
       <filter-types
         @filter-types="filter_types"
         @reset-filter-types="reset_filter_types"
@@ -40,7 +77,8 @@
         @reset-filter-unlocked="reset_filter_unlocked"
       />
     </div>
-    <div class="deck_in_progress">
+    <!-- Зона сбора колоды -->
+    <div class="deck_in_progress" v-if="deckBuilding">
       <div class="leader">
         <leader-comp v-if="leader_selected" :leader="leader" />
       </div>
@@ -52,33 +90,31 @@
         />
       </div>
     </div>
-    <div>
-      Лидер: {{ leader_selected }} Размер: {{ deck_is_progress.length }}/{{
-        $store.state.game.cards_in_deck
-      }}
-      Жизни: {{ health }}
-      <input
-        class="input"
+    <!-- TODO: Все вот это должно влезть в одну строку! -->
+    <div class="deck_info" v-if="deckBuilding">
+      <span>Лидер: {{ leader_selected }}</span>
+      <span>
+        {{ deck_is_progress.length }}/{{ $store.state.game.cards_in_deck }}
+      </span>
+      <span>Жизни: {{ health }}</span>
+      <input class="input" :disabled="cant_save_deck" v-model="deck_name" />
+      <button
+        class="btn_save_deck"
+        v-if="!patch"
         :disabled="cant_save_deck"
-        v-model="deck_name"
-      /><br />
+        @click="save_deck"
+      >
+        СОХРАНИТЬ
+      </button>
+      <button
+        class="btn_save_deck"
+        v-if="patch"
+        :disabled="cant_save_deck"
+        @click="patch_deck"
+      >
+        ИЗМЕНИТЬ
+      </button>
     </div>
-    <button
-      class="btn_save_deck"
-      v-if="!patch"
-      :disabled="cant_save_deck"
-      @click="save_deck"
-    >
-      СОХРАНИТЬ
-    </button>
-    <button
-      class="btn_save_deck"
-      v-if="patch"
-      :disabled="cant_save_deck"
-      @click="patch_deck"
-    >
-      ИЗМЕНИТЬ
-    </button>
     <div class="decks_btn" @click="open_decks_list_modal">КОЛОДЫ!</div>
     <decks-list-modal
       v-if="show_decks_list_modal"
@@ -113,9 +149,14 @@ export default {
   mixins: [filtering],
   data() {
     return {
-      deck_is_progress: [], // колода в процессе - целиком объкты
-      health: 0, // жизни текущей деки
+      showLeaders: false, // показывать таб лидеров (True) или карт (default, False)
+      showNewDeckFactionSelect: false,
+      deckBuilding: false, // флаг - собираем мы колоду, или нет
+      showFilters: false, // флаг, показать ли окно с фильтрами
+
+      deck_is_progress: [], // колода в процессе - целиком объекты, для отображения
       deck_body: [], // только {card: id} для пост-запроса
+      health: 0, // жизни текущей деки
       deck_name: "",
 
       faction_selected: false, // выбрана ли фракция, можно ли добавить лидера в деку
@@ -130,10 +171,22 @@ export default {
   },
 
   methods: {
+    startDeckBuilding() {
+      this.showNewDeckFactionSelect = true
+    },
+    cancelDeckBuilding() {
+      this.showNewDeckFactionSelect = false
+      this.deckBuilding = false
+      this.new_deck()
+    },
+
     // новая дека, обнуляем фильтры и сбрасываем все добавления
     new_deck() {
+      // сброс фильтров
       this.query = {}
       this.faction = ""
+      this.count = undefined
+
       this.deck_is_progress = []
       this.deck_body = []
       this.health = 0
@@ -206,6 +259,7 @@ export default {
 
     show_deck(index) {
       this.new_deck()
+      this.deckBuilding = true
       let deck = JSON.parse(
         JSON.stringify(this.$store.getters["all_decks"][index])
       )
@@ -268,48 +322,86 @@ export default {
         !this.leader_selected
       )
     },
+    filters_enabled() {
+      return this.count || Object.keys(this.query).length > 0
+    },
   },
 }
 </script>
 
 <style scoped>
+span {
+  color: white;
+}
+
 .database {
   display: inline;
   float: left;
-  width: 80%;
+  width: 100%;
   /*border: solid 1px red;*/
 }
 
+.new_deck_faction_select {
+  position: absolute;
+  top: 100px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  width: 100%;
+  height: 200px;
+  border-radius: 18px;
+  padding: 45px 22px;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
 .filters {
-  display: inline;
-  float: right;
-  /*border: solid 1px black;*/
-  width: 18%;
-  height: 50vh;
-  margin-right: 1%;
-  margin-top: 0.05%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  /*max-width: 335px;*/
+  width: 100%;
+  border-radius: 18px;
+  padding: 45px 22px;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+.filters_enabled {
+  height: 3vh;
+  width: 23%;
+  background-color: greenyellow;
+}
+
+.filters_disabled {
+  height: 3vh;
+  width: 23%;
 }
 
 /*база карт*/
-.card_pool_view {
-  height: 35vh;
-  border: solid 1px black;
+.pool_full {
+  height: 70vh;
+  /*border: solid 1px black;*/
   margin: 0.05%;
   overflow: scroll;
 }
 
-/*база лидеров*/
-.leader_pool_view {
-  height: 15vh;
+.pool_deckbuild {
+  height: 50vh;
   border: solid 1px black;
-  /*margin: 1px;*/
+  margin: 0.05%;
   overflow: scroll;
 }
 
 .new {
   height: 4vh;
   width: 92%;
-  margin: 2% auto;
 }
 
 .deck_in_progress {
@@ -340,13 +432,13 @@ export default {
   margin: 0.05%;
 }
 
+.deck_info {
+  width: 100%;
+}
+
 .btn_save_deck {
-  width: 23%;
   height: 3vh;
-  /*background-color: green;*/
-  display: inline;
-  float: left;
-  /*margin-top: 1%;*/
+  width: 23%;
 }
 
 .input {
@@ -357,12 +449,11 @@ export default {
 /*кнопка КОЛОДЫ*/
 .decks_btn {
   height: 3vh;
-  width: 70%;
+  width: 100%;
   border: solid 2px green;
   text-align: center;
-  display: inline;
-  float: right;
-  margin-right: 2%;
-  /*margin-top: 1%;*/
+  background: red;
+  position: absolute;
+  bottom: 7vh;
 }
 </style>
