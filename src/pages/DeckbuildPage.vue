@@ -1,15 +1,15 @@
 <template>
   <div class="dekabuild-page">
     <div class="card-list-wrapper">
-      <card-list-component 
+      <card-list-component
         :cards="pool"
         :hp_needed="true"
         :deckbuilder="true"
       />
     </div>
     <!-- <div class="database"> -->
-      <!-- база карт -->
-      <!-- <div class="card_pool_view">
+    <!-- база карт -->
+    <!-- <div class="card_pool_view">
         <cards-list
           :cards="pool"
           :hp_needed="true"
@@ -17,8 +17,8 @@
           @chose_player_card="append_into_deck_in_progress"
         />
       </div> -->
-      <!-- список всех лидеров из базы -->
-      <!-- <div class="leader_pool_view">
+    <!-- список всех лидеров из базы -->
+    <!-- <div class="leader_pool_view">
         <cards-list
           :cards="leaders"
           :for_leaders="true"
@@ -105,7 +105,7 @@ import FilterColors from "@/components/Pages/DeckbuildPage/FilterColors"
 import FilterPassives from "@/components/Pages/DeckbuildPage/FilterPassives"
 import filtering from "@/mixins/DeckbuildPage/filtering"
 import FilterUnlocked from "@/components/Pages/DeckbuildPage/FilterUnlocked"
-import CardListComponent from '@/components/CardListComponent'
+import CardListComponent from "@/components/CardListComponent"
 
 export default {
   components: {
@@ -308,7 +308,6 @@ export default {
   /* border: solid 1px black; */
   /* margin: 0.05%; */
   overflow: scroll;
-
 }
 
 /*база лидеров*/
