@@ -181,6 +181,7 @@ export default {
 div {
   font-family: "Brush Script MT", cursive;
   font-size: 14pt;
+  color: white;
 }
 
 .title {
