@@ -1,6 +1,5 @@
 <template>
-  <div
-    class="card-item"
+  <div class="card-item"
     :style="{backgroundImage: `url(${this.card.image})` }"
     :id="make_id(card, index)"
     @contextmenu.prevent
@@ -32,13 +31,13 @@
     <card-charges>{{ card.charges }}&#8607;</card-charges>
 
     <card-hp v-if="hp_needed">&hearts;{{ card.hp }}</card-hp>
-
+<!-- 
     <card-modal
       v-if="show_card_modal"
       :card="card"
       :hp_needed="hp_needed"
       @close_card_modal="show_card_modal = false"
-    />
+    /> -->
   </div>
 </template>
 
@@ -78,11 +77,9 @@ export default {
     },
     count: {
       type: Number,
-      required: false,
     },
     index: {
       type: Number,
-      required: false,
     },
   },
   data() {
@@ -107,37 +104,12 @@ export default {
 
 <style scoped>
 .card-item {
+  width: 70px;
+  height: 100px;
+  margin: 8px;
   position: relative;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: contain;
-  height: 100%;
-  /* border-width: 3px 4px 3px 5px;
-  border-radius: 95% 4% 92% 5%/4% 95% 6% 95%; */
+  background-size: cover;
 }
-
-
-
-/* .img {
-  width: 99.3%;
-  height: 99.3%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
-  border-width: 3px 4px 3px 5px;
-  border-radius: 95% 4% 92% 5%/4% 95% 6% 95%;
-}
-
-.img2 {
-  width: 99.3%;
-  height: 99.3%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
-  opacity: 0.5;
-  border-width: 3px 4px 3px 5px;
-  border-radius: 95% 4% 92% 5%/4% 95% 6% 95%;
-} */
 </style>

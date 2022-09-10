@@ -1,15 +1,22 @@
 <template>
-  <div>
-    <div class="database">
+  <div class="dekabuild-page">
+    <div class="card-list-wrapper">
+      <card-list-component 
+        :cards="pool"
+        :hp_needed="true"
+        :deckbuilder="true"
+      />
+    </div>
+    <!-- <div class="database"> -->
       <!-- база карт -->
-      <div class="card_pool_view">
+      <!-- <div class="card_pool_view">
         <cards-list
           :cards="pool"
           :hp_needed="true"
           :deckbuilder="true"
           @chose_player_card="append_into_deck_in_progress"
         />
-      </div>
+      </div> -->
       <!-- список всех лидеров из базы -->
       <!-- <div class="leader_pool_view">
         <cards-list
@@ -19,7 +26,7 @@
           @chose_player_card="chose_leader"
         />
       </div> -->
-    </div>
+    <!-- </div> -->
     <!-- <div class="filters">
       <button class="new" @click="new_deck()">NEW+</button>
       <filter-factions @filter-factions="filter_factions" />
@@ -98,6 +105,7 @@ import FilterColors from "@/components/Pages/DeckbuildPage/FilterColors"
 import FilterPassives from "@/components/Pages/DeckbuildPage/FilterPassives"
 import filtering from "@/mixins/DeckbuildPage/filtering"
 import FilterUnlocked from "@/components/Pages/DeckbuildPage/FilterUnlocked"
+import CardListComponent from '@/components/CardListComponent'
 
 export default {
   components: {
@@ -109,6 +117,7 @@ export default {
     DecksListModal,
     CardsList,
     LeaderComp,
+    CardListComponent,
   },
   mixins: [filtering],
   data() {
@@ -273,10 +282,15 @@ export default {
 </script>
 
 <style scoped>
-.database {
-  /* width: 80%; */
-  /*border: solid 1px red;*/
+.dekabuild-page {
+  padding: 8px;
+  max-height: 100%;
 }
+
+/* .database {
+  width: 80%;
+  border: solid 1px red;
+} */
 
 .filters {
   display: inline;
@@ -291,9 +305,10 @@ export default {
 /*база карт*/
 .card_pool_view {
   /* height: 35vh; */
-  border: solid 1px black;
-  margin: 0.05%;
+  /* border: solid 1px black; */
+  /* margin: 0.05%; */
   overflow: scroll;
+
 }
 
 /*база лидеров*/

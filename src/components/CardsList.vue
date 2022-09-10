@@ -8,12 +8,12 @@
       @dblclick="chose_player_card(card)"
     >
       <div class="c">
-        <card-comp
+        <!-- <card-comp
           :card="card.card ? card.card : card"
           :hp_needed="hp_needed"
           :deckbuilder="deckbuilder"
           :count="card.count"
-        />
+        /> -->
       </div>
       <div class="divb" v-if="deckbuilder">
         <button class="b" @click="mill(card)" v-if="!bonus">mill</button>
