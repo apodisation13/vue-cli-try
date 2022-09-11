@@ -2,11 +2,9 @@
   <div class="filter_types">
     <div @click="reset_filter_types">Тип</div>
     <div class="types" v-for="type in types" :key="type">
-
       <button class="type" @click="filtering(type)">
         {{ type[0] }}
       </button>
-
     </div>
   </div>
 </template>
@@ -16,18 +14,18 @@ export default {
   name: "filter-types",
   data() {
     return {
-      types: ['Unit', 'Special']
+      types: ["Unit", "Special"],
     }
   },
   methods: {
     filtering(type) {
-      this.$emit('filter-types', [type,])
+      this.$emit("filter-types", [type])
     },
     reset_filter_types() {
-      this.$emit('reset-filter-types')
+      this.$emit("reset-filter-types")
     },
   },
-  emits: ['filter-types', 'reset-filter-types'],
+  emits: ["filter-types", "reset-filter-types"],
 }
 </script>
 

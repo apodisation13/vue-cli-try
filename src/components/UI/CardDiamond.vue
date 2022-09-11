@@ -31,6 +31,6 @@ export default {
   right: 2%;
   color: whitesmoke;
   font-size: 11pt;
-  transform:  rotateZ(-45deg);
+  transform: rotateZ(-45deg);
 }
 </style>

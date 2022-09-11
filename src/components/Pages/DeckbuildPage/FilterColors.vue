@@ -2,11 +2,13 @@
   <div class="filter_colors">
     <div @click="reset_filter_colors">Цвет</div>
     <div class="colors" v-for="color in colors" :key="color">
-
-      <button class="color" :style="{'backgroundColor': color[1]}" @click="filtering(color)">
+      <button
+        class="color"
+        :style="{ backgroundColor: color[1] }"
+        @click="filtering(color)"
+      >
         {{ color[0][0] }}
       </button>
-
     </div>
   </div>
 </template>
@@ -17,21 +19,21 @@ export default {
   data() {
     return {
       colors: [
-        ["Gold", 'gold'],
-        ["Silver", 'silver'],
-        ["Bronze", 'lightsalmon'],
-      ]
+        ["Gold", "gold"],
+        ["Silver", "silver"],
+        ["Bronze", "lightsalmon"],
+      ],
     }
   },
   methods: {
     filtering(color) {
-      this.$emit('filter-colors', [color[0],])
+      this.$emit("filter-colors", [color[0]])
     },
     reset_filter_colors() {
-      this.$emit('reset-filter-colors')
+      this.$emit("reset-filter-colors")
     },
   },
-  emits: ['filter-colors', 'reset-filter-colors']
+  emits: ["filter-colors", "reset-filter-colors"],
 }
 </script>
 

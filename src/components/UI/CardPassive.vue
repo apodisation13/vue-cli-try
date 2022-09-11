@@ -1,11 +1,7 @@
 <template>
-  <div class="triangle" >
-    <span v-if="!card || card.timer === 0">
-      &#8987;
-    </span>
-    <span v-else class="timer">
-      {{ card.timer }}&#8987;
-    </span>
+  <div class="triangle">
+    <span v-if="!card || card.timer === 0"> &#8987; </span>
+    <span v-else class="timer"> {{ card.timer }}&#8987; </span>
   </div>
 </template>
 
@@ -45,5 +41,4 @@ span {
   height: 100%;
   font-size: 8pt;
 }
-
 </style>

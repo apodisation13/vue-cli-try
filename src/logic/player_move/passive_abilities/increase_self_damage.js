@@ -1,5 +1,4 @@
-import {sound_passive_increase_damage} from "@/logic/play_sounds"
-
+import { sound_passive_increase_damage } from "@/logic/play_sounds"
 
 function passive_end_turn_increase_self_damage(card) {
   let temp = card.damage
@@ -14,5 +13,4 @@ function passive_end_turn_increase_self_damage(card) {
   sound_passive_increase_damage()
 }
 
-
-export {passive_end_turn_increase_self_damage}
+export { passive_end_turn_increase_self_damage }
