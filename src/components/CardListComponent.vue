@@ -1,6 +1,6 @@
 <template>
   <div class="card-list">
-    <card-comp v-for="item in cards" 
+    <card-item v-for="item in cards" 
       :card="item.card" 
       :key="item.card.id" 
       :hp_needed="hp_needed"
@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import CardComp from "@/components/CardComp"
+import CardItem from "@/components/CardItem"
 export default {
-  components: { CardComp },
+  components: { CardItem },
   props: {
     cards: {
       required: true,
