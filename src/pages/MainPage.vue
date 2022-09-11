@@ -10,59 +10,6 @@
       <div class="not_logged_in__text">Добро пожаловать, username</div>
     </div>
     <div class="info">
-      <!-- <b>Тут будут новости</b>
-      <div v-if="isLoggedIn">
-        <div class="info_block">
-          Если провести пальцем вниз по кнопке аватарка, откроется подменю.<br />
-          Если провести по подменю пальцем вверх,подменю закроется.<br />
-          Если провести пальцем вправо, откроется меню.<br />
-        </div>
-        <div class="info_block" v-if="$store.state.show_menu">
-          <div>Ну вот отлично! Меню открылось!</div>
-          <div>
-            А закрыть его можно по кнопке Закрыть в нём, или провести в нём
-            пальцем влево! Попробуйте!
-          </div>
-        </div>
-
-        <div class="info_block" v-if="$store.state.show_menu">
-          <div>
-            <b>Навигация по меню:</b>
-          </div>
-          <div>База данных - информация о картах, лидерах</div>
-          <div>
-            Уровни - информация о доступных уровнях, выбрать колоду для игры
-          </div>
-          <div>Игра - играть в саму игру!</div>
-          <div>
-            А внизу значок on/off - включен ли звук (on - включен, off -
-            выключен).
-          </div>
-        </div>
-      </div>
-
-      <div class="info_block">
-        Внимание! Меню так же доступно на любой странице, только найти свободное
-        место чтобы его вызвать :) -->
-      <!-- </div> -->
-      <!-- <div class="news">
-        <div class="news__header">
-          <button @click="() => (this.currentSlide = this.currentSlide + 1)">
-            {{ "<" }}
-          </button>
-          <b>Тут будут новости</b>
-          <button>{{ ">" }}</button>
-          <p>Тут будут новости</p>
-        </div>
-        <div
-          class="news__content"
-          :style="{ 'margin-left': '-' + 80 * currentSlide + '%' }"
-        >
-          <div class="news__element" v-for="element in news" :key="element.id">
-            {{ element.description }}
-          </div>
-        </div>
-      </div> -->
       <news-list />
     </div>
   </div>
