@@ -1,30 +1,9 @@
 <template>
   <div>
     <!-- Зона кнопок - новая, карты\лидеры, фильтры -->
-    <div>
-      <button
-        class="btn_save_deck"
-        v-if="!showNewDeckFactionSelect && !deckBuilding"
-        @click="startDeckBuilding"
-      >
-        Новая
-      </button>
-      <button class="btn_save_deck" v-else @click="cancelDeckBuilding">
-        Отмена
-      </button>
-      <button class="btn_save_deck" @click="showLeaders = false">cards</button>
-      <button class="btn_save_deck" @click="showLeaders = true">leaders</button>
-      <button
-        :class="filters_enabled ? 'filters_enabled' : 'filters_disabled'"
-        @click="showFilters = !showFilters"
-      >
-        filters
-      </button>
-    </div>
-    <div class="new_deck_faction_select" v-if="showNewDeckFactionSelect">
-      <div>Выберете фракцию!</div>
-      <filter-factions @filter-factions="filter_factions" />
-    </div>
+    <deckbuilder-filters 
+      @reset="cancelDeckBuilding"
+    />
     <!-- Зона базы карт: или показывать карты, или лидеров -->
     <div class="database">
       <!-- база карт -->
@@ -135,6 +114,7 @@ import FilterPassives from "@/components/Pages/DeckbuildPage/FilterPassives"
 import filtering from "@/mixins/DeckbuildPage/filtering"
 import FilterUnlocked from "@/components/Pages/DeckbuildPage/FilterUnlocked"
 import CardListComponent from "@/components/CardListComponent"
+import DeckbuilderFilters from '@/components/DeckbuilderFilters'
 
 export default {
   components: {
@@ -147,12 +127,13 @@ export default {
     CardsList,
     LeaderComp,
     CardListComponent,
+    DeckbuilderFilters,
   },
   mixins: [filtering],
   data() {
     return {
       showLeaders: false, // показывать таб лидеров (True) или карт (default, False)
-      showNewDeckFactionSelect: false,
+      // showNewDeckFactionSelect: false,
       deckBuilding: false, // флаг - собираем мы колоду, или нет
       showFilters: false, // флаг, показать ли окно с фильтрами
 
@@ -177,9 +158,8 @@ export default {
       this.showNewDeckFactionSelect = true
     },
     cancelDeckBuilding() {
-      this.showNewDeckFactionSelect = false
-      this.deckBuilding = false
-      this.new_deck()
+      this.deckBuilding = false;
+      this.new_deck();
     },
 
     // новая дека, обнуляем фильтры и сбрасываем все добавления
@@ -343,22 +323,6 @@ span {
   /*border: solid 1px red;*/
 }
 
-.new_deck_faction_select {
-  position: absolute;
-  top: 100px;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 999;
-  width: 100%;
-  height: 200px;
-  border-radius: 18px;
-  padding: 45px 22px;
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-}
-
 .filters {
   position: absolute;
   top: 0;
@@ -373,17 +337,6 @@ span {
   display: flex;
   flex-direction: column;
   background: #fff;
-}
-
-.filters_enabled {
-  height: 3vh;
-  width: 23%;
-  background-color: greenyellow;
-}
-
-.filters_disabled {
-  height: 3vh;
-  width: 23%;
 }
 
 /*база карт*/
