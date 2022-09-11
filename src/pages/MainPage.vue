@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="not_logged_in" v-if="!isLoggedIn">
-<<<<<<< HEAD
       <div class="not_logged_in__text">
         Для регистрации перейдите по
         <router-link to="/login">ссылке</router-link>
@@ -9,10 +8,6 @@
     </div>
     <div class="not_logged_in" v-if="isLoggedIn">
       <div class="not_logged_in__text">Добро пожаловать, username</div>
-=======
-      <div>Перейдите по ссылке</div>
-      <router-link to="/login">Регистрация\Вход</router-link>
->>>>>>> dev
     </div>
     <div class="info">
       <!-- <b>Тут будут новости</b>
@@ -48,7 +43,6 @@
 
       <div class="info_block">
         Внимание! Меню так же доступно на любой странице, только найти свободное
-<<<<<<< HEAD
         место чтобы его вызвать :) -->
       <!-- </div> -->
       <!-- <div class="news">
@@ -70,10 +64,6 @@
         </div>
       </div> -->
       <news-list />
-=======
-        место чтобы его вызвать :)
-      </div>
->>>>>>> dev
     </div>
   </div>
 </template>
@@ -100,7 +90,6 @@ button {
 }
 
 .not_logged_in {
-<<<<<<< HEAD
   display: flex;
   justify-content: center;
   text-align: center;
@@ -121,12 +110,6 @@ button {
 
 .not_logged_in__text a {
   color: black;
-=======
-  margin-top: 1vh;
-  width: 99%;
-  height: 15vh;
-  border: solid 2px red;
->>>>>>> dev
 }
 
 .info {
@@ -138,7 +121,6 @@ button {
 .info_block {
   margin-top: 2%;
 }
-<<<<<<< HEAD
 
 .news__element {
   flex: 0 0 auto;
@@ -147,6 +129,4 @@ button {
   overflow: scroll;
   margin-left: 15px;
 }
-=======
->>>>>>> dev
 </style>

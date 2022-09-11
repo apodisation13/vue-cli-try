@@ -2,11 +2,7 @@ import { all_news } from "@/store/const/api_urls"
 import axios from "axios"
 
 const state = {
-<<<<<<< HEAD
   news: null,
-=======
-  news: [],
->>>>>>> dev
 }
 
 const getters = {
@@ -23,13 +19,8 @@ const actions = {
   async fetchNews({ commit }) {
     const url = all_news
     try {
-<<<<<<< HEAD
       let response = await axios.get(url).then(response => response.data)
       commit("set_news", response)
-=======
-      let response = await axios.get(url)
-      commit("set_news", response.data)
->>>>>>> dev
     } catch (err) {
       throw new Error("Ошибка при загрузке новостей")
     }
