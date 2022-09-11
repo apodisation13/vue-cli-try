@@ -104,10 +104,9 @@ export default {
 }
 
 .expand-menu__content {
-  position:fixed;
-  left: 15px;
-  top: 15px;
   display: flex;
+  margin-top: 18px;
+  margin-left: 10px;
   flex-direction: column;
   justify-content: space-around;
   width: 156px;
@@ -117,14 +116,14 @@ export default {
 }
 
 .expand-menu {
-    content: '';
-    background-color: rgba(0, 0, 0, 0.3);
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2;
+  content: "";
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.3);
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
 }
 
 .menu-btn {
