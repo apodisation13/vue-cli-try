@@ -101,9 +101,9 @@ export default {
   border: 3px solid #667080;
   border-radius: 10px;
   overflow: scroll;
-  background: #EEF1F4;
+  background: #eef1f4;
 }
-.news__title{
+.news__title {
   margin-bottom: 42px;
 }
 .news__content {

@@ -28,7 +28,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -116,7 +115,7 @@ export default {
   justify-content: space-around;
   width: 156px;
   height: 198px;
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 8px;
 }
 
@@ -134,10 +133,10 @@ export default {
 .menu-btn {
   margin: 1px;
   border: none;
-  background-color:#FFFFFF;
+  background-color: #ffffff;
 }
 
-.menu-btn:active{
+.menu-btn:active {
   color: #263238;
 }
 
