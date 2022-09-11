@@ -33,6 +33,31 @@
         />
       </div>
     </div>
+    <!-- Окно с фильтрами -->
+    <!-- <div class="filters" v-if="showFilters">
+      <button class="new" @click="showFilters = false">Закрыть</button>
+      <button class="new" @click="cancelFilters">Сброс фильтров</button>
+      <filter-factions
+        @filter-factions="filter_factions"
+        v-if="!deckBuilding"
+      />
+      <filter-types
+        @filter-types="filter_types"
+        @reset-filter-types="reset_filter_types"
+      />
+      <filter-colors
+        @filter-colors="filter_colors"
+        @reset-filter-colors="reset_filter_colors"
+      />
+      <filter-passives
+        @filter-passives="filter_passives"
+        @reset-filter-passives="reset_filter_passives"
+      />
+      <filter-unlocked
+        @filter-unlocked="filter_unlocked"
+        @reset-filter-unlocked="reset_filter_unlocked"
+      />
+    </div> -->
     <!-- Зона сбора колоды -->
     <div class="deck_in_progress" v-if="deckBuilding">
       <div class="leader">
@@ -94,43 +119,54 @@ import CardListComponent from "@/components/CardListComponent"
 import DeckbuilderFilters from "@/components/DeckbuilderFilters"
 
 export default {
-  components: {FilterUnlocked,FilterPassives,FilterColors,FilterTypes,FilterFactions,DecksListModal,CardsList,LeaderComp,CardListComponent,DeckbuilderFilters},
+  components: {
+    FilterUnlocked,
+    FilterPassives,
+    FilterColors,
+    FilterTypes,
+    FilterFactions,
+    DecksListModal,
+    CardsList,
+    LeaderComp,
+    CardListComponent,
+    DeckbuilderFilters,
+  },
   // mixins: [filtering],
   data() {
     return {
       showLeaders: false, // показывать таб лидеров (True) или карт (default, False)
+      // showNewDeckFactionSelect: false,
       deckBuilding: false, // флаг - собираем мы колоду, или нет
       showFilters: false, // флаг, показать ли окно с фильтрами
-      deck: {
-        deck_name: "",
-        deck_is_progress: [], // колода в процессе - целиком объекты, для отображения
-        deck_body: [], // только {card: id} для пост-запроса
-        leader: null, // сам выбранный лидер
-      },
+
+      deck_is_progress: [], // колода в процессе - целиком объекты, для отображения
+      deck_body: [], // только {card: id} для пост-запроса
+      health: 0, // жизни текущей деки
+      deck_name: "",
+
+      faction_selected: false, // выбрана ли фракция, можно ли добавить лидера в деку
+      leader_selected: false, // выбран лидер или нет
+      leader: null, // сам выбранный лидер
+
+      show_decks_list_modal: false, // показать окно с колодами
+
+      patch: false,
+      deck_id: null,
       query: {
-        faction: null,
+        faction: "",
         type: "",
         color: "",
         has_passive: false,
       },
-      health: 0, // жизни текущей деки
-      show_decks_list_modal: false, // показать окно с колодами
-      patch: false,
-      deck_id: null,
-      count: null,
+      faction: "",
+      count: undefined,
     }
   },
 
   methods: {
-    // триггеры показа дополнительных окон
     startDeckBuilding() {
       this.showNewDeckFactionSelect = true
     },
-    
-    open_decks_list_modal() {
-      this.show_decks_list_modal = true
-    },
-
     cancelDeckBuilding() {
       this.deckBuilding = false
       this.new_deck()
@@ -139,7 +175,8 @@ export default {
     // новая дека, обнуляем фильтры и сбрасываем все добавления
     new_deck() {
       // сброс фильтров
-      this.query = this.resetQueryParam()
+      this.query = {}
+      this.faction = ""
       this.count = undefined
 
       this.deck_is_progress = []
@@ -147,17 +184,9 @@ export default {
       this.health = 0
       this.deck_name = ""
       this.leader_selected = false
+      this.faction_selected = false
       this.patch = false
       this.deck_id = null
-    },
-
-    resetQueryParam() {
-      return {
-        faction: null,
-        type: "",
-        color: "",
-        has_passive: false,
-      }
     },
 
     // добавляем карты в колоду из базы карт
@@ -184,7 +213,7 @@ export default {
 
     // выбираем лидера для деки
     chose_leader(leader) {
-      if (!this.query.faction) {
+      if (!this.faction_selected) {
         alert("выберете фракцию!")
         return
       }
@@ -220,11 +249,51 @@ export default {
       }
     },
 
+    // show_deck(index) {
+    //   this.new_deck()
+    //   this.deckBuilding = true
+    //   let deck = _.cloneDeep(this.$store.getters["all_decks"][index])
+    //   this.deck_is_progress = deck.deck.cards
+    //   this.deck_body = deck.deck.d
+    //   this.leader = deck.deck.leader
+    //   this.leader_selected = true
+    //   this.health = deck.deck.health
+    //   this.deck_name = deck.deck.name
+    //   this.query.faction = [deck.deck.leader.faction, "Neutral"]
+    //   this.faction = deck.deck.leader.faction
+    //   this.faction_selected = true
+    //   this.patch = true
+    //   this.deck_id = deck.deck.id
+    // },
+
+    // async patch_deck() {
+    //   let body = {
+    //     name: this.deck_name,
+    //     health: this.health,
+    //     d: this.deck_body,
+    //     leader_id: this.leader.id,
+    //     id: this.deck_id,
+    //   }
+
+    //   try {
+    //     await this.$store.dispatch("patch_deck", body)
+    //     this.new_deck() // всё обнуляем!
+    //   } catch (err) {
+    //     console.log(err)
+    //     throw err
+    //   }
+    // },
+
+    open_decks_list_modal() {
+      this.show_decks_list_modal = true
+    },
+
     can_add_card(card) {
       return (
         !this.deck_is_progress.filter(c => c.card.id === card.card.id).length &&
         card.count !== 0 &&
-        this.deck_is_progress.length < this.$store.state.game.cards_in_deck && this.query.faction
+        this.deck_is_progress.length < this.$store.state.game.cards_in_deck &&
+        this.faction_selected
       )
     },
     // фильтр карт и лидеров по фракции по нажатию на кнопку фракции
@@ -232,10 +301,29 @@ export default {
       this.deckBuilding = true
       this.query.faction = emit // для this.query.cards
       this.faction = emit[0] // для this.query.leaders
+      this.faction_selected = this.faction !== '' // чтобы можно было добавить лидера, онли выбрав фракцию
     },
-
+    filter_types(type) {
+      this.query.type = type
+    },
+    filter_colors(color) {
+      this.query.color = color
+    },
+    filter_passives(passive) {
+      this.query.has_passive = passive
+    },
     filter_unlocked(count) {
       this.count = count
+    },
+
+    reset_filter_types() {
+      delete this.query.type
+    },
+    reset_filter_colors() {
+      delete this.query.color
+    },
+    reset_filter_passives() {
+      delete this.query.has_passive
     },
     reset_filter_unlocked() {
       this.count = undefined

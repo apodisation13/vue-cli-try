@@ -1,8 +1,9 @@
 <template>
   <div class="card-list">
-    <card-item v-for="item in cards" 
-      :card="item.card" 
-      :key="item.card.id" 
+    <card-item
+      v-for="item in cards"
+      :card="item.card"
+      :key="item.card.id"
       :hp_needed="hp_needed"
       :deckbuilder="deckbuilder"
     />

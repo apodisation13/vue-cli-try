@@ -8,11 +8,9 @@
       >
         Новая
       </button>
-      <button class="btn_save_deck" v-else @click="cancelBild">
-        Отмена
-      </button>
-      <button class="btn_save_deck" @click="showLeaders = false">cards</button>
-      <button class="btn_save_deck" @click="showLeaders = true">leaders</button>
+      <button class="btn_save_deck" v-else @click="cancelBild">Отмена</button>
+      <button class="btn_save_deck" @click="showLeaders(false)">cards</button>
+      <button class="btn_save_deck" @click="showLeaders(true)">leaders</button>
       <button
         :class="filters_enabled ? 'filters_enabled' : 'filters_disabled'"
         @click="showFilters = !showFilters"
@@ -28,30 +26,38 @@
 </template>
 
 <script>
-import FilterFactions from '@/components/Pages/DeckbuildPage/FilterFactions';
-  export default {
+import FilterFactions from "@/components/Pages/DeckbuildPage/FilterFactions"
+export default {
   components: { FilterFactions },
-    props: {
-      deckBuilding: {
-        type: Boolean,
-        default: false,
-      },
+  props: {
+    deckBuilding: {
+      type: Boolean,
+      default: false,
     },
-    data() {
-      return {
-        showNewDeckFactionSelect: false,
-      }
-    },
-    methods: {
-      startDeckBuilding() {
-        this.showNewDeckFactionSelect = true
-      },
-      cancelBild() {
-        this.showNewDeckFactionSelect = false;
-        this.$emit('reset');
-      }
+  },
+  data() {
+    return {
+      showNewDeckFactionSelect: false,
     }
-  }
+  },
+  methods: {
+    startDeckBuilding() {
+      this.showNewDeckFactionSelect = true
+    },
+    cancelBild() {
+      this.showNewDeckFactionSelect = false
+      this.$emit("reset")
+    },
+    filter_factions(emit) {
+      // если мы нажали кнопку фильтра фракций при сборе колоде, ещё ставим флаг сбора колоды и закрываем окно
+      this.showNewDeckFactionSelect = false
+      this.$emit("filter_factions", emit)
+    },
+    showLeaders(value) {
+      this.$emit("trigger_show_leaders", value)
+    },
+  },
+}
 </script>
 
 <style scoped>
@@ -82,4 +88,8 @@ import FilterFactions from '@/components/Pages/DeckbuildPage/FilterFactions';
   width: 23%;
 }
 
+.btn_save_deck {
+  height: 3vh;
+  width: 23%;
+}
 </style>

@@ -45,7 +45,7 @@ export default {
   display: block;
   width: 5px;
   height: 4px;
-  background-image: url('~@/assets/icons/card/sword.svg');
+  background-image: url("~@/assets/icons/card/sword.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
