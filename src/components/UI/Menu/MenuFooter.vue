@@ -18,7 +18,7 @@ export default {
   computed: {
     // меню не нужны, если в роутере есть notRequireMenu (страницы загрузки, игры)
     menuNeeded() {
-      return !this.$router.currentRoute.value.meta.notRequireMenu
+      return (!this.$store.state.isGame && !this.$router.currentRoute.value.meta.notRequireMenu)
     },
   },
 }
@@ -33,29 +33,34 @@ export default {
   width: 98%;
   height: 5vh;
   display: flex;
+  justify-content: space-between;
   text-align: center;
   margin: auto;
 }
 
 .game {
-  width: 25vw;
+  width: 50%;
   height: 100%;
 }
 
 .levels {
-  left: 5%;
-  width: 25vw;
+  width: 20%;
   height: 100%;
 }
 
 .deckbuilder {
-  right: 5%;
-  width: 25vw;
+  width: 20%;
   height: 100%;
 }
 
 .footer__btn{
-
+  background: #667080;
+  border-radius: 6px;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+  height: 48px;
 }
 
 </style>

@@ -2,11 +2,11 @@
   <div class="header" v-if="menuNeeded">
     <div class="header-fixed">
       <button class="avatar" @click="showExpandedMenu" v-touch:swipe.bottom="showExpandedMenu">
-       <img :src="require('@/assets/icons/'+ 'avatar.svg')" alt="">
+        <img :src="require('@/assets/icons/'+ 'Avatar.svg')" alt="">
       </button>
-
-      <resource-comp @click="$router.push('/bonus')" />
-
+      <resource-list @click="$router.push('/bonus')" />
+    </div>
+    
       <div class="expand-menu" v-if="expanded" v-touch:swipe.top="showExpandedMenu" >
         <div class="expand-menu__content" >
 
@@ -18,22 +18,12 @@
             </button>
             <span>$</span>
           </div>
-
-          <!-- <div v-if="isLoggedIn">Привет, {{ username }}!</div> -->
           <div class="expand-menu__action bordered" @click="showExpandedMenu">
             <button class="menu-btn">
               Закрыть
             </button>
             <span>X</span>
           </div>
-          <!-- <button
-              class="menu_btn"
-              @click="logout"
-              style="float: right"
-              v-if="isLoggedIn"
-          >
-            ВЫХОД
-          </button> -->
         </div>
       </div>
 
@@ -49,7 +39,7 @@ export default {
   computed: {
     // меню не нужны, если в роутере есть notRequireMenu (страницы загрузки, игры)
     menuNeeded() {
-      return !this.$router.currentRoute.value.meta.notRequireMenu
+      return (!this.$store.state.isGame && !this.$router.currentRoute.value.meta.notRequireMenu)
     },
     username() {
       return this.$store.getters['getUser'].username
@@ -102,27 +92,22 @@ export default {
   }
 }
 
-.header{
-  height: 50px;
-}
-
-.header-fixed{
-  position: fixed;
-}
-
 .avatar{
   background: none;
   border: none;
-  margin-left: 16px;
-  margin-top: 12px;
 }
 
+.wrapper__avatar-resources {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+}
 
 .expand-menu__content {
-  position:fixed;
-  top: 1px;
-  left: 15px;
-  display:flex;
+  display: flex;
+  margin-top: 18px;
+  margin-left: 10px;
   flex-direction: column;
   justify-content: space-around;
   width: 156px;
@@ -132,14 +117,14 @@ export default {
 }
 
 .expand-menu {
-    content: '';
-    background-color: rgba(0, 0, 0, 0.3);
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2;
+  content: "";
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.3);
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
 }
 
 .menu-btn {
