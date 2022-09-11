@@ -8,12 +8,12 @@
       @dblclick="chose_player_card(card)"
     >
       <div class="c">
-        <!-- <card-comp
+        <card-comp
           :card="card.card ? card.card : card"
           :hp_needed="hp_needed"
           :deckbuilder="deckbuilder"
           :count="card.count"
-        /> -->
+        />
       </div>
       <div class="divb" v-if="deckbuilder">
         <button class="b" @click="mill(card)" v-if="!bonus">mill</button>
@@ -141,17 +141,16 @@ export default {
 }
 
 .card_in_list {
-  width: 70px;
-  height: 87px;
-  margin: 15px;
+  width: 24%;
+  height: 16.7vh;
   /* border: solid 3px gold; */
   border-radius: 2%;
   display: inline-block;
   margin-left: 0.5%;
   margin-top: 0.2%;
   position: relative;
-  /* border-width: 3px 4px 3px 5px;
-  border-radius: 95% 4% 92% 5%/4% 95% 6% 95%; */
+  border-width: 3px 4px 3px 5px;
+  border-radius: 95% 4% 92% 5%/4% 95% 6% 95%;
 }
 
 .c {
