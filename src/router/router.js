@@ -61,6 +61,7 @@ const routes = [
     component: DeckbuildPage,
     meta: {
       requireAuth: true,
+      image: images.deckbuild,
     },
   },
   {
@@ -82,6 +83,7 @@ const routes = [
     component: BonusPage,
     meta: {
       requireAuth: true,
+      image: images.bonus,
     },
   },
   {

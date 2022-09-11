@@ -66,11 +66,11 @@ export default {
       type: Object,
     },
     field: {
-      required: true,
+      required: false,
       type: Array,
     },
     enemy_leader: {
-      required: true,
+      required: false,
       type: Object,
     },
   },
