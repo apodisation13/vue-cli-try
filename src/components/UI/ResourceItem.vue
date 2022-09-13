@@ -2,7 +2,7 @@
   <div class="resource-item">
     <div class="wrapper__resource-image">
       <img
-        :src="require(`@/assets/icons/resources/${name}.png`)"
+        :src="require(`@/assets/icons/resources/${name}.svg`)"
         :alt="name"
         class="resource-image"
       />
@@ -35,27 +35,27 @@ export default {
 }
 
 .wrapper__resource-image {
-  width: 35px;
-  height: 35px;
+  width: 60px;
+  height: 60px;
   margin-bottom: 5px;
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: center;
 }
 .resource-image {
   display: block;
-  max-width: 35px;
-  max-height: 35px;
+  /* max-width: 35px; */
+  max-height: 60px;
 }
 
 @media (max-width: 640px) {
   .wrapper__resource-image {
-    width: 25px;
-    height: 25px;
+    /* width: 25px; */
+    height: 60px;
   }
   .resource-image {
-    max-width: 25px;
-    max-height: 25px;
+    /* max-width: 25px; */
+    max-height: 60px;
   }
 }
 </style>
