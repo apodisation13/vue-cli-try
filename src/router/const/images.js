@@ -28,4 +28,7 @@ export const images = {
   levels: {
     default: `${path}/levels_default.jpeg`,
   },
+  // start_game: {
+  //   default: `${path}/start_game.jpg`,
+  // },
 }
