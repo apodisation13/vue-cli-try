@@ -12,6 +12,7 @@ import BonusPage from "@/pages/BonusPage"
 import RulesPage from "@/pages/RulesPage"
 import WinPage from "@/pages/WinPage"
 import LoadingPage from "@/pages/LoadingPage"
+import StartGame from "@/pages/StartGame"
 
 import { images } from "@/router/const/images"
 
@@ -43,10 +44,20 @@ const routes = [
     },
   },
   {
+    path: "/start_game",
+    component: StartGame,
+    meta: {
+      requireAuth: true,
+      // image: images.start_game,
+    },
+  },
+  {
     path: "/game",
     component: GamePage,
     meta: {
       requireAuth: true,
+      notRequireMenu: true,
+      sideMenu: true,
     },
   },
   {
@@ -112,10 +123,6 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   // прячем боковое меню по переходу в любую вкладку
   store.commit("set_show_menu", false)
-
-  if (from.path === "/game") {
-    store.commit("set_isGame", false)
-  }
 
   // если требуется АУФ, и мы залогинены, все ок. Если не залогинены, идем на главную. Если не требуется АУФ - все ок
   if (to.matched.some(record => record.meta.requireAuth)) {
