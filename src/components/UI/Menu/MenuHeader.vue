@@ -39,10 +39,7 @@ export default {
   computed: {
     // меню не нужны, если в роутере есть notRequireMenu (страницы загрузки, игры)
     menuNeeded() {
-      return (
-        !this.$store.state.isGame &&
-        !this.$router.currentRoute.value.meta.notRequireMenu
-      )
+      return !this.$router.currentRoute.value.meta.notRequireMenu
     },
     username() {
       return this.$store.getters["getUser"].username
