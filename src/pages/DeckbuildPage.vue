@@ -108,7 +108,7 @@ export default {
         leader: null, // сам выбранный лидер
       },
       query: {
-        faction: null,
+        faction: "",
         type: "",
         color: "",
         has_passive: false,

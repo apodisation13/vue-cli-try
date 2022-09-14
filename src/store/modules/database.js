@@ -39,23 +39,28 @@ const getters = {
   filtered_cards: state => (query, count) => {
     const applyFilter = (data, query) =>
       data.filter(obj =>
-        Object.entries(query).every(([prop, find]) =>
-          find.includes(obj.card[prop])
+        Object.entries(query).every(([prop, find]) =>{
+          debugger;
+          let a = obj.card[prop].includes(find)
+          return a;
+          }
         )
       )
-    if (count === undefined) return applyFilter(state.cards, query)
-    else {
-      if (count === 0)
-        return applyFilter(
-          state.cards.filter(card => card.count === 0),
-          query
-        )
-      else
-        return applyFilter(
-          state.cards.filter(card => card.count >= count),
-          query
-        )
+    if (count === null) { 
+      return applyFilter(state.cards, query)
     }
+
+    if (count === 0) {
+      return applyFilter(
+        state.cards.filter(card => card.count === 0),
+        query
+      )
+    }
+
+    return applyFilter(
+      state.cards.filter(card => card.count >= count),
+      query
+    )
   },
   filtered_leaders: state => fac => {
     return state.leaders.filter(f => f.card.faction === fac)
