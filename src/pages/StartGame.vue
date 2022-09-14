@@ -4,7 +4,9 @@
       <div class="play_price">
         Для этой игры надо заплатить <b>{{ play_price }}</b> wood!
       </div>
-      <button class="btn_start" @click="start_game">НАЧАТЬ</button>
+      <button class="btn_start" @click="start_game" :disabled="loading">
+        НАЧАТЬ
+      </button>
     </div>
   </div>
 </template>
@@ -12,6 +14,11 @@
 <script>
 export default {
   name: "StartGame",
+  data() {
+    return {
+      loading: false,
+    }
+  },
   computed: {
     play_price() {
       if (this.$store.state.game.level.difficulty === "easy")
@@ -25,15 +32,19 @@ export default {
   },
   methods: {
     async start_game() {
+      this.loading = true
       try {
         await this.$store.dispatch("pay_resource", {
           wood: this.$store.getters["resource"].wood + this.play_price,
         })
         this.$store.commit("set_start_game_redirect", true)
-        await this.$router.push("/game") // ВОТ ТУТ мы переходим на игру и ТОЛЬКО тут (с флагом, что запрос успешно)
+        setTimeout(() => {
+          this.$router.push("/game") // ВОТ ТУТ мы переходим на игру и ТОЛЬКО тут (с флагом, что запрос успешно)
+          this.loading = false
+        }, 1000)
       } catch (err) {
-        // TODO: Добавить сюда обработку ошибки
         alert("Что-то пошло не так, сыграть невозможно")
+        this.loading = false
       }
     },
   },
