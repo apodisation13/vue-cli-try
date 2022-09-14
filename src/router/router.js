@@ -69,6 +69,7 @@ const routes = [
     component: LevelPage,
     meta: {
       requireAuth: true,
+      image: images.levels,
     },
   },
   {
