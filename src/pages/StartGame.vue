@@ -1,13 +1,11 @@
 <template>
-  <div>
-    <div class="start">
-      <div class="play_price">
-        Для этой игры надо заплатить <b>{{ play_price }}</b> wood!
-      </div>
-      <button class="btn_start" @click="start_game" :disabled="loading">
-        НАЧАТЬ
-      </button>
+  <div class="start">
+    <div class="play_price">
+      Для этой игры надо заплатить <b>{{ play_price }}</b> wood!
     </div>
+    <button class="btn_start" @click="start_game" :disabled="loading">
+      НАЧАТЬ
+    </button>
   </div>
 </template>
 
