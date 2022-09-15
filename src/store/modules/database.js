@@ -39,10 +39,14 @@ const getters = {
   filtered_cards: state => (query, count) => {
     const applyFilter = (data, query) =>
       data.filter(obj =>
-        Object.entries(query).every(([prop, find]) =>{
-          debugger;
-          let a = obj.card[prop].includes(find)
-          return a;
+        Object.entries(query).every(([prop, find]) => {
+            if ('has_passive' === prop) {
+              return obj.card[prop] === find
+            }
+            if ('faction' === prop) {
+              return obj.card[prop].includes(find) || obj.card[prop] === "Neutral"
+            }
+            return obj.card[prop].includes(find)
           }
         )
       )

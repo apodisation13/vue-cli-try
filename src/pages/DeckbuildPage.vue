@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="deck_builder_page">
     <!-- Зона кнопок - новая, карты\лидеры, фильтры -->
     <deckbuilder-filters
       @reset="cancelDeckBuilding"
@@ -11,7 +11,7 @@
       <!-- база карт -->
       <div
         :class="deckBuilding ? 'pool_deckbuild' : 'pool_full'"
-        v-if="!showLeaders"
+        v-show="!showLeaders"
       >
         <cards-list
           :cards="pool"
@@ -23,7 +23,7 @@
       <!-- список всех лидеров из базы -->
       <div
         :class="deckBuilding ? 'pool_deckbuild' : 'pool_full'"
-        v-if="showLeaders"
+        v-show="showLeaders"
       >
         <cards-list
           :cards="leaders"
@@ -141,7 +141,7 @@ export default {
       // сброс фильтров
       this.query = this.resetQueryParam()
       this.deck = this.resetDeck()
-      this.count = undefined
+      this.count = null
 
       this.health = 0
       this.patch = false
@@ -150,7 +150,7 @@ export default {
 
     resetQueryParam() {
       return {
-        faction: null,
+        faction: "",
         type: "",
         color: "",
         has_passive: false,
@@ -235,7 +235,6 @@ export default {
     filter_factions(emit) {
       this.deckBuilding = true
       this.query.faction = emit // для this.query.cards
-      this.faction = emit[0] // для this.query.leaders
     },
 
     // filter_unlocked(count) {
