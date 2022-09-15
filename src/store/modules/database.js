@@ -66,8 +66,8 @@ const getters = {
       query
     )
   },
-  filtered_leaders: state => fac => {
-    return state.leaders.filter(f => f.card.faction === fac)
+  filtered_leaders: state => selected_faction => {
+    return state.leaders.filter(leader => leader.card.faction.includes(selected_faction))
   },
 
   all_enemies: state => state.enemies,

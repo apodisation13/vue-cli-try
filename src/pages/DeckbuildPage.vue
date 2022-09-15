@@ -264,8 +264,7 @@ export default {
       return this.$store.getters.filtered_cards(this.query, this.count)
     },
     leaders() {
-      if (!this.query.faction) return this.$store.getters.all_leaders
-      else return this.$store.getters.filtered_leaders(this.query.faction)
+      return this.$store.getters.filtered_leaders(this.query.faction)
     },
     cant_save_deck() {
       return (
