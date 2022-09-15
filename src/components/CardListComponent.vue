@@ -41,6 +41,5 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  overflow-y: scroll;
 }
 </style>

@@ -7,7 +7,7 @@
       @trigger_show_leaders="trigger_show_leaders"
     />
     <!-- Зона базы карт: или показывать карты, или лидеров -->
-    <div class="database">
+    <div class="database_of_cards">
       <!-- база карт -->
       <div
         :class="deckBuilding ? 'pool_deckbuild' : 'pool_full'"
@@ -34,43 +34,13 @@
       </div>
     </div>
     <!-- Зона сбора колоды -->
-    <div class="deck_in_progress" v-if="deckBuilding">
-      <div class="leader">
-        <leader-comp v-if="deck.leader" :leader="deck.leader" />
-      </div>
-      <div class="deck_build_view">
-        <cards-list
-          :cards="deck.deck_is_progress"
-          :hp_needed="true"
-          @chose_player_card="delete_from_deck_in_progress"
-        />
-      </div>
-    </div>
-    <!-- TODO: Все вот это должно влезть в одну строку! -->
-    <div class="deck_info" v-if="deckBuilding">
-      <span>Лидер: {{ !!deck.leader }}</span>
-      <span>
-        {{ deck.deck_is_progress.length }}/{{ $store.state.game.cards_in_deck }}
-      </span>
-      <span>Жизни: {{ health }}</span>
-      <input class="input" :disabled="cant_save_deck" v-model="deck.deck_name" />
-      <button
-        class="btn_save_deck"
-        v-if="!patch"
-        :disabled="cant_save_deck"
-        @click="save_deck"
-      >
-        СОХРАНИТЬ
-      </button>
-      <button
-        class="btn_save_deck"
-        v-if="patch"
-        :disabled="cant_save_deck"
-        @click="patch_deck"
-      >
-        ИЗМЕНИТЬ
-      </button>
-    </div>
+    <block-assembling-the-deck 
+      v-show="deckBuilding"
+      :deck="deck"
+      @delete_card="delete_card_from_deck"
+      :cant_save_deck="cant_save_deck"
+      @save_deck="save_deck"
+    />
     <div class="decks_btn" @click="open_decks_list_modal">КОЛОДЫ!</div>
     <decks-list-modal
       v-if="show_decks_list_modal"
@@ -83,18 +53,17 @@
 <script>
 import _ from "lodash"
 import CardsList from "@/components/CardsList"
-import LeaderComp from "@/components/LeaderComp"
 import DecksListModal from "@/components/ModalWindows/DecksListModal"
-import FilterFactions from "@/components/Pages/DeckbuildPage/FilterFactions"
-import FilterTypes from "@/components/Pages/DeckbuildPage/FilterTypes"
-import FilterColors from "@/components/Pages/DeckbuildPage/FilterColors"
-import FilterPassives from "@/components/Pages/DeckbuildPage/FilterPassives"
-import FilterUnlocked from "@/components/Pages/DeckbuildPage/FilterUnlocked"
-import CardListComponent from "@/components/CardListComponent"
 import DeckbuilderFilters from "@/components/DeckbuilderFilters"
+import BlockAssemblingTheDeck from '@/components/BlockAssemblingTheDeck'
 
 export default {
-  components: {FilterUnlocked,FilterPassives,FilterColors,FilterTypes,FilterFactions,DecksListModal,CardsList,LeaderComp,CardListComponent,DeckbuilderFilters},
+  components: {
+      DecksListModal,
+      CardsList,
+      DeckbuilderFilters,
+      BlockAssemblingTheDeck
+    },
   // mixins: [filtering],
   data() {
     return {
@@ -115,8 +84,6 @@ export default {
       },
       health: 0, // жизни текущей деки
       show_decks_list_modal: false, // показать окно с колодами
-      patch: false,
-      deck_id: null,
       count: null,
     }
   },
@@ -144,8 +111,6 @@ export default {
       this.count = null
 
       this.health = 0
-      this.patch = false
-      this.deck_id = null
     },
 
     resetQueryParam() {
@@ -167,26 +132,26 @@ export default {
     },
 
     // добавляем карты в колоду из базы карт
-    // append_into_deck_in_progress(card) {
-    //   if (this.can_add_card(card)) {
-    //     this.deck.deck_is_progress.push(card)
-    //     this.deck.deck_body.push({ card: card.card.id })
-    //     this.health += card.card.hp
-    //   } else
-    //     alert(
-    //       "нельзя карту добавить закрытую карту, или карту ещё раз или карт больше 12"
-    //     )
-    // },
+    append_into_deck_in_progress(card) {
+      if (this.can_add_card(card)) {
+        this.deck.deck_is_progress.push(card)
+        this.deck.deck_body.push({ card: card.card.id })
+        this.health += card.card.hp
+      } else
+        alert(
+          "нельзя карту добавить закрытую карту, или карту ещё раз или карт больше 12"
+        )
+    },
 
     // удалить из деки в процессе по нажатию дважды ЛКМ
-    // delete_from_deck_in_progress(card) {
-    //   this.health -= card.card.hp
-    //   this.deck.deck_is_progress.splice(this.deck.deck_is_progress.indexOf(card), 1)
-    //   this.deck.deck_body.splice(
-    //     this.deck.deck_body.findIndex(c => c.card === card.card.id),
-    //     1
-    //   )
-    // },
+    delete_from_deck_in_progress(card) {
+      this.health -= card.card.hp
+      this.deck.deck_is_progress.splice(this.deck.deck_is_progress.indexOf(card), 1)
+      this.deck.deck_body.splice(
+        this.deck.deck_body.findIndex(c => c.card === card.card.id),
+        1
+      )
+    },
 
     // выбираем лидера для деки
     chose_leader(leader) {
@@ -201,36 +166,36 @@ export default {
       this.deck.leader = leader.card
     },
 
-    // async save_deck() {
-    //   // карт ровно 12 и лидер выбран
-    //   if (this.cant_save_deck || !this.deck.deck_name) {
-    //     alert("Введите имя колоды")
-    //     return
-    //   }
+    async save_deck() {
+      // карт ровно 12 и лидер выбран
+      if (this.cant_save_deck || !this.deck.deck_name) {
+        alert("Введите имя колоды")
+        return
+      }
 
-    //   let body = {
-    //     name: this.deck.deck_name,
-    //     health: this.health,
-    //     d: this.deck.deck_body,
-    //     leader_id: this.deck.leader.id,
-    //   }
+      let body = {
+        name: this.deck.deck_name,
+        health: this.health,
+        d: this.deck.deck_body,
+        leader_id: this.deck.leader.id,
+      }
 
-    //   try {
-    //     await this.$store.dispatch("post_deck", body)
-    //     this.new_deck() // всё обнуляем!
-    //   } catch (err) {
-    //     console.log(err)
-    //     throw err
-    //   }
-    // },
+      try {
+        await this.$store.dispatch("post_deck", body)
+        this.new_deck() // всё обнуляем!
+      } catch (err) {
+        console.log(err)
+        throw err
+      }
+    },
 
-    // can_add_card(card) {
-    //   return (
-    //     !this.deck.deck_is_progress.filter(c => c.card.id === card.card.id).length &&
-    //     card.count !== 0 &&
-    //     this.deck.deck_is_progress.length < this.$store.state.game.cards_in_deck && this.query.faction
-    //   )
-    // },
+    can_add_card(card) {
+      return (
+        !this.deck.deck_is_progress.filter(c => c.card.id === card.card.id).length &&
+        card.count !== 0 &&
+        this.deck.deck_is_progress.length < this.$store.state.game.cards_in_deck && this.query.faction
+      )
+    },
     // фильтр карт и лидеров по фракции по нажатию на кнопку фракции
     filter_factions(emit) {
       this.deckBuilding = true
@@ -321,48 +286,6 @@ span {
   border: solid 1px black;
   margin: 0.05%;
   overflow: scroll;
-}
-
-.new {
-  height: 4vh;
-  width: 92%;
-}
-
-.deck_in_progress {
-  /* два дива в один ряд! */
-  clear: both;
-  height: 18vh;
-  /*border: solid 2px yellow;*/
-  width: 99%;
-  margin: 0.05% 0.05% 1%;
-}
-
-.leader {
-  width: 20%;
-  height: 100%;
-  border: dashed 1px black;
-  display: inline;
-  float: left;
-  /*margin: 0.05%;*/
-}
-
-.deck_build_view {
-  width: 79%;
-  height: 100%;
-  border: solid 1px black;
-  overflow: scroll;
-  display: inline;
-  float: right;
-  margin: 0.05%;
-}
-
-.deck_info {
-  width: 100%;
-}
-
-.input {
-  width: 23%;
-  height: 3vh;
 }
 
 /*кнопка КОЛОДЫ*/
