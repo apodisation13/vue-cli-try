@@ -1,10 +1,5 @@
 <template>
-  <div v-if="beginning">
-    <start-game @start_game="start_game" />
-  </div>
-
-  <!-- дальше идём только после нажатия кнопки начало -->
-  <div v-else>
+  <div>
     <!-- поле с врагами -->
     <field-comp :field="field" @exec_damage_ai_card="exec_damage_ai_card" />
 
@@ -80,12 +75,10 @@
 
 <script>
 import { damage_ai_card } from "@/logic/player_move/player_move"
-
 import draw from "@/mixins/GamePage/draw"
 import specialcaseabilities from "@/mixins/GamePage/specialcaseabilities"
 import execaimove from "@/mixins/GamePage/execaimove"
 
-import StartGame from "@/components/StartGame"
 import FieldComp from "@/components/Pages/GamePage/FieldComp"
 import EnemyLeader from "@/components/EnemyLeader"
 import RemainingEnemies from "@/components/Pages/GamePage/EnemiesRemaining"
@@ -99,11 +92,13 @@ import HealthComp from "@/components/Pages/GamePage/HealthComp"
 import HandComp from "@/components/Pages/GamePage/HandComp"
 import SpecialCaseAbilities from "@/components/AbilitiesComponents/SpecialCaseAbilities"
 import RedrawModal from "@/components/RedrawModal"
+import { place_enemies } from "@/logic/place_enemies"
+import { enemy_leader_ai_move_once } from "@/logic/ai_move/ai_move"
+import { draw_hand } from "@/logic/draw_hand"
 
 export default {
   components: {
     RedrawModal,
-    StartGame,
     FieldComp,
     EnemyLeader,
     RemainingEnemies,
@@ -120,19 +115,16 @@ export default {
   mixins: [draw, specialcaseabilities, execaimove],
 
   async created() {
-    this.leader = await JSON.parse(
-      JSON.stringify(this.$store.state.game.leader)
-    )
-    this.enemy_leader = await JSON.parse(
-      JSON.stringify(this.$store.state.game.enemy_leader)
-    )
+    if (!this.$store.state.game.start_game_redirect) {
+      this.$router.push("/start_game")
+    }
+    this.$store.commit("set_start_game_redirect", false)
+    this.start_game()
   },
 
   data() {
     return {
-      beginning: true, // статус начала игры - только для кнопки начало
-
-      field: [],
+      field: ["", "", "", "", "", "", "", "", "", "", "", ""],
       deck: [], // остаток сколько карт осталось в колоде
       hand: [],
       leader: "",
@@ -150,17 +142,25 @@ export default {
     }
   },
   methods: {
-    // эмит из компонента: расставить врагов, дро руки, редро
-    start_game(dict) {
-      this.hand = dict.hand
-      this.deck = dict.deck
-      this.field = dict.field
-      this.enemies = dict.enemies
-      this.beginning = false // убираем кнопку с экрана после этого
+    // НАЧАЛО ИГРЫ: копируем лидера, лидера врагов, врагов, колоду
+    // расставляем врагов, пассивка лидера врагов по началу, тянем руку и показываем окно редро
+    start_game() {
+      this.leader = JSON.parse(JSON.stringify(this.$store.state.game.leader))
+      this.enemy_leader = JSON.parse(
+        JSON.stringify(this.$store.state.game.enemy_leader)
+      )
+      this.enemies = JSON.parse(
+        JSON.stringify(this.$store.state.game.level.enemies)
+      )
+      // оставили только card, нам уже не нужны id записей UserCard
+      let deck = this.$store.state.game.current_deck.map(c => c.card)
+      this.deck = JSON.parse(JSON.stringify(deck))
 
-      // alert(this.s + 1)  // доступ к тем переменным
-      // this.show()  // доступ к тем методам
-      // this.f()  // из 1 миксина можно дергать параметры и методы другого!
+      place_enemies(this.field, this.enemies) // рандомно расставит врагов по полю, изменяет поле и врагов
+      enemy_leader_ai_move_once(this.enemy_leader, this.deck) // АБИЛКИ ЛИДЕРА врага в самом начале
+      draw_hand(this.hand, this.deck) // вытянет руку, остальное оставит в деке, изменяет руку и деку
+
+      this.draw = true // показать окно редро
     },
 
     // > по нажатию на карту игрока, из hand-comp, card - вся карта целиком

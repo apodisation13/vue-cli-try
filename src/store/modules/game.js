@@ -14,6 +14,8 @@ const state = {
   leader_ai_move: false,
   epa_end_turn: false,
   player_turn: true,
+
+  start_game_redirect: false,
 }
 
 const getters = {}
@@ -60,6 +62,10 @@ const mutations = {
   },
   set_player_turn(state, payload) {
     state.player_turn = payload
+  },
+
+  set_start_game_redirect(state, payload) {
+    state.start_game_redirect = payload
   },
 }
 
