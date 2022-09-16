@@ -67,8 +67,4 @@ button {
   height: 60vh;
   /*background-color: darkgrey;*/
 }
-
-.info_block {
-  margin-top: 2%;
-}
 </style>

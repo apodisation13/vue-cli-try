@@ -91,7 +91,7 @@ export default {
 .news__text {
   padding: 28px 16px;
   text-align: start;
-  font-family: "Inter";
+  font-family: "Inter, serif";
   font-style: normal;
   font-weight: 300;
   font-size: 12px;
