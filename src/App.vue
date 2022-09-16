@@ -49,7 +49,10 @@ export default {
   },
   computed: {
     showMenu() {
-      return this.$store.state.show_menu && this.$store.state.isGame
+      return (
+        this.$store.state.show_menu &&
+        this.$router.currentRoute.value.meta.sideMenu
+      )
     },
   },
   methods: {

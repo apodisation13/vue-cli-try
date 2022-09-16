@@ -3,7 +3,7 @@
     <button class="levels footer__btn" @click="$router.push('/levelselect')">
       Уровни
     </button>
-    <button class="game footer__btn" @click="$router.push('/game')">
+    <button class="game footer__btn" @click="$router.push('/start_game')">
       Игра
     </button>
     <button class="deckbuilder footer__btn" @click="$router.push('/deckbuild')">
@@ -18,10 +18,7 @@ export default {
   computed: {
     // меню не нужны, если в роутере есть notRequireMenu (страницы загрузки, игры)
     menuNeeded() {
-      return (
-        !this.$store.state.isGame &&
-        !this.$router.currentRoute.value.meta.notRequireMenu
-      )
+      return !this.$router.currentRoute.value.meta.notRequireMenu
     },
   },
 }
@@ -34,6 +31,7 @@ export default {
   padding: 0 10px 10px;
   display: flex;
   justify-content: space-between;
+  /*TODO: тут одинаковое???*/
   text-align: center;
   justify-content: space-around;
   bottom: 0;

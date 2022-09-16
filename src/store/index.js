@@ -26,9 +26,6 @@ const store = createStore({
     set_show_menu(state, payload) {
       state.show_menu = payload
     },
-    set_isGame(state, payload) {
-      state.isGame = payload
-    },
   },
   actions: {},
 })

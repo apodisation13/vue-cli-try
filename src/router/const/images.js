@@ -25,4 +25,10 @@ export const images = {
   bonus: {
     default: `${path}/bonus_default.png`,
   },
+  levels: {
+    default: `${path}/levels_default.jpeg`,
+  },
+  // start_game: {
+  //   default: `${path}/start_game.jpg`,
+  // },
 }
