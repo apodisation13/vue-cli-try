@@ -16,11 +16,9 @@ const mutations = {
 }
 
 const actions = {
-  async fetchNews({ commit }) {
-    const url = all_news
+  fetchNews({ commit }) {
     try {
-      let response = await axios.get(url).then(response => response.data)
-      commit("set_news", response)
+      axios.get(all_news).then(response => commit("set_news", response.data))
     } catch (err) {
       throw new Error("Ошибка при загрузке новостей")
     }

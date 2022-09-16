@@ -49,7 +49,7 @@ export default {
   },
   computed: {
     showMenu() {
-      return this.$store.state.show_menu
+      return this.$store.state.show_menu && this.$store.state.isGame
     },
   },
   methods: {

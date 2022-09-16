@@ -7,7 +7,12 @@
       <img :src="require('@/assets/icons/' + 'arrow.svg')" />
     </button>
     <div class="news__content">
-      <carousel ref="carousel" :items-to-show="1.4" :wrap-around="true">
+      <carousel
+        ref="carousel"
+        :items-to-show="1.4"
+        :wrap-around="true"
+        :touchDrag="false"
+      >
         <slide v-for="element in news" :key="element.id">
           <div class="news__item">
             <div class="news__title">
@@ -80,11 +85,6 @@ export default {
   font-size: 24px;
   line-height: 30px;
 }
-.news__header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 40px;
-}
 .news__header .carousel {
   width: 300px;
 }
@@ -96,7 +96,7 @@ export default {
   font-weight: 300;
   font-size: 12px;
   line-height: 140%;
-  height: 350px;
+  height: 40vh;
   width: 250px;
   border: 3px solid #667080;
   border-radius: 10px;
@@ -117,7 +117,7 @@ export default {
 }
 .news button {
   position: absolute;
-  z-index: 3;
+  z-index: 1;
   background: none;
   border: none;
 }

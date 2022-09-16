@@ -7,9 +7,11 @@
       </div>
     </div>
     <div class="not_logged_in" v-if="isLoggedIn">
-      <div class="not_logged_in__text">Добро пожаловать, username</div>
+      <div class="not_logged_in__text">
+        Добро пожаловать, {{ this.$store.state.login.user.username }}
+      </div>
     </div>
-    <div class="info">
+    <div class="news">
       <news-list />
     </div>
   </div>
@@ -17,6 +19,7 @@
 
 <script>
 import NewsList from "@/components/NewsList.vue"
+
 export default {
   computed: {
     isLoggedIn() {
@@ -59,7 +62,7 @@ button {
   color: black;
 }
 
-.info {
+.news {
   width: 100%;
   height: 60vh;
   /*background-color: darkgrey;*/
@@ -67,13 +70,5 @@ button {
 
 .info_block {
   margin-top: 2%;
-}
-
-.news__element {
-  flex: 0 0 auto;
-  border: 1px solid black;
-  max-width: 350px;
-  overflow: scroll;
-  margin-left: 15px;
 }
 </style>
