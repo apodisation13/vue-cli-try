@@ -13,7 +13,7 @@
       </div>
     </div>
         <!-- TODO: Все вот это должно влезть в одну строку! -->
-      <div class="deck_info">
+    <div class="deck_info">
       <span>Лидер: {{ !!deck.leader }}</span>
       <span>
         {{ deck.deck_is_progress.length }}/{{ $store.state.game.cards_in_deck }}

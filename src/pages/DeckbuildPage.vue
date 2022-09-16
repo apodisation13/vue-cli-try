@@ -54,8 +54,8 @@
 import _ from "lodash"
 import CardsList from "@/components/CardsList"
 import DecksListModal from "@/components/ModalWindows/DecksListModal"
-import DeckbuilderFilters from "@/components/DeckbuilderFilters"
-import BlockAssemblingTheDeck from '@/components/BlockAssemblingTheDeck'
+import DeckbuilderFilters from "@/components/Pages/DeckbuildPage/DeckbuilderFilters"
+import BlockAssemblingTheDeck from '@/components/Pages/DeckbuildPage/BlockAssemblingTheDeck'
 
 export default {
   components: {
