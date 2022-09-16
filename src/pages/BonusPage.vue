@@ -1,24 +1,19 @@
 <template>
   <div class="d">
     <div class="title">
-     <b>ДОБРО ПОЖАЛОВАТЬ НА БОНУСНУЮ СТРАНИЦУ!</b>
+      <b>ДОБРО ПОЖАЛОВАТЬ НА БОНУСНУЮ СТРАНИЦУ!</b>
     </div>
 
     <div class="inlines">
-      <div class="scraps_wood">
-        scraps: {{ resource.scraps }}
-      </div>
+      <div class="scraps_wood">scraps: {{ resource.scraps }}</div>
       <div class="add_kegs" style="border: 0"></div>
-      <div class="scraps_wood">
-        wood: {{ resource.wood }}
-      </div>
+      <div class="scraps_wood">wood: {{ resource.wood }}</div>
     </div>
 
     <div class="inlines">
-      <div class="kegs" @dblclick="open_keg">
-        kegs: {{ resource.kegs }}
-      </div>
+      <div class="kegs" @dblclick="open_keg">kegs: {{ resource.kegs }}</div>
       <div class="add_kegs" @dblclick="add_kegs">
+        <!--TODO: FIX THIS!!!-->
         {{ $store.state.user_actions.pay_for_kegs }}
       </div>
 
@@ -28,6 +23,7 @@
         big kegs: {{ resource.big_kegs }}
       </div>
       <div class="add_kegs" @dblclick="add_big_kegs">
+        <!--TODO: FIX THIS!!!-->
         {{ $store.state.user_actions.pay_for_big_kegs }}
       </div>
     </div>
@@ -37,54 +33,48 @@
         chests: {{ resource.chests }}
       </div>
       <div class="add_chests" @dblclick="add_chests">
+        <!--TODO: FIX THIS!!!-->
         {{ $store.state.user_actions.pay_for_chests }}
       </div>
     </div>
 
     <div class="cards_list" v-if="show_keg">
       <cards-list
-          :cards="random_cards"
-          :deckbuilder="true"
-          :bonus="true"
-          @chose_player_card="chose"
+        :cards="random_cards"
+        :deckbuilder="true"
+        :bonus="true"
+        @chose_player_card="chose"
       />
     </div>
 
     <div class="cards_list" style="height: 20vh" v-if="show_chest">
-      <cards-list
-          :cards="random_cards"
-          :deckbuilder="true"
-          :bonus="true"
-      />
+      <cards-list :cards="random_cards" :deckbuilder="true" :bonus="true" />
       <button v-if="show_chest" @click="accept_chest">Принять!</button>
     </div>
-
   </div>
 </template>
 
 <script>
 import CardsList from "@/components/CardsList"
 export default {
-  components: {CardsList},
+  components: { CardsList },
   created() {
     this.cards.forEach(card => {
       if (card.card.color === "Bronze") {
         for (let i = 0; i < 20; i++) {
           this.pool.push(card)
         }
-      }
-      else if (card.card.color === "Silver") {
+      } else if (card.card.color === "Silver") {
         this.pool.push(card)
         this.pool.push(card)
-      }
-      else if (card.card.color === "Gold") {
+      } else if (card.card.color === "Gold") {
         this.pool.push(card)
       }
     })
   },
   computed: {
     cards() {
-      return this.$store.getters['all_cards']
+      return this.$store.getters["all_cards"]
     },
     resource() {
       return this.$store.getters["resource"]
@@ -110,8 +100,8 @@ export default {
 
     async add_kegs() {
       await this.$store.dispatch("pay_resource", {
-        "wood": this.resource.wood + this.$store.state.user_actions.pay_for_kegs,
-        "kegs": this.resource.kegs + 1
+        wood: this.resource.wood + this.$store.state.user_actions.pay_for_kegs,
+        kegs: this.resource.kegs + 1,
       })
     },
     async open_keg() {
@@ -123,14 +113,15 @@ export default {
         this.random_cards.push(this.pool[random])
       }
       await this.$store.dispatch("pay_resource", {
-        "kegs": this.resource.kegs - 1
+        kegs: this.resource.kegs - 1,
       })
     },
 
     async add_big_kegs() {
       await this.$store.dispatch("pay_resource", {
-        "wood": this.resource.wood + this.$store.state.user_actions.pay_for_big_kegs,
-        "big_kegs": this.resource.big_kegs + 1
+        wood:
+          this.resource.wood + this.$store.state.user_actions.pay_for_big_kegs,
+        big_kegs: this.resource.big_kegs + 1,
       })
     },
     async open_big_keg() {
@@ -142,14 +133,15 @@ export default {
         this.random_cards.push(this.pool[random])
       }
       await this.$store.dispatch("pay_resource", {
-        "big_kegs": this.resource.big_kegs - 1
+        big_kegs: this.resource.big_kegs - 1,
       })
     },
 
     async add_chests() {
       await this.$store.dispatch("pay_resource", {
-        "wood": this.resource.wood + this.$store.state.user_actions.pay_for_chests,
-        "chests": this.resource.chests + 1
+        wood:
+          this.resource.wood + this.$store.state.user_actions.pay_for_chests,
+        chests: this.resource.chests + 1,
       })
     },
     async open_chest() {
@@ -162,7 +154,7 @@ export default {
         this.random_cards.push(this.pool[random])
       }
       await this.$store.dispatch("pay_resource", {
-        "chests": this.resource.chests - 1
+        chests: this.resource.chests - 1,
       })
     },
     async accept_chest() {
@@ -180,15 +172,16 @@ export default {
 <style scoped>
 .d {
   width: 98%;
-  height: 90vh;
+  height: 80vh;
   border: solid 1px blueviolet;
   margin: 1%;
   /*background-image: url('~@/assets/brick.jpg');*/
 }
 
 div {
-  font-family: 'Brush Script MT', cursive;
+  font-family: "Brush Script MT", cursive;
   font-size: 14pt;
+  color: white;
 }
 
 .title {
@@ -259,5 +252,4 @@ div {
 .cards_list {
   height: 50vh;
 }
-
 </style>

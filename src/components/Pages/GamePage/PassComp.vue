@@ -1,6 +1,8 @@
 <template>
   <div class="pass">
-    <button class="pass-btn" v-show="$store.state.game.player_turn">Пас</button>
+    <button class="pass-btn" :disabled="!$store.state.game.player_turn">
+      Пас
+    </button>
   </div>
 </template>
 
@@ -25,7 +27,7 @@ export default {
   height: 11vh;
   background-color: orangered;
   border-radius: 50%;
-  top: 50%; 
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   position: relative;

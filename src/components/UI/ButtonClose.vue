@@ -1,8 +1,6 @@
 <template>
   <div>
-    <button class="close_button" @click="close">
-      Закрыть
-    </button>
+    <button class="close_button" @click="close">Закрыть</button>
   </div>
 </template>
 
@@ -11,10 +9,10 @@ export default {
   name: "button-close",
   methods: {
     close() {
-      this.$emit('close_self')
+      this.$emit("close_self")
     },
   },
-  emits: ['close_self'],
+  emits: ["close_self"],
 }
 </script>
 

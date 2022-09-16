@@ -1,44 +1,50 @@
 const state = {
-  cards_in_deck: 12,  // СКОЛЬКО В ДЕКЕ ДОЛЖНО БЫТЬ КАРТ
-  hand_size: 6,  // СКОЛЬКО КАРТ В РУКЕ
+  cards_in_deck: 12, // СКОЛЬКО В ДЕКЕ ДОЛЖНО БЫТЬ КАРТ
+  hand_size: 6, // СКОЛЬКО КАРТ В РУКЕ
 
-  current_deck: [],  // дека выбранная для игры, deck.cards
-  health: 0,  // жизни деки, из деки, deck.health
-  leader: null,  // текущий лидер для игры из деки, deck.leader
+  current_deck: [], // дека выбранная для игры, deck.cards
+  health: 0, // жизни деки, из деки, deck.health
+  leader: null, // текущий лидер для игры из деки, deck.leader
 
-  level: null,  // объект уровня из БД, выбирается на странице LevelPage
-  enemy_leader: null,  // объект лидера врагов из уровней
+  level: null, // объект уровня из БД, выбирается на странице LevelPage
+  enemy_leader: null, // объект лидера врагов из уровней
 
-  ppa_end_turn: false,  // true - значит они сейчас в процессе
-  ai_move: false,  // true - значит они сейчас ходят
+  ppa_end_turn: false, // true - значит они сейчас в процессе
+  ai_move: false, // true - значит они сейчас ходят
   leader_ai_move: false,
   epa_end_turn: false,
   player_turn: true,
+
+  start_game_redirect: false,
 }
 
-const getters = {
-
-}
+const getters = {}
 
 const mutations = {
-  set_current_deck(state, deck) {  // записать деку для игры
+  set_current_deck(state, deck) {
+    // записать деку для игры
     state.current_deck = deck
   },
-  set_health(state, param) {  // установить здоровье из deck.health
+  set_health(state, param) {
+    // установить здоровье из deck.health
     state.health = param
   },
-  set_leader(state, leader) {  // установить лидера деки, deck.leader
+  set_leader(state, leader) {
+    // установить лидера деки, deck.leader
     state.leader = leader
   },
 
-  set_level(state, level) {  // установить уровень, объект
+  set_level(state, level) {
+    // установить уровень, объект
     state.level = level
   },
-  set_enemy_leader(state, enemy_leader) {  // установить лидера врагов
+  set_enemy_leader(state, enemy_leader) {
+    // установить лидера врагов
     state.enemy_leader = enemy_leader
   },
 
-  change_health(state, param) {  // в процессе игры, dmg/heal
+  change_health(state, param) {
+    // в процессе игры, dmg/heal
     state.health += param
   },
 
@@ -58,17 +64,20 @@ const mutations = {
     state.player_turn = payload
   },
 
+  set_start_game_redirect(state, payload) {
+    state.start_game_redirect = payload
+  },
 }
 
 const actions = {
   set_deck_in_play({ commit }, deck) {
-    commit('set_current_deck', deck.deck.cards)
-    commit('set_health', deck.deck.health)
-    commit('set_leader', deck.deck.leader)
+    commit("set_current_deck", deck.deck.cards)
+    commit("set_health", deck.deck.health)
+    commit("set_leader", deck.deck.leader)
   },
   set_level_in_play({ commit }, level) {
-    commit('set_level', level.level)
-    commit('set_enemy_leader', level.level.enemy_leader)
+    commit("set_level", level.level)
+    commit("set_enemy_leader", level.level.enemy_leader)
   },
 }
 

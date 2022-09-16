@@ -1,22 +1,16 @@
 <template>
   <div
-      @click.right="open_deck_view"
-      v-touch:longtap="open_deck_view"
-      @contextmenu.prevent
+    @click.right="open_deck_view"
+    v-touch:longtap="open_deck_view"
+    @contextmenu.prevent
   >
-
-    {{ deck.name }}
-    Жизни -- {{ deck.health }}<br>
-    Лидер {{ deck.leader.name }}
-    {{ deck.leader.ability.name}}
-
+    {{ deck.name }}, жизни {{ deck.health }}
     <deck-modal
       v-if="show_deck"
       :deck="deck.cards"
       :leader="deck.leader"
-      @close_deck_modal="show_deck=false"
+      @close_deck_modal="show_deck = false"
     />
-
   </div>
 </template>
 
@@ -24,7 +18,7 @@
 import DeckModal from "@/components/ModalWindows/DeckModal"
 export default {
   name: "deck-preview-comp",
-  components: {DeckModal},
+  components: { DeckModal },
   props: {
     deck: {
       type: Object,
@@ -44,6 +38,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

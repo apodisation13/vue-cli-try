@@ -1,13 +1,13 @@
 <template>
-
-  <button class="grave-btn" @click="flag=true">
-    Сброс {{ grave_len }}
-  </button>
-
-  <modal-window v-if="flag" v-touch:swipe="close_self">
-    <button-close @close_self="close_self" />
-    <cards-list :cards='grave' />
-  </modal-window>
+  <div>
+    <button class="grave-btn" @click="flag = true">
+      Сброс {{ grave_len }}
+    </button>
+    <modal-window v-if="flag" v-touch:swipe="close_self">
+      <button-close @close_self="close_self" />
+      <cards-list :cards="grave" />
+    </modal-window>
+  </div>
 </template>
 
 <script>
@@ -15,12 +15,12 @@ import ModalWindow from "@/components/UI/ModalWindow"
 import ButtonClose from "@/components/UI/ButtonClose"
 import CardsList from "@/components/CardsList"
 export default {
-  name: 'grave-comp',
-  components: {CardsList, ButtonClose, ModalWindow},
+  name: "grave-comp",
+  components: { CardsList, ButtonClose, ModalWindow },
   props: {
     grave: {
       required: true,
-      type: Array
+      type: Array,
     },
   },
   data() {
@@ -29,7 +29,9 @@ export default {
     }
   },
   computed: {
-    grave_len() {return this.grave.length}
+    grave_len() {
+      return this.grave.length
+    },
   },
   methods: {
     close_self() {
