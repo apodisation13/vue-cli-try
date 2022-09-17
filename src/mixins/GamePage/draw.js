@@ -21,7 +21,7 @@ export default {
     draw_one_card() {
       this.draw = true // показать окно редро
       let card = choice_pop(this.gameObj.deck)
-      this.hand.unshift(card) // FIXME: добавить в список на 1е место )))) потому что там в руке float:right
+      this.gameObj.hand.unshift(card) // FIXME: добавить в список на 1е место )))) потому что там в руке float:right
       this.player_cards_active = false
       this.can_draw = false
     },
