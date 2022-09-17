@@ -14,6 +14,7 @@
       class="expand-menu"
       v-if="expanded"
       v-touch:swipe.top="showExpandedMenu"
+      @click.self="showExpandedMenu"
     >
       <div class="expand-menu__content">
         <div class="expand-menu__action" v-for="button in routes" :key="button">
@@ -89,27 +90,28 @@ export default {
 }
 
 .expand-menu__content {
-  position: fixed;
-  left: 15px;
-  top: 15px;
+  position: relative;
   display: flex;
+  margin-top: 18px;
+  margin-left: 10px;
   flex-direction: column;
   justify-content: space-around;
   width: 156px;
   height: 198px;
   background: #ffffff;
   border-radius: 8px;
+  z-index: 8;
 }
 
 .expand-menu {
   content: "";
+  position: absolute;
   background-color: rgba(0, 0, 0, 0.3);
-  position: fixed;
-  left: 0;
-  top: 0;
+  left: 0px;
+  top: 0px;
   width: 100%;
   height: 100%;
-  z-index: 2;
+  z-index: 3;
 }
 
 .menu-btn {
