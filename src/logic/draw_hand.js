@@ -1,16 +1,10 @@
-// import store from '@/store'  // НЕ ЗАБЫВАТЬ ЭТО, иначе нельзя достать store
-// store.commit(), без THIS
-
-let HAND = ["", "", "", "", "", ""] // заготовка руки игрока
-// 0 1 2 3 4 5
-const hand_size = HAND.length // длина руки, пусть пока 6
+import store from "@/store"
+import { choice_pop } from "@/lib/utils"
 
 // вытянули рандомом hand_size карт
-function draw_hand(hand, deck) {
-  for (let i = 0; i < hand_size; i++) {
-    let random = Math.floor(Math.random() * deck.length)
-    hand[i] = deck[random] // кладём в руку новую карту вместо ''
-    deck.splice(random, 1) // убираем из деки эту карту по её индексу random
+function draw_hand(gameObj) {
+  for (let i = 0; i < store.state.game.hand_size; i++) {
+    gameObj.hand.push(choice_pop(gameObj.deck)) // берем рандомную карту из колоды, кладем в руку, удаляем из колоды
   }
 }
 
