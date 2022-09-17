@@ -11,7 +11,7 @@ export default {
     // можно ли ДРО - ход игрока, карт меньше чем {карт_в_руке}, дека не пуста
     calc_can_draw() {
       return (
-        this.player_cards_active &&
+        // this.player_cards_active &&
         this.gameObj.hand.length < this.$store.state.game.hand_size &&
         this.gameObj.deck.length !== 0
       )
