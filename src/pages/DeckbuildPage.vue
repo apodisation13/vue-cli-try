@@ -75,14 +75,14 @@ export default {
         deck_is_progress: [], // колода в процессе - целиком объекты, для отображения
         deck_body: [], // только {card: id} для пост-запроса
         leader: null, // сам выбранный лидер
+        health: 0, // жизни текущей деки
       },
       query: {
         faction: "",
         type: "",
         color: "",
-        has_passive: false,
+        has_passive: null,
       },
-      health: 0, // жизни текущей деки
       show_decks_list_modal: false, // показать окно с колодами
       count: null,
     }
@@ -110,7 +110,6 @@ export default {
       this.deck = this.resetDeck()
       this.count = null
 
-      this.health = 0
     },
 
     resetQueryParam() {
@@ -118,7 +117,7 @@ export default {
         faction: "",
         type: "",
         color: "",
-        has_passive: false,
+        has_passive: null,
       }
     },
     
@@ -128,6 +127,7 @@ export default {
         deck_is_progress: [], 
         deck_body: [], 
         leader: null,
+        health: 0,
       }
     },
 
@@ -136,16 +136,14 @@ export default {
       if (this.can_add_card(card)) {
         this.deck.deck_is_progress.push(card)
         this.deck.deck_body.push({ card: card.card.id })
-        this.health += card.card.hp
-      } else
-        alert(
-          "нельзя карту добавить закрытую карту, или карту ещё раз или карт больше 12"
-        )
+        this.deck.health += card.card.hp
+      }
+      alert("нельзя карту добавить закрытую карту, или карту ещё раз или карт больше 12")
     },
 
     // удалить из деки в процессе по нажатию дважды ЛКМ
     delete_from_deck_in_progress(card) {
-      this.health -= card.card.hp
+      this.deck.health -= card.card.hp
       this.deck.deck_is_progress.splice(this.deck.deck_is_progress.indexOf(card), 1)
       this.deck.deck_body.splice(
         this.deck.deck_body.findIndex(c => c.card === card.card.id),
@@ -173,15 +171,16 @@ export default {
         return
       }
 
-      let body = {
-        name: this.deck.deck_name,
-        health: this.health,
-        d: this.deck.deck_body,
-        leader_id: this.deck.leader.id,
-      }
-
       try {
-        await this.$store.dispatch("post_deck", body)
+        await this.$store.dispatch(
+          "post_deck",
+                {
+              name: this.deck.deck_name,
+              health: this.deck.health,
+              d: this.deck.deck_body,
+              leader_id: this.deck.leader.id,
+            }
+          )
         this.new_deck() // всё обнуляем!
       } catch (err) {
         console.log(err)

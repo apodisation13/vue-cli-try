@@ -40,6 +40,9 @@ const getters = {
     const applyFilter = (data, query) =>
       data.filter(obj =>
         Object.entries(query).every(([prop, find]) => {
+            if ('has_passive' === prop && find === null) {
+              return true;
+            }
             if ('has_passive' === prop) {
               return obj.card[prop] === find
             }
