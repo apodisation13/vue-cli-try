@@ -1,7 +1,7 @@
 <template>
   <div class="deck_builder_page">
-    <!-- Зона кнопок - новая, карты\лидеры, фильтры -->
-    <deckbuilder-filters
+    <!-- Зона кнопок - новая, карты\лидеры, открыть фильтры -->
+    <deckbuilder-top-buttons-block
       @reset="cancelDeckBuilding"
       @filter_factions="filter_factions"
       @trigger_show_list="trigger_show_list"
@@ -9,43 +9,45 @@
       :deckBuilding="deckBuilding"
     />
     <!-- Зона базы карт: или показывать карты, или лидеров -->
-    <div 
-      class="database_of_cards"
-      :class="deckBuilding ? 'pool_deckbuild' : 'pool_full'">
-      <!-- база карт -->
-      <cards-list
-        v-show="showingList === 'pool'"
-        :cards="pool"
-        :hp_needed="true"
-        :deckbuilder="true"
-        @chose_player_card="append_into_deck_in_progress"
+    <div class="deck-builder-body">
+      <div class="database_of_cards"
+        :class="deckBuilding ? 'pool_deckbuild' : 'pool_full'">
+        <!-- база карт -->
+        <cards-list
+          v-show="showingList === 'pool'"
+          :cards="pool"
+          :hp_needed="true"
+          :deckbuilder="true"
+          @chose_player_card="append_into_deck_in_progress"
+        />
+        <!-- список всех лидеров из базы -->
+        <cards-list
+          v-show="showingList === 'leaders'"
+          :cards="leaders"
+          :for_leaders="true"
+          :deckbuilder="true"
+          @chose_player_card="chose_leader"
+        />
+        </div>
+      <!-- Зона сбора колоды -->
+      <block-assembling-the-deck 
+        v-show="deckBuilding"
+        :patch="patch"
+        :deck="deck"
+        :cant_save_deck="cant_save_deck"
+        @delete_card="delete_card_from_deck"
+        @save_deck="save_deck"
+        @patch_deck="patch_deck"
       />
-      <!-- список всех лидеров из базы -->
-
-      <cards-list
-        v-show="showingList === 'leaders'"
-        :cards="leaders"
-        :for_leaders="true"
-        :deckbuilder="true"
-        @chose_player_card="chose_leader"
+    </div>
+    <div class="deckbuilder-bottom-buttons-block">
+      <div class="decks_btn" @click="trigger_decks_list_modal(true)">КОЛОДЫ!</div>
+      <decks-list-modal
+        v-if="show_decks_list_modal"
+        @close_decks_list_modal="trigger_decks_list_modal(false)"
+        @change_deck="show_deck"
       />
-      </div>
-    <!-- Зона сбора колоды -->
-    <block-assembling-the-deck 
-      v-show="deckBuilding"
-      :patch="patch"
-      :deck="deck"
-      :cant_save_deck="cant_save_deck"
-      @delete_card="delete_card_from_deck"
-      @save_deck="save_deck"
-      @patch_deck="patch_deck"
-    />
-    <div class="decks_btn" @click="trigger_decks_list_modal(true)">КОЛОДЫ!</div>
-    <decks-list-modal
-      v-if="show_decks_list_modal"
-      @close_decks_list_modal="trigger_decks_list_modal(false)"
-      @change_deck="show_deck"
-    />
+    </div>
   </div>
 </template>
 
@@ -53,14 +55,14 @@
 import _ from "lodash"
 import CardsList from "@/components/CardsList"
 import DecksListModal from "@/components/ModalWindows/DecksListModal"
-import DeckbuilderFilters from "@/components/Pages/DeckbuildPage/DeckbuilderFilters"
+import DeckbuilderTopButtonsBlock from "@/components/Pages/DeckbuildPage/DeckbuilderTopButtonsBlock"
 import BlockAssemblingTheDeck from '@/components/Pages/DeckbuildPage/BlockAssemblingTheDeck'
 
 export default {
   components: {
       DecksListModal,
       CardsList,
-      DeckbuilderFilters,
+      DeckbuilderTopButtonsBlock,
       BlockAssemblingTheDeck
     },
   // mixins: [filtering],
