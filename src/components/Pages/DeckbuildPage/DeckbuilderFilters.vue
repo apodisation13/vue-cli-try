@@ -1,40 +1,44 @@
 <template>
   <div class="deckbuilder-filters">
     <div class="button-filters">
-      <button
-        class="btn_save_deck"
-        v-if="!showNewDeckFactionSelect && !deckBuilding"
-        @click="startDeckBuilding"
-      >
-        Новая
-      </button>
-      <button class="btn_save_deck" v-else @click="cancelBild">Отмена</button>
-      <button class="btn_save_deck" @click="showList('pool')">cards</button>
-      <button class="btn_save_deck" @click="showList('leaders')">leaders</button>
-      <button
-        :class="filters_enabled ? 'filters_enabled' : 'filters_disabled'"
-        @click="showFilters = !showFilters"
-      >
-        filters
-      </button>
-    </div>
-    <div class="new_deck_faction_select" v-if="showNewDeckFactionSelect">
+      <button-icon 
+        class="filter_btn" 
+        :class="{'is-cancel': isCansel}" 
+        @click="clickAddButton"
+        :image_name="'add_icon.svg'"
+      />
+      <button class="btn_save_deck filter_btn" @click="showList('pool')">cards</button>
+      <button class="btn_save_deck filter_btn" @click="showList('leaders')">leaders</button>
+      <button-icon 
+        :image_name="'open_filters.svg'" 
+        class="filter_btn" 
+        @click="showFilters = !showFilters"/>
+      </div>
+    <base-modal v-if="showNewDeckFactionSelect"
+      @close-modal="showNewDeckFactionSelect = false"
+    >
       <div>Выберете фракцию!</div>
       <filter-factions @filter-factions="filter_factions" />
-    </div>
+    </base-modal>
   </div>
 </template>
 
 <script>
 import FilterFactions from "@/components/Pages/DeckbuildPage/FilterFactions"
+import ButtonIcon from '@/components/Pages/DeckbuildPage/Buttons/ButtonIcon'
+import BaseModal from '@/components/UI/BaseModal'
 export default {
-  components: { FilterFactions },
+  components: { 
+    FilterFactions, 
+    ButtonIcon,
+    BaseModal,
+  },
   props: {
     deckBuilding: {
       type: Boolean,
       default: false,
     },
-    filters_enabled: {
+    empty_filters: {
       type: Boolean,
     }
   },
@@ -44,13 +48,6 @@ export default {
     }
   },
   methods: {
-    startDeckBuilding() {
-      this.showNewDeckFactionSelect = true
-    },
-    cancelBild() {
-      this.showNewDeckFactionSelect = false
-      this.$emit("reset")
-    },
     filter_factions(emit) {
       // если мы нажали кнопку фильтра фракций при сборе колоде, ещё ставим флаг сбора колоды и закрываем окно
       this.showNewDeckFactionSelect = false
@@ -59,39 +56,41 @@ export default {
     showList(value) {
       this.$emit("trigger_show_list", value)
     },
+    clickAddButton() {
+      if (!this.showNewDeckFactionSelect && !this.deckBuilding) {
+        this.showNewDeckFactionSelect = true
+        return
+      }
+      this.showNewDeckFactionSelect = false
+      this.$emit("reset")
+    }
+    
   },
+  computed: {
+    isCansel() {
+      return this.showNewDeckFactionSelect || this.deckBuilding
+    }
+  }
 }
 </script>
 
 <style scoped>
-.new_deck_faction_select {
-  position: absolute;
-  top: 100px;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 999;
-  width: 100%;
-  height: 200px;
-  border-radius: 18px;
-  padding: 45px 22px;
+.button-filters {
   display: flex;
-  flex-direction: column;
-  background: #fff;
+  justify-content: center;
+  align-items: center;
 }
 
-.filters_enabled {
-  height: 3vh;
-  width: 23%;
-  background-color: greenyellow;
+.filter_btn {
+  margin: 10px;
 }
 
-.filters_disabled {
-  height: 3vh;
-  width: 23%;
+.is-cancel {
+  transform: rotate(45deg);
 }
 
 .btn_save_deck {
+  display: block;
   height: 3vh;
   width: 23%;
 }

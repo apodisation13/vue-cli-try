@@ -5,7 +5,7 @@
       @reset="cancelDeckBuilding"
       @filter_factions="filter_factions"
       @trigger_show_list="trigger_show_list"
-      :filters_enabled="filters_enabled"
+      :empty_filters="empty_filters"
       :deckBuilding="deckBuilding"
     />
     <!-- Зона базы карт: или показывать карты, или лидеров -->
@@ -252,8 +252,7 @@ export default {
       const required_count_person = this.$store.state.game.cards_in_deck;
       return this.deck.deck_is_progress.length !== required_count_person || !this.deck.leader
     },
-    filters_enabled() {
-      console.log(_.isEqual(this.default_query_param(), this.query));
+    empty_filters() {
       return _.isEqual(this.default_query_param(), this.query);
     },
   }
