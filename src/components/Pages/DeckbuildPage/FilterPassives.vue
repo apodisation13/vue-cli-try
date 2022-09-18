@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     filtering(passive) {
-      this.$emit("filter-passives", [passive])
+      this.$emit("set-filter", 'has_passive', passive)
     },
     reset_filter_passives() {
       this.$emit("reset-filter-passives")

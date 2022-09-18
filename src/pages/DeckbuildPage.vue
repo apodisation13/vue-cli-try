@@ -196,9 +196,9 @@ export default {
       )
     },
     // фильтр карт и лидеров по фракции по нажатию на кнопку фракции
-    select_faction(emit) {
+    select_faction(prop, value) {
       this.deckBuilding = true
-      this.query.faction = emit // для this.query.cards
+      this.setFilter(prop, value) // для this.query.cards
     },
 
     show_deck(index) {

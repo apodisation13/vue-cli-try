@@ -18,7 +18,7 @@
       @close-modal="showNewDeckFactionSelect = false"
     >
       <div>Выберете фракцию!</div>
-      <filter-factions @select_faction="select_faction" />
+      <filter-factions @set-filter="setFilter" />
     </base-modal>
   </div>
 </template>
@@ -52,10 +52,10 @@ export default {
     }
   },
   methods: {
-    select_faction(emit) {
+    setFilter(prop, value) {
       // если мы нажали кнопку фильтра фракций при сборе колоде, ещё ставим флаг сбора колоды и закрываем окно
       this.showNewDeckFactionSelect = false
-      this.$emit("select_faction", emit)
+      this.$emit("select_faction", prop, value)
     },
     showList(value) {
       this.$emit("trigger_show_list", value)

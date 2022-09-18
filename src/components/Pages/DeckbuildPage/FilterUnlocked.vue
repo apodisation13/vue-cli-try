@@ -14,7 +14,7 @@ export default {
   name: "filter-unlocked",
   methods: {
     filtering(count) {
-      this.$emit("filter-unlocked", count)
+      this.$emit("set-filter", 'count', count)
     },
     reset_filter_types() {
       this.$emit("reset-filter-unlocked")

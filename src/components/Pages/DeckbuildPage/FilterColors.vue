@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     filtering(color) {
-      this.$emit("filter-colors", [color[0]])
+      this.$emit("set-filter", 'color', color[0])
     },
     reset_filter_colors() {
       this.$emit("reset-filter-colors")

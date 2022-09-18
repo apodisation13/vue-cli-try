@@ -2,22 +2,22 @@
   <base-modal @close-modal="closeModal">
     <div class="filters">
       <button class="new" @click="closeModal">Закрыть</button>
-      <button class="new" @click="cancelFilters">Сброс фильтров</button>
+      <button class="new" @click="resetFilters">Сброс фильтров</button>
       <filter-factions
-        @filter-factions="filter_factions"
+        @set-filter="setFilter"
         v-if="!deckBuilding"
       />
       <filter-types
-        @filter-types="filter_types"
+        @set-filter="setFilter"
       />
       <filter-colors
-        @filter-colors="filter_colors"
+        @set-filter="setFilter"
       />
       <filter-passives
-        @filter-passives="filter_passives"
+        @set-filter="setFilter"
       />
       <filter-unlocked
-        @filter-unlocked="filter_unlocked"
+        @set-filter="setFilter"
       />
     </div>
   </base-modal>
@@ -50,7 +50,11 @@ import BaseModal from '@/components/UI/BaseModal'
         this.$emit('close-modal')
       },
       resetFilters() {
-
+        this.$emit('reset-filters')
+      },
+      setFilter(prop,value) {
+        debugger
+        this.$emit('set-filter', prop, value)
       }
     }
     
