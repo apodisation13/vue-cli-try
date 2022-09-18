@@ -1,77 +1,67 @@
 import store from "@/store"
 
+function sound(src) {
+  if (store.state.play_sound) new Audio(src).play()
+}
+
 function sound_hit_shield() {
-  if (store.state.play_sound)
-    new Audio("./../../audio/sounds/hit_shield.wav").play()
+  sound("./../../audio/sounds/hit_shield.wav")
 }
 
 function sound_damage_all() {
-  if (store.state.play_sound)
-    new Audio("./../../audio/sounds/damage_all.wav").play()
+  sound("./../../audio/sounds/damage_all.wav")
 }
 
 function sound_damage_one() {
-  if (store.state.play_sound)
-    new Audio("./../../audio/sounds/damage_one.wav").play()
+  sound("./../../audio/sounds/damage_one.wav")
 }
 
 function sound_spread_damage() {
-  if (store.state.play_sound)
-    new Audio("./../../audio/sounds/spread_damage.wav").play()
+  sound("./../../audio/sounds/spread_damage.wav")
 }
 
 function sound_damage_row() {
-  if (store.state.play_sound)
-    new Audio("./../../audio/sounds/damage_row.wav").play()
+  sound("./../../audio/sounds/damage_row.wav")
 }
 
 function sound_damage_column() {
-  if (store.state.play_sound)
-    new Audio("./../../audio/sounds/damage_column.wav").play()
+  sound("./../../audio/sounds/damage_column.wav")
 }
 
 function sound_heal() {
-  if (store.state.play_sound) new Audio("./../../audio/sounds/heal.wav").play()
+  sound("./../../audio/sounds/heal.wav")
 }
 
 function sound_destroy_enemy() {
-  if (store.state.play_sound)
-    new Audio("./../../audio/sounds/destroy_enemy.wav").play()
+  sound("./../../audio/sounds/destroy_enemy.wav")
 }
 
 function sound_passive_increase_damage() {
-  if (store.state.play_sound)
-    new Audio("./../../audio/sounds/passive_increase_damage.wav").play()
+  sound("./../../audio/sounds/passive_increase_damage.wav")
 }
 
 function sound_enemy_damage_player() {
-  if (store.state.play_sound)
-    new Audio("./../../audio/sounds/enemy_damage_player.wav").play()
+  sound("./../../audio/sounds/enemy_damage_player.wav")
 }
 
 function sound_enemy_move_down() {
-  if (store.state.play_sound)
-    new Audio("./../../audio/sounds/enemy_move_down.wav").play()
+  sound("./../../audio/sounds/enemy_move_down.wav")
 }
 
 function sound_enemy_regain_shield() {
-  if (store.state.play_sound)
-    new Audio("./../../audio/sounds/regain_shield.wav").play()
+  sound("./../../audio/sounds/regain_shield.wav")
 }
 
 function sound_enemy_decrease_player_damage() {
-  if (store.state.play_sound)
-    new Audio("./../../audio/sounds/enemy_decrease_player_damage.wav").play()
+  sound("./../../audio/sounds/enemy_decrease_player_damage.wav")
 }
 
 function sound_appear_new_enemy() {
-  if (store.state.play_sound)
-    new Audio("./../../audio/sounds/appear_new_enemy.wav").play()
+  sound("./../../audio/sounds/appear_new_enemy.wav")
 }
 
 function sound_lose_game() {
-  if (store.state.play_sound)
-    new Audio("./../../audio/sounds/lose_game.wav").play()
+  sound("./../../audio/sounds/lose_game.wav")
 }
 
 export {
