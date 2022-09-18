@@ -66,7 +66,7 @@ export default {
   // mixins: [filtering],
   data() {
     return {
-      showingList: 'pool', // показывать таб лидеров (True) или карт (default, False)
+      showingList: 'pool', // показывать список игровых карт ('pool') или список лидеров ('leaders')
       deckBuilding: false, // флаг - собираем мы колоду, или нет
       showFilters: false, // флаг, показать ли окно с фильтрами
       show_decks_list_modal: false, // показать окно с колодами
