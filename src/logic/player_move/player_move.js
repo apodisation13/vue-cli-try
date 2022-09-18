@@ -15,26 +15,12 @@ import { player_passive_abilities_upon_playing_a_card } from "@/logic/player_mov
 import { remove_dead_card } from "@/logic/player_move/service/service_for_player_move"
 import { check_win } from "@/logic/player_move/service/check_win"
 
-// сюда заходим если там есть враг
-// card - EITHER player_card or player_leader WHO we chose to play,
-// enemy - EITHER enemy or enemy_leader, WHO we target
-// field - for damage-all, damage-row, damage-column, check win, remove dead enemies
-// hand,deck,grave - remove dead card if isCard;
-// enemies - list of remaining enemies for check win,
-// isCard - FLAG: need to remove dead card (hand) or not, Boolean
-// leader - для пассивок во время хода
-function damage_ai_card(
-  card,
-  enemy,
-  field,
-  enemy_leader,
-  hand,
-  deck,
-  grave,
-  enemies,
-  isCard,
-  leader
-) {
+// Сюда заходим если там есть враг
+// card - карта, которую мы играем (или из руки, или лидер).
+// enemy - тот враг, в которого мы стреляем (или карта на поле, или лидер врагов).
+// isCard - флаг, картой или лидером мы ходим, нужен для сброса в кладбище
+function damage_ai_card(card, enemy, isCard, gameObj) {
+  const { field, enemy_leader, hand, deck, grave, enemies, leader } = gameObj
   if (card.ability.name === "heal") {
     damage_one(enemy, card, field, enemy_leader, enemies)
     heal(card)
