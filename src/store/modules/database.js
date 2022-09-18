@@ -36,10 +36,13 @@ const getters = {
   all_levels: state => state.levels,
   resource: state => state.resource,
 
-  filtered_cards: state => (query, count) => {
+  filtered_cards: state => (query) => {
     const applyFilter = (data, query) =>
       data.filter(obj =>
         Object.entries(query).every(([prop, find]) => {
+            if ('count' === prop) {
+              return true
+            }
             if ('has_passive' === prop && find === null) {
               return true;
             }
@@ -53,11 +56,11 @@ const getters = {
           }
         )
       )
-    if (count === null) { 
+    if (query.count === null) { 
       return applyFilter(state.cards, query)
     }
 
-    if (count === 0) {
+    if (query.count === 0) {
       return applyFilter(
         state.cards.filter(card => card.count === 0),
         query
@@ -65,7 +68,7 @@ const getters = {
     }
 
     return applyFilter(
-      state.cards.filter(card => card.count >= count),
+      state.cards.filter(card => card.count >= query.count),
       query
     )
   },

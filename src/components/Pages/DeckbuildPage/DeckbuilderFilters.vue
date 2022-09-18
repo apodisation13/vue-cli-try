@@ -9,8 +9,8 @@
         Новая
       </button>
       <button class="btn_save_deck" v-else @click="cancelBild">Отмена</button>
-      <button class="btn_save_deck" @click="showLeaders(false)">cards</button>
-      <button class="btn_save_deck" @click="showLeaders(true)">leaders</button>
+      <button class="btn_save_deck" @click="showList('pool')">cards</button>
+      <button class="btn_save_deck" @click="showList('leaders')">leaders</button>
       <button
         :class="filters_enabled ? 'filters_enabled' : 'filters_disabled'"
         @click="showFilters = !showFilters"
@@ -34,6 +34,9 @@ export default {
       type: Boolean,
       default: false,
     },
+    filters_enabled: {
+      type: Boolean,
+    }
   },
   data() {
     return {
@@ -53,8 +56,8 @@ export default {
       this.showNewDeckFactionSelect = false
       this.$emit("filter_factions", emit)
     },
-    showLeaders(value) {
-      this.$emit("trigger_show_leaders", value)
+    showList(value) {
+      this.$emit("trigger_show_list", value)
     },
   },
 }

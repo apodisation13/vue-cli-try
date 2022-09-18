@@ -22,19 +22,20 @@
       <!-- <input class="input" :disabled="cant_save_deck" v-model="deck.deck_name" /> -->
       <button
         class="btn_save_deck"
+        v-if="patch"
         :disabled="cant_save_deck"
         @click="emit('save_deck')"
       >
         СОХРАНИТЬ
       </button>
-      <!-- <button
+      <button
         class="btn_save_deck"
         v-if="patch"
         :disabled="cant_save_deck"
         @click="patch_deck"
       >
         ИЗМЕНИТЬ
-      </button> -->
+      </button>
     </div>
   </div>
 </template>
@@ -55,7 +56,11 @@ import CardsList from '@/components/CardsList'
       cant_save_deck: {
         type: Boolean,
         default: false,
+      },
+      patch: {
+        type: Boolean,
       }
+
     },
     methods: {
       delete_card_from_deck(emit) {

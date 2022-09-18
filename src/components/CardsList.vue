@@ -135,9 +135,6 @@ export default {
 .cards {
   width: 98%;
   height: 100%;
-  overflow: scroll;
-  /*position: relative;*/
-  /*border: solid 2px red;*/
 }
 
 .card_in_list {
