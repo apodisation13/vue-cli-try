@@ -3,10 +3,10 @@
     <!-- Зона кнопок - новая, карты\лидеры, открыть фильтры -->
     <deckbuilder-top-buttons-block
       @reset="cancelDeckBuilding"
-      @filter_factions="filter_factions"
+      @select_faction="select_faction"
       @trigger_show_list="trigger_show_list"
-      :empty_filters="empty_filters"
       :deckBuilding="deckBuilding"
+      @open-filters="showFilters = true"
     />
     <!-- Зона базы карт: или показывать карты, или лидеров -->
     <div class="deck-builder-body">
@@ -48,6 +48,13 @@
         @change_deck="show_deck"
       />
     </div>
+     <deckbuilder-filters 
+      v-if="showFilters" 
+      @close-modal="showFilters = false"
+      @reset-filters="resetFilters"
+      @set-filter="setFilter"
+      :deckBuilding="deckBuilding"
+     />
   </div>
 </template>
 
@@ -57,15 +64,16 @@ import CardsList from "@/components/CardsList"
 import DecksListModal from "@/components/ModalWindows/DecksListModal"
 import DeckbuilderTopButtonsBlock from "@/components/Pages/DeckbuildPage/DeckbuilderTopButtonsBlock"
 import BlockAssemblingTheDeck from '@/components/Pages/DeckbuildPage/BlockAssemblingTheDeck'
+import DeckbuilderFilters from '@/components/Pages/DeckbuildPage/DeckbuilderFilters'
 
 export default {
   components: {
       DecksListModal,
       CardsList,
       DeckbuilderTopButtonsBlock,
-      BlockAssemblingTheDeck
+      BlockAssemblingTheDeck,
+      DeckbuilderFilters,
     },
-  // mixins: [filtering],
   data() {
     return {
       showingList: 'pool', // показывать список игровых карт ('pool') или список лидеров ('leaders')
@@ -188,7 +196,7 @@ export default {
       )
     },
     // фильтр карт и лидеров по фракции по нажатию на кнопку фракции
-    filter_factions(emit) {
+    select_faction(emit) {
       this.deckBuilding = true
       this.query.faction = emit // для this.query.cards
     },
@@ -230,12 +238,17 @@ export default {
       }
     },
 
-    cancelFilters() {
+    resetFilters() {
       // в режиме сбора колоды - сбрасываем все фильтры КРОМЕ фракций, иначе - вообще все фильтры
       if (!this.deckBuilding) {
         this.query = this.default_query_param()
         return
       }
+      this.query = {...this.default_query_param(), faction: this.query.faction}
+    },
+
+    setFilter(prop, value) {
+      this.query[prop] = value
     },
     
     trigger_show_list(value) {
@@ -262,16 +275,11 @@ export default {
 </script>
 
 <style scoped>
-span {
-  color: white;
-}
-
 .database_of_cards {
   overflow-y: scroll;
 }
 
 /*база карт*/
-
 .pool_full {
   height: 70vh;
   /*border: solid 1px black;*/

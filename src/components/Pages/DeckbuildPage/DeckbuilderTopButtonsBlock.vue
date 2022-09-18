@@ -12,13 +12,13 @@
       <button-icon 
         :image_name="'open_filters.svg'" 
         class="filter_btn" 
-        @click="showFilters = !showFilters"/>
-      </div>
+        @click="$emit('open-filters')"/>
+    </div>
     <base-modal v-if="showNewDeckFactionSelect"
       @close-modal="showNewDeckFactionSelect = false"
     >
       <div>Выберете фракцию!</div>
-      <filter-factions @filter-factions="filter_factions" />
+      <filter-factions @select_faction="select_faction" />
     </base-modal>
   </div>
 </template>
@@ -27,11 +27,14 @@
 import FilterFactions from "@/components/Pages/DeckbuildPage/FilterFactions"
 import ButtonIcon from '@/components/Pages/DeckbuildPage/Buttons/ButtonIcon'
 import BaseModal from '@/components/UI/BaseModal'
+import DeckbuilderFilters from '@/components/Pages/DeckbuildPage/DeckbuilderFilters'
+
 export default {
-  components: { 
-    FilterFactions, 
+  components: {
+    FilterFactions,
     ButtonIcon,
     BaseModal,
+    DeckbuilderFilters,
   },
   props: {
     deckBuilding: {
@@ -45,13 +48,14 @@ export default {
   data() {
     return {
       showNewDeckFactionSelect: false,
+      showFilters: false,
     }
   },
   methods: {
-    filter_factions(emit) {
+    select_faction(emit) {
       // если мы нажали кнопку фильтра фракций при сборе колоде, ещё ставим флаг сбора колоды и закрываем окно
       this.showNewDeckFactionSelect = false
-      this.$emit("filter_factions", emit)
+      this.$emit("select_faction", emit)
     },
     showList(value) {
       this.$emit("trigger_show_list", value)
