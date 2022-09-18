@@ -21,35 +21,35 @@ export default {
       // - переход хода снова игроку
 
       player_passive_abilities_end_turn(
-        this.hand,
-        this.leader,
-        this.deck,
-        this.grave,
-        this.field,
-        this.enemy_leader,
-        this.enemies
+        this.gameObj.hand,
+        this.gameObj.leader,
+        this.gameObj.deck,
+        this.gameObj.grave,
+        this.gameObj.field,
+        this.gameObj.enemy_leader,
+        this.gameObj.enemies
       )
 
       let await_ppa_end_turn = setInterval(() => {
         if (!this.$store.state.game.ppa_end_turn) {
           console.log("закончили ppa_end_turn, начинает ходить комп")
           clearInterval(await_ppa_end_turn)
-          ai_move(this.field)
+          ai_move(this.gameObj.field)
 
           let await_ai_move = setInterval(() => {
             if (!this.$store.state.game.ai_move) {
               console.log("закончили ходить комп, ходит лидер врагов")
               clearInterval(await_ai_move)
-              passive_leader_ai_move(this.enemy_leader)
+              passive_leader_ai_move(this.gameObj.enemy_leader)
 
               let await_leader_ai_passive_move = setInterval(() => {
                 if (!this.$store.state.game.leader_ai_move) {
                   console.log("закончили лидер врагов, теперь пассивки врагов")
                   clearInterval(await_leader_ai_passive_move)
                   enemy_passive_abilities_end_turn(
-                    this.field,
-                    this.enemy_leader,
-                    this.hand
+                    this.gameObj.field,
+                    this.gameObj.enemy_leader,
+                    this.gameObj.hand
                   )
 
                   let await_epa_end_turn = setInterval(() => {
@@ -58,13 +58,9 @@ export default {
                         "всё закончили, щас появится новый враг и можно ходить снова"
                       )
                       clearInterval(await_epa_end_turn)
-                      appear_new_enemy(this.field, this.enemies)
-                      this.player_cards_active = true
-                      this.can_draw = this.calc_can_draw(
-                        this.player_cards_active,
-                        this.hand,
-                        this.deck
-                      )
+                      appear_new_enemy(this.gameObj.field, this.gameObj.enemies)
+                      this.isActive.player_cards = true
+                      this.can_draw = this.calc_can_draw()
                       this.$store.commit("set_player_turn", true)
                     }
                   }, 500)
