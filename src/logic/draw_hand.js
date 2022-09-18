@@ -2,9 +2,9 @@ import store from "@/store"
 import { choice_pop } from "@/lib/utils"
 
 // вытянули рандомом hand_size карт
-function draw_hand(gameObj) {
+function draw_hand(hand, deck) {
   for (let i = 0; i < store.state.game.hand_size; i++) {
-    gameObj.hand.push(choice_pop(gameObj.deck)) // берем рандомную карту из колоды, кладем в руку, удаляем из колоды
+    hand.push(choice_pop(deck)) // берем рандомную карту из колоды, кладем в руку, удаляем из колоды
   }
 }
 
