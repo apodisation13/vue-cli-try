@@ -142,7 +142,6 @@ export default {
         enemy_cards: false,
         enemy_leader: false,
       },
-
       selected_card: null, // объект выбранной карты путём дважды ЛКМ на карте в руке
       selected_enemy: null, // объёкт выбранного врага, по которому ткнули дважды ЛКМ, из field-comp
     }
