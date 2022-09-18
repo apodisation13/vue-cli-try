@@ -13,7 +13,7 @@
       <div class="database_of_cards"
         :class="deckBuilding ? 'pool_deckbuild' : 'pool_full'">
         <!-- база карт -->
-        <cards-list
+        <card-list-component
           v-show="showingList === 'pool'"
           :cards="pool"
           :hp_needed="true"
@@ -21,10 +21,10 @@
           @chose_player_card="append_into_deck_in_progress"
         />
         <!-- список всех лидеров из базы -->
-        <cards-list
+        <card-list-component
           v-show="showingList === 'leaders'"
           :cards="leaders"
-          :for_leaders="true"
+          :is_leader="true"
           :deckbuilder="true"
           @chose_player_card="chose_leader"
         />
@@ -60,19 +60,21 @@
 
 <script>
 import _ from "lodash"
-import CardsList from "@/components/CardsList"
+// import CardsList from "@/components/CardsList"
 import DecksListModal from "@/components/ModalWindows/DecksListModal"
 import DeckbuilderTopButtonsBlock from "@/components/Pages/DeckbuildPage/DeckbuilderTopButtonsBlock"
 import BlockAssemblingTheDeck from '@/components/Pages/DeckbuildPage/BlockAssemblingTheDeck'
 import DeckbuilderFilters from '@/components/Pages/DeckbuildPage/DeckbuilderFilters'
+import CardListComponent from '@/components/CardListComponent'
 
 export default {
   components: {
       DecksListModal,
-      CardsList,
+      // CardsList,
       DeckbuilderTopButtonsBlock,
       BlockAssemblingTheDeck,
       DeckbuilderFilters,
+      CardListComponent,
     },
   data() {
     return {
@@ -144,10 +146,14 @@ export default {
 
     // добавляем карты в колоду из базы карт
     append_into_deck_in_progress(card) {
+      if (!this.deckBuilding) {
+        return
+      }
       if (this.can_add_card(card)) {
         this.deck.deck_is_progress.push(card)
-        this.deck.deck_body.push({ card: card.card.id })
+        this.deck.deck_body.push({ card: card.card.id }) 
         this.deck.health += card.card.hp
+        return
       }
       alert("нельзя карту добавить закрытую карту, или карту ещё раз или карт больше 12")
     },
@@ -164,7 +170,7 @@ export default {
 
     // выбираем лидера для деки
     chose_leader(leader) {
-      if (!this.query.faction) {
+      if (!this.deckBuilding) {
         alert("выберете фракцию!")
         return
       }
@@ -189,11 +195,19 @@ export default {
     },
 
     can_add_card(card) {
-      return (
-        !this.deck.deck_is_progress.filter(c => c.card.id === card.card.id).length &&
-        card.count !== 0 &&
-        this.deck.deck_is_progress.length < this.$store.state.game.cards_in_deck && this.query.faction
-      )
+      if (this.deck.deck_is_progress.find(c => c.card.id === card.card.id)) {
+        return false
+      }
+      if (card.count === 0) {
+        return false
+      }
+      if (this.deck.deck_is_progress.length >= this.$store.state.game.cards_in_deck) {
+        return false
+      }
+      if (this.query.faction === '') {
+        return false
+      }
+      return true
     },
     // фильтр карт и лидеров по фракции по нажатию на кнопку фракции
     select_faction(prop, value) {

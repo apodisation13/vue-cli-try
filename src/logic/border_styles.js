@@ -171,20 +171,33 @@ function border_for_hand_2(hand, card) {
 }
 
 function border_for_card(card) {
-  if (card.damages_player) return { border: "outset 4px red" }
-  else {
-    if (card.color === "Bronze") return { border: "solid 1px lightsalmon" }
-    else if (card.color === "Silver") return { border: "solid 3px silver" }
-    else if (card.color === "Gold") return { border: "solid 3px gold" }
-    else return {}
+  if (card.damages_player) {
+    return { border: "outset 4px red" }
+  } else {
+    if (card.color === "Bronze") {
+      return { border: "solid 3px lightsalmon" }
+    }
+    if (card.color === "Silver") {
+      return { border: "solid 3px silver" }
+    }
+    if (card.color === "Gold") {
+      return { border: "solid 3px gold" }
+    }
+    return {}
   }
 }
 
 function border_leader(leader) {
-  if (leader.faction === "Soldiers") return { border: "solid 3px blue" }
-  else if (leader.faction === "Monsters") return { border: "solid 3px red" }
-  else if (leader.faction === "Animals") return { border: "solid 3px green" }
-  else return {}
+  if (leader.faction === "Soldiers") {
+    return { border: "solid 3px blue" }
+  }
+  if (leader.faction === "Monsters") {
+    return { border: "solid 3px red" }
+  }
+  if (leader.faction === "Animals") {
+    return { border: "solid 3px green" }
+  }
+  return {}
 }
 
 // задний фон значка урона для всех карт и значка пассивок

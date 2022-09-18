@@ -2,6 +2,7 @@
   <div
     class="card-item"
     :style="{ backgroundImage: `url(${this.card.image})` }"
+    :class="{'disable': count === 0}"
     :id="make_id(card, index)"
   >
     <!-- @contextmenu.prevent
@@ -102,6 +103,7 @@ export default {
 
 <style scoped>
 .card-item {
+  position: relative;
   width: 70px;
   height: 100px;
   margin: 8px;
@@ -109,5 +111,17 @@ export default {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+}
+
+.disable::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgb(0, 0, 0, 0.85);
+  z-index: 999
 }
 </style>
