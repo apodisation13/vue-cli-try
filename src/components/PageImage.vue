@@ -1,5 +1,5 @@
 <template>
-  <img class="page_img" :src="path" alt="#" />
+  <img class="page_img" :src="path" alt="#" v-if="path" />
 </template>
 
 <script>
