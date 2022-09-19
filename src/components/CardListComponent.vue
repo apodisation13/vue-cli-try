@@ -17,7 +17,9 @@
 import CardItem from "@/components/CardItem"
 import { border_for_card, border_leader } from "@/logic/border_styles"
 export default {
-  components: { CardItem },
+  components: { 
+    CardItem,
+  },
   props: {
     cards: {
       required: true,
@@ -43,9 +45,7 @@ export default {
       this.$emit("chose_player_card", card) // передаём this.index по эмиту
     },
     border(card) {
-      return (this.is_leader) ?
-            border_leader(card):
-            border_for_card(card);
+      return (this.is_leader) ? border_leader(card): border_for_card(card);
     },
   }
 }

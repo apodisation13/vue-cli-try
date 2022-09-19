@@ -17,10 +17,13 @@
     /> -->
 
     <!-- <card-type v-if="card.type === 'Special'">&starf;</card-type> -->
-    <card-damage-icon :style="background_color(card)" :damage="card.damage" />
-
-    <card-ability-circle :card="card" />
-
+    <card-damage-icon 
+      :style="background_color(card)" 
+      :damage="card.damage"
+    />
+    <card-ability-circle 
+      :card="card"  
+    />
     <card-passive
       :card="card"
       v-if="card.has_passive"
@@ -29,7 +32,9 @@
 
     <card-charges>{{ card.charges }}&#8607;</card-charges>
 
-    <card-hp v-if="hp_needed">&hearts;{{ card.hp }}</card-hp>
+    <!-- <card-hp v-if="hp_needed">&hearts;{{ card.hp }}</card-hp> -->
+    <heart-icon v-if="hp_needed" :health="card.hp"/>
+    
     <!-- 
     <card-modal
       v-if="show_card_modal"
@@ -49,6 +54,7 @@ import CardPassive from "@/components/UI/CardPassive"
 import CardCharges from "@/components/UI/CardCharges"
 import CardHp from "@/components/UI/CardHp"
 import CardDamageIcon from "@/components/UI/CardDamageIcon"
+import HeartIcon from '@/components/UI/HeartIcon'
 export default {
   name: "card-comp",
   components: {
@@ -59,6 +65,7 @@ export default {
     CardType,
     CardModal,
     CardDamageIcon,
+    HeartIcon,
   },
   props: {
     card: {
@@ -111,6 +118,7 @@ export default {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  border-radius: 2px;
 }
 
 .disable::before {
@@ -122,6 +130,6 @@ export default {
   bottom: 0;
   left: 0;
   background-color: rgb(0, 0, 0, 0.85);
-  z-index: 999
+  z-index: 1
 }
 </style>
