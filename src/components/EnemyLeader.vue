@@ -7,13 +7,13 @@
       @click.right="open_card_modal"
       v-touch:longtap="open_card_modal"
       @dblclick="exec_enemy_leader"
+      :id="`enemy_leader_${enemy_leader.name}`"
     >
       <img
         class="img"
         :src="enemy_leader.image"
         alt=""
         v-if="enemy_leader.hp > 0 || isNaN(enemy_leader.hp)"
-        :id="`enemy_leader_${enemy_leader.name}`"
       />
 
       <card-diamond
