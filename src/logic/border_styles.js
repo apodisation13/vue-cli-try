@@ -203,28 +203,28 @@ function border_leader(leader) {
 // задний фон значка урона для всех карт и значка пассивок
 function background_color(card) {
   if (card.faction === "Soldiers") {
-    if (card.color === "Bronze") return { backgroundColor: "blue" }
+    if (card.color === "Bronze") return { backgroundColor: "blue", border: "solid 3px lightsalmon" }
     else if (card.color === "Silver") {
       return { backgroundColor: "blue", border: "solid 2px silver" }
     } else if (card.color === "Gold") {
       return { backgroundColor: "blue", border: "solid 2px gold" }
     } else return { backgroundColor: "blue" }
   } else if (card.faction === "Monsters") {
-    if (card.color === "Bronze") return { backgroundColor: "red" }
+    if (card.color === "Bronze") return { backgroundColor: "red", border: "solid 3px lightsalmon" }
     else if (card.color === "Silver") {
       return { backgroundColor: "red", border: "solid 2px silver" }
     } else if (card.color === "Gold") {
       return { backgroundColor: "red", border: "solid 2px gold" }
     } else return { backgroundColor: "red" }
   } else if (card.faction === "Animals") {
-    if (card.color === "Bronze") return { backgroundColor: "green" }
+    if (card.color === "Bronze") return { backgroundColor: "green", border: "solid 3px lightsalmon" }
     else if (card.color === "Silver") {
       return { backgroundColor: "green", border: "solid 2px silver" }
     } else if (card.color === "Gold") {
       return { backgroundColor: "green", border: "solid 2px gold" }
     } else return { backgroundColor: "green" }
   } else if (card.faction === "Neutral") {
-    if (card.color === "Bronze") return { backgroundColor: "brown" }
+    if (card.color === "Bronze") return { backgroundColor: "brown", border: "solid 3px lightsalmon" }
     else if (card.color === "Silver") {
       return { backgroundColor: "brown", border: "solid 2px silver" }
     } else if (card.color === "Gold") {
