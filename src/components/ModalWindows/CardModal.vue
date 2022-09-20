@@ -5,9 +5,7 @@
   >
     <button-close @close_self="close_self" />
 
-    <div>
-      {{ card.name }}
-    </div>
+    <div>{{ card.name }}</div>
 
     <div class="enemy_border" :style="border(card)">
       <img class="img" :src="card.image" v-if="card.image" alt="" />
@@ -99,6 +97,25 @@
     <div class="text" v-if="card.has_passive">
       {{ card.passive_ability.description }}
     </div>
+    <div class="divb">
+        <button class="b" @click="mill(card)" v-if="!bonus">mill</button>
+        <button class="count" v-if="!bonus">{{ this.count }}</button>
+        <button class="bonus_count" v-if="bonus">У вас {{ card.count }}</button>
+        <button class="b" @click="craft(card)" v-if="!bonus">craft</button>
+    </div>
+    <yesno-modal
+        :visible="show_yesno_mill"
+        :resource_value="resource_value"
+        @confirm="confirm_mill"
+        @cancel="cancel"
+      />
+      <yesno-modal
+        :visible="show_yesno_craft"
+        :resource_value="resource_value"
+        @confirm="confirm_craft"
+        @cancel="cancel"
+      />
+    
   </modal-window>
 </template>
 
@@ -106,20 +123,40 @@
 import { border_for_card, background_color } from "@/logic/border_styles"
 import ButtonClose from "@/components/UI/ButtonClose"
 import ModalWindow from "@/components/UI/ModalWindow"
+import YesnoModal from '@/components/ModalWindows/YesnoModal'
 export default {
   name: "card-modal",
-  components: { ModalWindow, ButtonClose },
+  components: { ModalWindow, ButtonClose, YesnoModal, },
   props: {
     card: {
       // объект противника по индексу поля
       required: true,
       type: Object,
     },
+    count: {
+      type: Number,
+    },
     hp_needed: {
       // hp только для декбилдера, для игры не нужно оно
       type: Boolean,
       default: false,
     },
+    bonus: { //этот пропс используется для страницы BonusPage
+      type: Boolean,
+      default: false,
+      required: false,
+    },
+    deckbuilder: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  data() {
+    return {
+      show_yesno_mill: false,
+      show_yesno_craft: false,
+      resource_value: undefined,
+    }
   },
   methods: {
     close_self() {
@@ -131,8 +168,46 @@ export default {
     background_color(e) {
       return background_color(e)
     },
+    cancel() {
+      this.show_yesno_mill = false
+      this.show_yesno_craft = false
+    },
+    async mill(card) {
+      let can_mill = await this.$store.dispatch("calculate_value", {
+        card: this.card,
+        count: this.count,
+        process: "mill",
+      })
+      if (!can_mill) return
+      this.resource_value = can_mill
+      this.show_yesno_mill = true
+    },
+    async craft(card) {
+      let can_craft = await this.$store.dispatch("calculate_value", {
+        card: this.card,
+        count: this.count,
+        process: "craft",
+      })
+      if (!can_craft) return
+      this.resource_value = can_craft
+      this.show_yesno_craft = true
+      this.card = card
+    },
+    async confirm_mill() {
+      this.show_yesno_mill = false
+      let result = await this.$store.dispatch("pay_resource", {
+        scraps: this.$store.getters["resource"].scraps + this.resource_value,
+      })
+      if (result) await this.$store.dispatch("mill_card_action", this.card)
+    },
+    async confirm_craft() {
+      this.show_yesno_craft = false
+      let result = await this.$store.dispatch("pay_resource", {
+        scraps: this.$store.getters["resource"].scraps + this.resource_value,
+      })
+      if (result) await this.$store.dispatch("craft_card_action", this.card)
+    },
   },
-  emits: ["close_card_modal"],
 }
 </script>
 
@@ -221,5 +296,26 @@ span {
 .text {
   margin-bottom: 1%;
   font-size: 14pt;
+}
+.divb {
+  width: 98%;
+  height: 3vh;
+  margin-left: 0.5%;
+  margin-top: 0.2%;
+}
+
+.b {
+  width: 42%;
+  height: 100%;
+}
+
+.count {
+  width: 13%;
+  height: 100%;
+}
+
+.bonus_count {
+  width: 90%;
+  height: 100%;
 }
 </style>

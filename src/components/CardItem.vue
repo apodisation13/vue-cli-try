@@ -4,6 +4,9 @@
     :style="{ backgroundImage: `url(${this.card.image})` }"
     :class="{'disable': count === 0}"
     :id="make_id(card, index)"
+    @contextmenu.prevent
+    @click.right="this.show_card_modal = true"
+    v-touch:longtap="show_modal"
   >
     <!-- @contextmenu.prevent
     @click.right="show_modal" эти события понадобятся позже
@@ -42,6 +45,13 @@
       :hp_needed="hp_needed"
       @close_card_modal="show_card_modal = false"
     /> -->
+    <card-modal
+        v-if="show_card_modal"
+        :card="card"
+        :hp_needed="hp_needed"
+        @close_card_modal="show_card_modal = false"
+        :count="count"
+      />
   </div>
 </template>
 
@@ -56,7 +66,6 @@ import CardHp from "@/components/UI/CardHp"
 import CardDamageIcon from "@/components/UI/CardDamageIcon"
 import HeartIcon from '@/components/UI/HeartIcon'
 export default {
-  name: "card-comp",
   components: {
     CardHp,
     CardCharges,
@@ -97,9 +106,6 @@ export default {
     background_color(card) {
       return background_color(card)
     },
-    show_modal() {
-      this.show_card_modal = true
-    },
     make_id(card, index) {
       if (!index && index !== 0) return ""
       return `${card.name}_${index}`
@@ -111,7 +117,7 @@ export default {
 <style scoped>
 .card-item {
   position: relative;
-  width: 70px;
+  width: 80px;
   height: 100px;
   margin: 8px;
   position: relative;

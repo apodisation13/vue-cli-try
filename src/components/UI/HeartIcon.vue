@@ -14,6 +14,7 @@
       health: {
         type: Number,
       },
+      
     }
   }
 </script>
@@ -30,7 +31,7 @@
 .heart {
   width: 8px; 
   height: 8px; 
-  background-color: red; 
+  background-color: #006837; 
   transform: rotate(45deg);
   position: relative; 
 }  
@@ -40,7 +41,7 @@
   display: block;
   width: 8px;
   height: 8px;
-  background-color: red;
+  background-color: #006837;
   border-radius: 50%;
   position: absolute;
 }
@@ -56,8 +57,16 @@
 }
 
 .health-value {
-  font-size: 12px;
-  color: red;
-  margin-left: 4px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  margin-bottom: 2px;
+  color: white;
 }
 </style>

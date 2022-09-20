@@ -71,6 +71,7 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  user-select: none;
   /* font-family: Arial, Helvetica, sans-serif; единый на всё */
 }
 

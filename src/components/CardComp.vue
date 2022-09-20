@@ -49,6 +49,7 @@
       :card="card"
       :hp_needed="hp_needed"
       @close_card_modal="show_card_modal = false"
+      
     />
   </div>
 </template>

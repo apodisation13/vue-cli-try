@@ -66,7 +66,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    bonus: {
+    bonus: { //этот пропс используется для страницы BonusPage
       type: Boolean,
       default: false,
       required: false,
@@ -159,27 +159,5 @@ export default {
   margin-left: 0.5%;
   margin-top: 0.2%;
   position: relative;
-}
-
-.divb {
-  width: 98%;
-  height: 3vh;
-  margin-left: 0.5%;
-  margin-top: 0.2%;
-}
-
-.b {
-  width: 42%;
-  height: 100%;
-}
-
-.count {
-  width: 13%;
-  height: 100%;
-}
-
-.bonus_count {
-  width: 90%;
-  height: 100%;
 }
 </style>

@@ -39,6 +39,11 @@ export default {
       type: Boolean,
       default: false,
     },
+    bonus: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
   },
   methods: {
     chose_player_card(card) {
