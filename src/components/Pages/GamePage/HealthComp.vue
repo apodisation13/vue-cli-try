@@ -1,5 +1,5 @@
 <template>
-  <button class="health-btn" :style="style()">&hearts;{{ health }}</button>
+  <button class="health-btn" :style="style">&hearts;{{ health }}</button>
 </template>
 
 <script>
@@ -9,13 +9,13 @@ export default {
     health() {
       return this.$store.state.game.health
     },
-  },
-  methods: {
     style() {
       if (isNaN(this.health) && this.health.includes("-"))
         return { backgroundColor: "red" }
       else if (isNaN(this.health) && this.health.includes("+"))
         return { backgroundColor: "lime" }
+      else if (this.health < 30) return { backgroundColor: "#F75D59" }
+      else if (this.health < 50) return { backgroundColor: "orange" }
       else return { backgroundColor: "green" }
     },
   },

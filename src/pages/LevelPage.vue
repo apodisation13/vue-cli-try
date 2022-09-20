@@ -1,46 +1,62 @@
 <template>
-  <div>
-    <div class="levels">
-      <div>ВЫБЕРИТЕ УРОВЕНЬ (дважды ЛКМ)</div>
-
-      <div>Базовые уровни игры</div>
+  <div class="levels">
+    <div v-if="!gameMod">
+      <div class="backBtn">Выберите режим игры</div>
       <div
-        class="level"
-        :class="{ level_selected: index === selected }"
-        v-for="(level, index) in levels"
-        :key="level"
-        @dblclick="set_level(index)"
+        class="game_modes"
+        v-for="mode in gameTypes"
+        :key="mode"
+        @click="selectGameMode(mode)"
       >
-        <level-preview-comp :level="level" />
-      </div>
-      <br /><br />
-
-      <div>РАНДОМНЫЕ УРОВНИ!</div>
-      <div
-        class="level"
-        :class="{ level_selected: index === selected }"
-        v-for="(level, index) in random_levels"
-        :key="level"
-        @dblclick="set_random_level(index)"
-      >
-        <level-preview-comp :level="level" />
+        <div class="mode">{{ mode }}</div>
       </div>
     </div>
-    <selected-deck />
-    <deck-selection />
+
+    <div v-else>
+      <div class="backBtn" @click="cancelGameMod">Назад</div>
+      <div>Выбранный режим: {{ gameMod }}</div>
+      <div v-if="gameMod === 'seasons'">
+        <div
+          class="seasons"
+          v-for="season in 5"
+          :key="season"
+          @dblclick="selectSeason(season)"
+        >
+          Сезон {{ season }}
+        </div>
+        <br />
+        <div
+          class="level"
+          :class="{ level_selected: index === selectedLevel }"
+          v-for="(level, index) in levels"
+          :key="level"
+          @dblclick="set_level(index)"
+        >
+          <level-preview-comp :level="level" />
+        </div>
+      </div>
+      <div v-if="gameMod === 'random'">
+        <div
+          class="level"
+          :class="{ level_selected: index === selectedRandomLevel }"
+          v-for="(level, index) in random_levels"
+          :key="level"
+          @dblclick="set_random_level(index)"
+        >
+          <level-preview-comp :level="level" />
+        </div>
+      </div>
+      <div v-if="gameMod === 'arena'">Пока не реализовано!</div>
+    </div>
   </div>
 </template>
 
 <script>
 import { useToast } from "vue-toastification"
 import LevelPreviewComp from "@/components/Pages/LevelPage/LevelPreviewComp"
-import DeckSelection from "@/components/DeckSelection"
-import SelectedDeck from "@/components/Pages/LevelPage/SelectedDeck"
 import { random_level_generator } from "@/logic/random_level"
 export default {
   components: {
-    SelectedDeck,
-    DeckSelection,
     LevelPreviewComp,
   },
   setup() {
@@ -52,8 +68,11 @@ export default {
   },
   data() {
     return {
-      selected: undefined, // для подсветки выбранного уровня
+      selectedLevel: undefined, // для подсветки выбранного уровня
+      selectedRandomLevel: undefined,
       random_levels: [],
+      gameTypes: ["seasons", "random", "arena"],
+      gameMod: null,
     }
   },
   computed: {
@@ -62,16 +81,29 @@ export default {
     },
   },
   methods: {
+    selectGameMode(mode) {
+      console.log(mode)
+      this.gameMod = mode
+    },
+    cancelGameMod() {
+      this.gameMod = null
+    },
+    selectSeason(season) {
+      alert(season)
+    },
     set_level(index) {
-      if (this.levels[index].id) {
-        this.toast.success(`Выбран уровень ${index + 1}! `, { timeout: 1000 })
-        this.$store.commit("set_level", this.levels[index].level)
-        this.$store.commit(
-          "set_enemy_leader",
-          this.levels[index].level.enemy_leader
-        )
-        this.selected = index
-      } else this.toast.error("Уровень закрыт!")
+      if (!this.levels[index].id) {
+        this.toast.error("Уровень закрыт!")
+        return
+      }
+      this.toast.success(`Выбран уровень ${index + 1}! `, { timeout: 1000 })
+      this.$store.commit("set_level", this.levels[index].level)
+      this.$store.commit(
+        "set_enemy_leader",
+        this.levels[index].level.enemy_leader
+      )
+      this.selectedLevel = index
+      this.selectedRandomLevel = undefined
     },
     set_random_level(index) {
       this.toast.success(`Выбран рандомный уровень!`, { timeout: 1000 })
@@ -80,18 +112,27 @@ export default {
         "set_enemy_leader",
         this.random_levels[index].level.enemy_leader
       )
-      this.selected = index
+      this.selectedRandomLevel = index
+      this.selectedLevel = undefined
     },
   },
 }
 </script>
 
 <style scoped>
+div {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin-bottom: 1%;
+}
+
 .levels {
   margin: 1%;
-  width: 95%;
-  height: 50vh;
-  border: solid 1px orchid;
+  width: 99%;
+  height: 78vh;
+  /*border: solid 1px orchid;*/
   overflow: scroll;
 }
 
@@ -109,5 +150,27 @@ export default {
   height: 10vh;
   font-size: 6pt;
   background-color: green;
+}
+
+.game_modes {
+  display: inline-block;
+  width: 99%;
+}
+
+.mode {
+  width: 30%;
+  height: 20vh;
+  border: solid 2px blue;
+}
+
+.backBtn {
+  width: 99%;
+  height: 3vh;
+  background-color: greenyellow;
+}
+
+.seasons {
+  display: inline;
+  background-color: yellow;
 }
 </style>

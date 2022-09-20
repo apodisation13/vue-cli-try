@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 3.5vh">
     <button class="grave-btn" @click="flag = true">
       Сброс {{ grave_len }}
     </button>
@@ -43,7 +43,7 @@ export default {
 
 <style scoped>
 .grave-btn {
-  height: 40%;
+  height: 98%;
   width: 98%;
   border: solid 1px yellow;
   margin-bottom: 1%;
