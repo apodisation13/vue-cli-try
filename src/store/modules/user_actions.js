@@ -102,33 +102,32 @@ const actions = {
   },
 
   calculate_value({ state }, obj) {
-    debugger;
     if (obj.process === "craft") {
-      if (obj.card.color === "Bronze") return state.craft_bronze
-      else if (obj.card.color === "Silver") return state.craft_silver
-      else if (obj.card.color === "Gold") return state.craft_gold
+      if (obj.card.card.color === "Bronze") return state.craft_bronze
+      else if (obj.card.card.color === "Silver") return state.craft_silver
+      else if (obj.card.card.color === "Gold") return state.craft_gold
       else return state.craft_leader
     } else if (obj.process === "mill") {
       // нельзя: если карт 0, или если карт 1 и при этом она в стартовом наборе (unlocked то есть)
       if (
-        obj.count === 0 ||
-        (obj.count === 1 && obj.card.unlocked)
+        obj.card.count === 0 ||
+        (obj.card.count === 1 && obj.card.card.unlocked)
       ) {
         toast.error(
           "Нельзя размиллить карту из стартового набора (или карту которой у вас и так нет, ха-ха)"
         )
         return
       }
-      if (obj.card.color === "Bronze") return state.mill_bronze
-      else if (obj.card.color === "Silver") return state.mill_silver
-      else if (obj.card.color === "Gold") return state.mill_gold
+      if (obj.card.card.color === "Bronze") return state.mill_bronze
+      else if (obj.card.card.color === "Silver") return state.mill_silver
+      else if (obj.card.card.color === "Gold") return state.mill_gold
       else return state.mill_leader
     }
   },
 
   async craft_card_action({ dispatch }, card) {
     // если у карты есть цвет, значит это карта, идём на экшен craft_card, иначе это лидер и идём на craft_leader
-    if (card.color) await dispatch("craft_card", card)
+    if (card.card.color) await dispatch("craft_card", card)
     else await dispatch("craft_leader", card)
   },
 
@@ -198,20 +197,20 @@ const actions = {
     }
   },
 
-  async mill_card_action({ dispatch }, card) {
-    if (card.card.color) await dispatch("mill_card", card)
-    else await dispatch("mill_leader", card)
+  async mill_card_action({ dispatch }, user_card) {
+    if (user_card.card.color) await dispatch("mill_card", user_card)
+    else await dispatch("mill_leader", user_card)
   },
 
-  async mill_card({ dispatch, getters }, card) {
+  async mill_card({ dispatch, getters }, user_card) {
     let header = getters["getHeader"]
     let user_id = getters["getUser"].user_id
-    let url = `${mill_card}${card.id}/`
+    let url = `${mill_card}${user_card.id}/`
 
     try {
       await axios.patch(
         url,
-        { user: user_id, card: card.card.id, count: card.count },
+        { user: user_id, card: user_card.card.id, count: user_card.count },
         header
       )
       await dispatch("get_user_database")
@@ -221,15 +220,15 @@ const actions = {
     }
   },
 
-  async mill_leader({ dispatch, getters }, card) {
+  async mill_leader({ dispatch, getters }, user_card) {
     let header = getters["getHeader"]
     let user_id = getters["getUser"].user_id
-    let url = `${mill_leader}${card.id}/`
+    let url = `${mill_leader}${user_card.id}/`
 
     try {
       await axios.patch(
         url,
-        { user: user_id, leader: card.card.id, count: card.count },
+        { user: user_id, leader: user_card.card.id, count: user_card.count },
         header
       )
       await dispatch("get_user_database")

@@ -1,14 +1,13 @@
 <template>
   <div class="card-list">
     <card-item
-      v-for="item in cards"
-      :key="item.card.id"
-      :card="item.card"
-      :count="item.count"
+      v-for="user_card in cards"
+      :key="user_card.id"
+      :user_card="user_card"
       :hp_needed="hp_needed"
       :deckbuilder="deckbuilder"
-      :style="border(item.card)"
-      @dblclick="chose_player_card(item)"
+      :style="border(user_card.card)"
+      @dblclick="chose_player_card(user_card)"
     />
   </div>
 </template>

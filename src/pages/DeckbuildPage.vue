@@ -159,7 +159,8 @@ export default {
     },
 
     // удалить из деки в процессе по нажатию дважды ЛКМ
-    delete_from_deck_in_progress(card) {
+    delete_card_from_deck(card) {
+      debugger;
       this.deck.health -= card.card.hp
       this.deck.deck_is_progress.splice(this.deck.deck_is_progress.indexOf(card), 1)
       this.deck.deck_body.splice(
@@ -295,7 +296,7 @@ export default {
 
 /*база карт*/
 .pool_full {
-  height: 70vh;
+  height: 60vh;
   /*border: solid 1px black;*/
 }
 

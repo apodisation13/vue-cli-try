@@ -1,9 +1,9 @@
 <template>
   <div
     class="card-item"
-    :style="{ backgroundImage: `url(${this.card.image})` }"
-    :class="{'disable': count === 0}"
-    :id="make_id(card, index)"
+    :style="{ backgroundImage: `url(${user_card.card.image})` }"
+    :class="{'disable': user_card.count === 0}"
+    :id="make_id(user_card.card, index)"
     @contextmenu.prevent
     @click.right="this.show_card_modal = true"
     v-touch:longtap="show_modal"
@@ -21,22 +21,22 @@
 
     <!-- <card-type v-if="card.type === 'Special'">&starf;</card-type> -->
     <card-damage-icon 
-      :style="background_color(card)" 
-      :damage="card.damage"
+      :style="background_color(user_card.card)" 
+      :damage="user_card.card.damage"
     />
     <card-ability-circle 
-      :card="card"  
+      :card="user_card.card"  
     />
     <card-passive
-      :card="card"
-      v-if="card.has_passive"
-      :style="background_color(card)"
+      :card="user_card.card"
+      v-if="user_card.card.has_passive"
+      :style="background_color(user_card.card)"
     />
 
-    <card-charges>{{ card.charges }}&#8607;</card-charges>
+    <card-charges>{{ user_card.card.charges }}&#8607;</card-charges>
 
     <!-- <card-hp v-if="hp_needed">&hearts;{{ card.hp }}</card-hp> -->
-    <heart-icon v-if="hp_needed" :health="card.hp"/>
+    <heart-icon v-if="hp_needed" :health="user_card.card.hp"/>
     
     <!-- 
     <card-modal
@@ -47,10 +47,9 @@
     /> -->
     <card-modal
         v-if="show_card_modal"
-        :card="card"
+        :user_card="user_card"
         :hp_needed="hp_needed"
         @close_card_modal="show_card_modal = false"
-        :count="count"
       />
   </div>
 </template>
@@ -77,7 +76,7 @@ export default {
     HeartIcon,
   },
   props: {
-    card: {
+    user_card: {
       type: Object,
       required: true,
     },
@@ -110,6 +109,11 @@ export default {
       if (!index && index !== 0) return ""
       return `${card.name}_${index}`
     },
+  computed: {
+      card() {
+        return user_card.card
+      }
+    }
   },
 }
 </script>
