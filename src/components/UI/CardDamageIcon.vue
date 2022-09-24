@@ -1,5 +1,5 @@
 <template>
-  <div class="damage-icon">
+  <div class="damage-icon-wrapper">
     <div class="damage-count">
       {{ damage }}
     </div>
@@ -18,28 +18,52 @@ export default {
 </script>
 
 <style scoped>
-.damage-icon {
+.damage-icon-wrapper {
   position: absolute;
-  top: -2px;
-  right: -2px;
-  height: 25px;
-  padding-right: 2px;
+  top: -9px;
+  right: -9px;
+  height: 18px;
+  width: 18px;
+  transform: rotate(-45deg);
 }
 
 .damage-count {
+  position: absolute;
+  transform: rotate(45deg);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   color: whitesmoke;
-  font-size: 10px;
+  font-size: 8px;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 .damage-count::before {
   content: "";
   display: block;
-  width: 11px;
-  height: 22px;
+  width: 6px;
+  height: 12px;
   background-image: url("~@/assets/icons/card/sword.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
+}
+
+.rhomb {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  transform: rotate(45deg);
+}
+
+.wrapper-rhomb-body {
+  transform: rotate(-45deg);
+}
+
+.rhomb-top-right {
+  top: -9px;
+  right: -9px;
 }
 </style>

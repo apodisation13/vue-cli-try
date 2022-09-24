@@ -8,22 +8,11 @@
     @click.right="this.show_card_modal = true"
     v-touch:longtap="show_modal"
   >
-    <!-- @contextmenu.prevent
-    @click.right="show_modal" эти события понадобятся позже
-    v-touch:longtap="show_modal" -->
-    <!-- <img
-      :class="!deckbuilder || count > 0 ? 'img' : 'img2'"
-      :src="card.image"
-      alt=""
-      v-if="card.image"
-      :id="make_id(card, index)"
-    /> -->
-
-    <!-- <card-type v-if="card.type === 'Special'">&starf;</card-type> -->
     <card-damage-icon 
       :style="background_color(user_card.card)" 
       :damage="user_card.card.damage"
     />
+
     <card-ability-circle 
       :card="user_card.card"  
     />
@@ -35,16 +24,8 @@
 
     <card-charges>{{ user_card.card.charges }}&#8607;</card-charges>
 
-    <!-- <card-hp v-if="hp_needed">&hearts;{{ card.hp }}</card-hp> -->
     <heart-icon v-if="hp_needed" :health="user_card.card.hp"/>
     
-    <!-- 
-    <card-modal
-      v-if="show_card_modal"
-      :card="card"
-      :hp_needed="hp_needed"
-      @close_card_modal="show_card_modal = false"
-    /> -->
     <card-modal
         v-if="show_card_modal"
         :user_card="user_card"
@@ -61,12 +42,10 @@ import CardType from "@/components/UI/CardType"
 import CardAbilityCircle from "@/components/UI/AbilityCircleCard"
 import CardPassive from "@/components/UI/CardPassive"
 import CardCharges from "@/components/UI/CardCharges"
-import CardHp from "@/components/UI/CardHp"
 import CardDamageIcon from "@/components/UI/CardDamageIcon"
 import HeartIcon from '@/components/UI/HeartIcon'
 export default {
   components: {
-    CardHp,
     CardCharges,
     CardPassive,
     CardAbilityCircle,
@@ -121,8 +100,7 @@ export default {
 <style scoped>
 .card-item {
   position: relative;
-  width: 80px;
-  height: 100px;
+  width: 20%;
   margin: 8px;
   position: relative;
   background-repeat: no-repeat;
@@ -131,7 +109,13 @@ export default {
   border-radius: 2px;
 }
 
-.disable::before {
+.card-item::before {
+  content: '';
+  display: block;
+  padding-top: 143%;
+}
+
+.disable::after {
   content: '';
   display: block;
   position: absolute;

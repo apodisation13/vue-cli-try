@@ -57,8 +57,7 @@ export default {
 
 <style scoped>
 .card-list {
-  padding-left: 8px;
-  padding-right: 8px;
+  padding: 5px 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
