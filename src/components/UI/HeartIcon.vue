@@ -1,9 +1,11 @@
 <template>
-  <div class="heart-wrapper">
+  <div class="heart-wrapper" 
+    :style="{'--bgColor': bgColor}"
+  >
     <div class="heart">
-    </div>
-    <div class="health-value">
-      {{ health }}
+      <div class="health-value">
+        {{ health }}
+      </div>
     </div>
   </div>
 </template>
@@ -14,7 +16,9 @@
       health: {
         type: Number,
       },
-      
+      bgColor: {
+        type: String,
+      }
     }
   }
 </script>
@@ -22,38 +26,34 @@
 <style scoped>
 .heart-wrapper {
   position: absolute;
-  bottom: 2px;
-  left: 5px;
-  display: flex;
-  align-items: center;
+  width: 16px;
+  height: 16px;
+  bottom: -8px;
+  left: -8px;
+}
+
+.heart-wrapper::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 14px;
+  height: 14px;
+  transform: rotate(-45deg);
+  background-color: var(--bgColor);
+  border-radius: 2px;
 }
 
 .heart {
-  width: 8px; 
-  height: 8px; 
-  background-color: #006837; 
-  transform: rotate(45deg);
-  position: relative; 
-}  
-
-.heart::before, .heart::after {
-  content : '';
-  display: block;
-  width: 8px;
-  height: 8px;
-  background-color: #006837;
-  border-radius: 50%;
   position: absolute;
-}
-
-.heart::before {
-  top: -4px;
+  top: 2px;
+  right: 0;
+  bottom: 0;
   left: 0;
-}
-
-.heart::after {
-  top: 0;
-  left: -4px;
+  background-image: url('~@/assets/icons/card/heart_green.svg');
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .health-value {
@@ -63,9 +63,10 @@
   bottom: 0;
   left: 0;
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: 8px;
+  align-items: center;
+  margin-top: 2px;
+  font-size: 6px;
   margin-bottom: 2px;
   color: white;
 }

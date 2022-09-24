@@ -22,9 +22,15 @@
       :style="background_color(user_card.card)"
     />
 
-    <card-charges>{{ user_card.card.charges }}&#8607;</card-charges>
+    <card-charges 
+      :charge="user_card.card.charges"
+      :bgColor="background_color_charges(user_card.card.color)"
+    />
 
-    <heart-icon v-if="hp_needed" :health="user_card.card.hp"/>
+    <heart-icon v-if="hp_needed" 
+      :health="user_card.card.hp"
+      :bgColor="background_color_hp(user_card.card.color)"
+    />
     
     <card-modal
         v-if="show_card_modal"
@@ -36,7 +42,7 @@
 </template>
 
 <script>
-import { background_color } from "@/logic/border_styles"
+import { background_color, background_color_hp, background_color_charges } from "@/logic/border_styles"
 import CardModal from "@/components/ModalWindows/CardModal"
 import CardType from "@/components/UI/CardType"
 import CardAbilityCircle from "@/components/UI/AbilityCircleCard"
@@ -81,6 +87,12 @@ export default {
     }
   },
   methods: {
+    background_color_hp(color) {
+      return background_color_hp(color)
+    },
+    background_color_charges(color) {
+      return background_color_charges(color)
+    },
     background_color(card) {
       return background_color(card)
     },

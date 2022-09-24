@@ -235,6 +235,32 @@ function background_color(card) {
   } else return {}
 }
 
+function background_color_hp(color) {
+  switch (color) {
+    case "Bronze": 
+      return 'rgb(197, 168, 126)'
+    case "Silver": 
+      return 'rgb(255, 255, 255)'
+    case "Gold":
+      return 'rgb(245, 202, 90)'
+    default: 
+      return '#fd69b5'
+  }
+}
+
+function background_color_charges(color) {
+  switch (color) {
+    case "Bronze": 
+      return 'rgb(74, 66, 55)'
+    case "Silver": 
+      return 'rgb(29, 37, 45)'
+    case "Gold":
+      return 'rgb(176, 123, 21)'
+    default: 
+      return '#fd69b5'
+  }
+}
+
 function background_color_deck(deck) {
   if (deck.leader.faction === "Soldiers") return { backgroundColor: "blue" }
   else if (deck.leader.faction === "Monsters") return { backgroundColor: "red" }
@@ -250,4 +276,6 @@ export {
   background_color,
   background_color_deck,
   border_for_hand_2,
+  background_color_hp,
+  background_color_charges,
 }
