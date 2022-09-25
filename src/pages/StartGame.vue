@@ -1,17 +1,27 @@
 <template>
-  <div class="start">
-    <div class="play_price">
-      Для этой игры надо заплатить <b>{{ play_price }}</b> wood!
+  <div>
+    <div class="start">
+      <div class="play_price">
+        Для этой игры надо заплатить <b>{{ play_price }}</b> wood!
+      </div>
+      <button class="btn_start" @click="start_game" :disabled="loading">
+        НАЧАТЬ
+      </button>
     </div>
-    <button class="btn_start" @click="start_game" :disabled="loading">
-      НАЧАТЬ
-    </button>
+    <div class="decks">
+      <div>Выбранный уровень: {{ $store.state.game.level.name }}</div>
+      <selected-deck />
+      <deck-selection />
+    </div>
   </div>
 </template>
 
 <script>
+import DeckSelection from "@/components/DeckSelection"
+import SelectedDeck from "@/components/Pages/LevelPage/SelectedDeck"
 export default {
   name: "StartGame",
+  components: { SelectedDeck, DeckSelection },
   data() {
     return {
       loading: false,
@@ -52,11 +62,11 @@ export default {
 <style scoped>
 .start {
   position: absolute;
-  top: 50%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 70%;
-  height: 50vh;
+  height: 30vh;
   border: solid 2px black;
 }
 
@@ -76,5 +86,11 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   position: relative;
+}
+
+.decks {
+  position: absolute;
+  width: 99%;
+  bottom: 10%;
 }
 </style>

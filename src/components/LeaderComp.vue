@@ -112,23 +112,29 @@ export default {
       if (event_type === "dragend") {
         console.log("РАНЕЕ ПОТАЩИЛИ ЛИДЕРА, С КОМПА!!!!")
         console.log(event.originalEvent.clientX, event.originalEvent.clientY)
-        const elem = document.elementFromPoint(
+        const elems = document.elementsFromPoint(
           event.originalEvent.clientX,
           event.originalEvent.clientY
         )
-        this.target_emit(elem)
+        this.get_target(elems)
       } else {
         console.log("РАНЕЕ ПОТАЩИЛИ ЛИДЕРА, МЫ С ТЕЛЕФОНА!!!")
-        console.log(
+        const elems = document.elementsFromPoint(
           event.originalEvent.changedTouches[0].clientX,
           event.originalEvent.changedTouches[0].clientY
         )
-        const elem = document.elementFromPoint(
-          event.originalEvent.changedTouches[0].clientX,
-          event.originalEvent.changedTouches[0].clientY
-        )
-        this.target_emit(elem)
+        this.get_target(elems)
       }
+    },
+    get_target(elems) {
+      let elem = null
+      elems.forEach(el => {
+        if (el.className === "enemy" || el.className === "enemy-leader") {
+          console.log(el.className)
+          elem = el
+        }
+      })
+      this.target_emit(elem)
     },
     target_emit(elem) {
       const id = elem?.id
