@@ -192,6 +192,7 @@ export default {
 .expand-menu__content ::before {
   content: "";
   position: absolute;
+  z-index: -2;
   inset: 0;
   border-radius: 5px;
   padding: 2px;
