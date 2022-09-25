@@ -28,8 +28,8 @@
   position: absolute;
   width: 16px;
   height: 16px;
-  bottom: -8px;
-  left: -8px;
+  bottom: -6px;
+  left: -6px;
 }
 
 .heart-wrapper::before {
@@ -47,7 +47,7 @@
 
 .heart {
   position: absolute;
-  top: 2px;
+  top: 3px;
   right: 0;
   bottom: 0;
   left: 0;

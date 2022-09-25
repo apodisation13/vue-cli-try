@@ -56,11 +56,13 @@ export default {
 </script>
 
 <style scoped>
+
 .card-list {
-  padding: 5px 0;
-  display: flex;
-  flex-wrap: wrap;
+  padding: 8px 0;
+  display: grid; 
+  grid-template-columns: repeat(4, 20%); 
+  row-gap: 20px;
+  column-gap: 13px;
   justify-content: center;
-  align-items: center;
 }
 </style>

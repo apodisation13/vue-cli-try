@@ -29,8 +29,8 @@
   position: absolute;
   width: 16px;
   height: 16px;
-  bottom: -8px;
-  right: -8px;
+  bottom: -6px;
+  right: -6px;
 }
 
 .charge-wrapper::before {

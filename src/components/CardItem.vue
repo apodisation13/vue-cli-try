@@ -112,8 +112,7 @@ export default {
 <style scoped>
 .card-item {
   position: relative;
-  width: 20%;
-  margin: 8px;
+  width: 100%;
   position: relative;
   background-repeat: no-repeat;
   background-position: center;
