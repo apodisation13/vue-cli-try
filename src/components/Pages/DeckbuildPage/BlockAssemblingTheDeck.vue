@@ -19,12 +19,16 @@
         {{ deck.deck_is_progress.length }}/{{ $store.state.game.cards_in_deck }}
       </span>
       <span>Жизни: {{ health }}</span>
-      <!-- <input class="input" :disabled="cant_save_deck" v-model="deck.deck_name" /> -->
+      <input class="input" 
+        :disabled="cant_save_deck" 
+        :value='deck_name'
+        @input='changeNameDeck'
+      />
       <button
         class="btn_save_deck"
-        v-if="patch"
+        v-if="!patch"
         :disabled="cant_save_deck"
-        @click="emit('save_deck')"
+        @click="save_deck"
       >
         СОХРАНИТЬ
       </button>
@@ -59,6 +63,10 @@ import CardsList from '@/components/CardsList'
       },
       patch: {
         type: Boolean,
+      },
+      deck_name: {
+        type: String,
+        require: true,
       }
 
     },
@@ -66,6 +74,15 @@ import CardsList from '@/components/CardsList'
       delete_card_from_deck(emit) {
         this.$emit('delete_card', emit);
       },
+      changeNameDeck(event) {
+        this.$emit('update:deck_name', event.target.value)
+      },
+      save_deck() {
+        this.$emit('save_deck')
+      },
+      patch_deck() {
+        this.$emit('patch_deck')
+      }
     }
   }
 </script>

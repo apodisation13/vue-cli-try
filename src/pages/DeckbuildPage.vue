@@ -38,6 +38,7 @@
         @delete_card="delete_card_from_deck"
         @save_deck="save_deck"
         @patch_deck="patch_deck"
+        v-model:deck_name="deck.deck_name"
       />
     </div>
     <div class="deckbuilder-bottom-buttons-block">
@@ -60,7 +61,6 @@
 
 <script>
 import _ from "lodash"
-// import CardsList from "@/components/CardsList"
 import DecksListModal from "@/components/ModalWindows/DecksListModal"
 import DeckbuilderTopButtonsBlock from "@/components/Pages/DeckbuildPage/DeckbuilderTopButtonsBlock"
 import BlockAssemblingTheDeck from '@/components/Pages/DeckbuildPage/BlockAssemblingTheDeck'
@@ -70,7 +70,6 @@ import CardListComponent from '@/components/CardListComponent'
 export default {
   components: {
       DecksListModal,
-      // CardsList,
       DeckbuilderTopButtonsBlock,
       BlockAssemblingTheDeck,
       DeckbuilderFilters,
@@ -82,7 +81,7 @@ export default {
       deckBuilding: false, // флаг - собираем мы колоду, или нет
       showFilters: false, // флаг, показать ли окно с фильтрами
       show_decks_list_modal: false, // показать окно с колодами
-      patch: true,
+      patch: false,
       deck: {
         deck_id: null,
         deck_name: "",
@@ -113,6 +112,7 @@ export default {
 
     cancelDeckBuilding() {
       this.deckBuilding = false
+      this.patch = false
       this.new_deck()
     },
 
@@ -218,34 +218,32 @@ export default {
     show_deck(index) {
       this.new_deck();
       this.deckBuilding = true
-      debugger;
       const { deck } = _.cloneDeep(this.$store.getters["all_decks"][index])
-      this.deck = {
-        deck_id: deck.id,
-        deck_name: deck.name,
-        deck_is_progress: [...deck.cards], // колода в процессе - целиком объекты, для отображения
-        deck_body: [...deck.d], // только {card: id} для пост-запроса
-        leader: deck.leader, // сам выбранный лидер
-        health: deck.health, // жизни текущей деки
-      },
+
+      this.deck.deck_id = deck.id,
+      this.deck.deck_name = deck.name,
+      this.deck.deck_is_progress = [...deck.cards], // колода в процессе - целиком объекты, для отображения
+      this.deck.deck_body = [...deck.d], // только {card = id} для пост-запроса
+      this.deck.leader = deck.leader, // сам выбранный лидер
+      this.deck.health = deck.health, // жизни текущей деки
       this.query.faction = deck.leader.faction
       this.patch = true
     },
     
     async patch_deck() {
       this.send_data_to_store("patch_deck", {
-        name: this.deck_name,
-        health: this.health,
-        d: this.deck_body,
-        leader_id: this.leader.id,
-        id: this.deck_id,
+        name: this.deck.deck_name,
+        health: this.deck.health,
+        d: this.deck.deck_body,
+        leader_id: this.deck.leader.id,
+        id: this.deck.deck_id,
       })
     },
 
     async send_data_to_store(dispatch_name, body) {
       try {
         await this.$store.dispatch(dispatch_name, body)
-        this.new_deck() // всё обнуляем!
+        this.cancelDeckBuilding() // всё обнуляем!
       } catch (err) {
         console.log(err)
         throw err
