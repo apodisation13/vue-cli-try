@@ -20,7 +20,7 @@ export const images = {
     morning: `${path}/loading-morning.jpg`,
   },
   deckbuild: {
-    default: `${path}/deckbuild_default.png`,
+    default: `${path}/deckbuild_default.jpg`,
   },
   bonus: {
     default: `${path}/bonus_default.png`,

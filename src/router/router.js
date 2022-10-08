@@ -73,6 +73,7 @@ const routes = [
     meta: {
       requireAuth: true,
       image: images.deckbuild,
+      withGradient: true,
     },
   },
   {

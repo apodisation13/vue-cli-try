@@ -1,5 +1,9 @@
 <template>
-  <img class="page_img" :src="path" alt="#" v-if="path" />
+  <div class="page-img-wrapper"
+    :class="{'page-img-gradient': withGradient}"
+  >
+    <img class="page_img" :src="path" alt="#" v-if="path" />
+  </div>
 </template>
 
 <script>
@@ -12,6 +16,7 @@ export default {
       intervalId: null,
       isWorking: true,
       defaultImg: null,
+      withGradient: null,
     }
   },
 
@@ -37,6 +42,7 @@ export default {
   computed: {
     path() {
       const image = this.$router.currentRoute.value.meta.image
+      this.withGradient = this.$router.currentRoute.value.meta.withGradient
       if (!image) return ""
 
       if (image.default) {
@@ -64,14 +70,30 @@ export default {
 </script>
 
 <style scoped>
-.page_img {
+.page-img-wrapper {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: -2;
+}
+
+.page_img {
   width: 100%;
   height: 100%;
-  z-index: -1;
 }
+
+.page-img-gradient::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(180deg, #001327 -5%, transparent 50%, #001327 110%);
+  opacity: 0.9;
+}
+
 </style>
