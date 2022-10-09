@@ -7,12 +7,19 @@
         @click="clickAddButton"
         :image_name="'add_icon.svg'"
       />
-      <button class="btn_save_deck filter_btn" @click="showList('pool')">cards</button>
-      <button class="btn_save_deck filter_btn" @click="showList('leaders')">leaders</button>
-      <button-icon 
+      <button-toggle-card-list
+        @click="showList('leaders')"
+        :isActive="!!(showingList === 'leaders')"
+      >Лидеры</button-toggle-card-list>
+      <button-toggle-card-list
+        @click="showList('pool')"
+        :isActive="!!(showingList === 'pool')"
+      >Основные</button-toggle-card-list>
+      <button-icon class="filter_btn"
+        @click="$emit('open-filters')"
         :image_name="'open_filters.svg'" 
-        class="filter_btn" 
-        @click="$emit('open-filters')"/>
+        :class="[empty_filters ? '' : 'set-filter']"
+      />
     </div>
     <base-modal v-if="showNewDeckFactionSelect"
       @close-modal="showNewDeckFactionSelect = false"
@@ -28,6 +35,7 @@ import FilterFactions from "@/components/Pages/DeckbuildPage/FilterFactions"
 import ButtonIcon from '@/components/Pages/DeckbuildPage/Buttons/ButtonIcon'
 import BaseModal from '@/components/UI/BaseModal'
 import DeckbuilderFilters from '@/components/Pages/DeckbuildPage/DeckbuilderFilters'
+import ButtonToggleCardList from "@/components/Pages/DeckbuildPage/Buttons/ButtonToggleCardList"
 
 export default {
   components: {
@@ -35,7 +43,8 @@ export default {
     ButtonIcon,
     BaseModal,
     DeckbuilderFilters,
-  },
+    ButtonToggleCardList
+},
   props: {
     deckBuilding: {
       type: Boolean,
@@ -43,6 +52,9 @@ export default {
     },
     empty_filters: {
       type: Boolean,
+    },
+    showingList: {
+      type: String,
     }
   },
   data() {
@@ -73,7 +85,7 @@ export default {
   computed: {
     isCansel() {
       return this.showNewDeckFactionSelect || this.deckBuilding
-    }
+    },
   }
 }
 </script>
@@ -86,7 +98,20 @@ export default {
 }
 
 .filter_btn {
+  position: relative;
   margin: 10px;
+}
+
+.set-filter::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #FACF5D;
 }
 
 .is-cancel {

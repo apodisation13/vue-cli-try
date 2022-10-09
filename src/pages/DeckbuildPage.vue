@@ -2,10 +2,12 @@
   <div class="deck_builder_page">
     <!-- Зона кнопок - новая, карты\лидеры, открыть фильтры -->
     <deckbuilder-top-buttons-block
+      :deckBuilding="deckBuilding"
+      :showingList="showingList"
+      :empty_filters="empty_filters"
       @reset="cancelDeckBuilding"
       @select_faction="select_faction"
       @trigger_show_list="trigger_show_list"
-      :deckBuilding="deckBuilding"
       @open-filters="showFilters = true"
     />
     <!-- Зона базы карт: или показывать карты, или лидеров -->

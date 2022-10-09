@@ -92,8 +92,8 @@ export default {
   right: 0;
   bottom: 0;
   left: 0;
-  background: linear-gradient(180deg, #001327 -5%, transparent 50%, #001327 110%);
-  opacity: 0.9;
+  background: linear-gradient(180deg, #0A305B -12.88%, #A3ABB4 33.24%, #0A305B 108.88%);
+  mix-blend-mode: multiply;
 }
 
 </style>
