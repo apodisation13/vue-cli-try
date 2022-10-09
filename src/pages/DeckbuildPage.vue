@@ -43,14 +43,15 @@
         v-model:deck_name="deck.deck_name"
       />
     </div>
-    <div class="deckbuilder-bottom-buttons-block">
+    <!-- <div class="deckbuilder-bottom-buttons-block">
       <div class="decks_btn" @click="trigger_decks_list_modal(true)">КОЛОДЫ!</div>
-      <decks-list-modal
+    </div> -->
+    <button-decks @click="trigger_decks_list_modal(true)" />
+    <decks-list-modal
         v-if="show_decks_list_modal"
         @close_decks_list_modal="trigger_decks_list_modal(false)"
         @change_deck="show_deck"
       />
-    </div>
      <deckbuilder-filters 
       v-if="showFilters" 
       @close-modal="showFilters = false"
@@ -68,15 +69,17 @@ import DeckbuilderTopButtonsBlock from "@/components/Pages/DeckbuildPage/Deckbui
 import BlockAssemblingTheDeck from '@/components/Pages/DeckbuildPage/BlockAssemblingTheDeck'
 import DeckbuilderFilters from '@/components/Pages/DeckbuildPage/DeckbuilderFilters'
 import CardListComponent from '@/components/CardListComponent'
+import ButtonDecks from "@/components/Pages/DeckbuildPage/Buttons/ButtonDecks.vue"
 
 export default {
   components: {
-      DecksListModal,
-      DeckbuilderTopButtonsBlock,
-      BlockAssemblingTheDeck,
-      DeckbuilderFilters,
-      CardListComponent,
-    },
+    DecksListModal,
+    DeckbuilderTopButtonsBlock,
+    BlockAssemblingTheDeck,
+    DeckbuilderFilters,
+    CardListComponent,
+    ButtonDecks
+},
   data() {
     return {
       showingList: 'pool', // показывать список игровых карт ('pool') или список лидеров ('leaders')
