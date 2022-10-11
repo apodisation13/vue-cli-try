@@ -30,7 +30,7 @@
           :deckbuilder="true"
           @chose_player_card="chose_leader"
         />
-        </div>
+      </div>
       <!-- Зона сбора колоды -->
       <block-assembling-the-deck 
         v-show="deckBuilding"
