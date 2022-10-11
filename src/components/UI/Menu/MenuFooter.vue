@@ -116,7 +116,14 @@ export default {
 }
 
 .game__outer-wrapper {
-  background: linear-gradient(100.28deg, #11941E 0.7%, #2FB53C 20.71%, #CEFFDC 49.22%, #2FB53C 91.17%, #11941E 100%);
+  background: linear-gradient(
+    100.28deg,
+    #11941e 0.7%,
+    #2fb53c 20.71%,
+    #ceffdc 49.22%,
+    #2fb53c 91.17%,
+    #11941e 100%
+  );
   height: 100%;
   width: 100%;
   padding: 3px;
