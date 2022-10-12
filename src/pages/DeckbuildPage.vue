@@ -12,24 +12,26 @@
     />
     <!-- Зона базы карт: или показывать карты, или лидеров -->
     <div class="deck-builder-body">
-      <div class="database_of_cards"
-        :class="deckBuilding ? 'pool_deckbuild' : 'pool_full'">
-        <!-- база карт -->
-        <card-list-component
-          v-show="showingList === 'pool'"
-          :cards="pool"
-          :hp_needed="true"
-          :deckbuilder="true"
-          @chose_player_card="append_into_deck_in_progress"
-        />
-        <!-- список всех лидеров из базы -->
-        <card-list-component
-          v-show="showingList === 'leaders'"
-          :cards="leaders"
-          :is_leader="true"
-          :deckbuilder="true"
-          @chose_player_card="chose_leader"
-        />
+      <div class="database_of_cards-wrapper">
+        <div class="database_of_cards"
+          :class="deckBuilding ? 'pool_deckbuild' : 'pool_full'">
+          <!-- база карт -->
+          <card-list-component
+            v-show="showingList === 'pool'"
+            :cards="pool"
+            :hp_needed="true"
+            :deckbuilder="true"
+            @chose_player_card="append_into_deck_in_progress"
+          />
+          <!-- список всех лидеров из базы -->
+          <card-list-component
+            v-show="showingList === 'leaders'"
+            :cards="leaders"
+            :is_leader="true"
+            :deckbuilder="true"
+            @chose_player_card="chose_leader"
+          />
+        </div>
       </div>
       <!-- Зона сбора колоды -->
       <block-assembling-the-deck 
@@ -292,14 +294,30 @@ export default {
 </script>
 
 <style scoped>
-.database_of_cards {
-  overflow-y: scroll;
+.database_of_cards-wrapper {
+  position: relative;
 }
 
+.database_of_cards-wrapper::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 28px;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+}
+
+.database_of_cards {
+  background: #3C4D60;
+  box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.7);
+  padding: 15px;
+  overflow-y: scroll;
+}
 /*база карт*/
 .pool_full {
-  height: 60vh;
-  /*border: solid 1px black;*/
+  height: 55vh;
 }
 
 .pool_deckbuild {
