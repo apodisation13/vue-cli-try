@@ -80,6 +80,7 @@ export default {
 }
 
 .page_img {
+  display: block;
   width: 100%;
   height: 100%;
 }

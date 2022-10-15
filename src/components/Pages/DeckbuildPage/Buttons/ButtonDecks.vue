@@ -50,19 +50,6 @@
   color: transparent;
 }
 
-.transparent-block {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 166px;
-  height: 26px;
-  background: transparent;
-  border: 2px solid;
-  border-image: linear-gradient(153.5deg, #B07B15 34.99%, #FACF5D 57.14%, #B48328 82.81%) 1;
-  border-bottom: none;
-}
-
 .bottom-lines-button {
   display: flex;
   justify-content: center;
@@ -70,7 +57,7 @@
 }
 
 .bottom-line {
-  width: calc(50% - 166px / 2);
+  width: calc(30% - 6px);
   border: 2px solid;
   border-image: linear-gradient(153.5deg, #B07B15 34.99%, #FACF5D 57.14%, #B48328 82.81%) 1;
   border-left: none;
@@ -79,8 +66,8 @@
 }
 
 .bottom-line-center {
-  width: 166px;
-  height: 26px;
+  width: calc(40% + 12px);
+  height: 28px;
   border: 2px solid;
   border-image: linear-gradient(153.5deg, #B07B15 34.99%, #FACF5D 57.14%, #B48328 82.81%) 1;
   border-bottom: none;

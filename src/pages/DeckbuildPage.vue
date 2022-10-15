@@ -1,66 +1,68 @@
 <template>
-  <div class="deck_builder_page">
-    <!-- Зона кнопок - новая, карты\лидеры, открыть фильтры -->
-    <deckbuilder-top-buttons-block
-      :deckBuilding="deckBuilding"
-      :showingList="showingList"
-      :empty_filters="empty_filters"
-      @reset="cancelDeckBuilding"
-      @select_faction="select_faction"
-      @trigger_show_list="trigger_show_list"
-      @open-filters="showFilters = true"
-    />
-    <!-- Зона базы карт: или показывать карты, или лидеров -->
-    <div class="deck-builder-body">
-      <div class="database_of_cards-wrapper">
-        <div class="database_of_cards"
-          :class="deckBuilding ? 'pool_deckbuild' : 'pool_full'">
-          <!-- база карт -->
-          <card-list-component
-            v-show="showingList === 'pool'"
-            :cards="pool"
-            :hp_needed="true"
-            :deckbuilder="true"
-            @chose_player_card="append_into_deck_in_progress"
-          />
-          <!-- список всех лидеров из базы -->
-          <card-list-component
-            v-show="showingList === 'leaders'"
-            :cards="leaders"
-            :is_leader="true"
-            :deckbuilder="true"
-            @chose_player_card="chose_leader"
-          />
+  <div class="deck_builder_page-wrapper">
+    <div class="deck_builder_page">
+      <!-- Зона кнопок - новая, карты\лидеры, открыть фильтры -->
+      <deckbuilder-top-buttons-block
+        :deckBuilding="deckBuilding"
+        :showingList="showingList"
+        :empty_filters="empty_filters"
+        @reset="cancelDeckBuilding"
+        @select_faction="select_faction"
+        @trigger_show_list="trigger_show_list"
+        @open-filters="showFilters = true"
+      />
+      <!-- Зона базы карт: или показывать карты, или лидеров -->
+      <div class="deck-builder-body">
+        <div class="database_of_cards-wrapper">
+          <div class="database_of_cards"
+            :class="deckBuilding ? 'pool_deckbuild' : 'pool_full'">
+            <!-- база карт -->
+            <card-list-component
+              v-show="showingList === 'pool'"
+              :cards="pool"
+              :hp_needed="true"
+              :deckbuilder="true"
+              @chose_player_card="append_into_deck_in_progress"
+            />
+            <!-- список всех лидеров из базы -->
+            <card-list-component
+              v-show="showingList === 'leaders'"
+              :cards="leaders"
+              :is_leader="true"
+              :deckbuilder="true"
+              @chose_player_card="chose_leader"
+            />
+          </div>
         </div>
+        <!-- Зона сбора колоды -->
+        <block-assembling-the-deck 
+          v-show="deckBuilding"
+          :patch="patch"
+          :deck="deck"
+          :cant_save_deck="cant_save_deck"
+          @delete_card="delete_card_from_deck"
+          @save_deck="save_deck"
+          @patch_deck="patch_deck"
+          v-model:deck_name="deck.deck_name"
+        />
       </div>
-      <!-- Зона сбора колоды -->
-      <block-assembling-the-deck 
-        v-show="deckBuilding"
-        :patch="patch"
-        :deck="deck"
-        :cant_save_deck="cant_save_deck"
-        @delete_card="delete_card_from_deck"
-        @save_deck="save_deck"
-        @patch_deck="patch_deck"
-        v-model:deck_name="deck.deck_name"
+      <!-- <div class="deckbuilder-bottom-buttons-block">
+        <div class="decks_btn" @click="trigger_decks_list_modal(true)">КОЛОДЫ!</div>
+      </div> -->
+      <button-decks @click="trigger_decks_list_modal(true)" />
+      <decks-list-modal
+          v-if="show_decks_list_modal"
+          @close_decks_list_modal="trigger_decks_list_modal(false)"
+          @change_deck="show_deck"
+        />
+      <deckbuilder-filters 
+        v-if="showFilters" 
+        @close-modal="showFilters = false"
+        @reset-filters="resetFilters"
+        @set-filter="setFilter"
+        :deckBuilding="deckBuilding"
       />
     </div>
-    <!-- <div class="deckbuilder-bottom-buttons-block">
-      <div class="decks_btn" @click="trigger_decks_list_modal(true)">КОЛОДЫ!</div>
-    </div> -->
-    <button-decks @click="trigger_decks_list_modal(true)" />
-    <decks-list-modal
-        v-if="show_decks_list_modal"
-        @close_decks_list_modal="trigger_decks_list_modal(false)"
-        @change_deck="show_deck"
-      />
-     <deckbuilder-filters 
-      v-if="showFilters" 
-      @close-modal="showFilters = false"
-      @reset-filters="resetFilters"
-      @set-filter="setFilter"
-      :deckBuilding="deckBuilding"
-     />
   </div>
 </template>
 
@@ -294,6 +296,27 @@ export default {
 </script>
 
 <style scoped>
+.deck_builder_page-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 57px;
+  z-index: -1;
+}
+
+.deck_builder_page {
+  margin-top: auto;
+}
+
+.deck-builder-body {
+  height: 56vh;
+}
+
 .database_of_cards-wrapper {
   position: relative;
 }
@@ -317,22 +340,11 @@ export default {
 }
 /*база карт*/
 .pool_full {
-  height: 55vh;
+  height: 56vh;
 }
 
 .pool_deckbuild {
-  height: 50vh;
+  height: 26vh;
   border: solid 1px black;
-}
-
-/*кнопка КОЛОДЫ*/
-.decks_btn {
-  height: 3vh;
-  width: 100%;
-  border: solid 2px green;
-  text-align: center;
-  background: red;
-  position: absolute;
-  bottom: 7vh;
 }
 </style>
