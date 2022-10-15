@@ -18,7 +18,7 @@
       <span>
         {{ deck.deck_is_progress.length }}/{{ $store.state.game.cards_in_deck }}
       </span>
-      <span>Жизни: {{ health }}</span>
+      <span>Жизни: {{ deck.health }}</span>
       <input class="input" 
         :disabled="cant_save_deck" 
         :value='deck_name'
@@ -83,7 +83,7 @@ import CardsList from '@/components/CardsList'
       patch_deck() {
         this.$emit('patch_deck')
       }
-    }
+    },
   }
 </script>
 

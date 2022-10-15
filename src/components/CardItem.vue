@@ -5,9 +5,10 @@
     :class="{'disable': user_card.count === 0}"
     :id="make_id(user_card.card, index)"
     @contextmenu.prevent
-    @click.right="this.show_card_modal = true"
+    @click.right="show_modal"
     v-touch:longtap="show_modal"
   >
+  <!-- v-touch:longtap="show_modal" -->
     <card-damage-icon 
       :style="background_color(user_card.card)" 
       :damage="user_card.card.damage"
@@ -100,12 +101,15 @@ export default {
       if (!index && index !== 0) return ""
       return `${card.name}_${index}`
     },
+    show_modal() {
+      this.show_card_modal = true
+    },
+  },
   computed: {
       card() {
-        return user_card.card
+        return this.user_card.card
       }
     }
-  },
 }
 </script>
 

@@ -271,7 +271,7 @@ export default {
     setFilter(prop, value) {
       this.query[prop] = value
     },
-    
+
     trigger_show_list(value) {
       this.showingList = value
     }
@@ -279,7 +279,7 @@ export default {
 
   computed: {
     pool() {
-      return this.$store.getters.filtered_cards(this.query, this.count)
+      return this.$store.getters.filtered_cards(this.query, this.query.count)
     },
     leaders() {
       return this.$store.getters.filtered_leaders(this.query.faction)
@@ -291,7 +291,7 @@ export default {
     empty_filters() {
       return _.isEqual(this.default_query_param(), this.query);
     },
-  }
+  },
 }
 </script>
 
