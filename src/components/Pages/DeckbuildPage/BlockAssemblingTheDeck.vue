@@ -2,17 +2,36 @@
   <div class="block-assembling-deck">
     <div class="deck-block">
       <div class="leader-block">
-        <card-item-preview 
-          :user_card="deck.leader"
-          :is_leader="true"
-        />
+        <div class="leader-img-block">
+          <card-item-preview 
+            v-if="!!deck.leader"
+            class="leader-selected"
+            :user_card="deck.leader"
+            :is_leader="true"
+          />
+          <div 
+            class="leader-empty"
+            v-else
+          ></div>
+        </div>
+        <span class="leader-block-info">
+          Лидер: {{ !!deck.leader ? deck.leader.name : 'не выбран' }}
+        </span>
+        <span class="leader-block-info">
+          Размер: {{ deck.deck_is_progress.length }}/{{ $store.state.game.cards_in_deck }}
+        </span>
       </div>
       <assembling-pool-list 
         class="pool-block"
        :deck_is_progress="deck.deck_is_progress"
       />
     </div>
-    <div class="deck-info-block"></div>
+    <div class="deck-info-block">
+      <div class="deck-health">
+        <div class="heart"></div>
+        {{ deck.health }}
+      </div>
+    </div>
 
     <!-- <div class="deck_in_progress">
       <div class="leader">
@@ -27,12 +46,7 @@
       </div>
     </div> -->
         <!-- TODO: Все вот это должно влезть в одну строку! -->
-    <!-- <div class="deck_info">
-      <span>Лидер: {{ !!deck.leader }}</span>
-      <span>
-        {{ deck.deck_is_progress.length }}/{{ $store.state.game.cards_in_deck }}
-      </span>
-      <span>Жизни: {{ deck.health }}</span>
+    <!-- <span>Жизни: {{ deck.health }}</span>
       <input class="input" 
         :disabled="cant_save_deck" 
         :value='deck_name'
@@ -114,11 +128,27 @@ import AssemblingPoolList from '@/components/Pages/DeckbuildPage/AssemblingPoolL
 .deck-block {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
 }
 
 .leader-block {
   width: 25%;
   margin-right: 10px;
+}
+.leader-img-block {
+  margin-bottom: 10px;
+}
+
+.leader-empty {
+  width: 100%;
+  background-color: grey;
+  border-radius: 5px;
+}
+
+.leader-empty::before {
+  content: '';
+  display: block;
+  padding-top: 143%;
 }
 
 .pool-block {
@@ -126,6 +156,38 @@ import AssemblingPoolList from '@/components/Pages/DeckbuildPage/AssemblingPoolL
   margin-right: auto;
 }
 
+.leader-block-info, .deck-health {
+  font-family: 'Inter';
+  font-weight: 300;
+  font-size: 12px;
+  color: #FACF5D;
+}
+
+.leader-block-info {
+  display: block;
+  margin-left: 5px;
+  margin-bottom: 7px;
+  white-space: nowrap;
+}
+
+.deck-info-block {
+  display: flex;
+  justify-content: space-between;
+}
+
+.deck-health {
+  display: flex;
+  align-items: center;
+}
+
+.heart {
+  width: 12px;
+  height: 10px;
+  background-image: url('~@/assets/icons/card/heart_green.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 3px;
+} 
 
 /* //////////////////////// */
 

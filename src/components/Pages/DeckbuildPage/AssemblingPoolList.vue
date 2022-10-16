@@ -26,18 +26,18 @@ import CardItemPreview from '@/components/CardItemPreview'
 
 <style scoped>
 .assembling-pool-list {
-  width: 265px;
-  /* display: grid;
-  grid-template-columns: repeat(7, 30px);
-  align-content: center; */
+  width: 230px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
 .pool-item {
-  width: 85px;
-  margin-left: -50px;
-
+  max-width: 85px;
+  max-height: 122px;
+  margin-left: -27px;
+  margin-right: -27px;
+  margin-bottom: -65px;
+  box-shadow: -4px 0px 4px rgba(0, 0, 0, 0.5);
 }
 </style>
