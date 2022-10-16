@@ -121,6 +121,7 @@ const mutations = {
 }
 
 const actions = {
+  // в ответе user_database: cards,leaders,u_d(колоды),levels, resources: тут ресурсы
   async get_user_database({ commit, getters, dispatch }) {
     let user_id = getters["getUser"].user_id
     let header = getters["getHeader"]
@@ -128,16 +129,19 @@ const actions = {
 
     try {
       let response = await axios.get(url, header)
-      commit("set_leaders", response.data.leaders)
-      commit("set_cards", response.data.cards)
+      const { user_database, resources } = response.data
 
-      commit("set_decks", response.data.u_d)
-      dispatch("set_deck_in_play", response.data.u_d[0])
+      commit("set_leaders", user_database.leaders)
+      commit("set_cards", user_database.cards)
 
-      commit("set_levels", response.data.levels)
-      dispatch("set_level_in_play", response.data.levels[0])
+      commit("set_decks", user_database.u_d)
+      dispatch("set_deck_in_play", user_database.u_d[0]) // устанавливаем для игры первую колоду
 
-      await dispatch("get_resource")
+      commit("set_levels", user_database.levels)
+      dispatch("set_level_in_play", user_database.levels[0]) // устанавливаем для игры первый уровень
+
+      commit("set_resource", resources)
+
       await dispatch("get_enemies_for_random_level")
 
       commit("set_databaseLoaded", true)
