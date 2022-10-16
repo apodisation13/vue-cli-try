@@ -8,7 +8,7 @@
       >
         <img :src="require('@/assets/icons/' + 'Avatar.svg')" alt="" />
       </button>
-      <resource-list @click="$router.push('/bonus')" />
+      <resource-list @click="$router.push('/bonus')" v-if="isLoggedIn" />
     </div>
     <div
       class="expand-menu"
@@ -123,8 +123,8 @@ export default {
   content: "";
   position: absolute;
   background-color: rgba(0, 0, 0, 0.3);
-  left: 0px;
-  top: 0px;
+  left: 0;
+  top: 0;
   width: 100%;
   height: 100%;
   z-index: 3;
