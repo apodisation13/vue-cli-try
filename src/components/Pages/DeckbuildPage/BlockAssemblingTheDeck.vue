@@ -1,6 +1,20 @@
 <template>
-  <div class="create_deck">
-    <div class="deck_in_progress">
+  <div class="block-assembling-deck">
+    <div class="deck-block">
+      <div class="leader-block">
+        <card-item-preview 
+          :user_card="deck.leader"
+          :is_leader="true"
+        />
+      </div>
+      <assembling-pool-list 
+        class="pool-block"
+       :deck_is_progress="deck.deck_is_progress"
+      />
+    </div>
+    <div class="deck-info-block"></div>
+
+    <!-- <div class="deck_in_progress">
       <div class="leader">
         <leader-comp v-if="deck.leader" :leader="deck.leader" />
       </div>
@@ -11,9 +25,9 @@
           @chose_player_card="delete_card_from_deck"
         />
       </div>
-    </div>
+    </div> -->
         <!-- TODO: Все вот это должно влезть в одну строку! -->
-    <div class="deck_info">
+    <!-- <div class="deck_info">
       <span>Лидер: {{ !!deck.leader }}</span>
       <span>
         {{ deck.deck_is_progress.length }}/{{ $store.state.game.cards_in_deck }}
@@ -40,17 +54,21 @@
       >
         ИЗМЕНИТЬ
       </button>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 import LeaderComp from '@/components/LeaderComp'
 import CardsList from '@/components/CardsList'
+import CardItemPreview from '@/components/CardItemPreview';
+import AssemblingPoolList from '@/components/Pages/DeckbuildPage/AssemblingPoolList';
   export default {
   components: { 
     LeaderComp,
     CardsList,
+    CardItemPreview,
+    AssemblingPoolList,
    },
     props: {
       deck: {
@@ -88,6 +106,29 @@ import CardsList from '@/components/CardsList'
 </script>
 
 <style scoped>
+
+.block-assembling-deck {
+  padding: 15px 10px;
+}
+
+.deck-block {
+  display: flex;
+  justify-content: space-between;
+}
+
+.leader-block {
+  width: 25%;
+  margin-right: 10px;
+}
+
+.pool-block {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* //////////////////////// */
+
 .deck_in_progress {
   /* два дива в один ряд! */
   clear: both;
