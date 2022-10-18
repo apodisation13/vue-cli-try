@@ -36,6 +36,7 @@
         <div class="charges"></div>
         {{ charges }}
       </div>
+      <create-button name="Создать" />
     </div>
 
     <!-- <div class="deck_in_progress">
@@ -83,6 +84,7 @@ import CardsList from '@/components/CardsList'
 import CardItemPreview from '@/components/CardItemPreview';
 import AssemblingPoolList from '@/components/Pages/DeckbuildPage/AssemblingPoolList';
 import InputNameForDeck from '@/components/Pages/DeckbuildPage/InputNameForDeck';
+import CreateButton from '@/components/Pages/DeckbuildPage/Buttons/CreateButton';
   export default {
   components: { 
     LeaderComp,
@@ -90,6 +92,7 @@ import InputNameForDeck from '@/components/Pages/DeckbuildPage/InputNameForDeck'
     CardItemPreview,
     AssemblingPoolList,
     InputNameForDeck,
+    CreateButton,
    },
     props: {
       deck: {
@@ -186,6 +189,7 @@ import InputNameForDeck from '@/components/Pages/DeckbuildPage/InputNameForDeck'
 .deck-info-block {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .deck-health, .deck-charge {

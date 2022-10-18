@@ -27,8 +27,12 @@
   background-color: #fff;
   padding: 5px 10px;
   border-radius: 3px;
-  width: 190px;
+  width: 148px;
   outline: none;
   border: none;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 10px;
 }
 </style>
