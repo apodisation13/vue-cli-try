@@ -31,6 +31,10 @@
         <div class="heart"></div>
         {{ deck.health }}
       </div>
+      <div class="deck-charge">
+        <div class="charges"></div>
+        {{ charges }}
+      </div>
     </div>
 
     <!-- <div class="deck_in_progress">
@@ -116,6 +120,12 @@ import AssemblingPoolList from '@/components/Pages/DeckbuildPage/AssemblingPoolL
         this.$emit('patch_deck')
       }
     },
+    computed: {
+      charges() {
+        const leader_charges = this.deck.leader ? this.deck.leader.charges : 0
+        return this.deck.deck_is_progress.reduce( (acc, val) => acc + val.card.charges, 0) + leader_charges;
+      }
+    }
   }
 </script>
 
@@ -156,7 +166,7 @@ import AssemblingPoolList from '@/components/Pages/DeckbuildPage/AssemblingPoolL
   margin-right: auto;
 }
 
-.leader-block-info, .deck-health {
+.leader-block-info, .deck-health, .deck-charge {
   font-family: 'Inter';
   font-weight: 300;
   font-size: 12px;
@@ -175,7 +185,7 @@ import AssemblingPoolList from '@/components/Pages/DeckbuildPage/AssemblingPoolL
   justify-content: space-between;
 }
 
-.deck-health {
+.deck-health, .deck-charge {
   display: flex;
   align-items: center;
 }
@@ -187,6 +197,16 @@ import AssemblingPoolList from '@/components/Pages/DeckbuildPage/AssemblingPoolL
   background-repeat: no-repeat;
   background-position: center;
   margin-right: 3px;
+} 
+
+.charges {
+  width: 10px;
+  height: 20px;
+  margin-right: 3px;
+  background-image: url('~@/assets/icons/card/charge.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 } 
 
 /* //////////////////////// */

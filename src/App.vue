@@ -114,6 +114,7 @@ body {
   .app {
     position: relative;
     max-width: 425px;
+    max-height: 930px;
     border-radius: 8px;
     margin: 0 auto;
   }
