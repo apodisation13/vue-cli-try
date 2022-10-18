@@ -27,6 +27,7 @@
       />
     </div>
     <div class="deck-info-block">
+      <input-name-for-deck />
       <div class="deck-health">
         <div class="heart"></div>
         {{ deck.health }}
@@ -81,12 +82,14 @@ import LeaderComp from '@/components/LeaderComp'
 import CardsList from '@/components/CardsList'
 import CardItemPreview from '@/components/CardItemPreview';
 import AssemblingPoolList from '@/components/Pages/DeckbuildPage/AssemblingPoolList';
+import InputNameForDeck from '@/components/Pages/DeckbuildPage/InputNameForDeck';
   export default {
   components: { 
     LeaderComp,
     CardsList,
     CardItemPreview,
     AssemblingPoolList,
+    InputNameForDeck,
    },
     props: {
       deck: {

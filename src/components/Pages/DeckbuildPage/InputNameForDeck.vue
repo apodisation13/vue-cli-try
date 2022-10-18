@@ -1,0 +1,34 @@
+<template>
+  <div class="wrapper-name-input">
+    <div class="background-name-input">
+      <input class="name-input" type="text" placeholder="Введите название колоды">
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    
+  }
+</script>
+
+<style scoped>
+.wrapper-name-input {
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.background-name-input {
+  background-image: linear-gradient(#4A4237 0%, #C5A87E50 50%, #4A4237 100%);
+  padding: 2px;
+}
+
+.name-input {
+  background-color: #fff;
+  padding: 5px 10px;
+  border-radius: 3px;
+  width: 190px;
+  outline: none;
+  border: none;
+}
+</style>
