@@ -6,14 +6,9 @@
       @contextmenu.prevent
       @click.right="show_modal"
       v-touch:longtap="show_modal"
+      :id="make_id(enemy, index)"
     >
-      <img
-        class="img"
-        :src="enemy.image"
-        v-if="enemy.image"
-        alt=""
-        :id="make_id(enemy, index)"
-      />
+      <img class="img" :src="enemy.image" v-if="enemy.image" alt="" />
       <card-diamond :style="background_color(enemy)"
         >&dagger;{{ enemy.damage }}</card-diamond
       >
