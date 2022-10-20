@@ -128,7 +128,7 @@ export default {
   font-weight: 300;
   font-size: 12px;
   line-height: 140%;
-  height: 360px;
+  height: 38vh;
   width: 250px;
   border: 3px solid;
   border-image-source: linear-gradient(
