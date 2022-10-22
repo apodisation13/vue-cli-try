@@ -103,7 +103,7 @@ export default {
   .header {
     /*border: solid 1px yellow;*/
     width: 100%;
-    height: 7vh;
+    height: 11vh;
   }
 }
 
@@ -111,16 +111,12 @@ export default {
   .header {
     /*border: solid 1px red;*/
     width: 100%;
-    height: 7vh;
+    height: 11vh;
   }
 }
 
 .header {
   padding-top: 15px;
-}
-
-.header__resource-list {
-  margin-left: auto;
 }
 
 .avatar {
