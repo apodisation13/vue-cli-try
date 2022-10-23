@@ -24,10 +24,14 @@
       <assembling-pool-list 
         class="pool-block"
        :deck_is_progress="deck.deck_is_progress"
+       @delete_card_from_deck="delete_card_from_deck"
       />
     </div>
     <div class="deck-info-block">
-      <input-name-for-deck />
+      <input-name-for-deck
+        :deck_name="deck.deck_name"
+        @changeNameDeck="$emit('changeNameDeck', $event)"
+      />
       <div class="deck-health">
         <div class="heart"></div>
         {{ deck.health }}
@@ -36,7 +40,16 @@
         <div class="charges"></div>
         {{ charges }}
       </div>
-      <create-button name="Создать" />
+      <create-button name="Создать" 
+        v-if="!patch"
+        :disabled="cant_save_deck"
+        @click="save_deck"
+      />
+      <create-button name="Изменить" 
+        v-if="patch"
+        :disabled="cant_save_deck"
+        @click="patch_deck"
+      />
     </div>
 
     <!-- <div class="deck_in_progress">
@@ -58,22 +71,6 @@
         :value='deck_name'
         @input='changeNameDeck'
       />
-      <button
-        class="btn_save_deck"
-        v-if="!patch"
-        :disabled="cant_save_deck"
-        @click="save_deck"
-      >
-        СОХРАНИТЬ
-      </button>
-      <button
-        class="btn_save_deck"
-        v-if="patch"
-        :disabled="cant_save_deck"
-        @click="patch_deck"
-      >
-        ИЗМЕНИТЬ
-      </button>
     </div> -->
   </div>
 </template>
@@ -106,25 +103,17 @@ import CreateButton from '@/components/Pages/DeckbuildPage/Buttons/CreateButton'
       patch: {
         type: Boolean,
       },
-      deck_name: {
-        type: String,
-        require: true,
-      }
-
     },
     methods: {
       delete_card_from_deck(emit) {
         this.$emit('delete_card', emit);
-      },
-      changeNameDeck(event) {
-        this.$emit('update:deck_name', event.target.value)
       },
       save_deck() {
         this.$emit('save_deck')
       },
       patch_deck() {
         this.$emit('patch_deck')
-      }
+      },
     },
     computed: {
       charges() {
@@ -215,44 +204,5 @@ import CreateButton from '@/components/Pages/DeckbuildPage/Buttons/CreateButton'
   background-position: center;
   background-size: contain;
 } 
-
-/* //////////////////////// */
-
-.deck_in_progress {
-  /* два дива в один ряд! */
-  clear: both;
-  height: 18vh;
-  /*border: solid 2px yellow;*/
-  width: 99%;
-  margin: 0.05% 0.05% 1%;
-}
-
-.leader {
-  width: 20%;
-  height: 100%;
-  border: dashed 1px black;
-  display: inline;
-  float: left;
-  /*margin: 0.05%;*/
-}
-
-.deck_info {
-  width: 100%;
-}
-
-.input {
-  width: 23%;
-  height: 3vh;
-}
-
-.deck_build_view {
-  width: 79%;
-  height: 100%;
-  border: solid 1px black;
-  overflow: scroll;
-  display: inline;
-  float: right;
-  margin: 0.05%;
-}
 
 </style>

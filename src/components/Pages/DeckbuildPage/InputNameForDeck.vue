@@ -1,14 +1,23 @@
 <template>
   <div class="wrapper-name-input">
     <div class="background-name-input">
-      <input class="name-input" type="text" placeholder="Введите название колоды">
+      <input 
+        class="name-input" 
+        type="text" 
+        placeholder="Введите название колоды"
+        :disabled="cant_save_deck" 
+        :value="deck_name"
+        @input="$emit('changeNameDeck', $event.target.value)"
+      >
     </div>
   </div>
 </template>
 
 <script>
   export default {
-    
+    props: {
+      deck_name: String, 
+    }
   }
 </script>
 

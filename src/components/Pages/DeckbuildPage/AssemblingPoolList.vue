@@ -5,6 +5,7 @@
       v-for="full_card in deck_is_progress"
       :key="full_card.card.id"
       :user_card="full_card.card"
+      @dblclick="delete_card_from_deck(full_card)"
     />
   </div>
 </template>
@@ -19,6 +20,11 @@ import CardItemPreview from '@/components/CardItemPreview'
       deck_is_progress: {
         type: Array,
         default: [],
+      },
+    },
+    methods: {
+      delete_card_from_deck(card) {
+        return this.$emit('delete_card_from_deck', card)
       }
     }
   }

@@ -43,7 +43,7 @@
           @delete_card="delete_card_from_deck"
           @save_deck="save_deck"
           @patch_deck="patch_deck"
-          v-model:deck_name="deck.deck_name"
+          @changeNameDeck="changeNameDeck"
         />
       </div>
       <!-- <div class="deckbuilder-bottom-buttons-block">
@@ -188,6 +188,10 @@ export default {
         return
       }
       this.deck.leader = leader.card
+    },
+
+    changeNameDeck(value) {
+      this.deck.deck_name = value;
     },
 
     async save_deck() {
