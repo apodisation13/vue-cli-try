@@ -51,27 +51,6 @@
         @click="patch_deck"
       />
     </div>
-
-    <!-- <div class="deck_in_progress">
-      <div class="leader">
-        <leader-comp v-if="deck.leader" :leader="deck.leader" />
-      </div>
-      <div class="deck_build_view">
-        <cards-list
-          :cards="deck.deck_is_progress"
-          :hp_needed="true"
-          @chose_player_card="delete_card_from_deck"
-        />
-      </div>
-    </div> -->
-        <!-- TODO: Все вот это должно влезть в одну строку! -->
-    <!-- <span>Жизни: {{ deck.health }}</span>
-      <input class="input" 
-        :disabled="cant_save_deck" 
-        :value='deck_name'
-        @input='changeNameDeck'
-      />
-    </div> -->
   </div>
 </template>
 
