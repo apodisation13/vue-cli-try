@@ -21,11 +21,11 @@ export default {
   computed: {
     win_price() {
       if (this.$store.state.game.level.difficulty === "easy")
-        return this.$store.state.user_actions.win_level_easy
+        return this.$store.state.user_actions.game_prices.win_level_easy
       else if (this.$store.state.game.level.difficulty === "normal")
-        return this.$store.state.user_actions.win_level_normal
+        return this.$store.state.user_actions.game_prices.win_level_normal
       else if (this.$store.state.game.level.difficulty === "hard")
-        return this.$store.state.user_actions.win_level_hard
+        return this.$store.state.user_actions.game_prices.win_level_hard
       else return "Уровень не выбран!"
     },
   },

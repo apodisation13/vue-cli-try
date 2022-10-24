@@ -21,10 +21,6 @@ export const craft_leader =
 export const mill_leader =
   "https://card-game.ru/api/v1/patchleaders/mill_user_leaders/"
 
-// для рандомного сбора уровня для страницы levels
-export const all_enemies = "https://card-game.ru/api/v1/enemies/"
-export const all_enemy_leaders = "https://card-game.ru/api/v1/enemy_leaders/"
-
 // для получения новостей
 export const all_news = "https://card-game.ru/api/v1/news/"
 
