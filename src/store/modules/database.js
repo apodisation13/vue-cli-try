@@ -1,11 +1,6 @@
 import axios from "axios"
 import { useToast } from "vue-toastification"
-import {
-  all_enemies,
-  all_enemy_leaders,
-  user_database,
-  user_resource,
-} from "@/store/const/api_urls"
+import { user_database, user_resource } from "@/store/const/api_urls"
 
 const toast = useToast()
 
@@ -21,6 +16,7 @@ const state = {
   decks: [],
   levels: [], // все уровни, из запроса
   resource: {},
+
   databaseLoaded: false,
   errorLoading: "",
 
@@ -114,7 +110,8 @@ const actions = {
 
     try {
       let response = await axios.get(url, header)
-      const { user_database, resources } = response.data
+      const { user_database, resources, enemies, enemy_leaders, game_const } =
+        response.data
 
       commit("set_leaders", user_database.leaders)
       commit("set_cards", user_database.cards)
@@ -127,7 +124,11 @@ const actions = {
 
       commit("set_resource", resources)
 
-      await dispatch("get_enemies_for_random_level")
+      commit("set_enemies", enemies)
+      commit("set_enemy_leaders", enemy_leaders)
+
+      commit("set_game_const", game_const) // рука, карт в колоде
+      commit("set_game_prices", game_const) // всякие игровые цены
 
       commit("set_databaseLoaded", true)
       toast.success("Успешно загрузили всю вашу базу данных")
@@ -149,21 +150,6 @@ const actions = {
     } catch (err) {
       dispatch("error_action", err)
       throw new Error("Ошибка при загрузке ресурсов")
-    }
-  },
-
-  async get_enemies_for_random_level({ commit, getters, dispatch }) {
-    let header = getters["getHeader"]
-
-    try {
-      let response_e = await axios.get(all_enemies, header)
-      let response_e_l = await axios.get(all_enemy_leaders, header)
-      commit("set_enemies", response_e.data)
-      commit("set_enemy_leaders", response_e_l.data)
-      toast.success("Успешно загрузились враги для рандомных уровней")
-    } catch (err) {
-      dispatch("error_action", err)
-      throw new Error("Ошибка при загрузке рандомных уровней")
     }
   },
 
@@ -211,7 +197,7 @@ const actions = {
       })
     })
 
-    Promise.all(images)
+    await Promise.all(images)
       .then(() => {
         console.log("Images loaded!")
         toast.success("Успешно отрендерили картинки")

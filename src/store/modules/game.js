@@ -1,6 +1,6 @@
 const state = {
-  cards_in_deck: 12, // СКОЛЬКО В ДЕКЕ ДОЛЖНО БЫТЬ КАРТ
-  hand_size: 6, // СКОЛЬКО КАРТ В РУКЕ
+  cards_in_deck: undefined, // СКОЛЬКО В ДЕКЕ ДОЛЖНО БЫТЬ КАРТ
+  hand_size: undefined, // СКОЛЬКО КАРТ В РУКЕ
 
   current_deck: [], // дека выбранная для игры, deck.cards
   health: 0, // жизни деки, из деки, deck.health
@@ -21,6 +21,11 @@ const state = {
 const getters = {}
 
 const mutations = {
+  set_game_const(state, payload) {
+    state.hand_size = payload.hand_size
+    state.cards_in_deck = payload.number_of_cards_in_deck
+  },
+
   set_current_deck(state, deck) {
     // записать деку для игры
     state.current_deck = deck

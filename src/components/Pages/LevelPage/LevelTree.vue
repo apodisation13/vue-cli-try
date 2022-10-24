@@ -19,11 +19,15 @@
             :config="squareConfig(level)"
             @dblclick="setLevel(index)"
             @dbltap="setLevel(index)"
+            @pointerup="end(level)"
+            @pointerdown="start(level)"
           ></v-rect>
           <v-text
             :config="textConfig(level)"
             @dblclick="setLevel(index)"
             @dbltap="setLevel(index)"
+            @pointerup="end(level)"
+            @pointerdown="start(level)"
           ></v-text>
           <v-line
             v-for="line in level.level.lines"
@@ -33,14 +37,21 @@
         </div>
       </v-layer>
     </v-stage>
+    <level-modal
+      v-if="show_level_modal"
+      :level="level.level"
+      @close_level_modal="show_level_modal = false"
+    />
   </div>
 </template>
 
 <script>
 import { useToast } from "vue-toastification"
+import LevelModal from "@/components/ModalWindows/LevelModal"
 
 export default {
   name: "LevelTree",
+  components: { LevelModal },
   setup() {
     const toast = useToast()
     return { toast }
@@ -59,6 +70,9 @@ export default {
       w: 25,
       configKonva: { width: 1000, height: 1000 },
       levs: [],
+      timer: 0,
+      level: null,
+      show_level_modal: false,
     }
   },
   methods: {
@@ -181,6 +195,19 @@ export default {
         "set_enemy_leader",
         this.levels[index].level.enemy_leader
       )
+    },
+    start(level) {
+      this.timer = setTimeout(() => {
+        if (this.timer > 0) this.longTap(level)
+      }, 1000)
+    },
+    end() {
+      clearTimeout(this.timer)
+      this.timer = 0
+    },
+    longTap(level) {
+      this.level = level
+      this.show_level_modal = true
     },
   },
   computed: {
