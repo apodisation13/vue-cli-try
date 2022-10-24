@@ -28,6 +28,9 @@ export const all_enemy_leaders = "https://card-game.ru/api/v1/enemy_leaders/"
 // для получения новостей
 export const all_news = "https://card-game.ru/api/v1/news/"
 
+// PATCH запрос - пришло finished_levels - открытие уровней, не пришло - сброс (нужен id записи UserLevel)
+export const patch_levels = "https://card-game.ru/api/v1/unlock_levels/"
+
 // А ВОТ ЭТО ДЛЯ ЛОКАЛЬНОЙ РАЗРАБОТКИ
 // export const check_auth_url = 'http://127.0.0.1:8000/accounts/api-token-auth/'
 // export const register_url = 'http://127.0.0.1:8000/accounts/register/'

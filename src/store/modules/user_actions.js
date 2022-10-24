@@ -1,11 +1,12 @@
 import axios from "axios"
 import {
   craft_card,
-  mill_card,
   craft_leader,
+  mill_card,
   mill_leader,
-  user_resource,
+  patch_levels,
   post_deck,
+  user_resource,
 } from "@/store/const/api_urls"
 import { useToast } from "vue-toastification"
 
@@ -235,6 +236,43 @@ const actions = {
     } catch (err) {
       dispatch("error_action", err)
       throw new Error("Какая-то ошибка при размалывании лидера")
+    }
+  },
+
+  // тестоввый экшен, сбрасывает все уровни юзера кроме первого
+  async reset_levels({ dispatch, getters }) {
+    let header = getters["getHeader"]
+    // нужно присылать id записи UserLevel (то есть первого уровня), у которой поставить finished=False
+    const user_level_id = getters["all_levels"][0].id
+    let url = `${patch_levels}${user_level_id}/`
+
+    try {
+      const response = await axios.patch(url, null, header)
+      return response.data
+    } catch (err) {
+      dispatch("error_action", err)
+      throw new Error("Какая-то ошибка при сбрасывании уровней")
+    }
+  },
+
+  // открывает related_levels для текущего, а текущему ставит finished, возвращает полный список уровней
+  async open_new_levels({ dispatch, getters, commit }, data) {
+    let header = getters["getHeader"]
+    let url = `${patch_levels}${data.finished_user_level_id}/`
+
+    try {
+      const response = await axios.patch(
+        url,
+        {
+          finished_level: data.finished_level,
+          related_levels: data.related_levels,
+        },
+        header
+      )
+      commit("set_levels", response.data.levels)
+    } catch (err) {
+      dispatch("error_action", err)
+      throw new Error("Какая-то ошибка при открытии уровней")
     }
   },
 }
