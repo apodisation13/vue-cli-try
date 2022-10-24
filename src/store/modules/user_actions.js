@@ -6,6 +6,7 @@ import {
   mill_leader,
   user_resource,
   post_deck,
+  patch_levels,
 } from "@/store/const/api_urls"
 import { useToast } from "vue-toastification"
 
@@ -235,6 +236,19 @@ const actions = {
     } catch (err) {
       dispatch("error_action", err)
       throw new Error("Какая-то ошибка при размалывании лидера")
+    }
+  },
+
+  async reset_levels({ dispatch, getters }) {
+    let header = getters["getHeader"]
+    let url = `${patch_levels}1/`
+
+    try {
+      const response = await axios.patch(url, null, header)
+      return response.data
+    } catch (err) {
+      dispatch("error_action", err)
+      throw new Error("Какая-то ошибка при сбрасывании уровней")
     }
   },
 }
