@@ -25,15 +25,7 @@
           Сезон {{ season }}
         </div>
         <br />
-        <div
-          class="level"
-          :class="{ level_selected: index === selectedLevel }"
-          v-for="(level, index) in levels"
-          :key="level"
-          @dblclick="set_level(index)"
-        >
-          <level-preview-comp :level="level" />
-        </div>
+        <LevelTree />
       </div>
       <div v-if="gameMod === 'random'">
         <div
@@ -55,8 +47,10 @@
 import { useToast } from "vue-toastification"
 import LevelPreviewComp from "@/components/Pages/LevelPage/LevelPreviewComp"
 import { random_level_generator } from "@/logic/random_level"
+import LevelTree from "@/components/Pages/LevelPage/LevelTree"
 export default {
   components: {
+    LevelTree,
     LevelPreviewComp,
   },
   setup() {

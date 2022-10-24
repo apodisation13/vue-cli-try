@@ -5,6 +5,7 @@ import store from "@/store"
 import Toast from "vue-toastification"
 import "vue-toastification/dist/index.css"
 import Vue3TouchEvents from "vue3-touch-events"
+import VueKonva from "vue-konva"
 
 const app = createApp(App)
 
@@ -17,4 +18,5 @@ app
   .use(store)
   .use(Toast, toastOptions)
   .use(Vue3TouchEvents)
+  .use(VueKonva)
   .mount("#app")
