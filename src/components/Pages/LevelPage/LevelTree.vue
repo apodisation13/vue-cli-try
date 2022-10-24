@@ -2,11 +2,31 @@
   <div>
     <v-stage :config="configKonva">
       <v-layer>
-        <div v-for="level in levs" :key="level.id">
-          <v-rect :config="squareConfig(level)"></v-rect>
-          <v-text :config="textConfig(level)"></v-text>
+        <div v-for="(level, index) in levs" :key="level.id">
+          <v-star :config="starConfig(level, 0)"></v-star>
+          <v-star
+            :config="starConfig(level, w / 2)"
+            v-if="
+              level.level.difficulty === 'normal' ||
+              level.level.difficulty === 'hard'
+            "
+          ></v-star>
+          <v-star
+            :config="starConfig(level, w)"
+            v-if="level.level.difficulty === 'hard'"
+          ></v-star>
+          <v-rect
+            :config="squareConfig(level)"
+            @dblclick="setLevel(index)"
+            @dbltap="setLevel(index)"
+          ></v-rect>
+          <v-text
+            :config="textConfig(level)"
+            @dblclick="setLevel(index)"
+            @dbltap="setLevel(index)"
+          ></v-text>
           <v-line
-            v-for="line in level.lines"
+            v-for="line in level.level.lines"
             :key="line"
             :config="lineConfig(line, level)"
           ></v-line>
@@ -27,7 +47,6 @@ export default {
   },
   created() {
     this.levs = this.levels
-    console.log("ЗАГРУЗКА ДЕРЕВА")
     this.levs.forEach(level => {
       level.level.lines = [] // добавляем такой ключ, чтобы потом положить туда линии
       level.level.children.forEach(ch => {
@@ -38,7 +57,7 @@ export default {
   data() {
     return {
       w: 25,
-      configKonva: { width: 370, height: 600 },
+      configKonva: { width: 1000, height: 1000 },
       levs: [],
     }
   },
@@ -49,14 +68,26 @@ export default {
         y: item.level.y,
         width: this.w,
         height: this.w,
-        fill: item.finished ? "green" : "grey",
-        stroke: item.faction === 1 ? "blue" : "red",
+        fill: this.levelColor(item),
+        stroke: this.levelFaction(item),
       }
+    },
+    levelColor(item) {
+      if (item.finished) return "green"
+      else {
+        if (item.unlocked) return "grey"
+        else return "orange"
+      }
+    },
+    levelFaction(item) {
+      if (item.level.enemy_leader.faction === "Soldiers") return "blue"
+      if (item.level.enemy_leader.faction === "Monsters") return "red"
+      if (item.level.enemy_leader.faction === "Animals") return "green"
     },
     textConfig(item) {
       return {
         text: item.level.id,
-        fontSize: 8,
+        fontSize: 12,
         x: item.level.x + this.w / 4,
         y: item.level.y + this.w / 4,
         align: "center",
@@ -75,13 +106,22 @@ export default {
         ],
         fill: arrow.fill,
         stroke: arrow.fill,
-        strokeWidth: 4,
+        strokeWidth: 2,
+      }
+    },
+    starConfig(item, position) {
+      return {
+        x: item.level.x + position,
+        y: item.level.y - 7,
+        numPoints: 6,
+        innerRadius: 4,
+        outerRadius: 7,
+        fill: "gold",
+        strokeWidth: 2,
       }
     },
     calc_line(ch, item) {
       const { level } = item
-      console.log(level)
-      console.log(ch, "ИЗ ДЕРЕЕВАВВВВВВВВВВВВВВВВВВВВВВВВВВ")
       const connections = ch.connection?.split("-")
       if (!connections || !ch.line) return
       let x1 = undefined
@@ -89,40 +129,37 @@ export default {
       let x2 = undefined
       let y2 = undefined
       if (ch.line === "right") {
-        console.log(this.levels[level.id - 1].level.x, level.x)
-        x1 = this.levels[ch.id - 1].level.x - level.x - this.w
-        y1 = this.levels[ch.id - 1].level.y - level.y
+        x1 = this.levs[ch.related_level_id - 1].level.x - level.x - this.w
+        y1 = this.levs[ch.related_level_id - 1].level.y - level.y
         x2 = level.x + this.w
         y2 = level.y + this.w / 2
       } else if (ch.line === "down") {
-        x1 = this.levels[ch.id - 1].level.x - level.x
-        y1 = this.levels[ch.id - 1].level.y - level.y - this.w
+        x1 = this.levs[ch.related_level_id - 1].level.x - level.x
+        y1 = this.levs[ch.related_level_id - 1].level.y - level.y - this.w
         x2 = level.x + this.w / 2
         y2 = level.y + this.w
       } else if (ch.line === "left") {
-        x1 = this.levels[ch.id - 1].level.x - level.x + this.w
-        y1 = this.levels[ch.id - 1].level.y - level.y
+        x1 = this.levs[ch.related_level_id - 1].level.x - level.x + this.w
+        y1 = this.levs[ch.related_level_id - 1].level.y - level.y
         x2 = level.x
         y2 = level.y + this.w / 2
       } else if (ch.line === "top") {
-        x1 = this.levels[ch.id - 1].level.x - level.x
-        y1 = this.levels[ch.id - 1].level.y - level.y + this.w
+        x1 = this.levs[ch.related_level_id - 1].level.x - level.x
+        y1 = this.levs[ch.related_level_id - 1].level.y - level.y + this.w
         x2 = level.x + this.w / 2
         y2 = level.y
       }
-      console.log(connections, x1, y1, x2, y2)
       this.push_line(connections, level, x1, y1, x2, y2)
     },
     push_line(connections, level, x1, y1, x2, y2) {
       for (const l of connections) {
-        if (this.levels[parseInt(l) - 1].finished) {
+        if (this.levs[parseInt(l) - 1].finished) {
           level.lines.push({
             x: x2,
             y: y2,
             fill: "green",
             points: [0, 0, x1, y1],
           })
-          // console.log('Добавили' + connections + `Линюю зеленую, уровень ${l} же открыт`)
           return
         }
       }
@@ -132,7 +169,18 @@ export default {
         fill: "red",
         points: [0, 0, x1, y1],
       })
-      // console.log('Добавили' + connections + 'Линюю серую, все дети закрыты')
+    },
+    setLevel(index) {
+      if (!this.levels[index].id) {
+        this.toast.error("Уровень закрыт!")
+        return
+      }
+      this.toast.success(`Выбран уровень ${index + 1}! `, { timeout: 1000 })
+      this.$store.commit("set_level", this.levels[index].level)
+      this.$store.commit(
+        "set_enemy_leader",
+        this.levels[index].level.enemy_leader
+      )
     },
   },
   computed: {
@@ -142,7 +190,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-
-</style>
