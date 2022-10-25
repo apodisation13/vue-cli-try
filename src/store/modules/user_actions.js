@@ -244,7 +244,8 @@ const actions = {
     }
   },
 
-  // открывает related_levels для текущего, а текущему ставит finished, возвращает полный список уровней
+  // открывает related_levels для текущего, а текущему ставит finished,
+  // возвращает полный список уровней ДАННОГО СЕЗОНА
   async open_new_levels({ dispatch, getters, commit }, data) {
     let header = getters["getHeader"]
     let url = `${patch_levels}${data.finished_user_level_id}/`
@@ -255,6 +256,7 @@ const actions = {
         {
           finished_level: data.finished_level,
           related_levels: data.related_levels,
+          season_id: data.season_id,
         },
         header
       )

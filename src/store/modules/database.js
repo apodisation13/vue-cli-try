@@ -15,6 +15,7 @@ const state = {
   cards: [],
   decks: [],
   levels: [], // все уровни, из запроса
+  seasons: [],
   resource: {},
 
   databaseLoaded: false,
@@ -30,6 +31,7 @@ const getters = {
   all_cards: state => state.cards,
   all_decks: state => state.decks,
   all_levels: state => state.levels,
+  all_seasons: state => state.seasons,
   resource: state => state.resource,
 
   filtered_cards: state => (query, count) => {
@@ -81,6 +83,9 @@ const mutations = {
     // гет запрос уровни (а в них враги)
     state.levels = result
   },
+  set_seasons(state, result) {
+    state.seasons = result
+  },
   set_resource(state, result) {
     // {scraps, wood, kegs, big_kegs, chests}
     state.resource = result
@@ -110,8 +115,14 @@ const actions = {
 
     try {
       let response = await axios.get(url, header)
-      const { user_database, resources, enemies, enemy_leaders, game_const } =
-        response.data
+      const {
+        user_database,
+        seasons,
+        resources,
+        enemies,
+        enemy_leaders,
+        game_const,
+      } = response.data
 
       commit("set_leaders", user_database.leaders)
       commit("set_cards", user_database.cards)
@@ -119,8 +130,9 @@ const actions = {
       commit("set_decks", user_database.u_d)
       dispatch("set_deck_in_play", user_database.u_d[0]) // устанавливаем для игры первую колоду
 
-      commit("set_levels", user_database.levels)
-      dispatch("set_level_in_play", user_database.levels[0]) // устанавливаем для игры первый уровень
+      // commit("set_levels", user_database.levels)
+      commit("set_seasons", seasons)
+      dispatch("set_level_in_play", seasons[0].levels[0]) // устанавливаем для игры первый уровень
 
       commit("set_resource", resources)
 
