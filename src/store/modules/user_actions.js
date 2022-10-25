@@ -232,8 +232,8 @@ const actions = {
   async reset_levels({ dispatch, getters }) {
     let header = getters["getHeader"]
     // нужно присылать id записи UserLevel (то есть первого уровня), у которой поставить finished=False
-    const user_level_id = getters["all_levels"][0].id
-    let url = `${patch_levels}${user_level_id}/`
+    // const user_level_id = getters["all_levels"][0].id
+    let url = `${patch_levels}1/`
 
     try {
       const response = await axios.patch(url, null, header)
