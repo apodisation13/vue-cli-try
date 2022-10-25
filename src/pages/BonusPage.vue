@@ -14,7 +14,7 @@
       <div class="kegs" @dblclick="open_keg">kegs: {{ resource.kegs }}</div>
       <div class="add_kegs" @dblclick="add_kegs">
         <!--TODO: FIX THIS!!!-->
-        {{ $store.state.user_actions.pay_for_kegs }}
+        {{ $store.state.user_actions.game_prices.pay_for_kegs }}
       </div>
 
       <div class="add_kegs" style="border: 0"></div>
@@ -24,7 +24,7 @@
       </div>
       <div class="add_kegs" @dblclick="add_big_kegs">
         <!--TODO: FIX THIS!!!-->
-        {{ $store.state.user_actions.pay_for_big_kegs }}
+        {{ $store.state.user_actions.game_prices.pay_for_big_kegs }}
       </div>
     </div>
 
@@ -34,7 +34,7 @@
       </div>
       <div class="add_chests" @dblclick="add_chests">
         <!--TODO: FIX THIS!!!-->
-        {{ $store.state.user_actions.pay_for_chests }}
+        {{ $store.state.user_actions.game_prices.pay_for_chests }}
       </div>
     </div>
 
@@ -100,7 +100,9 @@ export default {
 
     async add_kegs() {
       await this.$store.dispatch("pay_resource", {
-        wood: this.resource.wood + this.$store.state.user_actions.pay_for_kegs,
+        wood:
+          this.resource.wood +
+          this.$store.state.user_actions.game_prices.pay_for_kegs,
         kegs: this.resource.kegs + 1,
       })
     },
@@ -120,7 +122,8 @@ export default {
     async add_big_kegs() {
       await this.$store.dispatch("pay_resource", {
         wood:
-          this.resource.wood + this.$store.state.user_actions.pay_for_big_kegs,
+          this.resource.wood +
+          this.$store.state.user_actions.game_prices.pay_for_big_kegs,
         big_kegs: this.resource.big_kegs + 1,
       })
     },
@@ -140,7 +143,8 @@ export default {
     async add_chests() {
       await this.$store.dispatch("pay_resource", {
         wood:
-          this.resource.wood + this.$store.state.user_actions.pay_for_chests,
+          this.resource.wood +
+          this.$store.state.user_actions.game_prices.pay_for_chests,
         chests: this.resource.chests + 1,
       })
     },
