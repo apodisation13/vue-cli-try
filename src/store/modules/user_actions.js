@@ -232,8 +232,8 @@ const actions = {
   async reset_levels({ dispatch, getters }) {
     let header = getters["getHeader"]
     // нужно присылать id записи UserLevel (то есть первого уровня), у которой поставить finished=False
-    const user_level_id = getters["all_levels"][0].id
-    let url = `${patch_levels}${user_level_id}/`
+    // const user_level_id = getters["all_levels"][0].id
+    let url = `${patch_levels}1/`
 
     try {
       const response = await axios.patch(url, null, header)
@@ -244,7 +244,8 @@ const actions = {
     }
   },
 
-  // открывает related_levels для текущего, а текущему ставит finished, возвращает полный список уровней
+  // открывает related_levels для текущего, а текущему ставит finished,
+  // возвращает полный список уровней ДАННОГО СЕЗОНА
   async open_new_levels({ dispatch, getters, commit }, data) {
     let header = getters["getHeader"]
     let url = `${patch_levels}${data.finished_user_level_id}/`
@@ -255,6 +256,7 @@ const actions = {
         {
           finished_level: data.finished_level,
           related_levels: data.related_levels,
+          season_id: data.season_id,
         },
         header
       )

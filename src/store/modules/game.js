@@ -7,6 +7,7 @@ const state = {
   leader: null, // текущий лидер для игры из деки, deck.leader
 
   level: null, // объект уровня из БД, выбирается на странице LevelPage
+  season: null, // объект сезона
   enemy_leader: null, // объект лидера врагов из уровней
 
   ppa_end_turn: false, // true - значит они сейчас в процессе
@@ -18,7 +19,9 @@ const state = {
   start_game_redirect: false,
 }
 
-const getters = {}
+const getters = {
+  get_season: state => state.season,
+}
 
 const mutations = {
   set_game_const(state, payload) {
@@ -39,6 +42,10 @@ const mutations = {
     state.leader = leader
   },
 
+  set_season(state, season) {
+    // установить объект сезона
+    state.season = season
+  },
   set_level(state, level) {
     // установить уровень, объект
     state.level = level

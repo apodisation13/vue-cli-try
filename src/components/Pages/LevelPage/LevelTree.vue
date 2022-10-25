@@ -52,12 +52,18 @@ import LevelModal from "@/components/ModalWindows/LevelModal"
 export default {
   name: "LevelTree",
   components: { LevelModal },
+  props: {
+    levels: {
+      type: Array,
+      required: true,
+    },
+  },
   setup() {
     const toast = useToast()
     return { toast }
   },
   created() {
-    this.levs = this.levels
+    this.levs = [...this.levels]
     this.levs.forEach(level => {
       level.level.lines = [] // добавляем такой ключ, чтобы потом положить туда линии
       level.level.children.forEach(ch => {
@@ -142,24 +148,29 @@ export default {
       let y1 = undefined
       let x2 = undefined
       let y2 = undefined
+
+      const levIndex = this.levels.findIndex(
+        lev => lev.level.id === ch.related_level_id
+      )
+
       if (ch.line === "right") {
-        x1 = this.levs[ch.related_level_id - 1].level.x - level.x - this.w
-        y1 = this.levs[ch.related_level_id - 1].level.y - level.y
+        x1 = this.levs[levIndex].level.x - level.x - this.w
+        y1 = this.levs[levIndex].level.y - level.y
         x2 = level.x + this.w
         y2 = level.y + this.w / 2
       } else if (ch.line === "down") {
-        x1 = this.levs[ch.related_level_id - 1].level.x - level.x
-        y1 = this.levs[ch.related_level_id - 1].level.y - level.y - this.w
+        x1 = this.levs[levIndex].level.x - level.x
+        y1 = this.levs[levIndex].level.y - level.y - this.w
         x2 = level.x + this.w / 2
         y2 = level.y + this.w
       } else if (ch.line === "left") {
-        x1 = this.levs[ch.related_level_id - 1].level.x - level.x + this.w
-        y1 = this.levs[ch.related_level_id - 1].level.y - level.y
+        x1 = this.levs[levIndex].level.x - level.x + this.w
+        y1 = this.levs[levIndex].level.y - level.y
         x2 = level.x
         y2 = level.y + this.w / 2
       } else if (ch.line === "top") {
-        x1 = this.levs[ch.related_level_id - 1].level.x - level.x
-        y1 = this.levs[ch.related_level_id - 1].level.y - level.y + this.w
+        x1 = this.levs[levIndex].level.x - level.x
+        y1 = this.levs[levIndex].level.y - level.y + this.w
         x2 = level.x + this.w / 2
         y2 = level.y
       }
@@ -208,11 +219,6 @@ export default {
     longTap(level) {
       this.level = level
       this.show_level_modal = true
-    },
-  },
-  computed: {
-    levels() {
-      return this.$store.getters["all_levels"]
     },
   },
 }

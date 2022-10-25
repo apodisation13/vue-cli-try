@@ -64,12 +64,15 @@ export default {
     },
     async open_levels() {
       const id = this.$store.state.game.level.id
-      const level = this.$store.getters["all_levels"][id - 1]
+      const season = this.$store.getters["get_season"]
+      const level = season.levels.filter(lev => lev.level.id === id)[0]
+      console.log(level)
       this.related_levels = level.level.related_levels
       const data = {
         finished_level: level.level.id, // если он приходит, то отркываем уровни, иначе удаляем все кроме первого
         related_levels: this.related_levels, // список [1,2,3] id уровней, которые надо открыть
         finished_user_level_id: level.id, // id записи UserLevel, ей поставим finished=true
+        season_id: season.id,
       }
       await this.$store.dispatch("open_new_levels", data)
     },
