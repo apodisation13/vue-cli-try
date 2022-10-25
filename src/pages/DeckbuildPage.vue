@@ -35,16 +35,18 @@
           </div>
         </div>
         <!-- Зона сбора колоды -->
-        <block-assembling-the-deck 
-          v-show="deckBuilding"
-          :patch="patch"
-          :deck="deck"
-          :cant_save_deck="cant_save_deck"
-          @delete_card="delete_card_from_deck"
-          @save_deck="save_deck"
-          @patch_deck="patch_deck"
-          @changeNameDeck="changeNameDeck"
-        />
+        <transition :delay="1000">
+          <block-assembling-the-deck 
+            v-show="deckBuilding"
+            :patch="patch"
+            :deck="deck"
+            :cant_save_deck="cant_save_deck"
+            @delete_card="delete_card_from_deck"
+            @save_deck="save_deck"
+            @patch_deck="patch_deck"
+            @changeNameDeck="changeNameDeck"
+          />
+        </transition>
       </div>
       <!-- <div class="deckbuilder-bottom-buttons-block">
         <div class="decks_btn" @click="trigger_decks_list_modal(true)">КОЛОДЫ!</div>
@@ -319,6 +321,7 @@ export default {
 
 .deck-builder-body {
   height: 56vh;
+  overflow: hidden;
 }
 
 .database_of_cards-wrapper {
@@ -345,10 +348,31 @@ export default {
 /*база карт*/
 .pool_full {
   height: 56vh;
+  animation: parttofull 0.5s ease;
 }
 
 .pool_deckbuild {
   height: 26vh;
-  border: solid 1px black;
+  animation: fulltopart 0.5s ease;
 }
+
+@keyframes fulltopart{
+  0% {
+    height: 56vh;
+  }
+  100% {
+    height: 26vh;
+  }
+}
+
+@keyframes parttofull {
+  0% {
+    height: 26vh;
+  }
+  100% {
+    height: 56vh;
+  }
+}
+
+
 </style>
