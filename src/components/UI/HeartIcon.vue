@@ -28,8 +28,8 @@
   position: absolute;
   width: 16px;
   height: 16px;
-  bottom: -6px;
-  left: -6px;
+  bottom: -5px;
+  left: -3px;
 }
 
 .heart-wrapper::before {

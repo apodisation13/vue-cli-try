@@ -20,8 +20,8 @@ export default {
 <style scoped>
 .damage-icon-wrapper {
   position: absolute;
-  top: -6px;
-  right: -6px;
+  top: -4px;
+  right: -4px;
   height: 18px;
   width: 18px;
   transform: rotate(-45deg);

@@ -60,9 +60,9 @@ export default {
 .card-list {
   padding: 8px 0;
   display: grid; 
-  grid-template-columns: repeat(4, 20%); 
-  row-gap: 20px;
-  column-gap: 13px;
+  grid-template-columns: repeat(4, 22%); 
+  row-gap: 10px;
+  column-gap: 9px;
   justify-content: center;
 }
 </style>
