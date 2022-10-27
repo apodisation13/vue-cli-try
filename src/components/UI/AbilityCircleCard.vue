@@ -1,9 +1,12 @@
 <template>
   <div>
     <!--  Кружок абилок карт игрока и лидера игрока-->
-    <card-circle-heal v-if="card.ability.name === 'heal'"
-      >+&hearts;{{ card.heal }}</card-circle-heal
-    >
+    <!-- <card-circle-heal v-if="card.ability.name === 'heal'"
+      >+&hearts;{{ card.heal }}</card-circle-heal> -->
+      <heal-ability
+        v-if="card.ability.name === 'heal'"
+        :heal="card.heal"
+      />
     <card-circle v-if="card.ability.name === 'damage-all'">
       &#9850;
     </card-circle>
@@ -44,9 +47,10 @@
 <script>
 import CardCircle from "@/components/UI/CardCircle"
 import CardCircleHeal from "@/components/UI/CardCircleHeal"
+import HealAbility from '@/components/UI/HealAbility'
 export default {
   name: "card-ability-circle",
-  components: { CardCircleHeal, CardCircle },
+  components: { CardCircleHeal, CardCircle, HealAbility },
   props: {
     card: {
       type: Object,
