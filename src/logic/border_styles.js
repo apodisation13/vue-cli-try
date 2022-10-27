@@ -238,9 +238,9 @@ function background_color(card) {
 function background_color_hp(color) {
   switch (color) {
     case "Bronze": 
-      return 'rgb(197, 168, 126)'
+      return '#a9916e'
     case "Silver": 
-      return 'rgb(255, 255, 255)'
+      return '#d3d4d5'
     case "Gold":
       return 'rgb(245, 202, 90)'
     default: 
@@ -251,9 +251,9 @@ function background_color_hp(color) {
 function background_color_charges(color) {
   switch (color) {
     case "Bronze": 
-      return 'rgb(74, 66, 55)'
+      return '#857359'
     case "Silver": 
-      return 'rgb(29, 37, 45)'
+      return '#95999d'
     case "Gold":
       return 'rgb(176, 123, 21)'
     default: 

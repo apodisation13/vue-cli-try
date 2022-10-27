@@ -6,15 +6,14 @@
       :user_card="user_card"
       :hp_needed="hp_needed"
       :deckbuilder="deckbuilder"
-      :style="border(user_card.card)"
       @dblclick="chose_player_card(user_card)"
+      :is_leader="is_leader"
     />
   </div>
 </template>
 
 <script>
 import CardItem from "@/components/CardItem"
-import { border_for_card, border_leader } from "@/logic/border_styles"
 export default {
   components: { 
     CardItem,
@@ -48,9 +47,9 @@ export default {
     chose_player_card(card) {
       this.$emit("chose_player_card", card) // передаём this.index по эмиту
     },
-    border(card) {
-      return (this.is_leader) ? border_leader(card): border_for_card(card);
-    },
+    // border(card) {
+    //   return (this.is_leader) ? border_leader(card): border_for_card(card);
+    // },
   }
 }
 </script>

@@ -3,9 +3,10 @@
     :style="{'--bgColor': bgColor}"
   >
     <div class="charge">
-      <div class="charge-icon"></div>
-      <div class="charge-value">
+      <div class="charge-icon">
+        <div class="charge-value">
         {{ charge }}
+        </div>
       </div>
     </div>
   </div>
@@ -27,20 +28,10 @@
 <style scoped>
 .charge-wrapper {
   position: absolute;
-  width: 16px;
-  height: 16px;
-  bottom: -5px;
-  right: -4px;
-}
-
-.charge-wrapper::before {
-  content: '';
-  display: block;
-  position: absolute;
-  top: 1px;
-  left: 1px;
-  width: 14px;
-  height: 14px;
+  width: 18px;
+  height: 18px;
+  bottom: -1px;
+  right: 0;
   transform: rotate(-45deg);
   background-color: var(--bgColor);
   border-radius: 2px;
@@ -48,6 +39,7 @@
 
 .charge {
   position: absolute;
+  transform: rotate(45deg);
   top: 0;
   right: 0;
   bottom: 0;
@@ -58,11 +50,15 @@
 }
 
 .charge-icon {
-  width: 5px;
-  height: 10px;
+  width: 10px;
+  height: 20px;
   background-image: url('~@/assets/icons/card/charge.svg');
   background-repeat: no-repeat;
   background-position: center;
+  background-size: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .charge-value {
