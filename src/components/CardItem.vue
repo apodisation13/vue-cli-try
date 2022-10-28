@@ -9,36 +9,36 @@
       <div
         class="card-item"
         :style="[
-          { backgroundImage: `url(${user_card.card.image})` },
-          border(user_card.card),
+          { backgroundImage: `url(${user_card.image})` },
+          border(user_card),
         ]"
-        :class="{ disable: user_card.count === 0 }"
-        :id="make_id(user_card.card, index)"
+        :class="{ disable: count === 0 }"
+        :id="make_id(user_card, index)"
       ></div>
     </div>
     <!-- v-touch:longtap="show_modal" -->
     <div class="card-item-information">
       <card-damage-icon
-        :style="background_color(user_card.card)"
-        :damage="user_card.card.damage"
+        :style="background_color(user_card)"
+        :damage="user_card.damage"
       />
 
-      <card-ability-circle :card="user_card.card" />
+      <card-ability-circle :card="user_card" />
       <card-passive
-        :card="user_card.card"
-        v-if="user_card.card.has_passive"
-        :style="background_color(user_card.card)"
+        :card="user_card"
+        v-if="user_card.has_passive"
+        :style="background_color(user_card)"
       />
 
       <card-charges
-        :charge="user_card.card.charges"
-        :bgColor="background_color_charges(user_card.card.color)"
+        :charge="user_card.charges"
+        :bgColor="background_color_charges(user_card.color)"
       />
 
       <heart-icon
         v-if="hp_needed"
-        :health="user_card.card.hp"
-        :bgColor="background_color_hp(user_card.card.color)"
+        :health="user_card.hp"
+        :bgColor="background_color_hp(user_card.color)"
       />
 
       <card-modal
@@ -130,7 +130,7 @@ export default {
   },
   computed: {
     card() {
-      return this.user_card.card
+      return this.user_card
     },
   },
 }

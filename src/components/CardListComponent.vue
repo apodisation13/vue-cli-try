@@ -3,7 +3,8 @@
     <card-item
       v-for="user_card in cards"
       :key="user_card.id"
-      :user_card="user_card"
+      :count="user_card.count"
+      :user_card="user_card.card ? user_card.card : user_card"
       :hp_needed="hp_needed"
       :deckbuilder="deckbuilder"
       @dblclick="chose_player_card(user_card)"
