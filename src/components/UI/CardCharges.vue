@@ -48,11 +48,11 @@ export default {
 }
 
 .charge-icon {
-  width: 10px;
+  width: 12px;
   height: 20px;
   background-image: url("~@/assets/icons/card/charge.svg");
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: right center;
   background-size: contain;
   display: flex;
   justify-content: center;
@@ -60,7 +60,9 @@ export default {
 }
 
 .charge-value {
+  display: block;
   font-size: 7px;
   color: white;
+  margin-right: 2px;
 }
 </style>

@@ -14,12 +14,10 @@ export default {
       intervalId: null,
       isWorking: true,
       defaultImg: null,
-      withGradient: null,
     }
   },
 
   created() {
-    this.withGradient = this.$router.currentRoute.value.meta.withGradient
     this.updateTime()
     this.intervalId = setInterval(() => {
       this.updateTime()
@@ -62,6 +60,9 @@ export default {
       } else {
         return ""
       }
+    },
+    withGradient() {
+      return this.$router.currentRoute.value.meta.withGradient
     },
   },
 }
