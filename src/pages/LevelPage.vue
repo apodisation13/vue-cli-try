@@ -18,22 +18,18 @@
       <div v-if="gameMod === 'seasons'">
         <div
           class="seasons"
-          v-for="season in 5"
-          :key="season"
-          @dblclick="selectSeason(season)"
+          v-for="season in seasons"
+          :key="season.id"
+          @dblclick="setSeason(season)"
         >
-          Сезон {{ season }}
+          <div class="seasons__element">
+            <div>{{ season.id }}:</div>
+            <div>{{ season.name }}</div>
+            <div>{{ season.description }}</div>
+          </div>
+          <br />
         </div>
-        <br />
-        <div
-          class="level"
-          :class="{ level_selected: index === selectedLevel }"
-          v-for="(level, index) in levels"
-          :key="level"
-          @dblclick="set_level(index)"
-        >
-          <level-preview-comp :level="level" />
-        </div>
+        <LevelTree :levels="seasonLevels" v-if="seasonLevels" />
       </div>
       <div v-if="gameMod === 'random'">
         <div
@@ -55,8 +51,10 @@
 import { useToast } from "vue-toastification"
 import LevelPreviewComp from "@/components/Pages/LevelPage/LevelPreviewComp"
 import { random_level_generator } from "@/logic/random_level"
+import LevelTree from "@/components/Pages/LevelPage/LevelTree"
 export default {
   components: {
+    LevelTree,
     LevelPreviewComp,
   },
   setup() {
@@ -73,37 +71,24 @@ export default {
       random_levels: [],
       gameTypes: ["seasons", "random", "arena"],
       gameMod: null,
+      seasonLevels: null,
     }
   },
   computed: {
-    levels() {
-      return this.$store.getters["all_levels"]
+    seasons() {
+      return this.$store.getters["all_seasons"]
     },
   },
   methods: {
     selectGameMode(mode) {
-      console.log(mode)
       this.gameMod = mode
     },
     cancelGameMod() {
       this.gameMod = null
     },
-    selectSeason(season) {
-      alert(season)
-    },
-    set_level(index) {
-      if (!this.levels[index].id) {
-        this.toast.error("Уровень закрыт!")
-        return
-      }
-      this.toast.success(`Выбран уровень ${index + 1}! `, { timeout: 1000 })
-      this.$store.commit("set_level", this.levels[index].level)
-      this.$store.commit(
-        "set_enemy_leader",
-        this.levels[index].level.enemy_leader
-      )
-      this.selectedLevel = index
-      this.selectedRandomLevel = undefined
+    setSeason(season) {
+      this.seasonLevels = season.levels
+      this.$store.commit("set_season", season)
     },
     set_random_level(index) {
       this.toast.success(`Выбран рандомный уровень!`, { timeout: 1000 })
@@ -172,5 +157,10 @@ div {
 .seasons {
   display: inline;
   background-color: yellow;
+}
+
+.seasons__element {
+  border: solid 2px black;
+  margin: 1px;
 }
 </style>

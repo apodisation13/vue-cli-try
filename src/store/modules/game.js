@@ -1,12 +1,13 @@
 const state = {
-  cards_in_deck: 12, // СКОЛЬКО В ДЕКЕ ДОЛЖНО БЫТЬ КАРТ
-  hand_size: 6, // СКОЛЬКО КАРТ В РУКЕ
+  cards_in_deck: undefined, // СКОЛЬКО В ДЕКЕ ДОЛЖНО БЫТЬ КАРТ
+  hand_size: undefined, // СКОЛЬКО КАРТ В РУКЕ
 
   current_deck: [], // дека выбранная для игры, deck.cards
   health: 0, // жизни деки, из деки, deck.health
   leader: null, // текущий лидер для игры из деки, deck.leader
 
   level: null, // объект уровня из БД, выбирается на странице LevelPage
+  season: null, // объект сезона
   enemy_leader: null, // объект лидера врагов из уровней
 
   ppa_end_turn: false, // true - значит они сейчас в процессе
@@ -18,9 +19,16 @@ const state = {
   start_game_redirect: false,
 }
 
-const getters = {}
+const getters = {
+  get_season: state => state.season,
+}
 
 const mutations = {
+  set_game_const(state, payload) {
+    state.hand_size = payload.hand_size
+    state.cards_in_deck = payload.number_of_cards_in_deck
+  },
+
   set_current_deck(state, deck) {
     // записать деку для игры
     state.current_deck = deck
@@ -34,6 +42,10 @@ const mutations = {
     state.leader = leader
   },
 
+  set_season(state, season) {
+    // установить объект сезона
+    state.season = season
+  },
   set_level(state, level) {
     // установить уровень, объект
     state.level = level
