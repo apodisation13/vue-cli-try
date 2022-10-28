@@ -111,7 +111,7 @@ export default {
 
 <style scoped>
 .block-assembling-deck {
-  padding: 15px 10px;
+  padding: 10px;
 }
 
 .deck-block {
