@@ -14,8 +14,10 @@
       <!-- Зона базы карт: или показывать карты, или лидеров -->
       <div class="deck-builder-body">
         <div class="database_of_cards-wrapper">
-          <div class="database_of_cards"
-            :class="deckBuilding ? 'pool_deckbuild' : 'pool_full'">
+          <div
+            class="database_of_cards"
+            :class="deckBuilding ? 'pool_deckbuild' : 'pool_full'"
+          >
             <!-- база карт -->
             <card-list-component
               v-show="showingList === 'pool'"
@@ -35,7 +37,7 @@
           </div>
         </div>
         <!-- Зона сбора колоды -->
-        <block-assembling-the-deck 
+        <block-assembling-the-deck
           class="assembling-deck"
           v-show="deckBuilding"
           :patch="patch"
@@ -52,12 +54,12 @@
       </div> -->
       <button-decks @click="trigger_decks_list_modal(true)" />
       <decks-list-modal
-          v-if="show_decks_list_modal"
-          @close_decks_list_modal="trigger_decks_list_modal(false)"
-          @change_deck="show_deck"
-        />
-      <deckbuilder-filters 
-        v-if="showFilters" 
+        v-if="show_decks_list_modal"
+        @close_decks_list_modal="trigger_decks_list_modal(false)"
+        @change_deck="show_deck"
+      />
+      <deckbuilder-filters
+        v-if="showFilters"
         @close-modal="showFilters = false"
         @reset-filters="resetFilters"
         @set-filter="setFilter"
@@ -71,9 +73,9 @@
 import _ from "lodash"
 import DecksListModal from "@/components/ModalWindows/DecksListModal"
 import DeckbuilderTopButtonsBlock from "@/components/Pages/DeckbuildPage/DeckbuilderTopButtonsBlock"
-import BlockAssemblingTheDeck from '@/components/Pages/DeckbuildPage/BlockAssemblingTheDeck'
-import DeckbuilderFilters from '@/components/Pages/DeckbuildPage/DeckbuilderFilters'
-import CardListComponent from '@/components/CardListComponent'
+import BlockAssemblingTheDeck from "@/components/Pages/DeckbuildPage/BlockAssemblingTheDeck"
+import DeckbuilderFilters from "@/components/Pages/DeckbuildPage/DeckbuilderFilters"
+import CardListComponent from "@/components/CardListComponent"
 import ButtonDecks from "@/components/Pages/DeckbuildPage/Buttons/ButtonDecks.vue"
 
 export default {
@@ -83,11 +85,11 @@ export default {
     BlockAssemblingTheDeck,
     DeckbuilderFilters,
     CardListComponent,
-    ButtonDecks
-},
+    ButtonDecks,
+  },
   data() {
     return {
-      showingList: 'pool', // показывать список игровых карт ('pool') или список лидеров ('leaders')
+      showingList: "pool", // показывать список игровых карт ('pool') или список лидеров ('leaders')
       deckBuilding: false, // флаг - собираем мы колоду, или нет
       showFilters: false, // флаг, показать ли окно с фильтрами
       show_decks_list_modal: false, // показать окно с колодами
@@ -115,7 +117,7 @@ export default {
     startDeckBuilding() {
       this.showNewDeckFactionSelect = true
     },
-    
+
     trigger_decks_list_modal(value) {
       this.show_decks_list_modal = value
     },
@@ -142,13 +144,13 @@ export default {
         count: null,
       }
     },
-    
+
     resetDeck() {
       return {
-        deck_id: null, 
+        deck_id: null,
         deck_name: "",
-        deck_is_progress: [], 
-        deck_body: [], 
+        deck_is_progress: [],
+        deck_body: [],
         leader: null,
         health: 0,
       }
@@ -161,17 +163,22 @@ export default {
       }
       if (this.can_add_card(card)) {
         this.deck.deck_is_progress.push(card)
-        this.deck.deck_body.push({ card: card.card.id }) 
+        this.deck.deck_body.push({ card: card.card.id })
         this.deck.health += card.card.hp
         return
       }
-      alert("нельзя карту добавить закрытую карту, или карту ещё раз или карт больше 12")
+      alert(
+        "нельзя карту добавить закрытую карту, или карту ещё раз или карт больше 12"
+      )
     },
 
     // удалить из деки в процессе по нажатию дважды ЛКМ
     delete_card_from_deck(card) {
       this.deck.health -= card.card.hp
-      this.deck.deck_is_progress.splice(this.deck.deck_is_progress.indexOf(card), 1)
+      this.deck.deck_is_progress.splice(
+        this.deck.deck_is_progress.indexOf(card),
+        1
+      )
       this.deck.deck_body.splice(
         this.deck.deck_body.findIndex(c => c.card === card.card.id),
         1
@@ -192,7 +199,7 @@ export default {
     },
 
     changeNameDeck(value) {
-      this.deck.deck_name = value;
+      this.deck.deck_name = value
     },
 
     async save_deck() {
@@ -201,11 +208,11 @@ export default {
         return alert("Введите имя колоды")
       }
       this.send_data_to_store("post_deck", {
-            name: this.deck.deck_name,
-            health: this.deck.health,
-            d: this.deck.deck_body,
-            leader_id: this.deck.leader.id,
-          })
+        name: this.deck.deck_name,
+        health: this.deck.health,
+        d: this.deck.deck_body,
+        leader_id: this.deck.leader.id,
+      })
     },
 
     can_add_card(card) {
@@ -215,10 +222,13 @@ export default {
       if (card.count === 0) {
         return false
       }
-      if (this.deck.deck_is_progress.length >= this.$store.state.game.cards_in_deck) {
+      if (
+        this.deck.deck_is_progress.length >=
+        this.$store.state.game.cards_in_deck
+      ) {
         return false
       }
-      if (this.query.faction === '') {
+      if (this.query.faction === "") {
         return false
       }
       return true
@@ -230,20 +240,20 @@ export default {
     },
 
     show_deck(index) {
-      this.new_deck();
+      this.new_deck()
       this.deckBuilding = true
       const { deck } = _.cloneDeep(this.$store.getters["all_decks"][index])
 
-      this.deck.deck_id = deck.id,
-      this.deck.deck_name = deck.name,
-      this.deck.deck_is_progress = [...deck.cards], // колода в процессе - целиком объекты, для отображения
-      this.deck.deck_body = [...deck.d], // только {card = id} для пост-запроса
-      this.deck.leader = deck.leader, // сам выбранный лидер
-      this.deck.health = deck.health, // жизни текущей деки
-      this.query.faction = deck.leader.faction
+      ;(this.deck.deck_id = deck.id),
+        (this.deck.deck_name = deck.name),
+        (this.deck.deck_is_progress = [...deck.cards]), // колода в процессе - целиком объекты, для отображения
+        (this.deck.deck_body = [...deck.d]), // только {card = id} для пост-запроса
+        (this.deck.leader = deck.leader), // сам выбранный лидер
+        (this.deck.health = deck.health), // жизни текущей деки
+        (this.query.faction = deck.leader.faction)
       this.patch = true
     },
-    
+
     async patch_deck() {
       this.send_data_to_store("patch_deck", {
         name: this.deck.deck_name,
@@ -270,7 +280,10 @@ export default {
         this.query = this.default_query_param()
         return
       }
-      this.query = {...this.default_query_param(), faction: this.query.faction}
+      this.query = {
+        ...this.default_query_param(),
+        faction: this.query.faction,
+      }
     },
 
     setFilter(prop, value) {
@@ -279,7 +292,7 @@ export default {
 
     trigger_show_list(value) {
       this.showingList = value
-    }
+    },
   },
 
   computed: {
@@ -290,11 +303,14 @@ export default {
       return this.$store.getters.filtered_leaders(this.query.faction)
     },
     cant_save_deck() {
-      const required_count_person = this.$store.state.game.cards_in_deck;
-      return this.deck.deck_is_progress.length !== required_count_person || !this.deck.leader
+      const required_count_person = this.$store.state.game.cards_in_deck
+      return (
+        this.deck.deck_is_progress.length !== required_count_person ||
+        !this.deck.leader
+      )
     },
     empty_filters() {
-      return _.isEqual(this.default_query_param(), this.query);
+      return _.isEqual(this.default_query_param(), this.query)
     },
   },
 }
@@ -340,7 +356,7 @@ export default {
 
 .database_of_cards {
   width: 100%;
-  background: #3C4D60;
+  background: #3c4d60;
   box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.7);
   padding-top: 5px;
   padding-bottom: 5px;
@@ -358,7 +374,7 @@ export default {
   animation: fulltopart 0.5s ease;
 }
 
-@keyframes fulltopart{
+@keyframes fulltopart {
   0% {
     height: 56vh;
   }
@@ -375,6 +391,4 @@ export default {
     height: 56vh;
   }
 }
-
-
 </style>

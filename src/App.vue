@@ -67,14 +67,15 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Philosopher:wght@400;700&family=Roboto:wght@300;400;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Philosopher&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   user-select: none;
-  font-family: 'Roboto', 'Inter', 'Philosopher', sans-serif;
+  font-family: "Roboto", "Inter", "Philosopher", sans-serif;
   /* font-family: Arial, Helvetica, sans-serif; единый на всё */
 }
 

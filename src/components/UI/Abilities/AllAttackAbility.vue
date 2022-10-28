@@ -1,13 +1,9 @@
 <template>
-  <div class="all-attack-ability">
-
-  </div>
+  <div class="all-attack-ability"></div>
 </template>
 
 <script>
-  export default {
-    
-  }
+export default {}
 </script>
 
 <style scoped>
@@ -17,7 +13,7 @@
   top: 30%;
   width: 12px;
   height: 20px;
-  background-image: url('~@/assets/icons/card/all_attack.svg');
+  background-image: url("~@/assets/icons/card/all_attack.svg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;

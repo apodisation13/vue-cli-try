@@ -1,27 +1,31 @@
 <template>
   <div class="deckbuilder-filters">
     <div class="button-filters">
-      <button-icon 
-        class="filter_btn" 
-        :class="{'is-cancel': isCansel}" 
+      <button-icon
+        class="filter_btn"
+        :class="{ 'is-cancel': isCansel }"
         @click="clickAddButton"
         :image_name="'add_icon.svg'"
       />
       <button-toggle-card-list
         @click="showList('leaders')"
         :isActive="!!(showingList === 'leaders')"
-      >Лидеры</button-toggle-card-list>
+        >Лидеры</button-toggle-card-list
+      >
       <button-toggle-card-list
         @click="showList('pool')"
         :isActive="!!(showingList === 'pool')"
-      >Основные</button-toggle-card-list>
-      <button-icon class="filter_btn"
+        >Основные</button-toggle-card-list
+      >
+      <button-icon
+        class="filter_btn"
         @click="$emit('open-filters')"
-        :image_name="'open_filters.svg'" 
+        :image_name="'open_filters.svg'"
         :class="[empty_filters ? '' : 'set-filter']"
       />
     </div>
-    <base-modal v-if="showNewDeckFactionSelect"
+    <base-modal
+      v-if="showNewDeckFactionSelect"
       @close-modal="showNewDeckFactionSelect = false"
     >
       <div>Выберете фракцию!</div>
@@ -32,9 +36,9 @@
 
 <script>
 import FilterFactions from "@/components/Pages/DeckbuildPage/FilterFactions"
-import ButtonIcon from '@/components/Pages/DeckbuildPage/Buttons/ButtonIcon'
-import BaseModal from '@/components/UI/BaseModal'
-import DeckbuilderFilters from '@/components/Pages/DeckbuildPage/DeckbuilderFilters'
+import ButtonIcon from "@/components/Pages/DeckbuildPage/Buttons/ButtonIcon"
+import BaseModal from "@/components/UI/BaseModal"
+import DeckbuilderFilters from "@/components/Pages/DeckbuildPage/DeckbuilderFilters"
 import ButtonToggleCardList from "@/components/Pages/DeckbuildPage/Buttons/ButtonToggleCardList"
 
 export default {
@@ -43,8 +47,8 @@ export default {
     ButtonIcon,
     BaseModal,
     DeckbuilderFilters,
-    ButtonToggleCardList
-},
+    ButtonToggleCardList,
+  },
   props: {
     deckBuilding: {
       type: Boolean,
@@ -55,7 +59,7 @@ export default {
     },
     showingList: {
       type: String,
-    }
+    },
   },
   data() {
     return {
@@ -79,14 +83,13 @@ export default {
       }
       this.showNewDeckFactionSelect = false
       this.$emit("reset")
-    }
-    
+    },
   },
   computed: {
     isCansel() {
       return this.showNewDeckFactionSelect || this.deckBuilding
     },
-  }
+  },
 }
 </script>
 
@@ -103,7 +106,7 @@ export default {
 }
 
 .set-filter::before {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   top: 0;
@@ -111,7 +114,7 @@ export default {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: #FACF5D;
+  background-color: #facf5d;
 }
 
 .is-cancel {

@@ -1,17 +1,20 @@
 <template>
-  <div class="btn_icon"
-  :style="{ backgroundImage: `url(${require(`@/assets/icons/buttons/${this.image_name}`)})`}"
+  <div
+    class="btn_icon"
+    :style="{
+      backgroundImage: `url(${require(`@/assets/icons/buttons/${this.image_name}`)})`,
+    }"
   ></div>
 </template>
 
 <script>
 export default {
-  props:{
+  props: {
     image_name: {
       type: String,
       required: true,
-    }
-  }
+    },
+  },
 }
 </script>
 

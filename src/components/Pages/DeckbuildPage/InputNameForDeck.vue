@@ -1,24 +1,24 @@
 <template>
   <div class="wrapper-name-input">
     <div class="background-name-input">
-      <input 
-        class="name-input" 
-        type="text" 
+      <input
+        class="name-input"
+        type="text"
         placeholder="Введите название колоды"
-        :disabled="cant_save_deck" 
+        :disabled="cant_save_deck"
         :value="deck_name"
         @input="$emit('changeNameDeck', $event.target.value)"
-      >
+      />
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    props: {
-      deck_name: String, 
-    }
-  }
+export default {
+  props: {
+    deck_name: String,
+  },
+}
 </script>
 
 <style scoped>
@@ -28,7 +28,7 @@
 }
 
 .background-name-input {
-  background-image: linear-gradient(#4A4237 0%, #C5A87E50 50%, #4A4237 100%);
+  background-image: linear-gradient(#4a4237 0%, #c5a87e50 50%, #4a4237 100%);
   padding: 2px;
 }
 
@@ -39,7 +39,7 @@
   width: 148px;
   outline: none;
   border: none;
-  font-family: 'Inter';
+  font-family: "Inter";
   font-style: normal;
   font-weight: 300;
   font-size: 10px;

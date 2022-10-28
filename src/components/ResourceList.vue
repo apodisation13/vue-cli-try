@@ -35,6 +35,6 @@ div {
   display: flex;
   align-items: flex-end;
   justify-content: space-around;
-  margin-left: 5px;
+  margin-left: auto;
 }
 </style>

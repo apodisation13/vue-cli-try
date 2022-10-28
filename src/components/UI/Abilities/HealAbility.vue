@@ -1,20 +1,18 @@
 <template>
   <div class="ability-heal">
-    <div class="ability-heal-value">
-      +{{heal}}
-    </div>
+    <div class="ability-heal-value">+{{ heal }}</div>
   </div>
 </template>
 
 <script>
-  export default {
-    props: {
-      heal: {
-        type: Number,
-        require: true,
-      }
-    }
-  }
+export default {
+  props: {
+    heal: {
+      type: Number,
+      require: true,
+    },
+  },
+}
 </script>
 
 <style scoped>
@@ -24,7 +22,7 @@
   top: 30%;
   width: 20px;
   height: 20px;
-  background-image: url('~@/assets/icons/card/emerald.svg');
+  background-image: url("~@/assets/icons/card/emerald.svg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -34,9 +32,9 @@
 }
 
 .ability-heal-value {
-  font-family: 'Inter';
+  font-family: "Inter";
   font-weight: 500;
   font-size: 7px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 </style>

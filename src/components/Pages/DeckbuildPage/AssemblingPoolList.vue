@@ -1,6 +1,6 @@
 <template>
   <div class="assembling-pool-list">
-    <card-item-preview 
+    <card-item-preview
       class="pool-item"
       v-for="full_card in deck_is_progress"
       :key="full_card.card.id"
@@ -11,23 +11,25 @@
 </template>
 
 <script>
-import CardItemPreview from '@/components/CardItemPreview'
-  export default {
-    components: { 
-      CardItemPreview,
-    },
-    props: {
-      deck_is_progress: {
-        type: Array,
-        default: [],
+import CardItemPreview from "@/components/CardItemPreview"
+export default {
+  components: {
+    CardItemPreview,
+  },
+  props: {
+    deck_is_progress: {
+      type: Array,
+      default() {
+        return []
       },
     },
-    methods: {
-      delete_card_from_deck(card) {
-        return this.$emit('delete_card_from_deck', card)
-      }
-    }
-  }
+  },
+  methods: {
+    delete_card_from_deck(card) {
+      return this.$emit("delete_card_from_deck", card)
+    },
+  },
+}
 </script>
 
 <style scoped>

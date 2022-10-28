@@ -1,11 +1,9 @@
 <template>
-  <div class="charge-wrapper" 
-    :style="{'--bgColor': bgColor}"
-  >
+  <div class="charge-wrapper" :style="{ '--bgColor': bgColor }">
     <div class="charge">
       <div class="charge-icon">
         <div class="charge-value">
-        {{ charge }}
+          {{ charge }}
         </div>
       </div>
     </div>
@@ -13,16 +11,16 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      charge: {
-        type: Number,
-      },
-      bgColor: {
-        type: String,
-      }
-    }
-  }
+export default {
+  props: {
+    charge: {
+      type: Number,
+    },
+    bgColor: {
+      type: String,
+    },
+  },
+}
 </script>
 
 <style scoped>
@@ -52,7 +50,7 @@
 .charge-icon {
   width: 10px;
   height: 20px;
-  background-image: url('~@/assets/icons/card/charge.svg');
+  background-image: url("~@/assets/icons/card/charge.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;

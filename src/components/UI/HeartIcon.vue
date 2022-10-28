@@ -1,7 +1,5 @@
 <template>
-  <div class="heart-wrapper" 
-    :style="{'--bgColor': bgColor}"
-  >
+  <div class="heart-wrapper" :style="{ '--bgColor': bgColor }">
     <div class="heart">
       <div class="health-value">
         {{ health }}
@@ -11,16 +9,16 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      health: {
-        type: Number,
-      },
-      bgColor: {
-        type: String,
-      }
-    }
-  }
+export default {
+  props: {
+    health: {
+      type: Number,
+    },
+    bgColor: {
+      type: String,
+    },
+  },
+}
 </script>
 
 <style scoped>
@@ -42,7 +40,7 @@
   right: 2px;
   bottom: 0;
   left: 0;
-  background-image: url('~@/assets/icons/card/heart_green.svg');
+  background-image: url("~@/assets/icons/card/heart_green.svg");
   background-size: 16px;
   background-repeat: no-repeat;
   background-position: center;

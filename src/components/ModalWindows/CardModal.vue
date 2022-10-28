@@ -8,7 +8,12 @@
     <div>{{ user_card.card.name }}</div>
 
     <div class="enemy_border" :style="border(user_card.card)">
-      <img class="img" :src="user_card.card.image" v-if="user_card.card.image" alt="" />
+      <img
+        class="img"
+        :src="user_card.card.image"
+        v-if="user_card.card.image"
+        alt=""
+      />
     </div>
 
     <div class="damage_and_hp">
@@ -37,7 +42,9 @@
         :style="{ backgroundColor: 'green' }"
         v-else-if="user_card.card.ability.name === 'heal'"
       >
-        <span :style="{ 'font-size': '12pt' }">+&hearts;{{ user_card.card.heal }}</span>
+        <span :style="{ 'font-size': '12pt' }"
+          >+&hearts;{{ user_card.card.heal }}</span
+        >
       </div>
       <div
         class="circle"
@@ -60,7 +67,9 @@
       <div
         class="circle"
         :style="{ backgroundColor: 'purple' }"
-        v-else-if="user_card.card.ability.name === 'give-charges-to-card-in-hand-1'"
+        v-else-if="
+          user_card.card.ability.name === 'give-charges-to-card-in-hand-1'
+        "
       >
         <span>+1&#8607;</span>
       </div>
@@ -91,33 +100,36 @@
       </h3>
     </div>
 
-    <div class="text"><b>СПОСОБНОСТЬ</b> - {{ user_card.card.ability.description }}</div>
+    <div class="text">
+      <b>СПОСОБНОСТЬ</b> - {{ user_card.card.ability.description }}
+    </div>
 
-    <div class="text" v-if="user_card.card.has_passive"><b>ПАССИВНАЯ СПОСОБНОСТЬ</b></div>
+    <div class="text" v-if="user_card.card.has_passive">
+      <b>ПАССИВНАЯ СПОСОБНОСТЬ</b>
+    </div>
     <div class="text" v-if="user_card.card.has_passive">
       {{ user_card.card.passive_ability.description }}
     </div>
     <div class="divb" v-if="!bonus">
-        <button class="b" @click="mill(user_card)" >mill</button>
-        <button class="count">{{ user_card.count }}</button>
-        <button class="b" @click="craft(user_card)">craft</button>
+      <button class="b" @click="mill(user_card)">mill</button>
+      <button class="count">{{ user_card.count }}</button>
+      <button class="b" @click="craft(user_card)">craft</button>
     </div>
     <div class="divb" v-if="bonus">
-        <button class="bonus_count">У вас {{ user_card.count }}</button>
+      <button class="bonus_count">У вас {{ user_card.count }}</button>
     </div>
     <yesno-modal
-        :visible="show_yesno_mill"
-        :resource_value="resource_value"
-        @confirm="confirm_mill"
-        @cancel="cancel"
-      />
-      <yesno-modal
-        :visible="show_yesno_craft"
-        :resource_value="resource_value"
-        @confirm="confirm_craft"
-        @cancel="cancel"
-      />
-    
+      :visible="show_yesno_mill"
+      :resource_value="resource_value"
+      @confirm="confirm_mill"
+      @cancel="cancel"
+    />
+    <yesno-modal
+      :visible="show_yesno_craft"
+      :resource_value="resource_value"
+      @confirm="confirm_craft"
+      @cancel="cancel"
+    />
   </modal-window>
 </template>
 
@@ -125,10 +137,10 @@
 import { border_for_card, background_color } from "@/logic/border_styles"
 import ButtonClose from "@/components/UI/ButtonClose"
 import ModalWindow from "@/components/UI/ModalWindow"
-import YesnoModal from '@/components/ModalWindows/YesnoModal'
+import YesnoModal from "@/components/ModalWindows/YesnoModal"
 export default {
   name: "card-modal",
-  components: { ModalWindow, ButtonClose, YesnoModal, },
+  components: { ModalWindow, ButtonClose, YesnoModal },
   props: {
     user_card: {
       // объект противника по индексу поля
@@ -143,7 +155,8 @@ export default {
       type: Boolean,
       default: false,
     },
-    bonus: { //этот пропс используется для страницы BonusPage
+    bonus: {
+      //этот пропс используется для страницы BonusPage
       type: Boolean,
       default: false,
       required: false,
@@ -205,7 +218,8 @@ export default {
       let result = await this.$store.dispatch("pay_resource", {
         scraps: this.$store.getters["resource"].scraps + this.resource_value,
       })
-      if (result) await this.$store.dispatch("craft_card_action", this.user_card)
+      if (result)
+        await this.$store.dispatch("craft_card_action", this.user_card)
     },
   },
 }

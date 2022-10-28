@@ -34,27 +34,26 @@ const getters = {
   all_seasons: state => state.seasons,
   resource: state => state.resource,
 
-  filtered_cards: state => (query) => {
+  filtered_cards: state => query => {
     const applyFilter = (data, query) =>
       data.filter(obj =>
         Object.entries(query).every(([prop, find]) => {
-            if ('count' === prop) {
-              return true
-            }
-            if ('has_passive' === prop && find === null) {
-              return true;
-            }
-            if ('has_passive' === prop) {
-              return obj.card[prop] === find
-            }
-            if ('faction' === prop) {
-              return obj.card[prop].includes(find) || obj.card[prop] === "Neutral"
-            }
-            return obj.card[prop].includes(find)
+          if ("count" === prop) {
+            return true
           }
-        )
+          if ("has_passive" === prop && find === null) {
+            return true
+          }
+          if ("has_passive" === prop) {
+            return obj.card[prop] === find
+          }
+          if ("faction" === prop) {
+            return obj.card[prop].includes(find) || obj.card[prop] === "Neutral"
+          }
+          return obj.card[prop].includes(find)
+        })
       )
-    if (query.count === null) { 
+    if (query.count === null) {
       return applyFilter(state.cards, query)
     }
 
@@ -71,7 +70,9 @@ const getters = {
     )
   },
   filtered_leaders: state => selected_faction => {
-    return state.leaders.filter(leader => leader.card.faction.includes(selected_faction))
+    return state.leaders.filter(leader =>
+      leader.card.faction.includes(selected_faction)
+    )
   },
 
   all_enemies: state => state.enemies,

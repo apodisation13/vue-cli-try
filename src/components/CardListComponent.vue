@@ -15,7 +15,7 @@
 <script>
 import CardItem from "@/components/CardItem"
 export default {
-  components: { 
+  components: {
     CardItem,
   },
   props: {
@@ -50,16 +50,15 @@ export default {
     // border(card) {
     //   return (this.is_leader) ? border_leader(card): border_for_card(card);
     // },
-  }
+  },
 }
 </script>
 
 <style scoped>
-
 .card-list {
   padding: 8px 0;
-  display: grid; 
-  grid-template-columns: repeat(4, 22%); 
+  display: grid;
+  grid-template-columns: repeat(4, 22%);
   row-gap: 10px;
   column-gap: 9px;
   justify-content: center;

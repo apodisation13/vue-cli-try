@@ -66,7 +66,8 @@ export default {
       type: Boolean,
       default: false,
     },
-    bonus: { //этот пропс используется для страницы BonusPage
+    bonus: {
+      //этот пропс используется для страницы BonusPage
       type: Boolean,
       default: false,
       required: false,

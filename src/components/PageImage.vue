@@ -1,7 +1,5 @@
 <template>
-  <div class="page-img-wrapper"
-    :class="{'page-img-gradient': withGradient}"
-  >
+  <div class="page-img-wrapper" :class="{ 'page-img-gradient': withGradient }">
     <img class="page_img" :src="path" alt="#" v-if="path" />
   </div>
 </template>
@@ -21,6 +19,7 @@ export default {
   },
 
   created() {
+    this.withGradient = this.$router.currentRoute.value.meta.withGradient
     this.updateTime()
     this.intervalId = setInterval(() => {
       this.updateTime()
@@ -42,7 +41,6 @@ export default {
   computed: {
     path() {
       const image = this.$router.currentRoute.value.meta.image
-      this.withGradient = this.$router.currentRoute.value.meta.withGradient
       if (!image) return ""
 
       if (image.default) {
@@ -86,15 +84,19 @@ export default {
 }
 
 .page-img-gradient::before {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  background: linear-gradient(180deg, #0A305B -12.88%, #A3ABB4 33.24%, #0A305B 108.88%);
+  background: linear-gradient(
+    180deg,
+    #0a305b -12.88%,
+    #a3abb4 33.24%,
+    #0a305b 108.88%
+  );
   mix-blend-mode: multiply;
 }
-
 </style>

@@ -2,12 +2,8 @@
   <div
     v-if="!!user_card"
     class="card-item"
-    :style="[
-      { backgroundImage: `url(${user_card.image})`} ,
-      border(user_card),
-    ]"
-  >
-  </div>
+    :style="[{ backgroundImage: `url(${user_card.image})` }, border(user_card)]"
+  ></div>
 </template>
 
 <script>
@@ -21,11 +17,11 @@ export default {
     is_leader: {
       type: Boolean,
       default: false,
-    }
+    },
   },
   methods: {
     border(card) {
-      return (this.is_leader) ? border_leader(card): border_for_card(card);
+      return this.is_leader ? border_leader(card) : border_for_card(card)
     },
   },
 }
@@ -43,7 +39,7 @@ export default {
 }
 
 .card-item::before {
-  content: '';
+  content: "";
   display: block;
   padding-top: 143%;
 }
