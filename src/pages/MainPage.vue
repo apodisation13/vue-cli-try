@@ -43,8 +43,8 @@ button {
   display: flex;
   justify-content: center;
   text-align: center;
-  margin-top: 15%;
-  margin-bottom: 28px;
+  margin-top: 50px;
+  margin-bottom: 15px;
   width: 100%;
   height: 6.5vh;
 }
