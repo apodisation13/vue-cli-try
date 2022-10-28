@@ -16,9 +16,29 @@
         <slide v-for="element in news" :key="element.id">
           <div class="news__item">
             <div class="news__title">
-              <b class="news__title-text">{{ element.title }}</b>
+              <p class="news__title-text">{{ element.title }}</p>
             </div>
-            <div class="news__text">{{ element.description }}</div>
+            <div class="news__text">
+              {{ element.description }}
+            </div>
+            <div class="rombica">
+              <div class="rombica__wrapper">
+                <div class="rombica__date">
+                  <span class="rombica__text">{{
+                    this.setDay(element.created_at, "day")
+                  }}</span>
+                </div>
+                <div class="rombica__date rombica__bottom-date">
+                  <span class="rombica__text">{{
+                    this.setDay(element.created_at, "month")
+                  }}</span>
+                </div>
+              </div>
+            </div>
+            <img
+              class="rombica__outer-border"
+              :src="require('@/assets/icons/Vector 77.svg')"
+            />
           </div>
         </slide>
       </carousel>
@@ -47,6 +67,16 @@ export default {
     },
     prev() {
       this.$refs.carousel.prev()
+    },
+    setDay(data, option) {
+      const date = new Date(data)
+
+      if (option === "month") {
+        return date.toLocaleString("en-GB", { month: "2-digit" })
+      } else if (option === "day") {
+        return date.toLocaleString("en-GB", { day: "2-digit" })
+      }
+      // console.log(result.getMonth())
     },
   },
   components: {
@@ -81,9 +111,11 @@ export default {
 .news__title-text {
   font-family: "Inter";
   font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 30px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 120%;
+  letter-spacing: -0.02em;
+  color: #fceabc;
 }
 .news__header .carousel {
   width: 300px;
@@ -91,18 +123,109 @@ export default {
 .news__text {
   padding: 28px 16px;
   text-align: start;
-  font-family: "Inter, serif";
+  font-family: "Inter";
   font-style: normal;
   font-weight: 300;
   font-size: 12px;
   line-height: 140%;
-  height: 40vh;
+  height: 38vh;
   width: 250px;
-  border: 3px solid #667080;
+  border: 3px solid;
+  border-image-source: linear-gradient(
+    93.48deg,
+    #b07b15 -6.47%,
+    #facf5d 41.82%,
+    #b48328 97.8%
+  );
+  border-image-slice: 1;
   border-radius: 10px;
+  color: #fceabc;
   overflow: scroll;
-  background: #eef1f4;
+  background: linear-gradient(
+    180deg,
+    #192320 0%,
+    rgba(25, 35, 32, 0.56) 0.01%,
+    rgba(16, 22, 28, 0.29) 41.27%,
+    #10161c 100%
+  );
 }
+.news__item {
+  padding-bottom: 40px;
+}
+.rombica {
+  position: absolute;
+  border: 3px solid;
+  border-image-source: linear-gradient(
+    93.48deg,
+    #b07b15 -6.47%,
+    #facf5d 41.82%,
+    #b48328 97.8%
+  );
+  border-image-slice: 1;
+  height: 49.5px;
+  width: 49.5px;
+  bottom: 0;
+  right: 0;
+  transform: rotate(-45deg);
+  margin: 0 21px 16px 0;
+  filter: drop-shadow(0px 4px 10px rgba(247, 202, 86, 0.2));
+  background: #1c2228;
+}
+.rombica__bottom-date {
+  border-top: 0.5px solid;
+  border-image-source: linear-gradient(
+    153.5deg,
+    #b07b15 34.99%,
+    #facf5d 57.14%,
+    #b48328 82.81%
+  );
+  border-image-slice: 1;
+  display: flex;
+  align-items: flex-end;
+}
+.rombica__date {
+  height: 50%;
+  display: flex;
+  justify-content: center;
+}
+.rombica__text {
+  transform: rotate(45deg);
+  font-weight: 700;
+  font-size: 13.0909px;
+  line-height: 100%;
+  font-family: "Philosopher";
+  background: linear-gradient(
+    153.5deg,
+    #b07b15 34.99%,
+    #facf5d 57.14%,
+    #b48328 82.81%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.rombica__outer-border {
+  position: absolute;
+  bottom: 0;
+  right: -1px;
+}
+.rombica__wrapper {
+  border: 1px solid;
+  border-image-source: linear-gradient(
+    180deg,
+    rgba(208, 170, 112, 0.4) -49.87%,
+    rgba(197, 168, 126, 0.116) 2.91%,
+    rgba(176, 139, 87, 0) 53.83%
+  );
+  margin-left: 3px;
+  margin-top: 3px;
+  width: 38px;
+  height: 38px;
+}
+/* .rombica__bottom-text {
+  display: flex;
+  align-self: flex-end;
+} */
 .news__title {
   margin-bottom: 42px;
 }
