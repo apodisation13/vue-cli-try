@@ -1,7 +1,7 @@
 <template>
   <div class="passive">
     <div class="passive-clock" v-if="!card || card.timer === 0"></div>
-    <div class="passive-timer">
+    <div class="passive-timer" v-else>
       <span class="passive-timer-value">{{ card.timer }}</span>
     </div>
   </div>
