@@ -16,8 +16,10 @@
         :id="make_id(user_card, index)"
       ></div>
     </div>
-    <!-- v-touch:longtap="show_modal" -->
     <div class="card-item-information">
+
+      <special-type-of-card :color="user_card.color" v-if="card.type === 'Special'" />
+
       <card-damage-icon
         :style="background_color(user_card)"
         :damage="user_card.damage"
@@ -66,6 +68,7 @@ import CardPassive from "@/components/UI/CardPassive"
 import CardCharges from "@/components/UI/CardCharges"
 import CardDamageIcon from "@/components/UI/CardDamageIcon"
 import HeartIcon from "@/components/UI/HeartIcon"
+import SpecialTypeOfCard from '@/components/UI/SpecialTypeOfCard'
 export default {
   components: {
     CardCharges,
@@ -75,6 +78,7 @@ export default {
     CardModal,
     CardDamageIcon,
     HeartIcon,
+    SpecialTypeOfCard,
   },
   props: {
     is_leader: {
