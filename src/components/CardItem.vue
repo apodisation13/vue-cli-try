@@ -31,7 +31,6 @@
       <card-passive
         :card="user_card"
         v-if="user_card.has_passive"
-        :style="background_color(user_card)"
       />
 
       <card-charges

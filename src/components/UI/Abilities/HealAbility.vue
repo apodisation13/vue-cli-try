@@ -18,7 +18,7 @@ export default {
 <style scoped>
 .ability-heal {
   position: absolute;
-  right: 0;
+  right: 5px;
   top: 30%;
   width: 20px;
   height: 20px;

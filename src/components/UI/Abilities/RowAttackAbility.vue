@@ -9,7 +9,7 @@ export default {}
 <style scoped>
 .row-attack-ability {
   position: absolute;
-  right: 0;
+  right: 5px;
   top: 30%;
   width: 12px;
   height: 20px;
