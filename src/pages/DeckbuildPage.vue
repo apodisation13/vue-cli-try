@@ -335,7 +335,7 @@ export default {
 } */
 
 .deck-builder-body {
-  height: calc((var(--vh) *100) - 318px );
+  height: calc((var(--vh) * 100) - 318px);
   overflow: hidden;
 }
 
@@ -365,32 +365,32 @@ export default {
 }
 /*база карт*/
 .pool_full {
-  height: calc((var(--vh) *100) - 318px );
+  height: calc((var(--vh) * 100) - 318px);
   /* 318 это сумма высот хедера фильтровнижних кнопок */
   animation: parttofull 0.5s ease;
 }
 
 .pool_deckbuild {
-  height: calc((var(--vh) * 100) - 545px );
+  height: calc((var(--vh) * 100) - 545px);
   /* 545 это сумма высот хедера фильтровнижних кнопок и окна сбора колоды */
   animation: fulltopart 0.5s ease;
 }
 
 @keyframes fulltopart {
   0% {
-    height: calc((var(--vh) *100) - 318px );
+    height: calc((var(--vh) * 100) - 318px);
   }
   100% {
-    height: calc((var(--vh) * 100) - 545px );
+    height: calc((var(--vh) * 100) - 545px);
   }
 }
 
 @keyframes parttofull {
   0% {
-    height: calc((var(--vh) * 100) - 545px );
+    height: calc((var(--vh) * 100) - 545px);
   }
   100% {
-    height: calc((var(--vh) *100) - 318px );
+    height: calc((var(--vh) * 100) - 318px);
   }
 }
 </style>

@@ -1,23 +1,21 @@
 <template>
-  <div class="special-type"
+  <div
+    class="special-type"
     :class="{
       'gold-lightning': color === 'Gold',
       'silver-lightning': color === 'Silver',
-      'bronze-lightning': color === 'Bronze' 
-      }"
-  
-  >
-
-  </div>
+      'bronze-lightning': color === 'Bronze',
+    }"
+  ></div>
 </template>
 
 <script>
 export default {
   props: {
     color: {
-      type: String
-    }
-  }
+      type: String,
+    },
+  },
 }
 </script>
 
@@ -29,7 +27,9 @@ export default {
   transform: rotate(-45deg);
 }
 
-.gold-lightning, .silver-lightning, .bronze-lightning {
+.gold-lightning,
+.silver-lightning,
+.bronze-lightning {
   width: 13px;
   height: 31px;
   background-repeat: no-repeat;
@@ -37,16 +37,15 @@ export default {
   background-position: center;
 }
 
-
 .gold-lightning {
-  background-image: url('~@/assets/icons/card/gold_lightning.svg');
+  background-image: url("~@/assets/icons/card/gold_lightning.svg");
 }
 
 .silver-lightning {
-  background-image: url('~@/assets/icons/card/silver_lightning.svg');
+  background-image: url("~@/assets/icons/card/silver_lightning.svg");
 }
 
 .bronze-lightning {
-  background-image: url('~@/assets/icons/card/bronze_lightning.svg');
+  background-image: url("~@/assets/icons/card/bronze_lightning.svg");
 }
 </style>

@@ -17,8 +17,10 @@
       ></div>
     </div>
     <div class="card-item-information">
-
-      <special-type-of-card :color="user_card.color" v-if="card.type === 'Special'" />
+      <special-type-of-card
+        :color="user_card.color"
+        v-if="card.type === 'Special'"
+      />
 
       <card-damage-icon
         :style="background_color(user_card)"
@@ -68,7 +70,7 @@ import CardPassive from "@/components/UI/CardPassive"
 import CardCharges from "@/components/UI/CardCharges"
 import CardDamageIcon from "@/components/UI/CardDamageIcon"
 import HeartIcon from "@/components/UI/HeartIcon"
-import SpecialTypeOfCard from '@/components/UI/SpecialTypeOfCard'
+import SpecialTypeOfCard from "@/components/UI/SpecialTypeOfCard"
 export default {
   components: {
     CardCharges,

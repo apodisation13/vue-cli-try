@@ -33,7 +33,7 @@ export default {
   async created() {
     //устанавливаем корректное значение вьюпорта переменную css для работы c var(--vh)
     let vh = window.innerHeight * 0.01
-    document.documentElement.style.setProperty('--vh', `${vh}px`)
+    document.documentElement.style.setProperty("--vh", `${vh}px`)
     // СРАБАТЫВАЕТ ПО ОТКРЫТИЮ САЙТА: вначале прыгаем на загрузку,
     // Далее проверяем логин из локалсторадж, если успешно, грузим базу данных и рендерим ВСЕ картинки
     // в любом случае идем на главную потом
