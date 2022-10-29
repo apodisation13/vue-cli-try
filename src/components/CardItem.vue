@@ -28,10 +28,7 @@
       />
 
       <card-ability-circle :card="user_card" />
-      <card-passive
-        :card="user_card"
-        v-if="user_card.has_passive"
-      />
+      <card-passive :card="user_card" v-if="user_card.has_passive" />
 
       <card-charges
         :charge="user_card.charges"
