@@ -24,5 +24,13 @@ export default {
   transform: translate(-50%, -50%);
   z-index: 9999;
   font-size: 12pt;
+
+  /*background-color: limegreen;*/
+  /*width: 100%;*/
+  /*height: 90%;*/
+  /*border-radius: 12px;*/
+  /*text-align: center;*/
+  /*position: absolute;*/
+  /*z-index: 9999;*/
 }
 </style>

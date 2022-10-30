@@ -1,49 +1,53 @@
 <template>
-  <div
-    class="card-item-component"
-    @contextmenu.prevent
-    @click.right="show_modal"
-    v-touch:longtap="show_modal"
-  >
-    <div class="card-item-wrapper">
-      <div
-        class="card-item"
-        :style="[{ backgroundImage: `url(${card.image})` }, border(card)]"
-        :class="{ disable: count === 0 }"
-        :id="make_id(card, index)"
-      ></div>
+  <div>
+    <div
+      class="card-item-component"
+      @contextmenu.prevent
+      @click.right="show_modal"
+      v-touch:longtap="show_modal"
+    >
+      <div class="card-item-wrapper">
+        <div
+          class="card-item"
+          :style="[{ backgroundImage: `url(${card.image})` }, border(card)]"
+          :class="{ disable: count === 0 }"
+          :id="make_id(card, index)"
+        ></div>
+      </div>
+      <div class="card-item-information">
+        <special-type-of-card
+          :color="card.color"
+          v-if="card.type === 'Special'"
+        />
+
+        <card-damage-icon
+          :style="background_color(card)"
+          :damage="card.damage"
+        />
+
+        <card-ability-circle :card="card" />
+        <card-passive :card="card" v-if="card.has_passive" />
+
+        <card-charges
+          :charge="card.charges"
+          :bgColor="background_color_charges(card.color)"
+        />
+
+        <heart-icon
+          v-if="hp_needed"
+          :health="card.hp"
+          :bgColor="background_color_hp(card.color)"
+        />
+      </div>
     </div>
-    <div class="card-item-information">
-      <special-type-of-card
-        :color="card.color"
-        v-if="card.type === 'Special'"
-      />
-
-      <card-damage-icon :style="background_color(card)" :damage="card.damage" />
-
-      <card-ability-circle :card="card" />
-      <card-passive :card="card" v-if="card.has_passive" />
-
-      <card-charges
-        :charge="card.charges"
-        :bgColor="background_color_charges(card.color)"
-      />
-
-      <heart-icon
-        v-if="hp_needed"
-        :health="card.hp"
-        :bgColor="background_color_hp(card.color)"
-      />
-
-      <card-modal
-        v-if="show_card_modal"
-        :count="count"
-        :card="card"
-        :user_card="user_card"
-        :hp_needed="hp_needed"
-        @close_card_modal="show_card_modal = false"
-      />
-    </div>
+    <card-modal
+      v-if="show_card_modal"
+      :count="count"
+      :card="card"
+      :user_card="user_card"
+      :hp_needed="hp_needed"
+      @close_card_modal="show_card_modal = false"
+    />
   </div>
 </template>
 
@@ -131,6 +135,7 @@ export default {
       return this.is_leader ? border_leader(card) : border_for_card(card)
     },
   },
+  emits: ["open_card_modal"],
 }
 </script>
 

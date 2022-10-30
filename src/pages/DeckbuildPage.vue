@@ -46,7 +46,7 @@
           @delete_card="delete_card_from_deck"
           @save_deck="save_deck"
           @patch_deck="patch_deck"
-          @change_name_deck="changeNameDeck"
+          @changeNameDeck="changeNameDeck"
         />
       </div>
       <!-- <div class="deckbuilder-bottom-buttons-block">
@@ -327,7 +327,6 @@ export default {
   flex-direction: column;
   justify-content: flex-end;
   padding-bottom: 57px;
-  z-index: -1;
 }
 
 /* .deck_builder_page {
