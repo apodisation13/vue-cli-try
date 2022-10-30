@@ -52,6 +52,7 @@ export default {
     //   return (this.is_leader) ? border_leader(card): border_for_card(card);
     // },
   },
+  emits: ["chose_player_card"]
 }
 </script>
 

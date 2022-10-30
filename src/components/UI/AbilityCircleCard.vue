@@ -33,7 +33,6 @@
 
 <script>
 import CardCircle from "@/components/UI/CardCircle"
-import CardCircleHeal from "@/components/UI/CardCircleHeal"
 import HealAbility from "@/components/UI/Abilities/HealAbility"
 import RowAttackAbility from "@/components/UI/Abilities/RowAttackAbility"
 import ColumnAttackAbility from "@/components/UI/Abilities/ColumnAttackAbility"
@@ -42,7 +41,6 @@ import SpreadAttackAbility from "@/components/UI/Abilities/SpreadAttackAbility"
 export default {
   name: "card-ability-circle",
   components: {
-    CardCircleHeal,
     CardCircle,
     HealAbility,
     RowAttackAbility,

@@ -60,7 +60,6 @@ import {
   border_leader,
 } from "@/logic/border_styles"
 import CardModal from "@/components/ModalWindows/CardModal"
-import CardType from "@/components/UI/CardType"
 import CardAbilityCircle from "@/components/UI/AbilityCircleCard"
 import CardPassive from "@/components/UI/CardPassive"
 import CardCharges from "@/components/UI/CardCharges"
@@ -72,7 +71,6 @@ export default {
     CardCharges,
     CardPassive,
     CardAbilityCircle,
-    CardType,
     CardModal,
     CardDamageIcon,
     HeartIcon,

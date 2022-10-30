@@ -46,7 +46,7 @@
           @delete_card="delete_card_from_deck"
           @save_deck="save_deck"
           @patch_deck="patch_deck"
-          @changeNameDeck="changeNameDeck"
+          @change_name_deck="changeNameDeck"
         />
       </div>
       <!-- <div class="deckbuilder-bottom-buttons-block">

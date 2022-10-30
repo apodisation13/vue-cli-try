@@ -27,6 +27,7 @@ export default {
       // this.$emit("filter-factions", [[faction.name, "Neutral"], true])
     },
   },
+  emits: ["set-filter"]
 }
 </script>
 

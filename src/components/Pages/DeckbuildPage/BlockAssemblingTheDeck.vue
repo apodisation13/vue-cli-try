@@ -29,7 +29,7 @@
     <div class="deck-info-block">
       <input-name-for-deck
         :deck_name="deck.deck_name"
-        @changeNameDeck="$emit('changeNameDeck', $event)"
+        @change_name_deck="$emit('change_name_deck', $event)"
       />
       <div class="deck-health">
         <div class="heart"></div>
@@ -56,16 +56,12 @@
 </template>
 
 <script>
-import LeaderComp from "@/components/LeaderComp"
-import CardsList from "@/components/CardsList"
 import CardItemPreview from "@/components/CardItemPreview"
 import AssemblingPoolList from "@/components/Pages/DeckbuildPage/AssemblingPoolList"
 import InputNameForDeck from "@/components/Pages/DeckbuildPage/InputNameForDeck"
 import CreateButton from "@/components/Pages/DeckbuildPage/Buttons/CreateButton"
 export default {
   components: {
-    LeaderComp,
-    CardsList,
     CardItemPreview,
     AssemblingPoolList,
     InputNameForDeck,
@@ -106,6 +102,7 @@ export default {
       )
     },
   },
+  emits: ["delete_card", "save_deck", "patch_deck", "change_name_deck"]
 }
 </script>
 

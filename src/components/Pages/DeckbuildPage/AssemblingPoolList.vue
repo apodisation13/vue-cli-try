@@ -29,6 +29,7 @@ export default {
       return this.$emit("delete_card_from_deck", card)
     },
   },
+  emits: ["delete_card_from_deck"],
 }
 </script>
 

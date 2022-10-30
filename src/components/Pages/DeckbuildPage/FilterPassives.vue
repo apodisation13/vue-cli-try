@@ -25,7 +25,7 @@ export default {
       this.$emit("reset-filter-passives")
     },
   },
-  emits: ["filter-passives", "reset-filter-passives"],
+  emits: ["set-filter", "reset-filter-passives"],
 }
 </script>
 

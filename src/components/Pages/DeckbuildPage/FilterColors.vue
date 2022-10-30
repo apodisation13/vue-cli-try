@@ -33,7 +33,7 @@ export default {
       this.$emit("reset-filter-colors")
     },
   },
-  emits: ["filter-colors", "reset-filter-colors"],
+  emits: ["set-filter", "reset-filter-colors"],
 }
 </script>
 

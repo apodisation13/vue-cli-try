@@ -38,7 +38,6 @@
 import FilterFactions from "@/components/Pages/DeckbuildPage/FilterFactions"
 import ButtonIcon from "@/components/Pages/DeckbuildPage/Buttons/ButtonIcon"
 import BaseModal from "@/components/UI/BaseModal"
-import DeckbuilderFilters from "@/components/Pages/DeckbuildPage/DeckbuilderFilters"
 import ButtonToggleCardList from "@/components/Pages/DeckbuildPage/Buttons/ButtonToggleCardList"
 
 export default {
@@ -46,7 +45,6 @@ export default {
     FilterFactions,
     ButtonIcon,
     BaseModal,
-    DeckbuilderFilters,
     ButtonToggleCardList,
   },
   props: {
@@ -90,6 +88,7 @@ export default {
       return this.showNewDeckFactionSelect || this.deckBuilding
     },
   },
+  emits: ["open-filters", "select_faction", "trigger_show_list", "reset"]
 }
 </script>
 

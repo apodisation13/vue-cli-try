@@ -8,12 +8,7 @@
     <div>{{ user_card.card.name }}</div>
 
     <div class="enemy_border" :style="border(user_card.card)">
-      <img
-        class="img"
-        :src="user_card.card.image"
-        v-if="user_card.card.image"
-        alt=""
-      />
+      <img class="img" :src="user_card.card.image" v-if="user_card.card.image" alt="" />
     </div>
 
     <div class="damage_and_hp">
@@ -222,6 +217,7 @@ export default {
         await this.$store.dispatch("craft_card_action", this.user_card)
     },
   },
+  emits: ["close_card_modal"],
 }
 </script>
 

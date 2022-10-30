@@ -42,10 +42,10 @@ export default {
       this.$emit("reset-filters")
     },
     setFilter(prop, value) {
-      debugger
       this.$emit("set-filter", prop, value)
     },
   },
+  emits: ["close-modal", "reset-filters", "set-filter"]
 }
 </script>
 

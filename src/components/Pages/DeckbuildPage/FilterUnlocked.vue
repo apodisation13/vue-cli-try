@@ -20,7 +20,7 @@ export default {
       this.$emit("reset-filter-unlocked")
     },
   },
-  emits: ["filter-unlocked", "reset-filter-unlocked"],
+  emits: ["set-filter", "reset-filter-unlocked"],
 }
 </script>
 

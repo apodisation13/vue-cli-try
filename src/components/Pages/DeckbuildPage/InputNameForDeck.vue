@@ -7,7 +7,7 @@
         placeholder="Введите название колоды"
         :disabled="cant_save_deck"
         :value="deck_name"
-        @input="$emit('changeNameDeck', $event.target.value)"
+        @input="$emit('change_name_deck', $event.target.value)"
       />
     </div>
   </div>
@@ -18,6 +18,7 @@ export default {
   props: {
     deck_name: String,
   },
+  emits: ["change_name_deck"]
 }
 </script>
 
