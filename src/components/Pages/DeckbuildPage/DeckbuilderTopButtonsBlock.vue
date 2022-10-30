@@ -88,7 +88,7 @@ export default {
       return this.showNewDeckFactionSelect || this.deckBuilding
     },
   },
-  emits: ["open-filters", "select_faction", "trigger_show_list", "reset"]
+  emits: ["open-filters", "select_faction", "trigger_show_list", "reset"],
 }
 </script>
 

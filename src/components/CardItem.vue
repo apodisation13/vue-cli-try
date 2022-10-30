@@ -8,41 +8,37 @@
     <div class="card-item-wrapper">
       <div
         class="card-item"
-        :style="[
-          { backgroundImage: `url(${user_card.image})` },
-          border(user_card),
-        ]"
+        :style="[{ backgroundImage: `url(${card.image})` }, border(card)]"
         :class="{ disable: count === 0 }"
-        :id="make_id(user_card, index)"
+        :id="make_id(card, index)"
       ></div>
     </div>
     <div class="card-item-information">
       <special-type-of-card
-        :color="user_card.color"
+        :color="card.color"
         v-if="card.type === 'Special'"
       />
 
-      <card-damage-icon
-        :style="background_color(user_card)"
-        :damage="user_card.damage"
-      />
+      <card-damage-icon :style="background_color(card)" :damage="card.damage" />
 
-      <card-ability-circle :card="user_card" />
-      <card-passive :card="user_card" v-if="user_card.has_passive" />
+      <card-ability-circle :card="card" />
+      <card-passive :card="card" v-if="card.has_passive" />
 
       <card-charges
-        :charge="user_card.charges"
-        :bgColor="background_color_charges(user_card.color)"
+        :charge="card.charges"
+        :bgColor="background_color_charges(card.color)"
       />
 
       <heart-icon
         v-if="hp_needed"
-        :health="user_card.hp"
-        :bgColor="background_color_hp(user_card.color)"
+        :health="card.hp"
+        :bgColor="background_color_hp(card.color)"
       />
 
       <card-modal
         v-if="show_card_modal"
+        :count="count"
+        :card="card"
         :user_card="user_card"
         :hp_needed="hp_needed"
         @close_card_modal="show_card_modal = false"
@@ -82,9 +78,16 @@ export default {
       type: Boolean,
       default: false,
     },
-    user_card: {
+    card: {
       type: Object,
       required: true,
+    },
+    user_card: {
+      type: Object || null,
+      required: true,
+      default() {
+        return null
+      },
     },
     hp_needed: {
       // hp только для декбилдера, для игры не нужно оно
@@ -126,11 +129,6 @@ export default {
     },
     border(card) {
       return this.is_leader ? border_leader(card) : border_for_card(card)
-    },
-  },
-  computed: {
-    card() {
-      return this.user_card
     },
   },
 }

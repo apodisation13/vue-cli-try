@@ -4,7 +4,8 @@
       v-for="user_card in cards"
       :key="user_card.id"
       :count="user_card.count"
-      :user_card="user_card.card ? user_card.card : user_card"
+      :card="user_card.card ? user_card.card : user_card"
+      :user_card="user_card.card ? user_card : null"
       :hp_needed="hp_needed"
       :deckbuilder="deckbuilder"
       @dblclick="chose_player_card(user_card)"
@@ -52,7 +53,7 @@ export default {
     //   return (this.is_leader) ? border_leader(card): border_for_card(card);
     // },
   },
-  emits: ["chose_player_card"]
+  emits: ["chose_player_card"],
 }
 </script>
 

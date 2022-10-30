@@ -45,7 +45,7 @@ export default {
       this.$emit("set-filter", prop, value)
     },
   },
-  emits: ["close-modal", "reset-filters", "set-filter"]
+  emits: ["close-modal", "reset-filters", "set-filter"],
 }
 </script>
 

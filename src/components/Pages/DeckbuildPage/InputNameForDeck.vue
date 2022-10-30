@@ -18,7 +18,7 @@ export default {
   props: {
     deck_name: String,
   },
-  emits: ["change_name_deck"]
+  emits: ["change_name_deck"],
 }
 </script>
 

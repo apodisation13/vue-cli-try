@@ -1,131 +1,129 @@
 <template>
-  <modal-window
-    :style="{ backgroundColor: 'floralwhite' }"
-    v-touch:swipe="close_self"
-  >
-    <button-close @close_self="close_self" />
+  <div class="modal-window-wrapper">
+    <modal-window class="modal-window"
+      :style="{ backgroundColor: 'floralwhite' }"
+      v-touch:swipe="close_self"
+    >
+      <button-close @close_self="close_self" />
 
-    <div>{{ user_card.card.name }}</div>
+      <div>{{ card.name }}</div>
 
-    <div class="enemy_border" :style="border(user_card.card)">
-      <img class="img" :src="user_card.card.image" v-if="user_card.card.image" alt="" />
-    </div>
-
-    <div class="damage_and_hp">
-      <div class="diamond" :style="background_color(user_card.card)"></div>
-      <h3>
-        Урон <br />
-        &dagger;{{ user_card.card.damage }}
-      </h3>
-
-      <div
-        class="circle"
-        :style="{ backgroundColor: 'orange' }"
-        v-if="user_card.card.ability.name === 'damage-all'"
-      >
-        <span>&#9850;</span>
+      <div class="enemy_border" :style="border(card)">
+        <img class="img" :src="card.image" v-if="card.image" alt="" />
       </div>
-      <div
-        class="circle"
-        :style="{ backgroundColor: 'orange' }"
-        v-if="user_card.card.ability.name === 'spread-damage'"
-      >
-        <span :style="{ 'font-size': '18pt' }">&#9798;</span>
-      </div>
-      <div
-        class="circle"
-        :style="{ backgroundColor: 'green' }"
-        v-else-if="user_card.card.ability.name === 'heal'"
-      >
-        <span :style="{ 'font-size': '12pt' }"
-          >+&hearts;{{ user_card.card.heal }}</span
+
+      <div class="damage_and_hp">
+        <div class="diamond" :style="background_color(card)"></div>
+        <h3>
+          Урон <br />
+          &dagger;{{ card.damage }}
+        </h3>
+
+        <div
+          class="circle"
+          :style="{ backgroundColor: 'orange' }"
+          v-if="card.ability.name === 'damage-all'"
         >
-      </div>
-      <div
-        class="circle"
-        :style="{ backgroundColor: 'purple' }"
-        v-else-if="user_card.card.ability.name === 'resurrect'"
-      >
-        <span>&#10014;&#8680;</span>
-      </div>
-      <div
-        class="circle"
-        :style="{ backgroundColor: 'purple' }"
-        v-else-if="
-          user_card.card.ability.name === 'draw-one-card' ||
-          user_card.card.ability.name === 'play-from-deck' ||
-          user_card.card.ability.name === 'play-from-grave'
-        "
-      >
-        <span>&#127136;</span>
-      </div>
-      <div
-        class="circle"
-        :style="{ backgroundColor: 'purple' }"
-        v-else-if="
-          user_card.card.ability.name === 'give-charges-to-card-in-hand-1'
-        "
-      >
-        <span>+1&#8607;</span>
+          <span>&#9850;</span>
+        </div>
+        <div
+          class="circle"
+          :style="{ backgroundColor: 'orange' }"
+          v-if="card.ability.name === 'spread-damage'"
+        >
+          <span :style="{ 'font-size': '18pt' }">&#9798;</span>
+        </div>
+        <div
+          class="circle"
+          :style="{ backgroundColor: 'green' }"
+          v-else-if="card.ability.name === 'heal'"
+        >
+          <span :style="{ 'font-size': '12pt' }">+&hearts;{{ card.heal }}</span>
+        </div>
+        <div
+          class="circle"
+          :style="{ backgroundColor: 'purple' }"
+          v-else-if="card.ability.name === 'resurrect'"
+        >
+          <span>&#10014;&#8680;</span>
+        </div>
+        <div
+          class="circle"
+          :style="{ backgroundColor: 'purple' }"
+          v-else-if="
+            card.ability.name === 'draw-one-card' ||
+            card.ability.name === 'play-from-deck' ||
+            card.ability.name === 'play-from-grave'
+          "
+        >
+          <span>&#127136;</span>
+        </div>
+        <div
+          class="circle"
+          :style="{ backgroundColor: 'purple' }"
+          v-else-if="card.ability.name === 'give-charges-to-card-in-hand-1'"
+        >
+          <span>+1&#8607;</span>
+        </div>
+
+        <div
+          class="triangle"
+          :style="background_color(card)"
+          v-if="card.has_passive"
+        ></div>
+        <div
+          class="text"
+          :style="{ 'font-size': '20pt' }"
+          v-if="card.has_passive"
+        >
+          <b>&#8987;</b>
+        </div>
+
+        <div class="charges"></div>
+        <h3>
+          Заряды <br />
+          {{ card.charges }}&#8607;
+        </h3>
+
+        <div class="hp" v-if="hp_needed"></div>
+        <h3 v-if="hp_needed">
+          Жизни <br />
+          &hearts;{{ card.hp }}
+        </h3>
       </div>
 
-      <div
-        class="triangle"
-        :style="background_color(user_card.card)"
-        v-if="user_card.card.has_passive"
-      ></div>
-      <div
-        class="text"
-        :style="{ 'font-size': '20pt' }"
-        v-if="user_card.card.has_passive"
-      >
-        <b>&#8987;</b>
+      <div class="text"><b>СПОСОБНОСТЬ</b> - {{ card.ability.description }}</div>
+
+      <div class="text" v-if="card.has_passive">
+        <b>ПАССИВНАЯ СПОСОБНОСТЬ</b>
       </div>
-
-      <div class="charges"></div>
-      <h3>
-        Заряды <br />
-        {{ user_card.card.charges }}&#8607;
-      </h3>
-
-      <div class="hp" v-if="hp_needed"></div>
-      <h3 v-if="hp_needed">
-        Жизни <br />
-        &hearts;{{ user_card.card.hp }}
-      </h3>
-    </div>
-
-    <div class="text">
-      <b>СПОСОБНОСТЬ</b> - {{ user_card.card.ability.description }}
-    </div>
-
-    <div class="text" v-if="user_card.card.has_passive">
-      <b>ПАССИВНАЯ СПОСОБНОСТЬ</b>
-    </div>
-    <div class="text" v-if="user_card.card.has_passive">
-      {{ user_card.card.passive_ability.description }}
-    </div>
-    <div class="divb" v-if="!bonus">
-      <button class="b" @click="mill(user_card)">mill</button>
-      <button class="count">{{ user_card.count }}</button>
-      <button class="b" @click="craft(user_card)">craft</button>
-    </div>
-    <div class="divb" v-if="bonus">
-      <button class="bonus_count">У вас {{ user_card.count }}</button>
-    </div>
-    <yesno-modal
-      :visible="show_yesno_mill"
-      :resource_value="resource_value"
-      @confirm="confirm_mill"
-      @cancel="cancel"
-    />
-    <yesno-modal
-      :visible="show_yesno_craft"
-      :resource_value="resource_value"
-      @confirm="confirm_craft"
-      @cancel="cancel"
-    />
-  </modal-window>
+      <div class="text" v-if="card.has_passive">
+        {{ card.passive_ability.description }}
+      </div>
+      <div class="mill_craft_block" v-if="user_card">
+        <div class="divb" v-if="!bonus">
+          <button class="b" @click="mill(user_card)">mill</button>
+          <button class="count">{{ count }}</button>
+          <button class="b" @click="craft(user_card)">craft</button>
+        </div>
+        <div class="divb" v-if="bonus">
+          <button class="bonus_count">У вас {{ count }}</button>
+        </div>
+      </div>
+      <yesno-modal
+        :visible="show_yesno_mill"
+        :resource_value="resource_value"
+        @confirm="confirm_mill"
+        @cancel="cancel"
+      />
+      <yesno-modal
+        :visible="show_yesno_craft"
+        :resource_value="resource_value"
+        @confirm="confirm_craft"
+        @cancel="cancel"
+      />
+    </modal-window>
+  </div>
 </template>
 
 <script>
@@ -139,8 +137,15 @@ export default {
   props: {
     user_card: {
       // объект противника по индексу поля
+      type: Object || null,
       required: true,
+      default() {
+        return null
+      },
+    },
+    card: {
       type: Object,
+      required: true,
     },
     count: {
       type: Number,
@@ -222,6 +227,10 @@ export default {
 </script>
 
 <style scoped>
+.modal-window-wrapper {
+  position: relative;
+  z-index:99
+}
 .enemy_border {
   width: 65%;
   height: 60%;

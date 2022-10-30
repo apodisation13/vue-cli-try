@@ -102,7 +102,7 @@ export default {
       )
     },
   },
-  emits: ["delete_card", "save_deck", "patch_deck", "change_name_deck"]
+  emits: ["delete_card", "save_deck", "patch_deck", "change_name_deck"],
 }
 </script>
 
