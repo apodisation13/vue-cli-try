@@ -91,6 +91,7 @@ export default {
   transform: scale(1);
   opacity: 0.5;
   transition: 0.5s;
+  will-change: transform;
 }
 .carousel__slide--visible > .news__item {
   opacity: 1;
@@ -207,7 +208,7 @@ export default {
 .rombica__outer-border {
   position: absolute;
   bottom: 0;
-  right: -1px;
+  right: -0.5px;
 }
 .rombica__wrapper {
   border: 1px solid;
