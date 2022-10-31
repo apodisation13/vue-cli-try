@@ -1,5 +1,6 @@
 <template>
-  <div class="card-item-wrapper"
+  <div
+    class="card-item-wrapper"
     @contextmenu.prevent
     @click.right="show_modal"
     v-touch:longtap="show_modal"
@@ -7,7 +8,10 @@
     <div
       class="card-item"
       v-if="!!user_card"
-      :style="[{ backgroundImage: `url(${user_card.image})` }, border(user_card)]"
+      :style="[
+        { backgroundImage: `url(${user_card.image})` },
+        border(user_card),
+      ]"
     ></div>
     <card-modal
       v-if="show_card_modal"
@@ -19,7 +23,7 @@
 
 <script>
 import { border_leader, border_for_card } from "@/logic/border_styles"
-import CardModal from '@/components/ModalWindows/CardModal'
+import CardModal from "@/components/ModalWindows/CardModal"
 export default {
   components: { CardModal },
   props: {
@@ -43,7 +47,7 @@ export default {
     },
     show_modal() {
       this.show_card_modal = true
-    }
+    },
   },
 }
 </script>
