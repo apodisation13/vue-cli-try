@@ -87,8 +87,7 @@ export default {
       required: true,
     },
     user_card: {
-      type: Object || null,
-      required: true,
+      type: Object,
       default() {
         return null
       },

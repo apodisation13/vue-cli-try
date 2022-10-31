@@ -135,8 +135,7 @@ export default {
   props: {
     user_card: {
       // объект противника по индексу поля
-      type: Object || null,
-      required: true,
+      type: Object,
       default() {
         return null
       },
