@@ -329,10 +329,6 @@ export default {
   padding-bottom: 57px;
 }
 
-/* .deck_builder_page {
-  margin-top: auto;
-} */
-
 .deck-builder-body {
   height: calc((var(--vh) * 100) - 318px);
   overflow: hidden;
@@ -370,7 +366,7 @@ export default {
 }
 
 .pool_deckbuild {
-  height: calc((var(--vh) * 100) - 545px);
+  height: calc((var(--vh) * 100) - 540px);
   /* 545 это сумма высот хедера фильтровнижних кнопок и окна сбора колоды */
   animation: fulltopart 0.5s ease;
 }

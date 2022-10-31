@@ -118,7 +118,7 @@ export default {
 }
 
 .leader-block {
-  width: 25%;
+  width: 85px;
   margin-right: 10px;
 }
 .leader-img-block {
