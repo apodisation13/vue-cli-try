@@ -5,7 +5,6 @@
         class="name-input"
         type="text"
         placeholder="Введите название колоды"
-        :disabled="cant_save_deck"
         :value="deck_name"
         @input="$emit('change_name_deck', $event.target.value)"
       />

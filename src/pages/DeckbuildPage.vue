@@ -46,7 +46,7 @@
           @delete_card="delete_card_from_deck"
           @save_deck="save_deck"
           @patch_deck="patch_deck"
-          @changeNameDeck="changeNameDeck"
+          @change_name_deck="change_name_deck"
         />
       </div>
       <!-- <div class="deckbuilder-bottom-buttons-block">
@@ -76,7 +76,7 @@ import DeckbuilderTopButtonsBlock from "@/components/Pages/DeckbuildPage/Deckbui
 import BlockAssemblingTheDeck from "@/components/Pages/DeckbuildPage/BlockAssemblingTheDeck"
 import DeckbuilderFilters from "@/components/Pages/DeckbuildPage/DeckbuilderFilters"
 import CardListComponent from "@/components/CardListComponent"
-import ButtonDecks from "@/components/Pages/DeckbuildPage/Buttons/ButtonDecks.vue"
+import ButtonDecks from "@/components/Pages/DeckbuildPage/Buttons/ButtonDecks"
 
 export default {
   components: {
@@ -198,13 +198,19 @@ export default {
       this.deck.leader = leader.card
     },
 
-    changeNameDeck(value) {
+    change_name_deck(value) {
       this.deck.deck_name = value
     },
 
     async save_deck() {
+      if (!this.deck.leader) {
+        return alert("Необходимо выбрать лидера")
+      }
       // карт ровно 12 и лидер выбран
-      if (this.cant_save_deck || !this.deck.deck_name) {
+      if (this.cant_save_deck) {
+        return alert("Соберите колоду из 12 карт")
+      }
+      if (!this.deck_name) {
         return alert("Введите имя колоды")
       }
       this.send_data_to_store("post_deck", {
