@@ -28,7 +28,7 @@ function random_pick_enemies(dict) {
   let random_silvers =
     dict.Silvers[Math.floor(Math.random() * dict.Silvers.length)]
   let random_golds = dict.Golds[Math.floor(Math.random() * dict.Golds.length)]
-  console.log(random_bronzes, random_silvers, random_golds)
+  // console.log(random_bronzes, random_silvers, random_golds)
 
   const bronzes = store.getters["bronze_enemies"]
   const silvers = store.getters["silver_enemies"]
@@ -47,7 +47,7 @@ function random_pick_enemies(dict) {
     enemies.push(golds[random])
   }
 
-  console.log(enemies)
+  // console.log(enemies)
   return enemies
 }
 
@@ -71,7 +71,7 @@ function random_level_generator() {
     })
   })
 
-  console.log(random_levels[0])
+  // console.log(random_levels[0])
   return random_levels
 }
 
