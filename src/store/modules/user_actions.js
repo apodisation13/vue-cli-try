@@ -187,20 +187,20 @@ const actions = {
     }
   },
 
-  async mill_card_action({ dispatch }, card) {
-    if (card.card.color) await dispatch("mill_card", card)
-    else await dispatch("mill_leader", card)
+  async mill_card_action({ dispatch }, user_card) {
+    if (user_card.card.color) await dispatch("mill_card", user_card)
+    else await dispatch("mill_leader", user_card)
   },
 
-  async mill_card({ dispatch, getters }, card) {
+  async mill_card({ dispatch, getters }, user_card) {
     let header = getters["getHeader"]
     let user_id = getters["getUser"].user_id
-    let url = `${mill_card}${card.id}/`
+    let url = `${mill_card}${user_card.id}/`
 
     try {
       await axios.patch(
         url,
-        { user: user_id, card: card.card.id, count: card.count },
+        { user: user_id, card: user_card.card.id, count: user_card.count },
         header
       )
       await dispatch("get_user_database")
@@ -210,15 +210,15 @@ const actions = {
     }
   },
 
-  async mill_leader({ dispatch, getters }, card) {
+  async mill_leader({ dispatch, getters }, user_card) {
     let header = getters["getHeader"]
     let user_id = getters["getUser"].user_id
-    let url = `${mill_leader}${card.id}/`
+    let url = `${mill_leader}${user_card.id}/`
 
     try {
       await axios.patch(
         url,
-        { user: user_id, leader: card.card.id, count: card.count },
+        { user: user_id, leader: user_card.card.id, count: user_card.count },
         header
       )
       await dispatch("get_user_database")

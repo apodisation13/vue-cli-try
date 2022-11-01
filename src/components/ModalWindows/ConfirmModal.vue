@@ -28,6 +28,7 @@ export default {
       this.$emit("confirm")
     },
   },
+  emits: ["close", "confirm"],
 }
 </script>
 

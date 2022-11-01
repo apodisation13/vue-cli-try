@@ -31,6 +31,9 @@ export default {
     MenuBar,
   },
   async created() {
+    //устанавливаем корректное значение вьюпорта переменную css для работы c var(--vh)
+    let vh = window.innerHeight * 0.01
+    document.documentElement.style.setProperty("--vh", `${vh}px`)
     // СРАБАТЫВАЕТ ПО ОТКРЫТИЮ САЙТА: вначале прыгаем на загрузку,
     // Далее проверяем логин из локалсторадж, если успешно, грузим базу данных и рендерим ВСЕ картинки
     // в любом случае идем на главную потом
@@ -74,6 +77,8 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  user-select: none;
+  font-family: "Roboto", "Inter", "Philosopher", sans-serif;
   /* font-family: Arial, Helvetica, sans-serif; единый на всё */
 }
 
@@ -113,7 +118,7 @@ body {
   .app {
     position: relative;
     max-width: 425px;
-    max-height: 800px;
+    /* max-height: 930px; */
     border-radius: 8px;
     margin: 0 auto;
   }

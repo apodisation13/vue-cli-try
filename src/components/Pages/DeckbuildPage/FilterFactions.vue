@@ -23,10 +23,11 @@ export default {
   methods: {
     filtering(faction) {
       // выбранная фракция и флаг что выбрано ТРУ
-      this.$emit("filter-factions", [[faction.name, "Neutral"], true])
+      this.$emit("set-filter", "faction", faction.name)
+      // this.$emit("filter-factions", [[faction.name, "Neutral"], true])
     },
   },
-  emits: ["filter-factions"],
+  emits: ["set-filter"],
 }
 </script>
 

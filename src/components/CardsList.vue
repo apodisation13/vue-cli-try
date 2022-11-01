@@ -67,6 +67,7 @@ export default {
       default: false,
     },
     bonus: {
+      //этот пропс используется для страницы BonusPage
       type: Boolean,
       default: false,
       required: false,
@@ -135,9 +136,6 @@ export default {
 .cards {
   width: 98%;
   height: 100%;
-  overflow: scroll;
-  /*position: relative;*/
-  /*border: solid 2px red;*/
 }
 
 .card_in_list {
@@ -162,27 +160,5 @@ export default {
   margin-left: 0.5%;
   margin-top: 0.2%;
   position: relative;
-}
-
-.divb {
-  width: 98%;
-  height: 3vh;
-  margin-left: 0.5%;
-  margin-top: 0.2%;
-}
-
-.b {
-  width: 42%;
-  height: 100%;
-}
-
-.count {
-  width: 13%;
-  height: 100%;
-}
-
-.bonus_count {
-  width: 90%;
-  height: 100%;
 }
 </style>

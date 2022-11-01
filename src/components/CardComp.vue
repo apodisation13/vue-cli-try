@@ -12,11 +12,12 @@
       :id="make_id(card, index)"
     />
 
-    <card-type v-if="card.type === 'Special'">&starf;</card-type>
+    <card-type v-if="card.type === 'Special'"> &starf; </card-type>
 
     <card-diamond :style="background_color(card)"
-      >&dagger;{{ card.damage }}</card-diamond
-    >
+      >&dagger;
+      {{ card.damage }}
+    </card-diamond>
 
     <card-ability-circle :card="card" />
 
@@ -26,9 +27,9 @@
       :style="background_color(card)"
     />
 
-    <card-charges>{{ card.charges }}&#8607;</card-charges>
+    <card-charges> {{ card.charges }}&#8607; </card-charges>
 
-    <card-hp v-if="hp_needed">&hearts;{{ card.hp }}</card-hp>
+    <card-hp v-if="hp_needed"> &hearts;{{ card.hp }} </card-hp>
 
     <card-modal
       v-if="show_card_modal"

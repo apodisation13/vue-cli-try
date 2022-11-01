@@ -1,5 +1,7 @@
 <template>
-  <img class="page_img" :src="path" alt="#" v-if="path" />
+  <div class="page-img-wrapper" :class="{ 'page-img-gradient': withGradient }">
+    <img class="page_img" :src="path" alt="#" v-if="path" />
+  </div>
 </template>
 
 <script>
@@ -59,19 +61,43 @@ export default {
         return ""
       }
     },
+    withGradient() {
+      return this.$router.currentRoute.value.meta.withGradient
+    },
   },
 }
 </script>
 
 <style scoped>
-.page_img {
+.page-img-wrapper {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: -2;
+}
+
+.page_img {
+  display: block;
   width: 100%;
   height: 100%;
-  z-index: -1;
+}
+
+.page-img-gradient::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(
+    180deg,
+    #0a305b -12.88%,
+    #a3abb4 33.24%,
+    #0a305b 108.88%
+  );
+  mix-blend-mode: multiply;
 }
 </style>

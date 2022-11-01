@@ -1,33 +1,68 @@
 <template>
-  <div class="charges">
-    <span>
-      <slot></slot>
-    </span>
+  <div class="charge-wrapper" :style="{ '--bgColor': bgColor }">
+    <div class="charge">
+      <div class="charge-icon">
+        <div class="charge-value">
+          {{ charge }}
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "card-charges",
+  props: {
+    charge: {
+      type: Number,
+    },
+    bgColor: {
+      type: String,
+    },
+  },
 }
 </script>
 
 <style scoped>
-span {
+.charge-wrapper {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 10pt;
+  width: 18px;
+  height: 18px;
+  bottom: -1px;
+  right: 0;
+  transform: rotate(-45deg);
+  background-color: var(--bgColor);
+  border-radius: 2px;
 }
 
-.charges {
-  width: 20%;
-  height: 20%;
-  background-color: hotpink;
+.charge {
   position: absolute;
-  bottom: 2%;
-  right: 2%;
-  border-radius: 20%;
+  transform: rotate(45deg);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.charge-icon {
+  width: 12px;
+  height: 20px;
+  background-image: url("~@/assets/icons/card/charge.svg");
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.charge-value {
+  display: block;
+  font-size: 7px;
+  color: white;
+  margin-right: 2px;
 }
 </style>
