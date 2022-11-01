@@ -367,7 +367,7 @@ export default {
 }
 
 .pool_deckbuild {
-  height: calc((var(--vh) * 100) - 540px);
+  height: calc((var(--vh) * 100) - 555px);
   /* 545 это сумма высот хедера фильтровнижних кнопок и окна сбора колоды */
   animation: fulltopart 0.5s ease;
 }
@@ -377,13 +377,13 @@ export default {
     height: calc((var(--vh) * 100) - 318px);
   }
   100% {
-    height: calc((var(--vh) * 100) - 545px);
+    height: calc((var(--vh) * 100) - 555px);
   }
 }
 
 @keyframes parttofull {
   0% {
-    height: calc((var(--vh) * 100) - 545px);
+    height: calc((var(--vh) * 100) - 555px);
   }
   100% {
     height: calc((var(--vh) * 100) - 318px);
