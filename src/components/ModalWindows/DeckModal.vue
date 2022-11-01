@@ -6,7 +6,7 @@
       <leader-comp :leader="leader" />
     </div>
 
-    <cards-list :cards="deck" />
+    <card-list-component :cards="deck" />
   </modal-window>
 </template>
 
@@ -14,10 +14,10 @@
 import ModalWindow from "@/components/UI/ModalWindow"
 import ButtonClose from "@/components/UI/ButtonClose"
 import LeaderComp from "@/components/LeaderComp"
-import CardsList from "@/components/CardsList"
+import CardListComponent from "@/components/CardListComponent"
 export default {
   name: "deck-modal",
-  components: { CardsList, LeaderComp, ButtonClose, ModalWindow },
+  components: { CardListComponent, LeaderComp, ButtonClose, ModalWindow },
   props: {
     deck: {
       type: Object,

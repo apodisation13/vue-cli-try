@@ -225,7 +225,7 @@ const actions = {
       })
     })
 
-    await Promise.all(images)
+    Promise.all(images) // TODO: await все решает
       .then(() => {
         console.log("Images loaded!")
         toast.success("Успешно отрендерили картинки")

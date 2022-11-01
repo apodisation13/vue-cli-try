@@ -133,7 +133,7 @@ export default {
       return {
         x: item.level.x + position,
         y: item.level.y - 7,
-        numPoints: 6,
+        numPoints: 5,
         innerRadius: 4,
         outerRadius: 7,
         fill: "gold",

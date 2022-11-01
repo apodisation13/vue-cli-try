@@ -5,13 +5,13 @@
       @contextmenu.prevent
       @click.right="show_modal"
       v-touch:longtap="show_modal"
+      :id="make_id(card, index)"
     >
       <div class="card-item-wrapper">
         <div
           class="card-item"
           :style="[{ backgroundImage: `url(${card.image})` }, border(card)]"
           :class="{ disable: count === 0 }"
-          :id="make_id(card, index)"
         ></div>
       </div>
       <div class="card-item-information">

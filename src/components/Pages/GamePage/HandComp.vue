@@ -7,7 +7,7 @@
       @end="onDragEnd($event)"
     >
       <template #item="{ element, index }">
-        <card-comp
+        <card-item
           :card="element"
           :index="index"
           class="card_in_hand"
@@ -21,10 +21,10 @@
 <script>
 import { border_for_hand_2 } from "@/logic/border_styles"
 import draggable from "vuedraggable"
-import CardComp from "@/components/CardComp"
+import CardItem from "@/components/CardItem"
 export default {
   name: "hand-comp",
-  components: { CardComp, draggable },
+  components: { CardItem, draggable },
   props: {
     hand: {
       required: true,
@@ -58,11 +58,11 @@ export default {
     },
     onDragStart(event) {
       console.log("ПОТЯНУЛИ ЗА КАРТУ")
-      const elem = document.elementFromPoint(
+      const elems = document.elementsFromPoint(
         event.originalEvent.clientX,
         event.originalEvent.clientY
       )
-      const id = elem?.id
+      const id = elems[3]?.id // TODO: исправить это!!! поискать класс нормальный
       console.log("КАРТА В РУКЕ", id)
       if (!id) return
       const index = parseInt(id.slice(id.indexOf("_") + 1))
@@ -120,9 +120,9 @@ export default {
 <style scoped>
 .hand {
   width: 98%;
-  height: 21vh;
+  /*height: 18vh;*/
   padding-top: 2%;
-  /* border: solid 1px blue; */
+  border: solid 1px blue;
   clear: both;
   overflow: auto;
   /*white-space: nowrap;*/
@@ -134,7 +134,7 @@ export default {
 
 .card_in_hand {
   width: 26%;
-  height: 18.5vh;
+  /*height: 18.5vh;*/
   /*border: solid 3px gold; */
   border-radius: 2%;
   display: table-row;
@@ -149,8 +149,8 @@ export default {
   /*float: right;*/
   margin-top: 0.1%;
   position: relative;
-  border-width: 3px 4px 3px 5px;
-  border-radius: 95% 4% 92% 5%/4% 95% 6% 95%;
+  /*border-width: 3px 4px 3px 5px;*/
+  /*border-radius: 95% 4% 92% 5%/4% 95% 6% 95%;*/
   /*transform: rotate(2deg);*/
 }
 .card_in_hand:hover {

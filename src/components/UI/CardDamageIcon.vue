@@ -10,7 +10,7 @@
 export default {
   props: {
     damage: {
-      type: Number,
+      // type: Number, // здесь нельзя Number, потому что в момент урона строка приходит
       require: true,
     },
   },
