@@ -210,7 +210,7 @@ export default {
       if (this.cant_save_deck) {
         return alert("Соберите колоду из 12 карт")
       }
-      if (this.deck.deck_name.trim() === '') {
+      if (this.deck.deck_name.trim() === "") {
         return alert("Введите имя колоды")
       }
       this.send_data_to_store("post_deck", {
