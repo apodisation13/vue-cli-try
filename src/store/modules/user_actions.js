@@ -256,7 +256,10 @@ const actions = {
         },
         header
       )
-      commit("set_levels", response.data.levels)
+      commit("set_updated_season", {
+        levels: response.data.levels,
+        index: data.seasonIndex,
+      })
     } catch (err) {
       dispatch("error_action", err)
       throw new Error("Какая-то ошибка при открытии уровней")
