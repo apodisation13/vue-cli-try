@@ -210,7 +210,7 @@ export default {
       if (this.cant_save_deck) {
         return alert("Соберите колоду из 12 карт")
       }
-      if (!this.deck_name) {
+      if (this.deck.deck_name.trim() === "") {
         return alert("Введите имя колоды")
       }
       this.send_data_to_store("post_deck", {
@@ -324,11 +324,6 @@ export default {
 
 <style scoped>
 .deck_builder_page-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -372,7 +367,7 @@ export default {
 }
 
 .pool_deckbuild {
-  height: calc((var(--vh) * 100) - 540px);
+  height: calc((var(--vh) * 100) - 550px);
   /* 545 это сумма высот хедера фильтровнижних кнопок и окна сбора колоды */
   animation: fulltopart 0.5s ease;
 }
@@ -382,13 +377,13 @@ export default {
     height: calc((var(--vh) * 100) - 318px);
   }
   100% {
-    height: calc((var(--vh) * 100) - 545px);
+    height: calc((var(--vh) * 100) - 550px);
   }
 }
 
 @keyframes parttofull {
   0% {
-    height: calc((var(--vh) * 100) - 545px);
+    height: calc((var(--vh) * 100) - 550px);
   }
   100% {
     height: calc((var(--vh) * 100) - 318px);
