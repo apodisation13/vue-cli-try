@@ -8,6 +8,7 @@
       :user_card="user_card.card ? user_card : null"
       :hp_needed="hp_needed"
       :deckbuilder="deckbuilder"
+      :bonus="bonus"
       @dblclick="chose_player_card(user_card)"
       :is_leader="is_leader"
     />
@@ -49,9 +50,6 @@ export default {
     chose_player_card(card) {
       this.$emit("chose_player_card", card) // передаём this.index по эмиту
     },
-    // border(card) {
-    //   return (this.is_leader) ? border_leader(card): border_for_card(card);
-    // },
   },
   emits: ["chose_player_card"],
 }

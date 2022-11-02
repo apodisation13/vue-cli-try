@@ -87,30 +87,26 @@ const actions = {
   },
 
   calculate_value({ state }, obj) {
+    // процесс крафта: по цвету, или если цвета нет, то крафтим лидера значит
     if (obj.process === "craft") {
-      if (obj.card.card.color === "Bronze")
-        return state.game_prices.craft_bronze
-      else if (obj.card.card.color === "Silver")
+      if (obj.card.color === "Bronze") return state.game_prices.craft_bronze
+      else if (obj.card.color === "Silver")
         return state.game_prices.craft_silver
-      else if (obj.card.card.color === "Gold")
-        return state.game_prices.craft_gold
+      else if (obj.card.color === "Gold") return state.game_prices.craft_gold
       else return state.game_prices.craft_leader
-    } else if (obj.process === "mill") {
+    }
+    // процесс милла: по цвету, или лидера, но нельзя если count = 0, или стартовый набор
+    if (obj.process === "mill") {
       // нельзя: если карт 0, или если карт 1 и при этом она в стартовом наборе (unlocked, то есть)
-      if (
-        obj.card.count === 0 ||
-        (obj.card.count === 1 && obj.card.card.unlocked)
-      ) {
+      if (obj.count === 0 || (obj.count === 1 && obj.card.unlocked)) {
         toast.error(
           "Нельзя размиллить карту из стартового набора (или карту которой у вас и так нет, ха-ха)"
         )
         return
       }
-      if (obj.card.card.color === "Bronze") return state.game_prices.mill_bronze
-      else if (obj.card.card.color === "Silver")
-        return state.game_prices.mill_silver
-      else if (obj.card.card.color === "Gold")
-        return state.game_prices.mill_gold
+      if (obj.card.color === "Bronze") return state.game_prices.mill_bronze
+      else if (obj.card.color === "Silver") return state.game_prices.mill_silver
+      else if (obj.card.color === "Gold") return state.game_prices.mill_gold
       else return state.game_prices.mill_leader
     }
   },
@@ -260,7 +256,10 @@ const actions = {
         },
         header
       )
-      commit("set_levels", response.data.levels)
+      commit("set_updated_season", {
+        levels: response.data.levels,
+        index: data.seasonIndex,
+      })
     } catch (err) {
       dispatch("error_action", err)
       throw new Error("Какая-то ошибка при открытии уровней")
