@@ -99,11 +99,11 @@
     <div class="text" v-if="card.has_passive">
       {{ card.passive_ability.description }}
     </div>
-    <div class="mill_craft_block" v-if="user_card">
+    <div class="mill_craft_block" v-if="deckbuilder">
       <div class="divb" v-if="!bonus">
-        <button class="b" @click="mill(user_card)">mill</button>
+        <button class="b" @click="mill">Уничтожить</button>
         <button class="count">{{ count }}</button>
-        <button class="b" @click="craft(user_card)">craft</button>
+        <button class="b" @click="craft">Создать</button>
       </div>
       <div class="divb" v-if="bonus">
         <button class="bonus_count">У вас {{ count }}</button>
@@ -184,26 +184,27 @@ export default {
       this.show_yesno_mill = false
       this.show_yesno_craft = false
     },
-    async mill(user_card) {
+    async mill() {
       let can_mill = await this.$store.dispatch("calculate_value", {
-        card: user_card,
+        card: this.card,
         process: "mill",
+        count: this.count,
       })
       if (!can_mill) return
       this.resource_value = can_mill
       this.show_yesno_mill = true
     },
-    async craft(user_card) {
+    async craft() {
       let can_craft = await this.$store.dispatch("calculate_value", {
-        card: user_card,
+        card: this.card,
         process: "craft",
+        count: this.count,
       })
       if (!can_craft) return
       this.resource_value = can_craft
       this.show_yesno_craft = true
     },
     async confirm_mill() {
-      // debugger;
       this.show_yesno_mill = false
       let result = await this.$store.dispatch("pay_resource", {
         scraps: this.$store.getters["resource"].scraps + this.resource_value,

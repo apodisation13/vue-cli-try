@@ -21,15 +21,16 @@
             v-if="element.charges > 0"
             alt=""
           />
-          <card-diamond :style="background_color(element)"
-            >&dagger;{{ element.damage }}</card-diamond
-          >
-          <card-ability-circle :card="element" />
-          <card-passive
-            v-if="element.has_passive"
+          <card-damage-icon
             :style="background_color(element)"
+            :damage="element.damage"
           />
-          <card-charges>{{ element.charges }}&#8607;</card-charges>
+          <card-ability-circle :card="element" />
+          <card-passive v-if="element.has_passive" :card="element" />
+          <card-charges
+            :charge="element.charges"
+            :bgColor="background_color_charges(element.color)"
+          />
         </div>
       </template>
     </draggable>
@@ -44,19 +45,23 @@
 
 <script>
 import draggable from "vuedraggable"
-import { border_leader, background_color } from "@/logic/border_styles"
+import {
+  border_leader,
+  background_color,
+  background_color_charges,
+} from "@/logic/border_styles"
 import LeaderModal from "@/components/ModalWindows/LeaderModal"
-import CardDiamond from "@/components/UI/CardDiamond"
 import CardAbilityCircle from "@/components/UI/AbilityCircleCard"
 import CardPassive from "@/components/UI/CardPassive"
 import CardCharges from "@/components/UI/CardCharges"
+import CardDamageIcon from "@/components/UI/CardDamageIcon"
 export default {
   name: "leader-comp",
   components: {
+    CardDamageIcon,
     CardCharges,
     CardPassive,
     CardAbilityCircle,
-    CardDiamond,
     LeaderModal,
     draggable,
   },
@@ -101,6 +106,9 @@ export default {
     },
     background_color(leader) {
       return background_color(leader)
+    },
+    background_color_charges(color) {
+      return background_color_charges(color)
     },
     onDragStart() {
       console.log("ТЯНЕМ ЗА ЛИДЕРА")

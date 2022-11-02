@@ -39,7 +39,7 @@
     </div>
 
     <div class="cards_list" v-if="show_keg">
-      <cards-list
+      <card-list-component
         :cards="random_cards"
         :deckbuilder="true"
         :bonus="true"
@@ -48,16 +48,20 @@
     </div>
 
     <div class="cards_list" style="height: 20vh" v-if="show_chest">
-      <cards-list :cards="random_cards" :deckbuilder="true" :bonus="true" />
+      <card-list-component
+        :cards="random_cards"
+        :deckbuilder="true"
+        :bonus="true"
+      />
       <button v-if="show_chest" @click="accept_chest">Принять!</button>
     </div>
   </div>
 </template>
 
 <script>
-import CardsList from "@/components/CardsList"
+import CardListComponent from "@/components/CardListComponent"
 export default {
-  components: { CardsList },
+  components: { CardListComponent },
   created() {
     this.cards.forEach(card => {
       if (card.card.color === "Bronze") {
@@ -107,6 +111,7 @@ export default {
       })
     },
     async open_keg() {
+      if (this.resource.kegs <= 0) return
       this.keg_len = 3
       this.random_cards = []
       this.show_keg = true
@@ -128,6 +133,7 @@ export default {
       })
     },
     async open_big_keg() {
+      if (this.resource.big_kegs <= 0) return
       this.keg_len = 5
       this.random_cards = []
       this.show_keg = true
@@ -149,6 +155,7 @@ export default {
       })
     },
     async open_chest() {
+      if (this.resource.chests <= 0) return
       this.keg_len = 3
       this.random_cards = []
       this.show_keg = false
