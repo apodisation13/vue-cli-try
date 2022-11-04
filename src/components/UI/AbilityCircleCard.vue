@@ -25,9 +25,10 @@
       +1&#8607;
     </card-circle>
     <row-attack-ability v-if="card.ability.name === 'damage-row'" />
-    <column-attack-ability v-if="card.ability.name === 'damage-column'" />
-    <all-attack-ability v-if="card.ability.name === 'damage-all'" />
-    <spread-attack-ability v-if="card.ability.name === 'spread-damage'" />
+    <column-attack-ability v-else-if="card.ability.name === 'damage-column'" />
+    <all-attack-ability v-else-if="card.ability.name === 'damage-all'" />
+    <spread-attack-ability v-else-if="card.ability.name === 'spread-damage'" />
+    <lock-ability v-else-if="card.ability.name === 'lock'" />
   </div>
 </template>
 
@@ -38,9 +39,11 @@ import RowAttackAbility from "@/components/UI/Abilities/RowAttackAbility"
 import ColumnAttackAbility from "@/components/UI/Abilities/ColumnAttackAbility"
 import AllAttackAbility from "@/components/UI/Abilities/AllAttackAbility"
 import SpreadAttackAbility from "@/components/UI/Abilities/SpreadAttackAbility"
+import LockAbility from "@/components/UI/Abilities/LockAbility"
 export default {
   name: "card-ability-circle",
   components: {
+    LockAbility,
     CardCircle,
     HealAbility,
     RowAttackAbility,

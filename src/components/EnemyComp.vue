@@ -14,6 +14,7 @@
       >
       <card-passive v-if="enemy.has_passive" :style="background_color(enemy)" />
       <enemy-shield v-if="enemy.shield" />
+      <enemy-locked v-if="enemy.locked" />
       <card-hp :style="style(enemy)">&hearts;{{ enemy.hp }}</card-hp>
       <ability-circle-enemy :enemy="enemy" />
     </div>
@@ -34,9 +35,11 @@ import CardPassive from "@/components/UI/CardPassive"
 import EnemyShield from "@/components/UI/EnemyShield"
 import CardHp from "@/components/UI/CardHp"
 import AbilityCircleEnemy from "@/components/UI/AbilityCircleEnemy"
+import EnemyLocked from "@/components/UI/EnemyLocked"
 export default {
   name: "enemy-comp",
   components: {
+    EnemyLocked,
     AbilityCircleEnemy,
     CardHp,
     EnemyShield,
