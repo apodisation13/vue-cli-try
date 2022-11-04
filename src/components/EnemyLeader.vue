@@ -32,6 +32,7 @@
       >
 
       <ability-circle-enemy-leader :enemy_leader="enemy_leader" />
+      <enemy-locked v-if="enemy_leader.locked" />
     </div>
 
     <enemy-leader-modal
@@ -49,10 +50,12 @@ import CardDiamond from "@/components/UI/CardDiamond"
 import CardHp from "@/components/UI/CardHp"
 import CardCircleHeal from "@/components/UI/CardCircleHeal"
 import AbilityCircleEnemyLeader from "@/components/UI/AbilityCircleEnemyLeader"
+import EnemyLocked from "@/components/UI/EnemyLocked"
 
 export default {
   name: "enemy-leader",
   components: {
+    EnemyLocked,
     AbilityCircleEnemyLeader,
     CardCircleHeal,
     CardHp,
