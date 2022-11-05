@@ -3,7 +3,7 @@
     <draggable
       v-model="draggableHand"
       item-key="id"
-      @start="onDragStart"
+      @start="onDragStart($event)"
       @end="onDragEnd($event)"
     >
       <template #item="{ element, index }">
@@ -56,13 +56,19 @@ export default {
     border(card) {
       return border_for_hand_2(this.hand, card)
     },
+    // берем список дивов под картой в руке, достаем ту, у которой есть id, там cardName_fieldIndex, так находим index
+    get_card(divs) {
+      for (let i = 0; i < divs.length; i++) {
+        if (divs[i].id) return divs[i].id
+      }
+    },
     onDragStart(event) {
       console.log("ПОТЯНУЛИ ЗА КАРТУ")
       const elems = document.elementsFromPoint(
         event.originalEvent.clientX,
         event.originalEvent.clientY
       )
-      const id = elems[3]?.id // TODO: исправить это!!! поискать класс нормальный
+      const id = this.get_card(elems)
       console.log("КАРТА В РУКЕ", id)
       if (!id) return
       const index = parseInt(id.slice(id.indexOf("_") + 1))
@@ -122,7 +128,7 @@ export default {
   width: 98%;
   /*height: 18vh;*/
   padding-top: 2%;
-  border: solid 1px blue;
+  /*border: solid 1px blue;*/
   clear: both;
   overflow: auto;
   /*white-space: nowrap;*/

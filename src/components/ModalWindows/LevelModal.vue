@@ -10,11 +10,7 @@
     </div>
 
     Врагов - {{ level.enemies.length }} <br />
-    <div class="enemies">
-      <div class="enemy" v-for="enemy in level.enemies" :key="enemy">
-        <enemy-comp :enemy="enemy" />
-      </div>
-    </div>
+    <enemy-list :enemies="level.enemies" />
   </modal-window>
 </template>
 
@@ -22,10 +18,10 @@
 import ModalWindow from "@/components/UI/ModalWindow"
 import ButtonClose from "@/components/UI/ButtonClose"
 import EnemyLeader from "@/components/EnemyLeader"
-import EnemyComp from "@/components/EnemyComp"
+import EnemyList from "@/components/EnemyList"
 export default {
   name: "level-modal",
-  components: { EnemyComp, EnemyLeader, ButtonClose, ModalWindow },
+  components: { EnemyList, EnemyLeader, ButtonClose, ModalWindow },
   props: {
     level: {
       required: true,

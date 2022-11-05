@@ -12,7 +12,7 @@
 export default {
   props: {
     health: {
-      type: Number,
+      type: [Number, String],
     },
     bgColor: {
       type: String,
