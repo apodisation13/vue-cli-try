@@ -1,7 +1,13 @@
 <template>
-  <enemy-circle v-if="enemy.move.name === 'down'">&#8595;</enemy-circle>
-  <enemy-circle v-else-if="enemy.move.name === 'stand'">&#9737;</enemy-circle>
-  <enemy-circle v-else-if="enemy.move.name === 'random'">&#9736;</enemy-circle>
+  <enemy-circle v-if="enemy.move.name === 'down'" move="enemy_move_down" />
+  <enemy-circle
+    v-else-if="enemy.move.name === 'stand'"
+    move="enemy_move_stand"
+  />
+  <enemy-circle
+    v-else-if="enemy.move.name === 'random'"
+    move="enemy_move_random"
+  />
 </template>
 
 <script>

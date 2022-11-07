@@ -13,6 +13,7 @@ import RulesPage from "@/pages/RulesPage"
 import WinPage from "@/pages/WinPage"
 import LoadingPage from "@/pages/LoadingPage"
 import StartGame from "@/pages/StartGame"
+import LosePage from "@/pages/LosePage"
 
 import { images } from "@/router/const/images"
 
@@ -48,7 +49,7 @@ const routes = [
     component: StartGame,
     meta: {
       requireAuth: true,
-      // image: images.start_game,
+      image: images.start_game,
     },
   },
   {
@@ -111,6 +112,15 @@ const routes = [
     component: WinPage,
     meta: {
       requireAuth: true,
+      image: images.win,
+    },
+  },
+  {
+    path: "/lose",
+    component: LosePage,
+    meta: {
+      requireAuth: true,
+      image: images.lose,
     },
   },
 ]

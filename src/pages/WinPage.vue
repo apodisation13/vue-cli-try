@@ -90,6 +90,10 @@ export default {
 </script>
 
 <style scoped>
+div {
+  color: white;
+}
+
 .start {
   position: absolute;
   top: 50%;
