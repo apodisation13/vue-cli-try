@@ -38,6 +38,10 @@
       </div>
     </div>
 
+    <div class="inlines">
+      <div class="chests" @dblclick="open_key">keys: {{ resource.keys }}</div>
+    </div>
+
     <div class="cards_list" v-if="show_keg">
       <card-list-component
         :cards="random_cards"
@@ -55,11 +59,16 @@
       />
       <button v-if="show_chest" @click="accept_chest">Принять!</button>
     </div>
+
+    <div v-if="show_key_content" class="inlines">
+      <div class="scraps_wood">{{ random_reward_choice }}</div>
+    </div>
   </div>
 </template>
 
 <script>
 import CardListComponent from "@/components/CardListComponent"
+import { choice } from "@/lib/utils"
 export default {
   components: { CardListComponent },
   created() {
@@ -91,6 +100,8 @@ export default {
       keg_len: 3,
       show_keg: false,
       show_chest: false,
+      show_key_content: false,
+      random_reward_choice: null,
     }
   },
   methods: {
@@ -175,6 +186,29 @@ export default {
       this.show_keg = false
       this.show_chest = false
       this.random_cards = []
+    },
+
+    async open_key() {
+      const random_reward = [
+        { key: "scraps", value: 100 },
+        { key: "scraps", value: 150 },
+        { key: "scraps", value: 200 },
+        { key: "wood", value: 150 },
+        { key: "wood", value: 200 },
+        { key: "wood", value: 150 },
+        { key: "wood", value: 200 },
+        { key: "wood", value: 150 },
+        { key: "wood", value: 200 },
+        { key: "kegs", value: 1 },
+        { key: "kegs", value: 1 },
+        { key: "kegs", value: 1 },
+        { key: "big_kegs", value: 1 },
+        { key: "big_kegs", value: 1 },
+        { key: "chests", value: 1 },
+      ]
+      this.show_key_content = true
+      const index = choice(random_reward)
+      this.random_reward_choice = random_reward[index]
     },
   },
 }
