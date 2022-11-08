@@ -1,5 +1,5 @@
 <template>
-  <div class="footer" v-if="menuNeeded">
+  <div class="footer" v-if="menuNeeded && isLoggedIn">
     <button class="levels footer__btn" @click="$router.push('/levelselect')">
       <span class="footer__text">Режимы</span>
     </button>
@@ -23,6 +23,9 @@ export default {
     // меню не нужны, если в роутере есть notRequireMenu (страницы загрузки, игры)
     menuNeeded() {
       return !this.$router.currentRoute.value.meta.notRequireMenu
+    },
+    isLoggedIn() {
+      return this.$store.getters["isLoggedIn"]
     },
   },
 }

@@ -1,41 +1,41 @@
 <template>
-  <div>
-    <div class="header" @click="choseFormRegister" v-if="formLogin">
-      <div class="auth">
-        <span>ВХОД</span>
-        <span :style="{ fontSize: '10pt' }"
-          >нажмите на это поле чтобы переключиться на регистрацию</span
-        >
-      </div>
+  <div class="login-page">
+    <div class="auth" v-if="formLogin">
+      <h2>Добрый день!</h2>
+      <p>
+        Войдите в систему ниже или
+        <span @click="choseFormRegister">создайте учетную запись</span>
+      </p>
     </div>
-    <div class="header" @click="choseFormLogin" v-else>
-      <div class="auth">
-        <span>РЕГИСТРАЦИЯ</span>
-        <span :style="{ fontSize: '10pt' }"
-          >нажмите на это поле чтобы переключиться на вход</span
-        >
-      </div>
+    <div class="auth" v-else>
+      <h2>Создать аккаунт</h2>
+      <p>
+        Введите данные своей учетной записи ниже
+        <span @click="choseFormLogin">или войдите в систему</span>
+      </p>
     </div>
     <form v-on:submit.prevent class="form">
-      <div class="auth" v-if="!formLogin">Введите имя пользователя</div>
+      <label class="auth__input-name" v-if="!formLogin">
+        Введите имя пользователя
+      </label>
       <div v-if="!formLogin">
-        <input class="data" v-model="username" autocomplete="username" />
+        <input class="auth__data" v-model="username" autocomplete="username" />
       </div>
-      <div class="auth">Введите адрес электронной почты</div>
+      <label class="auth__input-name">Логин</label>
       <div>
-        <input class="data" v-model="email" autocomplete="email" />
+        <input class="auth__data" v-model="email" autocomplete="email" />
       </div>
-      <div class="auth">Введите пароль</div>
+      <label class="auth__input-name">Пароль</label>
       <div>
         <input
-          class="data"
+          class="auth__data"
           v-model="password"
           type="password"
           autocomplete="password"
           v-on:keyup.enter="login"
         />
       </div>
-      <div class="auth" v-if="!formLogin">Подтвердите пароль</div>
+      <div class="auth__password-check" v-if="!formLogin">Подтвердите пароль</div>
       <div v-if="!formLogin">
         <input
           class="data"
@@ -45,9 +45,11 @@
           v-on:keyup.enter="userRegister"
         />
       </div>
-      <div class="auth">
-        <button class="login" v-if="formLogin" @click="login">ВХОД</button>
-        <button class="login" v-else @click="userRegister">Регистрация</button>
+      <div class="auth__buttons">
+        <button class="login" v-if="formLogin" @click="login">Войти</button>
+        <button class="login" v-else @click="userRegister">
+          Создать аккаунт
+        </button>
       </div>
       <div class="error" v-if="error">{{ error }}</div>
     </form>
@@ -133,14 +135,51 @@ export default {
 </script>
 
 <style scoped>
-.header {
-  background-color: cornflowerblue;
-  width: 80%;
-  height: 10vh;
-  margin: 1% auto auto;
-  border-radius: 1%;
-  border: solid 1px black;
-  font-size: 14pt;
+.login-page {
+  background: url("../assets/page_images/login-background.png");
+  background-size: cover;
+  height: 100%;
+  overflow: auto;
+}
+
+.auth {
+  margin-top: 80px;
+}
+
+.auth h2 {
+  display: flex;
+  justify-content: center; /* align horizontal */
+  align-items: center; /* align vertical */
+  font-family: "Philosopher";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 29px;
+  line-height: 100%;
+  /* identical to box height, or 29px */
+  font-feature-settings: "calt" off;
+  background: linear-gradient(153.5deg, #B07B15 16.64%, #FACF5D 47.22%, #B48328 82.67%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.auth p {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 120%;
+  /* or 19px */
+  text-align: center;
+  letter-spacing: -0.02em;
+  font-feature-settings: "calt" off;
+  color: rgba(252, 234, 188, 0.6);
+  margin-top: 17px;
+}
+
+.auth span {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 span {
@@ -149,39 +188,56 @@ span {
   align-items: center; /* align vertical */
 }
 
+.auth__input-name {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 120%;
+  /* or 19px */
+  letter-spacing: -0.02em;
+  font-feature-settings: "calt" off;
+  /* Цвет текста на кнопках */
+  color: #facf5d;
+}
+
+.auth__data {
+  box-sizing: border-box;
+  width: 328px;
+  height: 48px;
+  background: linear-gradient(
+    180deg,
+    #1d252d -43.75%,
+    rgba(0, 0, 0, 0.13) 52.08%,
+    #282d33 145.92%
+  );
+  border-radius: 2px;
+}
+
 .form {
   width: 80%;
-  height: 75vh;
   margin: 0 auto auto;
-  text-align: center;
-  border-radius: 1%;
-  border: solid 1px black;
-  font-size: 14pt;
-}
-
-.data {
-  width: 80%;
-  height: 5vh;
-  margin: 2% auto auto;
-  text-align: center;
-  border-radius: 1%;
-  border: solid 1px black;
-  font-size: 14pt;
-}
-
-.auth {
-  margin-bottom: 1%;
-  margin-top: 3%;
-  font-size: 14pt;
+  margin-top: 62px;
 }
 
 .login {
-  width: 50%;
-  height: 7vh;
-  background-color: limegreen;
-  font-size: 14pt;
-  border-radius: 5%;
-  border: dashed;
+  font-family: "Philosopher";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+  /* identical to box height, or 138% */
+  letter-spacing: -0.02em;
+  font-feature-settings: "calt" off;
+  background: linear-gradient(183.6deg, #EDB13E 2.96%, #F4D977 65.79%, #EEB850 129.95%);
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(180deg, #1D252D -21.82%, rgba(0, 0, 0, 0.13) 44.55%, #282D33 109.53%);
+  /* Цвет текста на кнопках */
+  border: 2px solid #FACF5D;
+  box-shadow: 5px 9px 20px rgba(0, 0, 0, 0.25), inset -5px -5px 5px rgba(0, 0, 0, 0.25), inset 5px 5px 5px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+  /* Note: backdrop-filter has minimal browser support */
+  border-radius: 2px;
 }
 
 .error {
