@@ -1,14 +1,22 @@
 <template>
-  <div class="circle">
-    <span>
-      <slot></slot>
-    </span>
-  </div>
+  <div
+    class="circle"
+    :style="{
+      'background-image':
+        'url(' + require(`@/assets/icons/card/${move}.svg`) + ')',
+    }"
+  ></div>
 </template>
 
 <script>
 export default {
   name: "enemy-circle",
+  props: {
+    move: {
+      type: String,
+      required: true,
+    },
+  },
 }
 </script>
 
@@ -17,18 +25,9 @@ export default {
   position: absolute;
   width: 24%;
   height: 3vh;
-  background: orangered;
-  border-radius: 50%;
+  /*background-image: url("~@/assets/icons/card/$move}");*/
   top: 3%;
   left: 3%;
-}
-
-span {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 10pt;
-  color: white;
+  background-repeat: no-repeat;
 }
 </style>

@@ -1,27 +1,20 @@
-// CURRENTLY NOT USED, использовалась в HAND-COMP
-function border_for_hand(card, index) {
-  if (card.color === "Bronze")
-    return { border: "solid 1px lightsalmon", "z-index": 6 - index }
-  else if (card.color === "Silver")
-    return { border: "solid 3px silver", "z-index": 6 - index }
-  else if (card.color === "Gold")
-    return { border: "solid 3px gold", "z-index": 6 - index }
-  else return {}
-}
-
 function border_for_hand_2(hand, card) {
   if (hand.length === 6) {
     if (!card.damages_enemy) {
       if (card.color === "Bronze")
         return {
           border: "solid 1px lightsalmon",
+          "border-image":
+            "repeating-linear-gradient( -45deg, rgb(74, 66, 55) 0%, rgb(197, 168, 126) 50%, rgb(74, 66, 55) 100% ) 1",
           float: "right",
           "margin-left": "-12%",
           "margin-right": "0.2%",
         }
       else if (card.color === "Silver")
         return {
-          border: "solid 3px silver",
+          border: "solid 2px silver",
+          "border-image":
+            "repeating-linear-gradient( -45deg, rgb(29, 37, 45) 0%, rgb(255, 255, 255) 50%, rgb(29, 37, 45) 100% ) 1",
           float: "right",
           "margin-left": "-12%",
           "margin-right": "0.2%",
@@ -29,6 +22,8 @@ function border_for_hand_2(hand, card) {
       else if (card.color === "Gold")
         return {
           border: "solid 3px gold",
+          "border-image":
+            "repeating-linear-gradient( -45deg, rgb(176, 123, 21) 0%, rgb(245, 202, 90) 50%, rgb(176, 123, 21) 100% ) 1",
           float: "right",
           "margin-left": "-12%",
           "margin-right": "0.2%",
@@ -47,13 +42,17 @@ function border_for_hand_2(hand, card) {
       if (card.color === "Bronze")
         return {
           border: "solid 1px lightsalmon",
+          "border-image":
+            "repeating-linear-gradient( -45deg, rgb(74, 66, 55) 0%, rgb(197, 168, 126) 50%, rgb(74, 66, 55) 100% ) 1",
           float: "right",
           "margin-left": "-9%",
           "margin-right": "0.8%",
         }
       else if (card.color === "Silver")
         return {
-          border: "solid 3px silver",
+          border: "solid 2px silver",
+          "border-image":
+            "repeating-linear-gradient( -45deg, rgb(29, 37, 45) 0%, rgb(255, 255, 255) 50%, rgb(29, 37, 45) 100% ) 1",
           float: "right",
           "margin-left": "-9%",
           "margin-right": "0.8%",
@@ -61,6 +60,8 @@ function border_for_hand_2(hand, card) {
       else if (card.color === "Gold")
         return {
           border: "solid 3px gold",
+          "border-image":
+            "repeating-linear-gradient( -45deg, rgb(176, 123, 21) 0%, rgb(245, 202, 90) 50%, rgb(176, 123, 21) 100% ) 1",
           float: "right",
           "margin-left": "-9%",
           "margin-right": "0.8%",
@@ -80,18 +81,24 @@ function border_for_hand_2(hand, card) {
       if (card.color === "Bronze")
         return {
           border: "solid 1px lightsalmon",
+          "border-image":
+            "repeating-linear-gradient( -45deg, rgb(74, 66, 55) 0%, rgb(197, 168, 126) 50%, rgb(74, 66, 55) 100% ) 1",
           float: "right",
           "margin-left": "-2%",
         }
       else if (card.color === "Silver")
         return {
-          border: "solid 3px silver",
+          border: "solid 2px silver",
+          "border-image":
+            "repeating-linear-gradient( -45deg, rgb(29, 37, 45) 0%, rgb(255, 255, 255) 50%, rgb(29, 37, 45) 100% ) 1",
           float: "right",
           "margin-left": "-2%",
         }
       else if (card.color === "Gold")
         return {
           border: "solid 3px gold",
+          "border-image":
+            "repeating-linear-gradient( -45deg, rgb(176, 123, 21) 0%, rgb(245, 202, 90) 50%, rgb(176, 123, 21) 100% ) 1",
           float: "right",
           "margin-left": "-2%",
         }
@@ -103,18 +110,24 @@ function border_for_hand_2(hand, card) {
       if (card.color === "Bronze")
         return {
           border: "solid 1px lightsalmon",
+          "border-image":
+            "repeating-linear-gradient( -45deg, rgb(74, 66, 55) 0%, rgb(197, 168, 126) 50%, rgb(74, 66, 55) 100% ) 1",
           float: "right",
           "margin-right": "5%",
         }
       else if (card.color === "Silver")
         return {
-          border: "solid 3px silver",
+          border: "solid 2px silver",
+          "border-image":
+            "repeating-linear-gradient( -45deg, rgb(29, 37, 45) 0%, rgb(255, 255, 255) 50%, rgb(29, 37, 45) 100% ) 1",
           float: "right",
           "margin-right": "5%",
         }
       else if (card.color === "Gold")
         return {
           border: "solid 3px gold",
+          "border-image":
+            "repeating-linear-gradient( -45deg, rgb(176, 123, 21) 0%, rgb(245, 202, 90) 50%, rgb(176, 123, 21) 100% ) 1",
           float: "right",
           "margin-right": "5%",
         }
@@ -126,18 +139,24 @@ function border_for_hand_2(hand, card) {
       if (card.color === "Bronze")
         return {
           border: "solid 1px lightsalmon",
+          "border-image":
+            "repeating-linear-gradient( -45deg, rgb(74, 66, 55) 0%, rgb(197, 168, 126) 50%, rgb(74, 66, 55) 100% ) 1",
           float: "right",
           "margin-right": "15%",
         }
       else if (card.color === "Silver")
         return {
-          border: "solid 3px silver",
+          border: "solid 2px silver",
+          "border-image":
+            "repeating-linear-gradient( -45deg, rgb(29, 37, 45) 0%, rgb(255, 255, 255) 50%, rgb(29, 37, 45) 100% ) 1",
           float: "right",
           "margin-right": "15%",
         }
       else if (card.color === "Gold")
         return {
           border: "solid 3px gold",
+          "border-image":
+            "repeating-linear-gradient( -45deg, rgb(176, 123, 21) 0%, rgb(245, 202, 90) 50%, rgb(176, 123, 21) 100% ) 1",
           float: "right",
           "margin-right": "15%",
         }
@@ -149,18 +168,24 @@ function border_for_hand_2(hand, card) {
       if (card.color === "Bronze")
         return {
           border: "solid 1px lightsalmon",
+          "border-image":
+            "repeating-linear-gradient( -45deg, rgb(74, 66, 55) 0%, rgb(197, 168, 126) 50%, rgb(74, 66, 55) 100% ) 1",
           float: "right",
           "margin-right": "35%",
         }
       else if (card.color === "Silver")
         return {
-          border: "solid 3px silver",
+          border: "solid 2px silver",
+          "border-image":
+            "repeating-linear-gradient( -45deg, rgb(29, 37, 45) 0%, rgb(255, 255, 255) 50%, rgb(29, 37, 45) 100% ) 1",
           float: "right",
           "margin-right": "35%",
         }
       else if (card.color === "Gold")
         return {
           border: "solid 3px gold",
+          "border-image":
+            "repeating-linear-gradient( -45deg, rgb(176, 123, 21) 0%, rgb(245, 202, 90) 50%, rgb(176, 123, 21) 100% ) 1",
           float: "right",
           "margin-right": "35%",
         }
@@ -173,10 +198,26 @@ function border_for_hand_2(hand, card) {
 function border_for_card(card) {
   if (card.damages_player) return { border: "outset 4px red" }
   else {
-    if (card.color === "Bronze") return { border: "solid 1px lightsalmon" }
-    else if (card.color === "Silver") return { border: "solid 3px silver" }
-    else if (card.color === "Gold") return { border: "solid 3px gold" }
-    else return {}
+    if (card.color === "Bronze") {
+      return {
+        border: "solid 1px lightsalmon",
+        "border-image":
+          "repeating-linear-gradient( -45deg, rgb(74, 66, 55) 0%, rgb(197, 168, 126) 50%, rgb(74, 66, 55) 100% ) 1",
+      }
+    } else if (card.color === "Silver") {
+      return {
+        border: "solid 2px silver",
+        "border-image":
+          "repeating-linear-gradient( -45deg, rgb(29, 37, 45) 0%, rgb(255, 255, 255) 50%, rgb(29, 37, 45) 100% ) 1",
+      }
+    } else if (card.color === "Gold") {
+      return {
+        border: "solid 3px gold",
+        "border-image":
+          "repeating-linear-gradient( -45deg, rgb(176, 123, 21) 0%, rgb(245, 202, 90) 50%, rgb(176, 123, 21) 100% ) 1",
+      }
+    }
+    return {}
   }
 }
 
@@ -220,6 +261,32 @@ function background_color(card) {
   } else return {}
 }
 
+function background_color_hp(color) {
+  switch (color) {
+    case "Bronze":
+      return "#a9916e"
+    case "Silver":
+      return "#d3d4d5"
+    case "Gold":
+      return "rgb(245, 202, 90)"
+    default:
+      return "#fd69b5"
+  }
+}
+
+function background_color_charges(color) {
+  switch (color) {
+    case "Bronze":
+      return "#857359"
+    case "Silver":
+      return "#95999d"
+    case "Gold":
+      return "rgb(176, 123, 21)"
+    default:
+      return "#fd69b5"
+  }
+}
+
 function background_color_deck(deck) {
   if (deck.leader.faction === "Soldiers") return { backgroundColor: "blue" }
   else if (deck.leader.faction === "Monsters") return { backgroundColor: "red" }
@@ -229,10 +296,11 @@ function background_color_deck(deck) {
 }
 
 export {
-  border_for_hand,
   border_for_card,
   border_leader,
   background_color,
   background_color_deck,
   border_for_hand_2,
+  background_color_hp,
+  background_color_charges,
 }

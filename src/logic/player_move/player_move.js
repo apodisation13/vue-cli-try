@@ -14,6 +14,7 @@ import { destroy_all_same_hp } from "@/logic/player_move/abilities/ability_destr
 import { player_passive_abilities_upon_playing_a_card } from "@/logic/player_move/player_passive_abilities"
 import { remove_dead_card } from "@/logic/player_move/service/service_for_player_move"
 import { check_win } from "@/logic/player_move/service/check_win"
+import { lock_enemy } from "@/logic/player_move/abilities/ability_lock"
 
 // Сюда заходим если там есть враг
 // card - карта, которую мы играем (или из руки, или лидер).
@@ -43,6 +44,9 @@ function damage_ai_card(card, enemy, isCard, gameObj) {
     destroy_random(field, enemy_leader, enemies)
   } else if (card.ability.name === "destroy-all-same-hp") {
     destroy_all_same_hp(enemy, field, enemy_leader, enemies)
+  } else if (card.ability.name === "lock") {
+    damage_one(enemy, card, field, enemy_leader, enemies)
+    lock_enemy(enemy)
   } else damage_one(enemy, card, field, enemy_leader, enemies)
 
   // убираем карту игрока, если в ней не осталось зарядов, из руки и из колоды, если играли оттуда

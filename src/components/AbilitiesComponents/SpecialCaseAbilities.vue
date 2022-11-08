@@ -2,7 +2,10 @@
   <div>
     <!--отркывается по любой абилке где нужно окно, там отфильтрованные карты cards_pool-->
     <modal-window v-if="show_pick_a_card_selection">
-      <cards-list :cards="cards_pool" @chose_player_card="confirm_selection" />
+      <card-list-component
+        :cards="cards_pool"
+        @chose_player_card="confirm_selection"
+      />
     </modal-window>
 
     <!--а тут только 1 выбранная карта, при абилках играть play_from-->
@@ -15,10 +18,10 @@
 <script>
 import CardComp from "@/components/CardComp"
 import ModalWindow from "@/components/UI/ModalWindow"
-import CardsList from "@/components/CardsList"
+import CardListComponent from "@/components/CardListComponent"
 export default {
   name: "special-case-abilities",
-  components: { CardsList, ModalWindow, CardComp },
+  components: { CardListComponent, ModalWindow, CardComp },
   props: {
     cards_pool: {
       required: true,

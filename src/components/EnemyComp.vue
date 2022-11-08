@@ -9,12 +9,18 @@
       :id="make_id(enemy, index)"
     >
       <img class="img" :src="enemy.image" v-if="enemy.image" alt="" />
-      <card-diamond :style="background_color(enemy)"
-        >&dagger;{{ enemy.damage }}</card-diamond
-      >
-      <card-passive v-if="enemy.has_passive" :style="background_color(enemy)" />
+
+      <card-damage-icon
+        :style="background_color(enemy)"
+        :damage="enemy.damage"
+      />
+      <card-passive v-if="enemy.has_passive" :card="enemy" />
       <enemy-shield v-if="enemy.shield" />
-      <card-hp :style="style(enemy)">&hearts;{{ enemy.hp }}</card-hp>
+      <enemy-locked v-if="enemy.locked" />
+      <heart-icon
+        :health="enemy.hp"
+        :bgColor="background_color_hp(enemy.color)"
+      />
       <ability-circle-enemy :enemy="enemy" />
     </div>
 
@@ -27,21 +33,28 @@
 </template>
 
 <script>
-import { border_for_card, background_color } from "@/logic/border_styles"
+import {
+  border_for_card,
+  background_color,
+  background_color_hp,
+} from "@/logic/border_styles"
 import EnemyModal from "@/components/ModalWindows/EnemyModal"
-import CardDiamond from "@/components/UI/CardDiamond"
 import CardPassive from "@/components/UI/CardPassive"
 import EnemyShield from "@/components/UI/EnemyShield"
-import CardHp from "@/components/UI/CardHp"
 import AbilityCircleEnemy from "@/components/UI/AbilityCircleEnemy"
+import EnemyLocked from "@/components/UI/EnemyLocked"
+import CardDamageIcon from "@/components/UI/CardDamageIcon"
+import HeartIcon from "@/components/UI/HeartIcon"
 export default {
   name: "enemy-comp",
   components: {
+    HeartIcon,
+    CardDamageIcon,
+    EnemyLocked,
     AbilityCircleEnemy,
-    CardHp,
     EnemyShield,
     CardPassive,
-    CardDiamond,
+    // CardDiamond,
     EnemyModal,
   },
   props: {
@@ -63,6 +76,9 @@ export default {
     },
     background_color(e) {
       return background_color(e)
+    },
+    background_color_hp(color) {
+      return background_color_hp(color)
     },
     show_modal() {
       this.show_enemy_modal = true
@@ -89,8 +105,8 @@ export default {
   /*top: 48%;*/
   /*left: 50%;*/
   /*transform: translate(-50%, -50%);*/
-  border-width: 3px 4px 3px 5px;
-  border-radius: 95% 4% 92% 5%/4% 95% 6% 95%;
+  /*border-width: 3px 4px 3px 5px;*/
+  /*border-radius: 95% 4% 92% 5%/4% 95% 6% 95%;*/
 }
 
 .img {
@@ -100,8 +116,8 @@ export default {
   /*left: 50%;*/
   /*transform: translate(-50%, -50%);*/
   position: absolute;
-  border-width: 3px 4px 3px 5px;
-  border-radius: 95% 4% 92% 5%/4% 95% 6% 95%;
-  transform: rotate(2deg);
+  /*border-width: 3px 4px 3px 5px;*/
+  /*border-radius: 95% 4% 92% 5%/4% 95% 6% 95%;*/
+  /*transform: rotate(2deg);*/
 }
 </style>

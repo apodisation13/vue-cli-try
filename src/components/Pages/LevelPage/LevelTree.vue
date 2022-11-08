@@ -62,14 +62,13 @@ export default {
     const toast = useToast()
     return { toast }
   },
+  watch: {
+    levels(oldVal, newVal) {
+      if (oldVal !== newVal) this.init()
+    },
+  },
   created() {
-    this.levs = [...this.levels]
-    this.levs.forEach(level => {
-      level.level.lines = [] // добавляем такой ключ, чтобы потом положить туда линии
-      level.level.children.forEach(ch => {
-        this.calc_line(ch, level)
-      })
-    })
+    this.init()
   },
   data() {
     return {
@@ -82,6 +81,15 @@ export default {
     }
   },
   methods: {
+    init() {
+      this.levs = [...this.levels]
+      this.levs.forEach(level => {
+        level.level.lines = [] // добавляем такой ключ, чтобы потом положить туда линии
+        level.level.children.forEach(ch => {
+          this.calc_line(ch, level)
+        })
+      })
+    },
     squareConfig(item) {
       return {
         x: item.level.x,
@@ -133,7 +141,7 @@ export default {
       return {
         x: item.level.x + position,
         y: item.level.y - 7,
-        numPoints: 6,
+        numPoints: 5,
         innerRadius: 4,
         outerRadius: 7,
         fill: "gold",

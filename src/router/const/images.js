@@ -20,7 +20,7 @@ export const images = {
     morning: `${path}/loading-morning.jpg`,
   },
   deckbuild: {
-    default: `${path}/deckbuild_default.png`,
+    default: `${path}/deckbuild_default.jpg`,
   },
   bonus: {
     default: `${path}/bonus_default.png`,
@@ -28,7 +28,22 @@ export const images = {
   levels: {
     default: `${path}/levels_default.jpeg`,
   },
-  // start_game: {
-  //   default: `${path}/start_game.jpg`,
-  // },
+  start_game: {
+    day: `${path}/start_game_day.png`,
+    night: `${path}/start_game_night.png`,
+    evening: `${path}/start_game_evening.png`,
+    morning: `${path}/start_game_morning.png`,
+  },
+  win: {
+    day: `${path}/win_day.png`,
+    night: `${path}/win_night.png`,
+    evening: `${path}/win_evening.png`,
+    morning: `${path}/win_morning.png`,
+  },
+  lose: {
+    day: `${path}/lose_day.png`,
+    night: `${path}/lose_night.png`,
+    evening: `${path}/lose_evening.png`,
+    morning: `${path}/lose_morning.png`,
+  },
 }

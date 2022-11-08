@@ -19,13 +19,13 @@ export default {
   },
   methods: {
     filtering(type) {
-      this.$emit("filter-types", [type])
+      this.$emit("set-filter", "type", type)
     },
     reset_filter_types() {
       this.$emit("reset-filter-types")
     },
   },
-  emits: ["filter-types", "reset-filter-types"],
+  emits: ["set-filter", "reset-filter-types"],
 }
 </script>
 

@@ -87,30 +87,26 @@ const actions = {
   },
 
   calculate_value({ state }, obj) {
+    // процесс крафта: по цвету, или если цвета нет, то крафтим лидера значит
     if (obj.process === "craft") {
-      if (obj.card.card.color === "Bronze")
-        return state.game_prices.craft_bronze
-      else if (obj.card.card.color === "Silver")
+      if (obj.card.color === "Bronze") return state.game_prices.craft_bronze
+      else if (obj.card.color === "Silver")
         return state.game_prices.craft_silver
-      else if (obj.card.card.color === "Gold")
-        return state.game_prices.craft_gold
+      else if (obj.card.color === "Gold") return state.game_prices.craft_gold
       else return state.game_prices.craft_leader
-    } else if (obj.process === "mill") {
+    }
+    // процесс милла: по цвету, или лидера, но нельзя если count = 0, или стартовый набор
+    if (obj.process === "mill") {
       // нельзя: если карт 0, или если карт 1 и при этом она в стартовом наборе (unlocked, то есть)
-      if (
-        obj.card.count === 0 ||
-        (obj.card.count === 1 && obj.card.card.unlocked)
-      ) {
+      if (obj.count === 0 || (obj.count === 1 && obj.card.unlocked)) {
         toast.error(
           "Нельзя размиллить карту из стартового набора (или карту которой у вас и так нет, ха-ха)"
         )
         return
       }
-      if (obj.card.card.color === "Bronze") return state.game_prices.mill_bronze
-      else if (obj.card.card.color === "Silver")
-        return state.game_prices.mill_silver
-      else if (obj.card.card.color === "Gold")
-        return state.game_prices.mill_gold
+      if (obj.card.color === "Bronze") return state.game_prices.mill_bronze
+      else if (obj.card.color === "Silver") return state.game_prices.mill_silver
+      else if (obj.card.color === "Gold") return state.game_prices.mill_gold
       else return state.game_prices.mill_leader
     }
   },
@@ -187,20 +183,20 @@ const actions = {
     }
   },
 
-  async mill_card_action({ dispatch }, card) {
-    if (card.card.color) await dispatch("mill_card", card)
-    else await dispatch("mill_leader", card)
+  async mill_card_action({ dispatch }, user_card) {
+    if (user_card.card.color) await dispatch("mill_card", user_card)
+    else await dispatch("mill_leader", user_card)
   },
 
-  async mill_card({ dispatch, getters }, card) {
+  async mill_card({ dispatch, getters }, user_card) {
     let header = getters["getHeader"]
     let user_id = getters["getUser"].user_id
-    let url = `${mill_card}${card.id}/`
+    let url = `${mill_card}${user_card.id}/`
 
     try {
       await axios.patch(
         url,
-        { user: user_id, card: card.card.id, count: card.count },
+        { user: user_id, card: user_card.card.id, count: user_card.count },
         header
       )
       await dispatch("get_user_database")
@@ -210,15 +206,15 @@ const actions = {
     }
   },
 
-  async mill_leader({ dispatch, getters }, card) {
+  async mill_leader({ dispatch, getters }, user_card) {
     let header = getters["getHeader"]
     let user_id = getters["getUser"].user_id
-    let url = `${mill_leader}${card.id}/`
+    let url = `${mill_leader}${user_card.id}/`
 
     try {
       await axios.patch(
         url,
-        { user: user_id, leader: card.card.id, count: card.count },
+        { user: user_id, leader: user_card.card.id, count: user_card.count },
         header
       )
       await dispatch("get_user_database")
@@ -260,7 +256,10 @@ const actions = {
         },
         header
       )
-      commit("set_levels", response.data.levels)
+      commit("set_updated_season", {
+        levels: response.data.levels,
+        index: data.seasonIndex,
+      })
     } catch (err) {
       dispatch("error_action", err)
       throw new Error("Какая-то ошибка при открытии уровней")

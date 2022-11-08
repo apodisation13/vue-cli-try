@@ -6,7 +6,7 @@ import { sound_lose_game } from "@/logic/play_sounds"
 function check_lose() {
   if (store.state.game.health <= 0) {
     sound_lose_game()
-    router.push("/")
+    router.push("/lose")
   }
 }
 

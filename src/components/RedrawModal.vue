@@ -2,26 +2,24 @@
   <modal-window v-if="visible">
     <button-close @close_self="close_self" />
 
-    <div>
-      <cards-list :cards="hand" @chose_player_card="chose_player_card" />
-    </div>
+    <card-list-component :cards="hand" @chose_player_card="chose_player_card" />
 
     <div>
       <h1>Изменить карту можно ещё {{ redraws }} раз</h1>
     </div>
     <h2>В колоде осталось ещё {{ deck.length }} карт</h2>
-    <cards-list :cards="deck" />
+    <card-list-component :cards="deck" />
   </modal-window>
 </template>
 
 <script>
 import ModalWindow from "@/components/UI/ModalWindow"
-import CardsList from "@/components/CardsList"
 import ButtonClose from "@/components/UI/ButtonClose"
 import { choice } from "@/lib/utils"
+import CardListComponent from "@/components/CardListComponent"
 export default {
   name: "redraw-modal",
-  components: { ButtonClose, CardsList, ModalWindow },
+  components: { CardListComponent, ButtonClose, ModalWindow },
   data() {
     return {
       visible: true,

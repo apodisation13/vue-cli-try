@@ -16,22 +16,23 @@
         v-if="enemy_leader.hp > 0 || isNaN(enemy_leader.hp)"
       />
 
-      <card-diamond
-        :style="background_color(enemy_leader)"
+      <card-damage-icon
         v-if="enemy_leader.damage_per_turn"
-      >
-        &dagger;{{ enemy_leader.damage_per_turn }}
-      </card-diamond>
+        :style="background_color(enemy_leader)"
+        :damage="enemy_leader.damage_per_turn"
+      />
 
       <card-circle-heal v-if="enemy_leader.heal_self_per_turn"
         >+&hearts;{{ enemy_leader.heal_self_per_turn }}</card-circle-heal
       >
 
-      <card-hp :style="style(enemy_leader)"
-        >&hearts;{{ enemy_leader.hp }}</card-hp
-      >
+      <heart-icon
+        :health="enemy_leader.hp"
+        :style="background_color(enemy_leader)"
+      />
 
       <ability-circle-enemy-leader :enemy_leader="enemy_leader" />
+      <enemy-locked v-if="enemy_leader.locked" />
     </div>
 
     <enemy-leader-modal
@@ -45,18 +46,20 @@
 <script>
 import { background_color, border_leader } from "@/logic/border_styles"
 import EnemyLeaderModal from "@/components/ModalWindows/EnemyLeaderModal"
-import CardDiamond from "@/components/UI/CardDiamond"
-import CardHp from "@/components/UI/CardHp"
 import CardCircleHeal from "@/components/UI/CardCircleHeal"
 import AbilityCircleEnemyLeader from "@/components/UI/AbilityCircleEnemyLeader"
+import EnemyLocked from "@/components/UI/EnemyLocked"
+import CardDamageIcon from "@/components/UI/CardDamageIcon"
+import HeartIcon from "@/components/UI/HeartIcon"
 
 export default {
   name: "enemy-leader",
   components: {
+    HeartIcon,
+    CardDamageIcon,
+    EnemyLocked,
     AbilityCircleEnemyLeader,
     CardCircleHeal,
-    CardHp,
-    CardDiamond,
     EnemyLeaderModal,
   },
   props: {

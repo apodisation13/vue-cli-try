@@ -5,7 +5,7 @@
     </button>
     <modal-window v-if="flag" v-touch:swipe="close_self">
       <button-close @close_self="close_self" />
-      <cards-list :cards="grave" />
+      <card-list-component :cards="grave" />
     </modal-window>
   </div>
 </template>
@@ -13,10 +13,10 @@
 <script>
 import ModalWindow from "@/components/UI/ModalWindow"
 import ButtonClose from "@/components/UI/ButtonClose"
-import CardsList from "@/components/CardsList"
+import CardListComponent from "@/components/CardListComponent"
 export default {
   name: "grave-comp",
-  components: { CardsList, ButtonClose, ModalWindow },
+  components: { CardListComponent, ButtonClose, ModalWindow },
   props: {
     grave: {
       required: true,

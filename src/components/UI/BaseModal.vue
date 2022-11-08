@@ -13,6 +13,7 @@ export default {
       this.$emit("close-modal")
     },
   },
+  emits: ["close-modal"],
 }
 </script>
 
