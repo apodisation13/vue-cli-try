@@ -71,15 +71,15 @@ const actions = {
     }
   },
 
-  async pay_resource({ getters, dispatch }, body) {
+  async pay_resource({ commit, getters, dispatch }, body) {
     let header = getters["getHeader"]
     let user_id = getters["getUser"].user_id
     const url = `${user_resource}${user_id}/`
 
     try {
-      await axios.patch(url, body, header)
-      await dispatch("get_resource")
-      return true
+      const response = await axios.patch(url, body, header)
+      commit("set_resource", response.data)
+      return response.data
     } catch (err) {
       dispatch("error_action", err)
       throw new Error("Какая-то ошибка при менеджменте ресурсов")

@@ -59,6 +59,7 @@ const routes = [
       requireAuth: true,
       notRequireMenu: true,
       sideMenu: true,
+      image: images.field,
     },
   },
   {
