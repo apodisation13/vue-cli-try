@@ -1,45 +1,73 @@
 <template>
   <div class="d">
     <div class="title">
-      <b>ДОБРО ПОЖАЛОВАТЬ НА БОНУСНУЮ СТРАНИЦУ!</b>
-    </div>
-
-    <div class="inlines">
-      <div class="scraps_wood">scraps: {{ resource.scraps }}</div>
-      <div class="add_kegs" style="border: 0"></div>
-      <div class="scraps_wood">wood: {{ resource.wood }}</div>
-    </div>
-
-    <div class="inlines">
-      <div class="kegs" @dblclick="open_keg">kegs: {{ resource.kegs }}</div>
-      <div class="add_kegs" @dblclick="add_kegs">
-        <!--TODO: FIX THIS!!!-->
-        {{ $store.state.user_actions.game_prices.pay_for_kegs }}
-      </div>
-
-      <div class="add_kegs" style="border: 0"></div>
-
-      <div class="kegs" @dblclick="open_big_keg">
-        big kegs: {{ resource.big_kegs }}
-      </div>
-      <div class="add_kegs" @dblclick="add_big_kegs">
-        <!--TODO: FIX THIS!!!-->
-        {{ $store.state.user_actions.game_prices.pay_for_big_kegs }}
+      <div class="title__text">
+        <b>ДОБРО ПОЖАЛОВАТЬ НА <br />БОНУСНУЮ СТРАНИЦУ!</b>
       </div>
     </div>
 
-    <div class="inlines">
-      <div class="chests" @dblclick="open_chest">
-        chests: {{ resource.chests }}
+    <!--Строка открытия и приобретения kegs-->
+    <div class="element">
+      <div class="open_icon" @dblclick="open_keg"></div>
+      <div class="line">
+        <resource-item name="kegs" :count="resource.kegs" />
       </div>
-      <div class="add_chests" @dblclick="add_chests">
-        <!--TODO: FIX THIS!!!-->
-        {{ $store.state.user_actions.game_prices.pay_for_chests }}
+      <div class="line">
+        <div class="kegs" @dblclick="add_kegs">
+          +++ {{ $store.state.user_actions.game_prices.pay_for_kegs }}
+          <img
+            :src="require(`@/assets/icons/resources/wood.svg`)"
+            alt=""
+            class="wood"
+          />
+        </div>
       </div>
     </div>
 
-    <div class="inlines">
-      <div class="chests" @dblclick="open_key">keys: {{ resource.keys }}</div>
+    <!--Строка открытия и приобретения big_kegs-->
+    <div class="element">
+      <div class="open_icon" @dblclick="open_big_keg"></div>
+      <div class="line">
+        <resource-item name="big_kegs" :count="resource.big_kegs" />
+      </div>
+      <div class="line">
+        <div class="kegs" @dblclick="add_big_kegs">
+          +++
+          {{ $store.state.user_actions.game_prices.pay_for_big_kegs }}
+          <img
+            :src="require(`@/assets/icons/resources/wood.svg`)"
+            class="wood"
+            alt=""
+          />
+        </div>
+      </div>
+    </div>
+
+    <!--Строка открытия и приобретения chests-->
+    <div class="element">
+      <div class="open_icon" @dblclick="open_chest"></div>
+      <div class="line">
+        <resource-item name="chests" :count="resource.chests" />
+      </div>
+      <div class="line">
+        <div class="kegs" @dblclick="add_chests">
+          +++
+          {{ $store.state.user_actions.game_prices.pay_for_chests }}
+          <img
+            :src="require(`@/assets/icons/resources/wood.svg`)"
+            alt=""
+            class="wood"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!--Строка открытия и приобретения chests-->
+    <div class="element">
+      <div class="open_icon" @dblclick="open_key"></div>
+      <div class="line">
+        <resource-item name="keys" :count="resource.keys" />
+      </div>
     </div>
 
     <div class="cards_list" v-if="show_keg">
@@ -61,16 +89,26 @@
     </div>
 
     <div v-if="show_key_content" class="inlines">
-      <div class="scraps_wood">{{ random_reward_choice }}</div>
+      <div class="scraps_wood" @dblclick="accept_random_reward">
+        <img
+          :src="
+            require(`@/assets/icons/resources/${random_reward_choice.resource}.svg`)
+          "
+          alt=""
+          class="wood"
+        />
+        {{ random_reward_choice.value }}
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import CardListComponent from "@/components/CardListComponent"
-import { choice } from "@/lib/utils"
+import { getRandomReward } from "@/logic/random_rewards"
+import ResourceItem from "@/components/UI/ResourceItem"
 export default {
-  components: { CardListComponent },
+  components: { ResourceItem, CardListComponent },
   created() {
     this.cards.forEach(card => {
       if (card.card.color === "Bronze") {
@@ -106,7 +144,6 @@ export default {
   },
   methods: {
     async chose(card) {
-      alert(card.card.name)
       await this.$store.dispatch("craft_card_action", card)
       this.show_keg = false
       this.show_chest = false
@@ -189,26 +226,19 @@ export default {
     },
 
     async open_key() {
-      const random_reward = [
-        { key: "scraps", value: 100 },
-        { key: "scraps", value: 150 },
-        { key: "scraps", value: 200 },
-        { key: "wood", value: 150 },
-        { key: "wood", value: 200 },
-        { key: "wood", value: 150 },
-        { key: "wood", value: 200 },
-        { key: "wood", value: 150 },
-        { key: "wood", value: 200 },
-        { key: "kegs", value: 1 },
-        { key: "kegs", value: 1 },
-        { key: "kegs", value: 1 },
-        { key: "big_kegs", value: 1 },
-        { key: "big_kegs", value: 1 },
-        { key: "chests", value: 1 },
-      ]
+      await this.$store.dispatch("pay_resource", {
+        keys: this.resource.keys - 1,
+      })
       this.show_key_content = true
-      const index = choice(random_reward)
-      this.random_reward_choice = random_reward[index]
+      this.random_reward_choice = getRandomReward()
+    },
+    async accept_random_reward() {
+      const { resource, value } = this.random_reward_choice
+      let reward = {}
+      reward[resource] = this.resource[resource] + value
+      await this.$store.dispatch("pay_resource", reward)
+      this.show_key_content = false
+      this.random_reward_choice = null
     },
   },
 }
@@ -230,8 +260,38 @@ div {
 }
 
 .title {
-  margin: auto;
-  width: 40%;
+  justify-content: center;
+  display: flex;
+}
+
+.title__text {
+  text-align: center;
+}
+
+.element {
+  /*border: solid 2px red;*/
+  margin-top: 10px;
+}
+
+.line {
+  display: inline-block;
+  margin-right: 30px;
+}
+
+.open_icon {
+  width: 30px;
+  height: 30px;
+  background-image: url("~@/assets/icons/buttons/open_icon.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-left: 20px;
+  margin-right: 30px;
+  display: inline-block;
+}
+
+.wood {
+  max-height: 25px;
 }
 
 .scraps_wood {
@@ -251,47 +311,11 @@ div {
 }
 
 .kegs {
-  width: 20vh;
-  height: 5vh;
-  margin: 1%;
   border-radius: 50% 20% / 10% 40%;
+  width: 200px;
   border: dashed 2px brown;
   text-align: center;
   line-height: 7vh;
-  display: table-cell;
-}
-
-.add_kegs {
-  width: 7vh;
-  height: 5vh;
-  margin: 1%;
-  border-radius: 50% 20% / 10% 40%;
-  border: solid 2px brown;
-  text-align: center;
-  line-height: 7vh;
-  display: table-cell;
-}
-
-.chests {
-  width: 30vh;
-  height: 7vh;
-  margin: 1%;
-  border-radius: 50% 20% / 10% 40%;
-  border: dotted 4px gold;
-  text-align: center;
-  line-height: 7vh;
-  display: table-cell;
-}
-
-.add_chests {
-  width: 10vh;
-  height: 5vh;
-  margin: 1%;
-  border-radius: 50% 20% / 10% 40%;
-  border: solid 4px gold;
-  text-align: center;
-  line-height: 7vh;
-  display: table-cell;
 }
 
 .cards_list {
