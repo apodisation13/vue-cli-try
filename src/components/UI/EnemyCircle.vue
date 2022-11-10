@@ -3,7 +3,7 @@
     class="circle"
     :style="{
       'background-image':
-        'url(' + require(`@/assets/icons/card/${move}.svg`) + ')',
+        'url(' + require(`@/assets/icons/enemy/${move}.svg`) + ')',
     }"
   ></div>
 </template>

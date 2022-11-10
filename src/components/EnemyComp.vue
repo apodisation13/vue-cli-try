@@ -17,6 +17,7 @@
       <card-passive v-if="enemy.has_passive" :card="enemy" />
       <enemy-shield v-if="enemy.shield" />
       <enemy-locked v-if="enemy.locked" />
+      <deathwish-ability v-if="enemy.has_deathwish" />
       <heart-icon
         :health="enemy.hp"
         :bgColor="background_color_hp(enemy.color)"
@@ -45,9 +46,11 @@ import AbilityCircleEnemy from "@/components/UI/AbilityCircleEnemy"
 import EnemyLocked from "@/components/UI/EnemyLocked"
 import CardDamageIcon from "@/components/UI/CardDamageIcon"
 import HeartIcon from "@/components/UI/HeartIcon"
+import DeathwishAbility from "@/components/UI/AbilitiesEnemies/DeathwishAbility"
 export default {
   name: "enemy-comp",
   components: {
+    DeathwishAbility,
     HeartIcon,
     CardDamageIcon,
     EnemyLocked,
