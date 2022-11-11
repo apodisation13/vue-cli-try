@@ -46,6 +46,8 @@
       :card="card"
       :user_card="user_card"
       :hp_needed="hp_needed"
+      :deckbuilder="deckbuilder"
+      :bonus="bonus"
       @close_card_modal="show_card_modal = false"
     />
   </div>
@@ -106,6 +108,11 @@ export default {
     },
     index: {
       type: Number,
+    },
+    bonus: {
+      type: Boolean,
+      default: false,
+      required: false,
     },
   },
   data() {
