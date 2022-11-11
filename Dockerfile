@@ -15,12 +15,9 @@ RUN npm install
 # копируем файлы и каталоги проекта в текущий рабочий каталог (т.е. в каталог 'app')
 COPY . .
 
-ARG DOMAIN_NAME
-
-RUN echo "$DOMAIN_NAME"
-RUN echo "VUE_APP_API_URL=$DOMAIN_NAME" > .env.production
-RUN echo "VUE_APP_TRY1=try1envprod" >> .env.production
-RUN echo "I AM HERE AND I SEE THIS!!!"
+# принимаем аргумент из экшена билда, из секретов и записываем его в этот файл
+ARG VUE_APP_API_URL
+RUN echo "VUE_APP_API_URL=$VUE_APP_API_URL" > .env.production
 
 # собираем приложение для production с минификацией
 RUN npm run build
