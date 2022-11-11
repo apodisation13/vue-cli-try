@@ -15,6 +15,10 @@ RUN npm install
 # копируем файлы и каталоги проекта в текущий рабочий каталог (т.е. в каталог 'app')
 COPY . .
 
+RUN echo "VUE_APP_TRY1=try1envprod" > .env.production
+RUN echo "VUE_APP_TRY1=try1env" > .env
+RUN echo "I AM HERE AND I SEE THIS!!!"
+
 # собираем приложение для production с минификацией
 RUN npm run build
 
