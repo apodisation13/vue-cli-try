@@ -16,9 +16,8 @@ RUN npm install
 COPY . .
 
 RUN echo "${DOMAIN_NAME}"
-RUN echo "VUE_APP_TRY1=${DOMAIN_NAME}" > .env.production
-RUN echo "VUE_APP_TRY1=try1envprod" > .env.production
-RUN echo "VUE_APP_TRY1=try1env" > .env
+RUN echo "VUE_APP_API_URL=${DOMAIN_NAME}" > .env.production
+RUN echo "VUE_APP_TRY1=try1envprod" >> .env.production
 RUN echo "I AM HERE AND I SEE THIS!!!"
 
 # собираем приложение для production с минификацией
