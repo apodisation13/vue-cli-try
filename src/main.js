@@ -41,3 +41,4 @@ app
 
 console.log(process.env.VUE_APP_TRY1, "ПЕРЕМЕННАЯ!")
 console.log(process.env.VUE_APP_API_URL, "ИМЯ СЕРВЕРА")
+console.log(process.env)
