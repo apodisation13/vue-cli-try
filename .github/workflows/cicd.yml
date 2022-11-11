@@ -55,7 +55,7 @@ jobs:
           cache-to: type=gha,mode=max
           secrets: |
             "DOMAIN_NAME=${{ secrets.DOMAIN_NAME }}"
-          build-args: AAA=aaa
+          build-args: AAA=aaaaaaaaa
 
       - name: Send docker-compose
         uses: appleboy/scp-action@master
