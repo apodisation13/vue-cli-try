@@ -53,9 +53,9 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}:${{ env.MODE }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}"
           secrets: |
             "DOMAIN_NAME=${{ secrets.DOMAIN_NAME }}"
+          build-args: AAA=aaa
 
       - name: Send docker-compose
         uses: appleboy/scp-action@master
