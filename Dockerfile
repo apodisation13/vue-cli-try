@@ -15,10 +15,10 @@ RUN npm install
 # копируем файлы и каталоги проекта в текущий рабочий каталог (т.е. в каталог 'app')
 COPY . .
 
-ARG AAA
+ARG DOMAIN_NAME
 
-RUN echo "$AAA"
-RUN echo "VUE_APP_API_URL=${DOMAIN_NAME}" > .env.production
+RUN echo "$DOMAIN_NAME"
+RUN echo "VUE_APP_API_URL=$DOMAIN_NAME" > .env.production
 RUN echo "VUE_APP_TRY1=try1envprod" >> .env.production
 RUN echo "I AM HERE AND I SEE THIS!!!"
 
