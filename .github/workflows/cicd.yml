@@ -53,12 +53,6 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}:${{ env.MODE }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          script: |
-            echo "i am here and i see this!"
-            echo "VUE_APP_API_URL=${{ secrets.DOMAIN_NAME }}" > .env.production
-            echo "VUE_APP_TRY1=try1envprod" >> .env.production
-            echo "VUE_APP_TRY1=try1env" > .env
-            
 
       - name: Send docker-compose
         uses: appleboy/scp-action@master
@@ -84,9 +78,9 @@ jobs:
             export MODE=${{ env.MODE }}
             export DOMAIN_NAME=${{ secrets.DOMAIN_NAME }}
             
-            echo "VUE_APP_API_URL=${{ secrets.DOMAIN_NAME }}" > .env.production
-            echo "VUE_APP_TRY1=try1envprod" >> .env.production
-            echo "VUE_APP_TRY1=try1env" > .env
+#            echo "VUE_APP_API_URL=${{ secrets.DOMAIN_NAME }}" > .env.production
+#            echo "VUE_APP_TRY1=try1envprod" >> .env.production
+#            echo "VUE_APP_TRY1=try1env" > .env
             
             echo "${{ github.token }}" | docker login ${{ env.REGISTRY }} --username ${{ github.actor }} --password-stdin
             docker pull ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}:${{ env.MODE }}
