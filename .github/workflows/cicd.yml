@@ -78,10 +78,6 @@ jobs:
             export MODE=${{ env.MODE }}
             export DOMAIN_NAME=${{ secrets.DOMAIN_NAME }}
             
-#            echo "VUE_APP_API_URL=${{ secrets.DOMAIN_NAME }}" > .env.production
-#            echo "VUE_APP_TRY1=try1envprod" >> .env.production
-#            echo "VUE_APP_TRY1=try1env" > .env
-            
             echo "${{ github.token }}" | docker login ${{ env.REGISTRY }} --username ${{ github.actor }} --password-stdin
             docker pull ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}:${{ env.MODE }}
             
