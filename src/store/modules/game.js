@@ -21,6 +21,7 @@ const state = {
 
 const getters = {
   get_season: state => state.season,
+  currentLevel: state => state.level,
 }
 
 const mutations = {
