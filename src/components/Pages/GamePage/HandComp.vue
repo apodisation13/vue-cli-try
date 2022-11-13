@@ -139,7 +139,6 @@ export default {
   width: 26%;
   margin-left: -20%;
   margin-right: -20%;
-  box-shadow: -4px 0px 4px rgba(0, 0, 0, 0.5);
   border-radius: 2px;
 }
 .card_in_hand:hover {

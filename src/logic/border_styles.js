@@ -221,6 +221,27 @@ function border_for_card(card) {
   }
 }
 
+function card_margin(card) {
+  if (card.damages_player) return { border: "outset 4px red" }
+  else {
+    if (card.color === "Bronze") {
+      return {
+        margin: "1px",
+      }
+    } else if (card.color === "Silver") {
+      return {
+        margin: "2px",
+
+      }
+    } else if (card.color === "Gold") {
+      return {
+        margin: "3px",
+      }
+    }
+    return {}
+  }
+}
+
 function border_leader(leader) {
   if (leader.faction === "Soldiers") return { border: "solid 3px blue" }
   else if (leader.faction === "Monsters") return { border: "solid 3px red" }
@@ -297,6 +318,7 @@ function background_color_deck(deck) {
 
 export {
   border_for_card,
+  card_margin,
   border_leader,
   background_color,
   background_color_deck,

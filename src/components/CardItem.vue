@@ -10,7 +10,7 @@
     >
       <div
         class="card-item"
-        :style="{ backgroundImage: `url(${card.image})`}"
+        :style="[{ backgroundImage: `url(${card.image})`}, card_margin(card)]"
         :class="{ disable: count === 0 }"
       ></div>
       <div class="card-item-information">
@@ -59,6 +59,7 @@ import {
   background_color_charges,
   border_for_card,
   border_leader,
+  card_margin,
 } from "@/logic/border_styles"
 import CardModal from "@/components/ModalWindows/CardModal"
 import CardAbilityCircle from "@/components/UI/AbilityCircleCard"
@@ -139,6 +140,9 @@ export default {
     border(card) {
       return this.is_leader ? border_leader(card) : border_for_card(card)
     },
+    card_margin(card) {
+      return card_margin(card);
+    }
   },
   emits: ["open_card_modal"],
 }
@@ -148,8 +152,6 @@ export default {
 .card-item-component {
   position: relative;
   width: 100%;
-  border-radius: 2px;
-  overflow: hidden;
   box-shadow: -4px 0px 4px rgb(0 0 0 / 50%);
 }
 
@@ -159,17 +161,14 @@ export default {
   padding-top: 143%;
 }
 
-/* .card-item-wrapper {
-  border-radius: 2px;
-  overflow: hidden;
-} */
-
-.card-item {
+.card-item, .card-item-information {
   position: absolute;
-  top: 2px;
-  right: 2px;
-  bottom: 2px;
-  left: 2px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.card-item {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -192,11 +191,6 @@ export default {
 }
 
 .card-item-information {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   z-index: 2;
 }
 </style>
