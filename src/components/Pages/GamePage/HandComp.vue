@@ -3,7 +3,7 @@
     <draggable
       v-model="draggableHand"
       item-key="id"
-      @start="onDragStart($event)"
+
       @end="onDragEnd($event)"
       class="hand-list"
     >
