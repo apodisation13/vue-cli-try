@@ -15,17 +15,19 @@ const toastOptions = {
   timeout: 2000,
 }
 
-Sentry.init({
-  app,
-  dsn: "https://b8e6f199e75f43d1973e376cf7ab0c74@o4504139249876992.ingest.sentry.io/4504140574162944",
-  integrations: [
-    new BrowserTracing({
-      routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-      tracingOrigins: ["*"],
-    }),
-  ],
-  tracesSampleRate: 1.0,
-})
+if (process.env.NODE_ENV === "production") {
+  Sentry.init({
+    app,
+    dsn: "https://b8e6f199e75f43d1973e376cf7ab0c74@o4504139249876992.ingest.sentry.io/4504140574162944",
+    integrations: [
+      new BrowserTracing({
+        routingInstrumentation: Sentry.vueRouterInstrumentation(router),
+        tracingOrigins: ["*"],
+      }),
+    ],
+    tracesSampleRate: 1.0,
+  })
+}
 
 app
   .use(router)
