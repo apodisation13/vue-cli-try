@@ -92,6 +92,7 @@ export default {
     },
     set_random_level(index) {
       this.toast.success(`Выбран рандомный уровень!`, { timeout: 1000 })
+      this.random_levels[index].level.random = true // ставим флаг, что уровень рандомный, чтобы потом не открывать его детей
       this.$store.commit("set_level", this.random_levels[index].level)
       this.$store.commit(
         "set_enemy_leader",
