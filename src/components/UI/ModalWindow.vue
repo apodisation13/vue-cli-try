@@ -14,14 +14,12 @@ export default {
 <style scoped>
 .modal_window {
   background-color: springgreen;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
   text-align: center;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: absolute;
+  top:0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 9999;
   font-size: 12pt;
 

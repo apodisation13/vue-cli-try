@@ -135,7 +135,6 @@ export default {
 }
 
 .card_in_hand {
-  position: relative;
   width: 26%;
   margin-left: -20%;
   margin-right: -20%;

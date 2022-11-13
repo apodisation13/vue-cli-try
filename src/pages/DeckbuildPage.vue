@@ -335,17 +335,12 @@ export default {
   overflow: hidden;
 }
 
-.database_of_cards-wrapper {
-  position: relative;
-}
-
 .database_of_cards-wrapper::after {
   content: "";
   display: block;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  margin-top: -28px;
+  position: relative;
+  z-index: 10;
   height: 28px;
   background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
 }
