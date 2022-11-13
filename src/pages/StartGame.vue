@@ -42,9 +42,9 @@ export default {
     async start_game() {
       this.loading = true
       try {
-        await this.$store.dispatch("pay_resource", {
-          wood: this.$store.getters["resource"].wood + this.play_price,
-        })
+        // await this.$store.dispatch("pay_resource", {
+        //   wood: this.$store.getters["resource"].wood + this.play_price,
+        // })
         this.$store.commit("set_start_game_redirect", true)
         setTimeout(() => {
           this.$router.push("/game") // ВОТ ТУТ мы переходим на игру и ТОЛЬКО тут (с флагом, что запрос успешно)

@@ -200,21 +200,21 @@ function border_for_card(card) {
   else {
     if (card.color === "Bronze") {
       return {
-        border: "solid 1px lightsalmon",
-        "border-image":
-          "repeating-linear-gradient( -45deg, rgb(74, 66, 55) 0%, rgb(197, 168, 126) 50%, rgb(74, 66, 55) 100% ) 1",
+        // padding: "1px",
+        "background-image":
+          "linear-gradient( -45deg, rgb(74, 66, 55) 0%, rgb(197, 168, 126) 50%, rgb(74, 66, 55) 100% )",
       }
     } else if (card.color === "Silver") {
       return {
-        border: "solid 2px silver",
-        "border-image":
-          "repeating-linear-gradient( -45deg, rgb(29, 37, 45) 0%, rgb(255, 255, 255) 50%, rgb(29, 37, 45) 100% ) 1",
+        // padding: "2px",
+        "background-image":
+          "linear-gradient( -45deg, rgb(29, 37, 45) 0%, rgb(255, 255, 255) 50%, rgb(29, 37, 45) 100% )",
       }
     } else if (card.color === "Gold") {
       return {
-        border: "solid 3px gold",
-        "border-image":
-          "repeating-linear-gradient( -45deg, rgb(176, 123, 21) 0%, rgb(245, 202, 90) 50%, rgb(176, 123, 21) 100% ) 1",
+        // padding: "3px",
+        "background-image":
+          "linear-gradient( -45deg, rgb(176, 123, 21) 0%, rgb(245, 202, 90) 50%, rgb(176, 123, 21) 100% )",
       }
     }
     return {}

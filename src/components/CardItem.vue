@@ -6,14 +6,13 @@
       @click.right="show_modal"
       v-touch:longtap="show_modal"
       :id="make_id(card, index)"
+      :style="[ border(card)]"
     >
-      <div class="card-item-wrapper">
-        <div
-          class="card-item"
-          :style="[{ backgroundImage: `url(${card.image})` }, border(card)]"
-          :class="{ disable: count === 0 }"
-        ></div>
-      </div>
+      <div
+        class="card-item"
+        :style="{ backgroundImage: `url(${card.image})`}"
+        :class="{ disable: count === 0 }"
+      ></div>
       <div class="card-item-information">
         <special-type-of-card
           :color="card.color"
@@ -148,26 +147,37 @@ export default {
 <style scoped>
 .card-item-component {
   position: relative;
-}
-
-.card-item-wrapper {
+  width: 100%;
   border-radius: 2px;
   overflow: hidden;
-}
-.card-item {
-  position: relative;
-  width: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  border-radius: 2px;
+  box-shadow: -4px 0px 4px rgb(0 0 0 / 50%);
 }
 
-.card-item::before {
+.card-item-component::before {
   content: "";
   display: block;
   padding-top: 143%;
 }
+
+/* .card-item-wrapper {
+  border-radius: 2px;
+  overflow: hidden;
+} */
+
+.card-item {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  bottom: 2px;
+  left: 2px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+
 
 .disable::after {
   content: "";

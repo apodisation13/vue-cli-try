@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <!-- поле с врагами -->
+  <div class="game-page">
+    <div class="game-block">
+          <!-- поле с врагами -->
     <field-comp
       :field="gameObj.field"
       @exec_damage_ai_card="exec_damage_enemy_card"
@@ -49,6 +50,7 @@
 
       <!-- Просто полоска с жизнями (пока что) -->
       <health-comp />
+    </div>
     </div>
 
     <hand-comp
@@ -291,6 +293,13 @@ export default {
 </script>
 
 <style scoped>
+/* стилизация всей страницы */
+.game-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+}
+
 /* Панель справа - лидер врага, кнопки, пас, лидер игрока */
 .right-panel {
   display: inline;
