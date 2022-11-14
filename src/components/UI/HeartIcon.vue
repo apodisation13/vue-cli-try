@@ -1,6 +1,6 @@
 <template>
   <div class="heart-wrapper" :style="{ '--bgColor': bgColor }">
-    <div :class="hp === 0 ? 'heart' : 'heart_takes_damage'">
+    <div class="heart" :style="bgImage">
       <div class="health-value">
         {{ health }}
       </div>
@@ -19,10 +19,19 @@ export default {
     },
   },
   computed: {
-    hp() {
-      if (isNaN(this.health) && this.health.includes("-")) return 1
-      else if (isNaN(this.health) && this.health.includes("+")) return 2
-      else return 0
+    bgImage() {
+      if (isNaN(this.health) && this.health.includes("-"))
+        return {
+          backgroundImage: `url(${require("@/assets/icons/card/heart_red.svg")})`,
+        }
+      else if (isNaN(this.health) && this.health.includes("+"))
+        return {
+          backgroundImage: `url(${require("@/assets/icons/card/heart_light_green.svg")})`,
+        }
+      else
+        return {
+          backgroundImage: `url(${require("@/assets/icons/card/heart_green.svg")})`,
+        }
     },
   },
 }
@@ -47,20 +56,6 @@ export default {
   right: 2px;
   bottom: 0;
   left: 0;
-  background-image: url("~@/assets/icons/card/heart_green.svg");
-  background-size: 16px;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.heart_takes_damage {
-  position: absolute;
-  transform: rotate(45deg);
-  top: 2px;
-  right: 2px;
-  bottom: 0;
-  left: 0;
-  background-image: url("~@/assets/icons/card/heart_red.svg");
   background-size: 16px;
   background-repeat: no-repeat;
   background-position: center;
