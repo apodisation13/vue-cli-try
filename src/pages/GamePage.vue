@@ -300,14 +300,16 @@ export default {
   justify-content: space-between; 
 }
 
+.game-block {
+  display: flex;
+  justify-content: space-between; 
+}
+
 /* Панель справа - лидер врага, кнопки, пас, лидер игрока */
 .right-panel {
-  display: inline;
-  float: right;
   width: 24.5%;
   height: 74vh;
   /* border: solid 1px orange; */
-  position: relative;
   margin-right: 0.4%;
 }
 
@@ -317,7 +319,6 @@ export default {
   /* border: solid 1px red; */
   margin-bottom: 1%;
   margin-top: 1%;
-  position: relative;
 }
 
 .draw {
@@ -326,6 +327,5 @@ export default {
   /* border: solid 1px red; */
   margin-bottom: 1%;
   margin-top: 1%;
-  position: relative;
 }
 </style>

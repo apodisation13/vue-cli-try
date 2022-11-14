@@ -12,6 +12,7 @@
           :card="element"
           :index="index"
           class="card_in_hand"
+          :style="{'z-index': 10 + index }"
         />
       </template>
     </draggable>
