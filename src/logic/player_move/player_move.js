@@ -13,7 +13,8 @@ import { destroy_all_same_hp } from "@/logic/player_move/abilities/ability_destr
 import { lock_enemy } from "@/logic/player_move/abilities/ability_lock"
 
 import {
-  get_enemies_with_triggered_deathwish,
+  get_enemies,
+  place_dead_enemies_in_grave,
   remove_dead_card,
 } from "@/logic/player_move/service/service_for_player_move"
 import { check_win } from "@/logic/player_move/service/check_win"
@@ -26,7 +27,17 @@ import { deathwish } from "@/logic/ai_move/ai_deathwish_abilities"
 // enemy - тот враг, в которого мы стреляем (или карта на поле, или лидер врагов).
 // isCard - флаг, картой или лидером мы ходим, нужен для сброса в кладбище
 function damage_ai_card(card, enemy, isCard, gameObj) {
-  const { field, enemy_leader, hand, deck, grave, enemies, leader } = gameObj
+  const {
+    field,
+    enemy_leader,
+    hand,
+    deck,
+    grave,
+    enemies,
+    leader,
+    enemies_grave,
+  } = gameObj
+
   if (card.ability.name === "heal") {
     damage_one(enemy, card, field, enemy_leader, enemies)
     heal(card)
@@ -58,11 +69,10 @@ function damage_ai_card(card, enemy, isCard, gameObj) {
   card.charges -= 1
   if (isCard) remove_dead_card(card, grave, hand, deck)
 
-  // собираем всех врагов, у которых сработал deathwish за этот ход
-  const deathwish_enemies = get_enemies_with_triggered_deathwish(
-    field,
-    enemy_leader
-  )
+  // собираем: всех врагов с deathwish за этот ход и всех которые умерли
+  const { deathwish_enemies, dead_enemies } = get_enemies(field, enemy_leader)
+  // собирает всех умерших врагов на кладбище врагов
+  place_dead_enemies_in_grave(dead_enemies, enemies_grave)
 
   // пассивные абилки от хода
   // пока только лидер игрока, +заряд от спецкарты

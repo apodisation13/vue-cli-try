@@ -32,11 +32,15 @@ function get_random_enemy(field, enemy_leader) {
   return enemies_list[random]
 }
 
-// для врага ставит ему deathwish_triggered
-function set_deathwish_triggered(enemy, card) {
-  if (enemy.has_deathwish && enemy.hp - card.damage <= 0) {
-    console.log("У ВРАГА СРАБОТАЛО ДЕФВИШ")
-    enemy.deathwish_triggered = true // для deathwish
+// для врага ставит ему dead и deathwish_triggered
+function set_dead_and_deathwish(enemy, card) {
+  if (enemy.hp - card.damage <= 0) {
+    console.log("ВРАГ УМЕР из вспомогательной функции")
+    enemy.dead = true // враг умер, если у него жизней меньше или равно 0
+    if (enemy.has_deathwish) {
+      console.log("У ВРАГА ТРИГГЕРНУЛО ДЕФВИШ из вспомогательной функции")
+      enemy.deathwish_triggered = true // для deathwish
+    }
   }
 }
 
@@ -50,22 +54,32 @@ function get_empty_field_indexes(field) {
 }
 
 // если хотя бы у одного врага есть deathwish И при этом он умер, то возвращаем ТРУ
-function get_enemies_with_triggered_deathwish(field, enemy_leader) {
+function get_enemies(field, enemy_leader) {
   const enemies = get_all_enemies(field, enemy_leader)
   let deathwish_enemies = []
+  let dead_enemies = []
   for (let i = 0; i < enemies.length; i++) {
     if (enemies[i].deathwish_triggered) {
       deathwish_enemies.push(enemies[i])
     }
+    if (enemies[i].dead) {
+      dead_enemies.push(enemies[i])
+    }
   }
-  return deathwish_enemies
+  return { deathwish_enemies, dead_enemies }
+}
+
+// складывает мертвых врагов в кладбище
+function place_dead_enemies_in_grave(dead_enemies, enemies_grave) {
+  dead_enemies.forEach(enemy => enemies_grave.push(enemy))
 }
 
 export {
   remove_dead_card,
   get_all_enemies,
   get_random_enemy,
-  set_deathwish_triggered,
+  set_dead_and_deathwish,
   get_empty_field_indexes,
-  get_enemies_with_triggered_deathwish,
+  get_enemies,
+  place_dead_enemies_in_grave,
 }

@@ -1,6 +1,6 @@
 import { sound_hit_shield } from "@/logic/play_sounds"
 import { check_win } from "@/logic/player_move/service/check_win"
-import { set_deathwish_triggered } from "@/logic/player_move/service/service_for_player_move"
+import { set_dead_and_deathwish } from "@/logic/player_move/service/service_for_player_move"
 
 function hit_one_enemy(
   enemy,
@@ -20,7 +20,7 @@ function hit_one_enemy(
   }
 
   // поставим врагу enemy.deathwish_triggered
-  set_deathwish_triggered(enemy, card)
+  set_dead_and_deathwish(enemy, card)
 
   let temp = enemy.hp // сложили жизни в темп
   enemy.hp = `${enemy.hp}-${card.damage}` // отрисовали 5-3 (жизни-урон)
