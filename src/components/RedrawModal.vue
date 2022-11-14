@@ -1,5 +1,6 @@
 <template>
-  <modal-window v-if="visible">
+  <modal-window class="redraw-modal-window"
+    v-if="visible" >
     <button-close @close_self="close_self" />
 
     <card-list-component :cards="hand" @chose_player_card="chose_player_card" />
@@ -65,4 +66,9 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.redraw-modal-window {
+  overflow-y: scroll ;
+}
+
+</style>
