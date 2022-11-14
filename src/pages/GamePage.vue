@@ -17,7 +17,7 @@
       <!-- колода оставшихся врагов и кладбище врагов -->
       <div class="div-two-buttons">
         <remaining-enemies :enemies="gameObj.enemies" />
-        <enemies-grave />
+        <enemies-grave :enemies_grave="gameObj.enemies_grave" />
       </div>
 
       <!-- возможность вытянуть карту, дро -->
@@ -133,7 +133,7 @@ export default {
         field: ["", "", "", "", "", "", "", "", "", "", "", ""],
         enemy_leader: null,
         enemies: [], // враги, копия из стора, приходит из start_game
-        enemy_grave: [], // кладбище врагов
+        enemies_grave: [], // кладбище врагов
       },
       // объект активны ли разные карты, то есть можно ли на них тыкать
       isActive: {
