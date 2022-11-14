@@ -12,27 +12,28 @@ import { if_in_deck_increase_self_damage } from "@/logic/player_move/passive_abi
 import { if_in_grave_increase_self_damage } from "@/logic/player_move/passive_abilities/if_in_grave_increase_self_damage"
 import { passive_end_turn_destroy_2_enemies_after_3_turns } from "@/logic/player_move/passive_abilities/destroy_2_enemies_after_3_turns"
 
+// диспетчер вызова пассивных абилок
 function player_passive_abilities_upon_playing_a_card(player_card, leader) {
-  // диспетчер вызова пассивных абилок
-
   // здесь карты из руки проверяем
-
   if (!leader.has_passive) return
   if (leader.passive_ability.name === "add-charges-to-leader-if-play-special") {
     add_charges_to_leader_if_play_special(player_card, leader)
   }
 }
 
-function player_passive_abilities_end_turn(
-  hand,
-  leader,
-  deck,
-  grave,
-  field,
-  enemy_leader,
-  enemies
-) {
+function player_passive_abilities_end_turn(gameObj) {
   store.commit("set_ppa_end_turn", true)
+
+  const {
+    field,
+    enemy_leader,
+    hand,
+    deck,
+    grave,
+    enemies,
+    leader,
+    enemies_grave,
+  } = gameObj
 
   let passive_hand = hand.filter(c => c.has_passive_in_hand)
   passive_hand.reverse() // не забываем про float right :) FIXME
@@ -72,7 +73,8 @@ function player_passive_abilities_end_turn(
           passive_hand[i],
           undefined,
           enemy_leader,
-          enemies
+          enemies,
+          enemies_grave
         )
       } else if (
         passive_hand[i].passive_ability.name ===
