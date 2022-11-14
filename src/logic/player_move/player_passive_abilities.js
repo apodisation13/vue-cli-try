@@ -24,16 +24,7 @@ function player_passive_abilities_upon_playing_a_card(player_card, leader) {
 function player_passive_abilities_end_turn(gameObj) {
   store.commit("set_ppa_end_turn", true)
 
-  const {
-    field,
-    enemy_leader,
-    hand,
-    deck,
-    grave,
-    enemies,
-    leader,
-    enemies_grave,
-  } = gameObj
+  const { field, enemy_leader, hand, deck, grave, enemies, leader } = gameObj
 
   let passive_hand = hand.filter(c => c.has_passive_in_hand)
   passive_hand.reverse() // не забываем про float right :) FIXME
@@ -68,14 +59,7 @@ function player_passive_abilities_end_turn(gameObj) {
     } else {
       // ДИСПЕТЧЕР пассивных абилок
       if (passive_hand[i].passive_ability.name === "damage-random-enemy-by-1") {
-        passive_end_turn_damage_random_enemy(
-          field,
-          passive_hand[i],
-          undefined,
-          enemy_leader,
-          enemies,
-          enemies_grave
-        )
+        passive_end_turn_damage_random_enemy(passive_hand[i], gameObj)
       } else if (
         passive_hand[i].passive_ability.name ===
         "increase-damage-to-card-in-hand-by-1"
