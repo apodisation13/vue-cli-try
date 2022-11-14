@@ -10,11 +10,16 @@ import { destroy_highest_hp } from "@/logic/player_move/abilities/ability_destro
 import { destroy_highest_damage } from "@/logic/player_move/abilities/ability_destroy_highest_damage"
 import { destroy_random } from "@/logic/player_move/abilities/ability_destroy_random"
 import { destroy_all_same_hp } from "@/logic/player_move/abilities/ability_destroy_all_same_hp"
+import { lock_enemy } from "@/logic/player_move/abilities/ability_lock"
+
+import {
+  get_enemies_with_triggered_deathwish,
+  remove_dead_card,
+} from "@/logic/player_move/service/service_for_player_move"
+import { check_win } from "@/logic/player_move/service/check_win"
 
 import { player_passive_abilities_upon_playing_a_card } from "@/logic/player_move/player_passive_abilities"
-import { remove_dead_card } from "@/logic/player_move/service/service_for_player_move"
-import { check_win } from "@/logic/player_move/service/check_win"
-import { lock_enemy } from "@/logic/player_move/abilities/ability_lock"
+import { deathwish } from "@/logic/ai_move/ai_deathwish_abilities"
 
 // Сюда заходим если там есть враг
 // card - карта, которую мы играем (или из руки, или лидер).
@@ -45,17 +50,26 @@ function damage_ai_card(card, enemy, isCard, gameObj) {
   } else if (card.ability.name === "destroy-all-same-hp") {
     destroy_all_same_hp(enemy, field, enemy_leader, enemies)
   } else if (card.ability.name === "lock") {
-    damage_one(enemy, card, field, enemy_leader, enemies)
     lock_enemy(enemy)
+    damage_one(enemy, card, field, enemy_leader, enemies)
   } else damage_one(enemy, card, field, enemy_leader, enemies)
 
   // убираем карту игрока, если в ней не осталось зарядов, из руки и из колоды, если играли оттуда
   card.charges -= 1
   if (isCard) remove_dead_card(card, grave, hand, deck)
 
+  // собираем всех врагов, у которых сработал deathwish за этот ход
+  const deathwish_enemies = get_enemies_with_triggered_deathwish(
+    field,
+    enemy_leader
+  )
+
   // пассивные абилки от хода
   // пока только лидер игрока, +заряд от спецкарты
   player_passive_abilities_upon_playing_a_card(card, leader)
+
+  // выполняем все deathwish способности врагов, за ход
+  setTimeout(() => deathwish(deathwish_enemies, field), 1200)
 }
 
 export { damage_ai_card }

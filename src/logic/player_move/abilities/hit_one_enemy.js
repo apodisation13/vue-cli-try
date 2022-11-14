@@ -1,5 +1,6 @@
 import { sound_hit_shield } from "@/logic/play_sounds"
 import { check_win } from "@/logic/player_move/service/check_win"
+import { set_deathwish_triggered } from "@/logic/player_move/service/service_for_player_move"
 
 function hit_one_enemy(
   enemy,
@@ -18,6 +19,9 @@ function hit_one_enemy(
     return
   }
 
+  // поставим врагу enemy.deathwish_triggered
+  set_deathwish_triggered(enemy, card)
+
   let temp = enemy.hp // сложили жизни в темп
   enemy.hp = `${enemy.hp}-${card.damage}` // отрисовали 5-3 (жизни-урон)
 
@@ -27,7 +31,8 @@ function hit_one_enemy(
     enemy.hp -= card.damage // вот теперь отняли урон
 
     if (enemy.hp <= 0) {
-      if (field.indexOf(enemy) === -1) {
+      // это поле признак именно лидера врагов
+      if (enemy?.damage_once >= 0) {
         enemy_leader.hp = 0
         console.log("умер лидер врагов")
       } else {

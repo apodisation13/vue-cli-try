@@ -1,11 +1,3 @@
-function remove_dead_enemies(field) {
-  for (let i = 0; i < field.length; i++) {
-    if (field[i].hp <= 0) {
-      field[i] = ""
-    }
-  }
-}
-
 function remove_dead_card(card, grave, hand, deck) {
   if (card.charges === 0) {
     grave.push(card) // поместили карту в кладбище
@@ -40,9 +32,40 @@ function get_random_enemy(field, enemy_leader) {
   return enemies_list[random]
 }
 
+// для врага ставит ему deathwish_triggered
+function set_deathwish_triggered(enemy, card) {
+  if (enemy.has_deathwish && enemy.hp - card.damage <= 0) {
+    console.log("У ВРАГА СРАБОТАЛО ДЕФВИШ")
+    enemy.deathwish_triggered = true // для deathwish
+  }
+}
+
+// собирает пустые клетки на поле (для deathwish появления, например)
+function get_empty_field_indexes(field) {
+  let emptyIndexesArray = []
+  for (let i = 0; i < field.length; i++) {
+    if (!field[i] || field[i].hp <= 0) emptyIndexesArray.push(i)
+  }
+  return emptyIndexesArray
+}
+
+// если хотя бы у одного врага есть deathwish И при этом он умер, то возвращаем ТРУ
+function get_enemies_with_triggered_deathwish(field, enemy_leader) {
+  const enemies = get_all_enemies(field, enemy_leader)
+  let deathwish_enemies = []
+  for (let i = 0; i < enemies.length; i++) {
+    if (enemies[i].deathwish_triggered) {
+      deathwish_enemies.push(enemies[i])
+    }
+  }
+  return deathwish_enemies
+}
+
 export {
-  remove_dead_enemies,
   remove_dead_card,
   get_all_enemies,
   get_random_enemy,
+  set_deathwish_triggered,
+  get_empty_field_indexes,
+  get_enemies_with_triggered_deathwish,
 }

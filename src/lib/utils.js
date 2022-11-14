@@ -14,3 +14,8 @@ export function choice_pop(list) {
 export function randInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
+
+// полное копирование объекта
+export function copyObj(obj) {
+  return JSON.parse(JSON.stringify(obj))
+}
