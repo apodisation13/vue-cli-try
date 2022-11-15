@@ -38,13 +38,13 @@ function damage_ai_card(card, enemy, isCard, gameObj) {
   } else if (card.ability.name === "damage-column") {
     damage_column(enemy, card, gameObj)
   } else if (card.ability.name === "destroy-highest-hp") {
-    destroy_highest_hp(field, enemy_leader, enemies)
+    destroy_highest_hp(gameObj)
   } else if (card.ability.name === "destroy-highest-damage") {
-    destroy_highest_damage(field, enemy_leader, enemies)
+    destroy_highest_damage(gameObj)
   } else if (card.ability.name === "destroy-random") {
-    destroy_random(field, enemy_leader, enemies)
+    destroy_random(gameObj)
   } else if (card.ability.name === "destroy-all-same-hp") {
-    destroy_all_same_hp(enemy, field, enemy_leader, enemies)
+    destroy_all_same_hp(enemy, gameObj)
   } else if (card.ability.name === "lock") {
     lock_enemy(enemy)
     damage_one(enemy, card, gameObj)

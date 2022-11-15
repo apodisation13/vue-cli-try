@@ -24,7 +24,7 @@ function player_passive_abilities_upon_playing_a_card(player_card, leader) {
 function player_passive_abilities_end_turn(gameObj) {
   store.commit("set_ppa_end_turn", true)
 
-  const { field, enemy_leader, hand, deck, grave, enemies, leader } = gameObj
+  const { hand, deck, grave, leader } = gameObj
 
   let passive_hand = hand.filter(c => c.has_passive_in_hand)
   passive_hand.reverse() // не забываем про float right :) FIXME
@@ -36,9 +36,9 @@ function player_passive_abilities_end_turn(gameObj) {
       deck
         .filter(c => c.has_passive)
         .forEach(card => {
-          if (
-            card.passive_ability.name === "if-in-deck-increase-self-damage-by-1"
-          ) {
+          // ДИСПЕТЧЕР ПАССИВНЫХ АБИЛОК В КОЛОДЕ
+          const cpa = card.passive_ability.name
+          if (cpa === "if-in-deck-increase-self-damage-by-1") {
             if_in_deck_increase_self_damage(card)
           }
         })
@@ -46,10 +46,9 @@ function player_passive_abilities_end_turn(gameObj) {
       grave
         .filter(c => c.has_passive)
         .forEach(card => {
-          if (
-            card.passive_ability.name ===
-            "if-in-grave-increase-self-damage-by-1"
-          ) {
+          // ДИСПЕТЧЕР ПАССИВНЫХ АБИЛОК В КЛАДБИЩЕ
+          const cpa = card.passive_ability.name
+          if (cpa === "if-in-grave-increase-self-damage-by-1") {
             if_in_grave_increase_self_damage(card)
           }
         })
@@ -57,33 +56,22 @@ function player_passive_abilities_end_turn(gameObj) {
       clearInterval(passive_time)
       store.commit("set_ppa_end_turn", false)
     } else {
-      // ДИСПЕТЧЕР пассивных абилок
-      if (passive_hand[i].passive_ability.name === "damage-random-enemy-by-1") {
+      // ДИСПЕТЧЕР ПАССИВНЫХ АБИЛОК В РУКЕ!
+      const pa = passive_hand[i].passive_ability.name
+      if (pa === "damage-random-enemy-by-1") {
         passive_end_turn_damage_random_enemy(passive_hand[i], gameObj)
-      } else if (
-        passive_hand[i].passive_ability.name ===
-        "increase-damage-to-card-in-hand-by-1"
-      ) {
+      } else if (pa === "increase-damage-to-card-in-hand-by-1") {
         passive_end_turn_increase_damage_in_hand(hand)
-      } else if (passive_hand[i].passive_ability.name === "heal-leader-by-2") {
+      } else if (pa === "heal-leader-by-2") {
         passive_end_turn_heal_leader_by_2()
-      } else if (passive_hand[i].passive_ability.name === "heal-leader-by-3") {
+      } else if (pa === "heal-leader-by-3") {
         passive_end_turn_heal_leader_by_3()
-      } else if (
-        passive_hand[i].passive_ability.name === "increase-self-damage-by-1"
-      ) {
+      } else if (pa === "increase-self-damage-by-1") {
         passive_end_turn_increase_self_damage(passive_hand[i])
-      } else if (
-        passive_hand[i].passive_ability.name ===
-        "destroy-2-enemies-after-3-turns"
-      ) {
+      } else if (pa === "destroy-2-enemies-after-3-turns") {
         passive_end_turn_destroy_2_enemies_after_3_turns(
           passive_hand[i],
-          field,
-          enemy_leader,
-          enemies,
-          grave,
-          hand
+          gameObj
         )
       }
 
