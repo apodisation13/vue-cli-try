@@ -67,7 +67,7 @@
       @confirm_selection="confirm_selection"
     />
 
-    <redraw-modal
+    <redraw-comp
       v-if="draw"
       :game-obj="gameObj"
       @redraw_finished="redraw_finished"
@@ -94,10 +94,10 @@ import LeaderComp from "@/components/LeaderComp"
 import HealthComp from "@/components/Pages/GamePage/HealthComp"
 import HandComp from "@/components/Pages/GamePage/HandComp"
 import SpecialCaseAbilities from "@/components/AbilitiesComponents/SpecialCaseAbilities"
-import RedrawModal from "@/components/RedrawModal"
+import RedrawComp from "@/components/RedrawComp"
 export default {
   components: {
-    RedrawModal,
+    RedrawComp,
     FieldComp,
     EnemyLeader,
     RemainingEnemies,
