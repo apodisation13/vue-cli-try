@@ -66,8 +66,8 @@
 
 <script>
 import { border_leader, background_color } from "@/logic/border_styles"
-import ButtonClose from "@/components/UI/ButtonClose"
-import ModalWindow from "@/components/UI/ModalWindow"
+import ButtonClose from "@/components/UI/Buttons/ButtonClose"
+import ModalWindow from "@/components/ModalWindows/ModalWindow"
 export default {
   name: "enemy-leader-modal",
   components: { ModalWindow, ButtonClose },

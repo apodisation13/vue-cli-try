@@ -40,12 +40,12 @@ import {
   background_color_hp,
 } from "@/logic/border_styles"
 import EnemyModal from "@/components/ModalWindows/EnemyModal"
-import CardPassive from "@/components/UI/CardPassive"
+import CardPassive from "@/components/UI/CardsUI/CardPassive"
 import EnemyShield from "@/components/UI/EnemyShield"
-import AbilityCircleEnemy from "@/components/UI/AbilityCircleEnemy"
-import EnemyLocked from "@/components/UI/EnemyLocked"
-import CardDamageIcon from "@/components/UI/CardDamageIcon"
-import HeartIcon from "@/components/UI/HeartIcon"
+import AbilityCircleEnemy from "@/components/UI/CardsUI/AbilityCircleEnemy"
+import EnemyLocked from "@/components/UI/CardsUI/EnemyLocked"
+import CardDamageIcon from "@/components/UI/CardsUI/CardDamageIcon"
+import HeartIcon from "@/components/UI/CardsUI/HeartIcon"
 import DeathwishAbility from "@/components/UI/AbilitiesEnemies/DeathwishAbility"
 export default {
   name: "enemy-comp",
