@@ -126,8 +126,8 @@
 
 <script>
 import { border_for_card, background_color } from "@/logic/border_styles"
-import ButtonClose from "@/components/UI/ButtonClose"
-import ModalWindow from "@/components/UI/ModalWindow"
+import ButtonClose from "@/components/UI/Buttons/ButtonClose"
+import ModalWindow from "@/components/ModalWindows/ModalWindow"
 import YesnoModal from "@/components/ModalWindows/YesnoModal"
 export default {
   name: "card-modal",
