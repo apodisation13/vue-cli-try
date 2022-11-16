@@ -9,12 +9,12 @@
       />
       <button-toggle-card-list
         @click="showList('leaders')"
-        :isActive="!!(showingList === 'leaders')"
+        :isActive="showingList === 'leaders'"
         >Лидеры</button-toggle-card-list
       >
       <button-toggle-card-list
         @click="showList('pool')"
-        :isActive="!!(showingList === 'pool')"
+        :isActive="showingList === 'pool'"
         >Основные</button-toggle-card-list
       >
       <button-icon
@@ -37,7 +37,7 @@
 <script>
 import FilterFactions from "@/components/Pages/DeckbuildPage/FilterFactions"
 import ButtonIcon from "@/components/Pages/DeckbuildPage/Buttons/ButtonIcon"
-import BaseModal from "@/components/UI/BaseModal"
+import BaseModal from "@/components/ModalWindows/BaseModal"
 import ButtonToggleCardList from "@/components/Pages/DeckbuildPage/Buttons/ButtonToggleCardList"
 
 export default {
@@ -118,11 +118,5 @@ export default {
 
 .is-cancel {
   transform: rotate(45deg);
-}
-
-.btn_save_deck {
-  display: block;
-  height: 3vh;
-  width: 23%;
 }
 </style>

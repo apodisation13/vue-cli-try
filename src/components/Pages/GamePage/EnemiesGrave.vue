@@ -12,8 +12,8 @@
 
 <script>
 import EnemyList from "@/components/EnemyList"
-import ButtonClose from "@/components/UI/ButtonClose"
-import ModalWindow from "@/components/UI/ModalWindow"
+import ButtonClose from "@/components/UI/Buttons/ButtonClose"
+import ModalWindow from "@/components/ModalWindows/ModalWindow"
 
 export default {
   name: "enemies-grave",

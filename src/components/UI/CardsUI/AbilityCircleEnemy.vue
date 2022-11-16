@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import EnemyCircle from "@/components/UI/EnemyCircle"
+import EnemyCircle from "@/components/UI/CardsUI/EnemyCircle"
 export default {
   name: "ability-circle-enemy",
   components: { EnemyCircle },

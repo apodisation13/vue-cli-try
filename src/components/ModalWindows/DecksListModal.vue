@@ -8,9 +8,9 @@
 </template>
 
 <script>
-import ButtonClose from "@/components/UI/ButtonClose"
+import ButtonClose from "@/components/UI/Buttons/ButtonClose"
 import DeckSelection from "@/components/DeckSelection"
-import ModalWindow from "@/components/UI/ModalWindow"
+import ModalWindow from "@/components/ModalWindows/ModalWindow"
 export default {
   name: "decks-list-modal",
   components: { ModalWindow, DeckSelection, ButtonClose },

@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import ModalWindow from "@/components/UI/ModalWindow"
-import ButtonClose from "@/components/UI/ButtonClose"
+import ModalWindow from "@/components/ModalWindows/ModalWindow"
+import ButtonClose from "@/components/UI/Buttons/ButtonClose"
 import CardListComponent from "@/components/CardListComponent"
 export default {
   name: "grave-comp",

@@ -18,7 +18,7 @@ import FilterTypes from "@/components/Pages/DeckbuildPage/FilterTypes"
 import FilterColors from "@/components/Pages/DeckbuildPage/FilterColors"
 import FilterPassives from "@/components/Pages/DeckbuildPage/FilterPassives"
 import FilterUnlocked from "@/components/Pages/DeckbuildPage/FilterUnlocked"
-import BaseModal from "@/components/UI/BaseModal"
+import BaseModal from "@/components/ModalWindows/BaseModal"
 
 export default {
   components: {
