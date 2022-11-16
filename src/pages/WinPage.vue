@@ -63,11 +63,12 @@ export default {
     },
     // открытие всех связанных уровней при прохождении уровня
     async open_levels() {
-      const id = this.$store.state.game.level.id // id уровня, в который мы играли
+      const currentLevel = this.$store.getters["currentLevel"]
+      if (currentLevel.random) return // при рандомном уровне сразу выходим отсюда
 
       const season = this.$store.getters["get_season"] // выбранный сезон из стора, выбирается по открытию дерева
-      const level = season.levels.filter(lev => lev.level.id === id)[0] // ищем уровень из списка уровней сезона
-      if (level.finished) return // если уровень УЖЕ пройден, то нет смысла открывать его детей
+      const level = season.levels.find(lev => lev.level.id === currentLevel.id) // ищем уровень из списка уровней сезона
+      if (!level || level.finished) return // если уровень УЖЕ пройден, то нет смысла открывать его детей
 
       this.related_levels = level.level.related_levels
       if (this.related_levels.length === 0) return // если связанных уровней нет, открывать нечего

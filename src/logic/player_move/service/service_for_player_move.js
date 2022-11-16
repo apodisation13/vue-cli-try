@@ -1,11 +1,3 @@
-function remove_dead_enemies(field) {
-  for (let i = 0; i < field.length; i++) {
-    if (field[i].hp <= 0) {
-      field[i] = ""
-    }
-  }
-}
-
 function remove_dead_card(card, grave, hand, deck) {
   if (card.charges === 0) {
     grave.push(card) // поместили карту в кладбище
@@ -40,9 +32,24 @@ function get_random_enemy(field, enemy_leader) {
   return enemies_list[random]
 }
 
+// собирает пустые клетки на поле (для deathwish появления, например)
+function get_empty_field_indexes(field) {
+  let emptyIndexesArray = []
+  for (let i = 0; i < field.length; i++) {
+    if (!field[i] || field[i].hp <= 0) emptyIndexesArray.push(i)
+  }
+  return emptyIndexesArray
+}
+
+// складывает мертвых врагов в кладбище
+function place_dead_enemies_in_grave(dead_enemies, enemies_grave) {
+  dead_enemies.forEach(enemy => enemies_grave.push(enemy))
+}
+
 export {
-  remove_dead_enemies,
   remove_dead_card,
   get_all_enemies,
   get_random_enemy,
+  get_empty_field_indexes,
+  place_dead_enemies_in_grave,
 }
