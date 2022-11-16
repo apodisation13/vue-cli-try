@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import BaseButton from "@/components/UI/BaseButton"
-import BaseModal from "@/components/UI/BaseModal"
+import BaseButton from "@/components/UI/Buttons/BaseButton"
+import BaseModal from "@/components/ModalWindows/BaseModal"
 
 export default {
   components: { BaseModal, BaseButton },

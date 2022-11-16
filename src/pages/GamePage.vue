@@ -18,7 +18,7 @@
       <!-- колода оставшихся врагов и кладбище врагов -->
       <div class="div-two-buttons">
         <remaining-enemies :enemies="gameObj.enemies" />
-        <enemies-grave />
+        <enemies-grave :enemies_grave="gameObj.enemies_grave" />
       </div>
 
       <!-- возможность вытянуть карту, дро -->
@@ -69,7 +69,7 @@
       @confirm_selection="confirm_selection"
     />
 
-    <redraw-modal
+    <redraw-comp
       v-if="draw"
       :game-obj="gameObj"
       @redraw_finished="redraw_finished"
@@ -96,10 +96,10 @@ import LeaderComp from "@/components/LeaderComp"
 import HealthComp from "@/components/Pages/GamePage/HealthComp"
 import HandComp from "@/components/Pages/GamePage/HandComp"
 import SpecialCaseAbilities from "@/components/AbilitiesComponents/SpecialCaseAbilities"
-import RedrawModal from "@/components/RedrawModal"
+import RedrawComp from "@/components/RedrawComp"
 export default {
   components: {
-    RedrawModal,
+    RedrawComp,
     FieldComp,
     EnemyLeader,
     RemainingEnemies,
@@ -135,7 +135,7 @@ export default {
         field: ["", "", "", "", "", "", "", "", "", "", "", ""],
         enemy_leader: null,
         enemies: [], // враги, копия из стора, приходит из start_game
-        enemy_grave: [], // кладбище врагов
+        enemies_grave: [], // кладбище врагов
       },
       // объект активны ли разные карты, то есть можно ли на них тыкать
       isActive: {

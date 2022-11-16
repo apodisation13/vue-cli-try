@@ -10,18 +10,18 @@
 
     <!--а тут только 1 выбранная карта, при абилках играть play_from-->
     <div class="chosen_card_from_deck" v-if="show_picked_card">
-      <card-comp :card="picked_card" />
+      <card-item :card="picked_card" />
     </div>
   </div>
 </template>
 
 <script>
-import CardComp from "@/components/CardComp"
-import ModalWindow from "@/components/UI/ModalWindow"
+import ModalWindow from "@/components/ModalWindows/ModalWindow"
 import CardListComponent from "@/components/CardListComponent"
+import CardItem from "@/components/CardItem"
 export default {
   name: "special-case-abilities",
-  components: { CardListComponent, ModalWindow, CardComp },
+  components: { CardItem, CardListComponent, ModalWindow },
   props: {
     cards_pool: {
       required: true,
@@ -57,13 +57,11 @@ export default {
 <style scoped>
 .chosen_card_from_deck {
   width: 24%;
-  height: 22%;
-  text-align: center;
+  /*height: 22%;*/
   position: fixed;
-  top: 28%;
+  top: 34%;
   right: 1%;
-  /*transform: translate(-23%, -3%);*/
   z-index: 999999;
-  border: solid 4px black;
+  /*border: solid 4px black;*/
 }
 </style>

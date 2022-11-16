@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import CardItemPreview from "@/components/CardItemPreview"
+import CardItemPreview from "@/components/Pages/DeckbuildPage/CardItemPreview"
 export default {
   components: {
     CardItemPreview,
@@ -47,6 +47,6 @@ export default {
   margin-left: -27px;
   margin-right: -27px;
   margin-bottom: -65px;
-  box-shadow: -4px 0px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: -4px 0 4px rgba(0, 0, 0, 0.5);
 }
 </style>

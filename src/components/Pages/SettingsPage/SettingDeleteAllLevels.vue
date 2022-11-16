@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import BaseButton from "@/components/UI/BaseButton"
+import BaseButton from "@/components/UI/Buttons/BaseButton"
 import ConfirmModal from "@/components/ModalWindows/ConfirmModal"
 export default {
   name: "SettingDeleteAllLevels",

@@ -48,9 +48,9 @@ import { background_color, border_leader } from "@/logic/border_styles"
 import EnemyLeaderModal from "@/components/ModalWindows/EnemyLeaderModal"
 import CardCircleHeal from "@/components/UI/CardCircleHeal"
 import AbilityCircleEnemyLeader from "@/components/UI/AbilityCircleEnemyLeader"
-import EnemyLocked from "@/components/UI/EnemyLocked"
-import CardDamageIcon from "@/components/UI/CardDamageIcon"
-import HeartIcon from "@/components/UI/HeartIcon"
+import EnemyLocked from "@/components/UI/CardsUI/EnemyLocked"
+import CardDamageIcon from "@/components/UI/CardsUI/CardDamageIcon"
+import HeartIcon from "@/components/UI/CardsUI/HeartIcon"
 
 export default {
   name: "enemy-leader",

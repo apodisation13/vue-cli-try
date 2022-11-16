@@ -14,12 +14,12 @@
 </template>
 
 <script>
-import ModalWindow from "@/components/UI/ModalWindow"
-import ButtonClose from "@/components/UI/ButtonClose"
+import ModalWindow from "@/components/ModalWindows/ModalWindow"
+import ButtonClose from "@/components/UI/Buttons/ButtonClose"
 import { choice } from "@/lib/utils"
 import CardListComponent from "@/components/CardListComponent"
 export default {
-  name: "redraw-modal",
+  name: "redraw-comp",
   components: { CardListComponent, ButtonClose, ModalWindow },
   data() {
     return {

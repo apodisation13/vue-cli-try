@@ -1,8 +1,10 @@
 import { get_all_enemies } from "@/logic/player_move/service/service_for_player_move"
 import { sound_destroy_enemy } from "@/logic/play_sounds"
-import { check_win } from "@/logic/player_move/service/check_win"
+import { enemy_takes_damage } from "@/logic/player_move/abilities/enemy_takes_damage"
 
-function destroy_highest_damage(field, enemy_leader, enemies) {
+function destroy_highest_damage(gameObj) {
+  const { field, enemy_leader } = gameObj
+
   let all_enemies
   if (enemy_leader.damage_per_turn && enemy_leader.hp > 0) {
     all_enemies = get_all_enemies(field, {
@@ -17,15 +19,7 @@ function destroy_highest_damage(field, enemy_leader, enemies) {
   let target = all_enemies[0]
 
   sound_destroy_enemy()
-  target.hp = `${target.hp}-${target.hp}`
-
-  setTimeout(() => {
-    target.hp = 0
-    let index = field.indexOf(target)
-    if (index !== -1) field[index] = "" // если это не лидер врагов, убираем его
-
-    check_win(field, enemies, enemy_leader)
-  }, 1000)
+  enemy_takes_damage(target, { damage: target.hp }, gameObj, 1000)
 }
 
 export { destroy_highest_damage }

@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import CardItemPreview from "@/components/CardItemPreview"
+import CardItemPreview from "@/components/Pages/DeckbuildPage/CardItemPreview"
 import AssemblingPoolList from "@/components/Pages/DeckbuildPage/AssemblingPoolList"
 import InputNameForDeck from "@/components/Pages/DeckbuildPage/InputNameForDeck"
 import CreateButton from "@/components/Pages/DeckbuildPage/Buttons/CreateButton"

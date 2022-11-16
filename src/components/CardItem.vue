@@ -62,12 +62,12 @@ import {
   card_margin,
 } from "@/logic/border_styles"
 import CardModal from "@/components/ModalWindows/CardModal"
-import CardAbilityCircle from "@/components/UI/AbilityCircleCard"
-import CardPassive from "@/components/UI/CardPassive"
-import CardCharges from "@/components/UI/CardCharges"
-import CardDamageIcon from "@/components/UI/CardDamageIcon"
-import HeartIcon from "@/components/UI/HeartIcon"
-import SpecialTypeOfCard from "@/components/UI/SpecialTypeOfCard"
+import CardAbilityCircle from "@/components/UI/CardsUI/AbilityCircleCard"
+import CardPassive from "@/components/UI/CardsUI/CardPassive"
+import CardCharges from "@/components/UI/CardsUI/CardCharges"
+import CardDamageIcon from "@/components/UI/CardsUI/CardDamageIcon"
+import HeartIcon from "@/components/UI/CardsUI/HeartIcon"
+import SpecialTypeOfCard from "@/components/UI/CardsUI/SpecialTypeOfCard"
 export default {
   components: {
     CardCharges,
