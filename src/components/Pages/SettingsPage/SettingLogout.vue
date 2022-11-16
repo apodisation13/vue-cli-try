@@ -13,7 +13,7 @@
 
 <script>
 import ConfirmModal from "@/components/ModalWindows/ConfirmModal"
-import BaseButton from "@/components/UI/BaseButton"
+import BaseButton from "@/components/UI/Buttons/BaseButton"
 
 export default {
   components: {

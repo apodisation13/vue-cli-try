@@ -51,10 +51,10 @@ import {
   background_color_charges,
 } from "@/logic/border_styles"
 import LeaderModal from "@/components/ModalWindows/LeaderModal"
-import CardAbilityCircle from "@/components/UI/AbilityCircleCard"
-import CardPassive from "@/components/UI/CardPassive"
-import CardCharges from "@/components/UI/CardCharges"
-import CardDamageIcon from "@/components/UI/CardDamageIcon"
+import CardAbilityCircle from "@/components/UI/CardsUI/AbilityCircleCard"
+import CardPassive from "@/components/UI/CardsUI/CardPassive"
+import CardCharges from "@/components/UI/CardsUI/CardCharges"
+import CardDamageIcon from "@/components/UI/CardsUI/CardDamageIcon"
 export default {
   name: "leader-comp",
   components: {

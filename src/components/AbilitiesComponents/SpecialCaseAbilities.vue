@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import ModalWindow from "@/components/UI/ModalWindow"
+import ModalWindow from "@/components/ModalWindows/ModalWindow"
 import CardListComponent from "@/components/CardListComponent"
 import CardItem from "@/components/CardItem"
 export default {
