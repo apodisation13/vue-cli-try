@@ -50,20 +50,4 @@ export default {
   background-position: center;
   background-size: contain;
 }
-
-.rhomb {
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  transform: rotate(45deg);
-}
-
-.wrapper-rhomb-body {
-  transform: rotate(-45deg);
-}
-
-.rhomb-top-right {
-  top: -9px;
-  right: -9px;
-}
 </style>
