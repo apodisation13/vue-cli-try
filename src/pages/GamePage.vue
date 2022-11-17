@@ -302,7 +302,7 @@ export default {
 
 .game-block {
   display: flex;
-  justify-content: space-between; 
+  justify-content: center; 
 }
 
 /* Панель справа - лидер врага, кнопки, пас, лидер игрока */

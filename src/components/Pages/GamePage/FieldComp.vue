@@ -54,10 +54,7 @@ export default {
 
 <style scoped>
 .field {
-  display: inline;
-  float: left;
-  /* border: 1px solid red; */
-  font-size: 20pt;
+
   width: 75%;
   height: 74vh;
   overflow: hidden;

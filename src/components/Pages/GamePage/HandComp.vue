@@ -12,7 +12,7 @@
           :card="element"
           :index="index"
           class="card_in_hand"
-          :style="{'z-index': 10 + index }"
+          :style="{'--custom-z-index': 10 + index }"
         />
       </template>
     </draggable>
@@ -136,6 +136,7 @@ export default {
 }
 
 .card_in_hand {
+  z-index: var(--custom-z-index);
   width: 26%;
   margin-left: -20%;
   margin-right: -20%;
