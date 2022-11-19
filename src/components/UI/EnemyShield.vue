@@ -6,7 +6,6 @@
 
 <script>
 export default {
-  name: "enemy-shield",
 }
 </script>
 
