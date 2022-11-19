@@ -7,63 +7,24 @@
       @end="onDragEnd($event)"
     >
       <template #item="{ element }">
-        <div
-          class="leader"
-          :style="border(element)"
-          @contextmenu.prevent
-          @click.right="open_card_modal"
-          v-touch:longtap="open_card_modal"
+        <card-item
+          :card="element"
+          :user_card="element"
+          :is_leader="true"
           @dblclick="exec_leader"
-        >
-          <img
-            class="img"
-            :src="element.image"
-            v-if="element.charges > 0"
-            alt=""
-          />
-          <card-damage-icon
-            :style="background_color(element)"
-            :damage="element.damage"
-          />
-          <card-ability-circle :card="element" />
-          <card-passive v-if="element.has_passive" :card="element" />
-          <card-charges
-            :charge="element.charges"
-            :bgColor="background_color_charges(element.color)"
-          />
-        </div>
+        />
       </template>
     </draggable>
-
-    <leader-modal
-      v-if="show_card_modal"
-      :leader="leader"
-      @close_leader_modal="show_card_modal = false"
-    />
   </div>
 </template>
 
 <script>
 import draggable from "vuedraggable"
-import {
-  border_leader,
-  background_color,
-  background_color_charges,
-} from "@/logic/border_styles"
-import LeaderModal from "@/components/ModalWindows/LeaderModal"
-import CardAbilityCircle from "@/components/UI/CardsUI/AbilityCircleCard"
-import CardPassive from "@/components/UI/CardsUI/CardPassive"
-import CardCharges from "@/components/UI/CardsUI/CardCharges"
-import CardDamageIcon from "@/components/UI/CardsUI/CardDamageIcon"
+import CardItem from '@/components/CardItem.vue'
 export default {
-  name: "leader-comp",
   components: {
-    CardDamageIcon,
-    CardCharges,
-    CardPassive,
-    CardAbilityCircle,
-    LeaderModal,
     draggable,
+    CardItem,
   },
   props: {
     leader: {
@@ -74,15 +35,6 @@ export default {
       required: false,
       type: Array,
     },
-    enemy_leader: {
-      required: false,
-      type: Object,
-    },
-  },
-  data() {
-    return {
-      show_card_modal: false,
-    }
   },
   computed: {
     draggableLeader: {
@@ -97,18 +49,6 @@ export default {
   methods: {
     exec_leader() {
       this.$emit("exec_leader")
-    },
-    open_card_modal() {
-      this.show_card_modal = true
-    },
-    border(leader) {
-      return border_leader(leader)
-    },
-    background_color(leader) {
-      return background_color(leader)
-    },
-    background_color_charges(color) {
-      return background_color_charges(color)
     },
     onDragStart() {
       console.log("ТЯНЕМ ЗА ЛИДЕРА")
@@ -137,7 +77,7 @@ export default {
     get_target(elems) {
       let elem = null
       elems.forEach(el => {
-        if (el.className === "enemy" || el.className === "enemy-leader") {
+        if (el.className === "card-enemy-component" || el.className === "enemy-leader") {
           console.log(el.className)
           elem = el
         }
@@ -163,23 +103,4 @@ export default {
 }
 </script>
 
-<style scoped>
-.leader {
-  height: 18vh;
-  width: 98%;
-  border-radius: 2%;
-  margin-bottom: 2px;
-  margin-top: 2px;
-  position: relative;
-  /*border: solid 1px black;*/
-}
-
-.img {
-  width: 99%;
-  height: 99%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
-}
-</style>
+<style scoped></style>
