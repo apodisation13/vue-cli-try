@@ -2,7 +2,8 @@
   <div class="field">
     <table class="table">
       <tr v-for="i in 4" :key="i">
-        <td v-for="j in 3"
+        <td
+          v-for="j in 3"
           :key="j"
           @dblclick="exec_damage_ai_card(get_index(i, j))"
           @contextmenu.prevent
@@ -53,7 +54,6 @@ export default {
 
 <style scoped>
 .field {
-
   width: 75%;
   height: 74vh;
   overflow: hidden;

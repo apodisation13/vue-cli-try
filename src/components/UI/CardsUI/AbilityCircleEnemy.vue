@@ -1,9 +1,13 @@
 <template>
-    <div class="ability-circle-enemy"
-      v-if="!!enemy.move.name"
-      :style="{
-        'background-image': 'url(' + require(`@/assets/icons/enemy/enemy_move_${enemy.move.name}.svg`) + ')',
-      }"
+  <div
+    class="ability-circle-enemy"
+    v-if="!!enemy.move.name"
+    :style="{
+      'background-image':
+        'url(' +
+        require(`@/assets/icons/enemy/enemy_move_${enemy.move.name}.svg`) +
+        ')',
+    }"
   ></div>
 </template>
 

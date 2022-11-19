@@ -6,11 +6,11 @@
       @click.right="show_modal"
       v-touch:longtap="show_modal"
       :id="make_id(card, index)"
-      :style="[ border(card)]"
+      :style="[border(card)]"
     >
       <div
         class="card-item"
-        :style="[{ backgroundImage: `url(${card.image})`}, card_margin(card)]"
+        :style="[{ backgroundImage: `url(${card.image})` }, card_margin(card)]"
         :class="{ disable: count === 0 }"
       ></div>
       <div class="card-item-information">
@@ -141,8 +141,8 @@ export default {
       return this.is_leader ? border_leader(card) : border_for_card(card)
     },
     card_margin(card) {
-      return card_margin(card);
-    }
+      return card_margin(card)
+    },
   },
   emits: ["open_card_modal"],
 }
@@ -161,7 +161,8 @@ export default {
   padding-top: 143%;
 }
 
-.card-item, .card-item-information {
+.card-item,
+.card-item-information {
   position: absolute;
   top: 0;
   right: 0;
@@ -175,8 +176,6 @@ export default {
   border-radius: 2px;
   overflow: hidden;
 }
-
-
 
 .disable::after {
   content: "";

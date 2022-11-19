@@ -20,7 +20,7 @@
 
 <script>
 import draggable from "vuedraggable"
-import CardItem from '@/components/CardItem.vue'
+import CardItem from "@/components/CardItem.vue"
 export default {
   components: {
     draggable,
@@ -77,7 +77,10 @@ export default {
     get_target(elems) {
       let elem = null
       elems.forEach(el => {
-        if (el.className === "card-enemy-component" || el.className === "enemy-leader") {
+        if (
+          el.className === "card-enemy-component" ||
+          el.className === "enemy-leader"
+        ) {
           console.log(el.className)
           elem = el
         }

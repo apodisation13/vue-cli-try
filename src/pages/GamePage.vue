@@ -1,56 +1,56 @@
 <template>
   <div class="game-page">
     <div class="game-block">
-          <!-- поле с врагами -->
-    <field-comp
-      :field="gameObj.field"
-      @exec_damage_ai_card="exec_damage_enemy_card"
-    />
-
-    <!-- правая часть экрана -->
-    <div class="right-panel">
-      <!-- лидер врага -->
-      <enemy-leader
-        :enemy_leader="gameObj.enemy_leader"
-        @exec_enemy_leader="exec_damage_enemy_leader"
-      />
-
-      <!-- колода оставшихся врагов и кладбище врагов -->
-      <div class="div-two-buttons">
-        <remaining-enemies :enemies="gameObj.enemies" />
-        <enemies-grave :enemies_grave="gameObj.enemies_grave" />
-      </div>
-
-      <!-- возможность вытянуть карту, дро -->
-      <div class="draw">
-        <draw-comp
-          v-show="can_draw && $store.state.game.player_turn"
-          @click="draw_one_card"
-        />
-      </div>
-
-      <!-- чисто кнопка пас -->
-      <pass-comp @click="exec_ai_move" />
-
-      <!-- кнопки кладбища и колоды -->
-      <div class="div-two-buttons">
-        <grave-comp :grave="gameObj.grave" />
-        <deck-comp :deck="gameObj.deck" />
-      </div>
-
-      <!-- лидер игрока -->
-      <leader-comp
-        :leader="gameObj.leader"
+      <!-- поле с врагами -->
+      <field-comp
         :field="gameObj.field"
-        :enemy_leader="gameObj.enemy_leader"
-        @exec_leader="chose_leader"
-        @target_enemy="exec_damage_enemy_card"
-        @target_enemy_leader="exec_damage_enemy_leader"
+        @exec_damage_ai_card="exec_damage_enemy_card"
       />
 
-      <!-- Просто полоска с жизнями (пока что) -->
-      <health-comp />
-    </div>
+      <!-- правая часть экрана -->
+      <div class="right-panel">
+        <!-- лидер врага -->
+        <enemy-leader
+          :enemy_leader="gameObj.enemy_leader"
+          @exec_enemy_leader="exec_damage_enemy_leader"
+        />
+
+        <!-- колода оставшихся врагов и кладбище врагов -->
+        <div class="div-two-buttons">
+          <remaining-enemies :enemies="gameObj.enemies" />
+          <enemies-grave :enemies_grave="gameObj.enemies_grave" />
+        </div>
+
+        <!-- возможность вытянуть карту, дро -->
+        <div class="draw">
+          <draw-comp
+            v-show="can_draw && $store.state.game.player_turn"
+            @click="draw_one_card"
+          />
+        </div>
+
+        <!-- чисто кнопка пас -->
+        <pass-comp @click="exec_ai_move" />
+
+        <!-- кнопки кладбища и колоды -->
+        <div class="div-two-buttons">
+          <grave-comp :grave="gameObj.grave" />
+          <deck-comp :deck="gameObj.deck" />
+        </div>
+
+        <!-- лидер игрока -->
+        <leader-comp
+          :leader="gameObj.leader"
+          :field="gameObj.field"
+          :enemy_leader="gameObj.enemy_leader"
+          @exec_leader="chose_leader"
+          @target_enemy="exec_damage_enemy_card"
+          @target_enemy_leader="exec_damage_enemy_leader"
+        />
+
+        <!-- Просто полоска с жизнями (пока что) -->
+        <health-comp />
+      </div>
     </div>
 
     <hand-comp
@@ -297,12 +297,12 @@ export default {
 .game-page {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; 
+  justify-content: space-between;
 }
 
 .game-block {
   display: flex;
-  justify-content: center; 
+  justify-content: center;
 }
 
 /* Панель справа - лидер врага, кнопки, пас, лидер игрока */

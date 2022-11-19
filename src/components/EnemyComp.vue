@@ -8,11 +8,14 @@
       :id="make_id(enemy, index)"
       :style="border(enemy)"
     >
-    <div
-      class="card-enemy"
-      :style="[{ backgroundImage: `url(${enemy.image})`}, card_margin(enemy)]"
-    ></div>
-    <div class="card-enemy-information">
+      <div
+        class="card-enemy"
+        :style="[
+          { backgroundImage: `url(${enemy.image})` },
+          card_margin(enemy),
+        ]"
+      ></div>
+      <div class="card-enemy-information">
         <card-damage-icon
           :style="background_color(enemy)"
           :damage="enemy.damage"
@@ -81,7 +84,7 @@ export default {
       return border_for_card(e)
     },
     card_margin(card) {
-      return card_margin(card);
+      return card_margin(card)
     },
     background_color(e) {
       return background_color(e)
@@ -107,7 +110,6 @@ export default {
 </script>
 
 <style scoped>
-
 .card-enemy-component {
   position: relative;
   width: 100%;
@@ -120,7 +122,8 @@ export default {
   padding-top: 143%;
 }
 
-.card-enemy, .card-enemy-information {
+.card-enemy,
+.card-enemy-information {
   position: absolute;
   top: 0;
   right: 0;

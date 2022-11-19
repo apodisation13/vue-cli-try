@@ -231,7 +231,6 @@ function card_margin(card) {
     } else if (card.color === "Silver") {
       return {
         margin: "2px",
-
       }
     } else if (card.color === "Gold") {
       return {
