@@ -8,7 +8,6 @@
       :id="make_id(enemy, index)"
       :style="border(enemy)"
     >
-      <!-- <img class="img" :src="enemy.image" v-if="enemy.image" alt="" /> -->
     <div
       class="card-enemy"
       :style="[{ backgroundImage: `url(${enemy.image})`}, card_margin(enemy)]"

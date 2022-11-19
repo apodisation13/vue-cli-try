@@ -20,6 +20,7 @@ export default {
 
 <style scoped>
 .ability-circle-enemy {
+  position: absolute;
   width: 25px;
   height: 25px;
   top: 5px;
