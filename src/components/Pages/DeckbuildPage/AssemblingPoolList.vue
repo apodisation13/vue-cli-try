@@ -1,5 +1,5 @@
 <template>
-  <div class="assembling-pool-list">
+  <transition-group name="flip-list" tag="div" class="assembling-pool-list">
     <card-item
       class="pool-item"
       v-for="(full_card, index) in deck_is_progress"
@@ -10,7 +10,7 @@
       @dblclick="delete_card_from_deck(full_card)"
       @click="change_order(index)"
     />
-  </div>
+  </transition-group>
 </template>
 
 <script>
@@ -43,6 +43,12 @@ export default {
 </script>
 
 <style scoped>
+
+.flip-list-move {
+  -webkit-transition: test .5s;
+  transition: transform 1s;
+}
+
 .assembling-pool-list {
   width: 230px;
   display: flex;
@@ -55,6 +61,5 @@ export default {
   margin-left: -27px;
   margin-right: -27px;
   margin-bottom: -65px;
-  box-shadow: -4px 0 4px rgba(0, 0, 0, 0.5);
 }
 </style>
