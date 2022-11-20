@@ -99,7 +99,10 @@ export default {
     get_target(elems) {
       let elem = null
       elems.forEach(el => {
-        if (el.className === "enemy" || el.className === "enemy-leader") {
+        if (
+          el.className === "card-enemy-component" ||
+          el.className === "enemy-leader"
+        ) {
           console.log(el.className)
           elem = el
         }
