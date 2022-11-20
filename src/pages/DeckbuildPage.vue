@@ -16,7 +16,7 @@
         <div class="database_of_cards-wrapper">
           <div
             class="database_of_cards"
-            :class="disable_animation ? 'pool_full__start' :
+            :class="disable_start_animation ? 'pool_full__start' :
                     deckBuilding ? 'pool_deckbuild' : 'pool_full'"
           >
             <!-- база карт -->
@@ -88,7 +88,7 @@ export default {
   },
   data() {
     return {
-      disable_animation: true, // флаг выключение первичной анимации
+      disable_start_animation: true, // флаг выключение первичной анимации
       showingList: "pool", // показывать список игровых карт ('pool') или список лидеров ('leaders')
       deckBuilding: false, // флаг - собираем мы колоду, или нет
       showFilters: false, // флаг, показать ли окно с фильтрами
@@ -249,7 +249,7 @@ export default {
     },
     // фильтр карт и лидеров по фракции по нажатию на кнопку фракции
     select_faction(prop, value) {
-      this.disable_animation = this.disable_animation && false
+      this.disable_start_animation = this.disable_start_animation && false
       this.deckBuilding = true
       this.setFilter(prop, value) // для this.query.cards
     },
