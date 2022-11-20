@@ -12,7 +12,10 @@
           :card="element"
           :index="index"
           class="card_in_hand"
-          :style="{ '--custom-z-index': 10 - index }"
+          :style="{
+            '--custom-z-index': 10 - index,
+            border: element.damages_enemy ? 'outset 3px lime' : '',
+          }"
         />
       </template>
     </draggable>
@@ -20,7 +23,6 @@
 </template>
 
 <script>
-// import { border_for_hand_2 } from "@/logic/border_styles"
 import draggable from "vuedraggable"
 import CardItem from "@/components/CardItem"
 export default {
@@ -54,9 +56,6 @@ export default {
     chose_player_card(card) {
       this.$emit("chose_player_card", card) // передаём card по эмиту
     },
-    // border(card) {
-    //   return border_for_hand_2(this.hand, card)
-    // },
     // берем список дивов под картой в руке, достаем ту, у которой есть id, там cardName_fieldIndex, так находим index
     get_card(divs) {
       for (let i = 0; i < divs.length; i++) {
