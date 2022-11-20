@@ -12,7 +12,7 @@
           :card="element"
           :index="index"
           class="card_in_hand"
-          :style="{ '--custom-z-index': 10 + index }"
+          :style="{ '--custom-z-index': 10 - index }"
         />
       </template>
     </draggable>
@@ -135,15 +135,25 @@ export default {
 
 .hand-list {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+  flex-shrink: 1;
+  margin: 0 10px ;
 }
 
 .card_in_hand {
   z-index: var(--custom-z-index);
   width: 26%;
-  margin-left: -20%;
-  margin-right: -20%;
+  margin-left: -10%;
+  margin-right: -10%;
   border-radius: 2px;
+}
+
+.card_in_hand:first-child {
+  margin-left: -5%;
+}
+
+.card_in_hand:last-child {
+  margin-right: -5%;
 }
 .card_in_hand:hover {
   margin-top: -2%;

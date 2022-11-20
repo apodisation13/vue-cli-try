@@ -308,9 +308,9 @@ export default {
 /* Панель справа - лидер врага, кнопки, пас, лидер игрока */
 .right-panel {
   width: 24.5%;
-  height: 74vh;
-  /* border: solid 1px orange; */
-  margin-right: 0.4%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between
 }
 
 .div-two-buttons {
