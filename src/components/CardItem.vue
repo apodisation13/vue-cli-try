@@ -13,7 +13,9 @@
         :style="[{ backgroundImage: `url(${card.image})` }, card_margin(card)]"
         :class="{ disable: count === 0 }"
       ></div>
-      <div class="card-item-information">
+      <div class="card-item-information"
+        v-if="!is_previev"
+      >
         <special-type-of-card
           :color="card.color"
           v-if="card.type === 'Special'"
@@ -80,6 +82,11 @@ export default {
   },
   props: {
     is_leader: {
+      // брать границу карты как для лидеров
+      type: Boolean,
+      default: false,
+    },
+    is_previev: {
       // брать границу карты как для лидеров
       type: Boolean,
       default: false,

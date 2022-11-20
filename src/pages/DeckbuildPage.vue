@@ -47,11 +47,9 @@
           @save_deck="save_deck"
           @patch_deck="patch_deck"
           @change_name_deck="change_name_deck"
+          @change_order_deck="change_order_deck"
         />
       </div>
-      <!-- <div class="deckbuilder-bottom-buttons-block">
-        <div class="decks_btn" @click="trigger_decks_list_modal(true)">КОЛОДЫ!</div>
-      </div> -->
       <button-decks @click="trigger_decks_list_modal(true)" />
       <decks-list-modal
         v-if="show_decks_list_modal"
@@ -126,6 +124,16 @@ export default {
       this.deckBuilding = false
       this.patch = false
       this.new_deck()
+    },
+
+    change_order_deck(index) {
+      this.deck.deck_is_progress.push(
+        ...this.deck.deck_is_progress.splice( index, 1 )
+      )
+      
+      this.deck.deck_body.push(
+        ...this.deck.deck_body.splice( index, 1 )
+      )
     },
 
     // новая дека, обнуляем фильтры и сбрасываем все добавления
