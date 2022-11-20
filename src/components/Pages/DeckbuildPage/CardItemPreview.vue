@@ -10,19 +10,22 @@
       <div
         class="card-item"
         v-if="!!user_card"
-        :style="[{ backgroundImage: `url(${user_card.image})` }, card_margin(user_card)]"
+        :style="[
+          { backgroundImage: `url(${user_card.image})` },
+          card_margin(user_card),
+        ]"
       ></div>
     </div>
     <card-modal
-        v-if="show_card_modal"
-        :card="user_card"
-        @close_card_modal="show_card_modal = false"
-      />
+      v-if="show_card_modal"
+      :card="user_card"
+      @close_card_modal="show_card_modal = false"
+    />
   </div>
 </template>
 
 <script>
-import { 
+import {
   border_leader,
   border_for_card,
   card_margin,

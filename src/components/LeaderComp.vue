@@ -10,7 +10,9 @@
         <card-item
           :card="element"
           :user_card="element"
-          :class="{'not-charges': (element.charges === 0 && !element.has_passive) }"
+          :class="{
+            'not-charges': element.charges === 0 && !element.has_passive,
+          }"
           :is_leader="true"
           :is_previev="element.charges === 0 && !element.has_passive"
           @dblclick="exec_leader"
@@ -111,7 +113,7 @@ export default {
 <style>
 /* добавляем псевдоэлемент к семантичному селектору card-item-component*/
 .not-charges > div.card-item-component::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   top: 0;

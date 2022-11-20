@@ -13,9 +13,7 @@
         :style="[{ backgroundImage: `url(${card.image})` }, card_margin(card)]"
         :class="{ disable: count === 0 }"
       ></div>
-      <div class="card-item-information"
-        v-if="!is_previev"
-      >
+      <div class="card-item-information" v-if="!is_previev">
         <special-type-of-card
           :color="card.color"
           v-if="card.type === 'Special'"

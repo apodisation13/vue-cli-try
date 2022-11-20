@@ -2,11 +2,11 @@
   <div class="assembling-pool-list">
     <card-item
       class="pool-item"
-      v-for="( full_card, index ) in deck_is_progress"
+      v-for="(full_card, index) in deck_is_progress"
       :key="full_card.card.id"
       :card="full_card.card ? full_card.card : full_card"
       :user_card="full_card.card ? full_card : null"
-      :is_previev="(index + 1 !== deck_is_progress.length)"
+      :is_previev="index + 1 !== deck_is_progress.length"
       @dblclick="delete_card_from_deck(full_card)"
       @click="change_order(index)"
     />
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import CardItem from '@/components/CardItem'
+import CardItem from "@/components/CardItem"
 export default {
   components: {
     CardItem,
@@ -33,15 +33,12 @@ export default {
     },
     change_order(index) {
       if (this.deck_is_progress.length === index + 1) {
-        return;
+        return
       }
-      this.$emit('change_order_deck', index)
-    }
+      this.$emit("change_order_deck", index)
+    },
   },
-  emits: [
-    "delete_card_from_deck",
-    "change_order_deck",
-],
+  emits: ["delete_card_from_deck", "change_order_deck"],
 }
 </script>
 

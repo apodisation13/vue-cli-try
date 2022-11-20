@@ -128,12 +128,10 @@ export default {
 
     change_order_deck(index) {
       this.deck.deck_is_progress.push(
-        ...this.deck.deck_is_progress.splice( index, 1 )
+        ...this.deck.deck_is_progress.splice(index, 1)
       )
-      
-      this.deck.deck_body.push(
-        ...this.deck.deck_body.splice( index, 1 )
-      )
+
+      this.deck.deck_body.push(...this.deck.deck_body.splice(index, 1))
     },
 
     // новая дека, обнуляем фильтры и сбрасываем все добавления

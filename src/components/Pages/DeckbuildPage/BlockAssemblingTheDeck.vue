@@ -62,7 +62,7 @@
 import AssemblingPoolList from "@/components/Pages/DeckbuildPage/AssemblingPoolList"
 import InputNameForDeck from "@/components/Pages/DeckbuildPage/InputNameForDeck"
 import CreateButton from "@/components/Pages/DeckbuildPage/Buttons/CreateButton"
-import CardItem from '@/components/CardItem'
+import CardItem from "@/components/CardItem"
 export default {
   components: {
     AssemblingPoolList,
@@ -109,11 +109,11 @@ export default {
     },
   },
   emits: [
-    "delete_card", 
+    "delete_card",
     "save_deck",
     "patch_deck",
     "change_name_deck",
-    "change_order_deck"
+    "change_order_deck",
   ],
 }
 </script>

@@ -137,7 +137,7 @@ export default {
   display: flex;
   justify-content: space-around;
   flex-shrink: 1;
-  margin: 0 10px ;
+  margin: 0 10px;
 }
 
 .card_in_hand {

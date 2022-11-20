@@ -310,7 +310,7 @@ export default {
   width: 24.5%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between
+  justify-content: space-between;
 }
 
 .div-two-buttons {
