@@ -43,9 +43,8 @@ export default {
 </script>
 
 <style scoped>
-
 .flip-list-move {
-  -webkit-transition: test .5s;
+  -webkit-transition: test 0.5s;
   transition: transform 1s;
 }
 

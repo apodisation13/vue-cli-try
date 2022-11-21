@@ -103,7 +103,7 @@ export default {
 .filter_btn {
   position: relative;
   margin: 10px;
-  transition: transform .2s 
+  transition: transform 0.2s;
 }
 
 .set-filter::before {
