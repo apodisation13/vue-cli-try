@@ -255,17 +255,17 @@ export default {
     },
 
     show_deck(index) {
+      this.disable_start_animation = this.disable_start_animation && false
       this.new_deck()
       this.deckBuilding = true
-      const { deck } = _.cloneDeep(this.$store.getters["all_decks"][index])
-
-      ;(this.deck.deck_id = deck.id),
-        (this.deck.deck_name = deck.name),
-        (this.deck.deck_is_progress = [...deck.cards]), // колода в процессе - целиком объекты, для отображения
-        (this.deck.deck_body = [...deck.d]), // только {card = id} для пост-запроса
-        (this.deck.leader = deck.leader), // сам выбранный лидер
-        (this.deck.health = deck.health), // жизни текущей деки
-        (this.query.faction = deck.leader.faction)
+      const { deck } = _.cloneDeep(this.$store.getters["all_decks"][index]);
+      (this.deck.deck_id = deck.id),
+      (this.deck.deck_name = deck.name),
+      (this.deck.deck_is_progress = [...deck.cards]), // колода в процессе - целиком объекты, для отображения
+      (this.deck.deck_body = [...deck.d]), // только {card = id} для пост-запроса
+      (this.deck.leader = deck.leader), // сам выбранный лидер
+      (this.deck.health = deck.health), // жизни текущей деки
+      (this.query.faction = deck.leader.faction)
       this.patch = true
     },
 
