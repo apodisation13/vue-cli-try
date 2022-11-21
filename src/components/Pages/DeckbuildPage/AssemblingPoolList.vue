@@ -7,6 +7,7 @@
       :card="full_card.card ? full_card.card : full_card"
       :user_card="full_card.card ? full_card : null"
       :is_previev="index + 1 !== deck_is_progress.length"
+      :hp_needed="true"
       @dblclick="delete_card_from_deck(full_card)"
       @click="change_order(index)"
     />
