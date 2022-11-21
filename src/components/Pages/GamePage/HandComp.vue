@@ -5,13 +5,17 @@
       item-key="id"
       @start="onDragStart($event)"
       @end="onDragEnd($event)"
+      class="hand-list"
     >
       <template #item="{ element, index }">
         <card-item
           :card="element"
           :index="index"
           class="card_in_hand"
-          :style="border(element)"
+          :style="{
+            '--custom-z-index': 10 - index,
+            border: element.damages_enemy ? 'outset 3px lime' : '',
+          }"
         />
       </template>
     </draggable>
@@ -19,7 +23,6 @@
 </template>
 
 <script>
-import { border_for_hand_2 } from "@/logic/border_styles"
 import draggable from "vuedraggable"
 import CardItem from "@/components/CardItem"
 export default {
@@ -52,9 +55,6 @@ export default {
   methods: {
     chose_player_card(card) {
       this.$emit("chose_player_card", card) // передаём card по эмиту
-    },
-    border(card) {
-      return border_for_hand_2(this.hand, card)
     },
     // берем список дивов под картой в руке, достаем ту, у которой есть id, там cardName_fieldIndex, так находим index
     get_card(divs) {
@@ -98,7 +98,10 @@ export default {
     get_target(elems) {
       let elem = null
       elems.forEach(el => {
-        if (el.className === "enemy" || el.className === "enemy-leader") {
+        if (
+          el.className === "card-enemy-component" ||
+          el.className === "enemy-leader"
+        ) {
           console.log(el.className)
           elem = el
         }
@@ -125,45 +128,34 @@ export default {
 
 <style scoped>
 .hand {
-  width: 98%;
-  /*height: 18vh;*/
-  padding-top: 2%;
-  /*border: solid 1px blue;*/
-  clear: both;
-  overflow: auto;
-  /*white-space: nowrap;*/
-  /*position: absolute;*/
-  /*top: 75%;*/
-  /*left: 0;*/
-  /*touch-action: none;*/
+  width: 100%;
+  margin-top: 2%;
+}
+
+.hand-list {
+  display: flex;
+  justify-content: space-around;
+  flex-shrink: 1;
+  margin: 0 10px;
 }
 
 .card_in_hand {
+  z-index: var(--custom-z-index);
   width: 26%;
-  /*height: 18.5vh;*/
-  /*border: solid 3px gold; */
-  border-radius: 2%;
-  display: table-row;
-  overflow: hidden;
-  /*touch-action: none;*/
-  /*вот так было через жопу*/
-  /*margin-right: -12%;*/
-  /*margin-left: 0.5%;*/
-  /*ну а вот так вроде всё заебись*/
-  /*margin-right: 0.3%;*/
-  /*margin-left: -12%;*/
-  /*float: right;*/
-  margin-top: 0.1%;
-  position: relative;
-  /*border-width: 3px 4px 3px 5px;*/
-  /*border-radius: 95% 4% 92% 5%/4% 95% 6% 95%;*/
-  /*transform: rotate(2deg);*/
+  margin-left: -10%;
+  margin-right: -10%;
+  border-radius: 2px;
+}
+
+.card_in_hand:first-child {
+  margin-left: -5%;
+}
+
+.card_in_hand:last-child {
+  margin-right: -5%;
 }
 .card_in_hand:hover {
   margin-top: -2%;
   z-index: 999999;
-  border-width: 3px 4px 3px 5px;
-  border-color: red;
-  border-style: solid;
 }
 </style>

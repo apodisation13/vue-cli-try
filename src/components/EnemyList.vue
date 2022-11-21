@@ -35,5 +35,6 @@ export default {
   display: inline-block;
   position: relative;
   text-align: justify;
+  margin: 3px;
 }
 </style>

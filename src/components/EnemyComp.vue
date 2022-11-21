@@ -1,30 +1,36 @@
 <template>
   <div>
     <div
-      class="enemy"
-      :style="border(enemy)"
+      class="card-enemy-component"
       @contextmenu.prevent
       @click.right="show_modal"
       v-touch:longtap="show_modal"
       :id="make_id(enemy, index)"
+      :style="border(enemy)"
     >
-      <img class="img" :src="enemy.image" v-if="enemy.image" alt="" />
-
-      <card-damage-icon
-        :style="background_color(enemy)"
-        :damage="enemy.damage"
-      />
-      <card-passive v-if="enemy.has_passive" :card="enemy" />
-      <enemy-shield v-if="enemy.shield" />
-      <enemy-locked v-if="enemy.locked" />
-      <deathwish-ability v-if="enemy.has_deathwish" />
-      <heart-icon
-        :health="enemy.hp"
-        :bgColor="background_color_hp(enemy.color)"
-      />
-      <ability-circle-enemy :enemy="enemy" />
+      <div
+        class="card-enemy"
+        :style="[
+          { backgroundImage: `url(${enemy.image})` },
+          card_margin(enemy),
+        ]"
+      ></div>
+      <div class="card-enemy-information">
+        <card-damage-icon
+          :style="background_color(enemy)"
+          :damage="enemy.damage"
+        />
+        <card-passive v-if="enemy.has_passive" :card="enemy" />
+        <enemy-shield v-if="enemy.shield" />
+        <enemy-locked v-if="enemy.locked" />
+        <deathwish-ability v-if="enemy.has_deathwish" />
+        <heart-icon
+          :health="enemy.hp"
+          :bgColor="background_color_hp(enemy.color)"
+        />
+        <ability-circle-enemy :enemy="enemy" />
+      </div>
     </div>
-
     <enemy-modal
       v-if="show_enemy_modal"
       :enemy="enemy"
@@ -38,6 +44,7 @@ import {
   border_for_card,
   background_color,
   background_color_hp,
+  card_margin,
 } from "@/logic/border_styles"
 import EnemyModal from "@/components/ModalWindows/EnemyModal"
 import CardPassive from "@/components/UI/CardsUI/CardPassive"
@@ -57,7 +64,6 @@ export default {
     AbilityCircleEnemy,
     EnemyShield,
     CardPassive,
-    // CardDiamond,
     EnemyModal,
   },
   props: {
@@ -76,6 +82,9 @@ export default {
   methods: {
     border(e) {
       return border_for_card(e)
+    },
+    card_margin(card) {
+      return card_margin(card)
     },
     background_color(e) {
       return background_color(e)
@@ -101,26 +110,35 @@ export default {
 </script>
 
 <style scoped>
-.enemy {
-  width: 98%;
-  height: 17vh;
+.card-enemy-component {
   position: relative;
-  /*top: 48%;*/
-  /*left: 50%;*/
-  /*transform: translate(-50%, -50%);*/
-  /*border-width: 3px 4px 3px 5px;*/
-  /*border-radius: 95% 4% 92% 5%/4% 95% 6% 95%;*/
+  width: 100%;
+  box-shadow: -4px 0px 4px rgb(0 0 0 / 50%);
 }
 
-.img {
-  width: 99%;
-  height: 99%;
-  /*top: 50%; */
-  /*left: 50%;*/
-  /*transform: translate(-50%, -50%);*/
+.card-enemy-component::before {
+  content: "";
+  display: block;
+  padding-top: 143%;
+}
+
+.card-enemy,
+.card-enemy-information {
   position: absolute;
-  /*border-width: 3px 4px 3px 5px;*/
-  /*border-radius: 95% 4% 92% 5%/4% 95% 6% 95%;*/
-  /*transform: rotate(2deg);*/
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.card-enemy {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.card-enemy-information {
+  z-index: 2;
 }
 </style>

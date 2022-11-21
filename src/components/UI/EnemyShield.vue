@@ -5,28 +5,22 @@
 </template>
 
 <script>
-export default {
-  name: "enemy-shield",
-}
+export default {}
 </script>
 
 <style scoped>
 .shield {
   position: absolute;
-  /*height: 8vh;*/
-  /*width: 8vh;*/
-  /*background-color: red;*/
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-  /* border: solid 1px yellow; */
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 span {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   font-size: 30pt;
   color: white;
 }

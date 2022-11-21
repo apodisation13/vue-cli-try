@@ -27,7 +27,6 @@ function player_passive_abilities_end_turn(gameObj) {
   const { hand, deck, grave, leader } = gameObj
 
   let passive_hand = hand.filter(c => c.has_passive_in_hand)
-  passive_hand.reverse() // не забываем про float right :) FIXME
   if (leader.has_passive) passive_hand.push(leader)
 
   let i = 0

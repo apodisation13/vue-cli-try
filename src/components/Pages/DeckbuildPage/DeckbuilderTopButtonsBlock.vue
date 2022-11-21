@@ -61,6 +61,7 @@ export default {
   },
   data() {
     return {
+      disable_start_animation: true, // флаг выключения первичной анимации
       showNewDeckFactionSelect: false,
       showFilters: false,
     }
@@ -102,6 +103,7 @@ export default {
 .filter_btn {
   position: relative;
   margin: 10px;
+  transition: transform 0.2s;
 }
 
 .set-filter::before {

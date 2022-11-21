@@ -6,15 +6,14 @@
       @click.right="show_modal"
       v-touch:longtap="show_modal"
       :id="make_id(card, index)"
+      :style="[border(card)]"
     >
-      <div class="card-item-wrapper">
-        <div
-          class="card-item"
-          :style="[{ backgroundImage: `url(${card.image})` }, border(card)]"
-          :class="{ disable: count === 0 }"
-        ></div>
-      </div>
-      <div class="card-item-information">
+      <div
+        class="card-item"
+        :style="[{ backgroundImage: `url(${card.image})` }, card_margin(card)]"
+        :class="{ disable: count === 0 }"
+      ></div>
+      <div class="card-item-information" v-if="!is_previev">
         <special-type-of-card
           :color="card.color"
           v-if="card.type === 'Special'"
@@ -60,6 +59,7 @@ import {
   background_color_charges,
   border_for_card,
   border_leader,
+  card_margin,
 } from "@/logic/border_styles"
 import CardModal from "@/components/ModalWindows/CardModal"
 import CardAbilityCircle from "@/components/UI/CardsUI/AbilityCircleCard"
@@ -80,6 +80,11 @@ export default {
   },
   props: {
     is_leader: {
+      // брать границу карты как для лидеров
+      type: Boolean,
+      default: false,
+    },
+    is_previev: {
       // брать границу карты как для лидеров
       type: Boolean,
       default: false,
@@ -140,6 +145,9 @@ export default {
     border(card) {
       return this.is_leader ? border_leader(card) : border_for_card(card)
     },
+    card_margin(card) {
+      return card_margin(card)
+    },
   },
   emits: ["open_card_modal"],
 }
@@ -148,25 +156,30 @@ export default {
 <style scoped>
 .card-item-component {
   position: relative;
+  width: 100%;
+  box-shadow: -4px 0px 4px rgb(0 0 0 / 50%);
 }
 
-.card-item-wrapper {
-  border-radius: 2px;
-  overflow: hidden;
+.card-item-component::before {
+  content: "";
+  display: block;
+  padding-top: 143%;
+}
+
+.card-item,
+.card-item-information {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 .card-item {
-  position: relative;
-  width: 100%;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   border-radius: 2px;
-}
-
-.card-item::before {
-  content: "";
-  display: block;
-  padding-top: 143%;
+  overflow: hidden;
 }
 
 .disable::after {
@@ -182,11 +195,6 @@ export default {
 }
 
 .card-item-information {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   z-index: 2;
 }
 </style>
