@@ -9,6 +9,9 @@
 <script>
 export default {
   name: "LosePage",
+  created() {
+    this.$store.dispatch("re_set_deck")
+  },
 }
 </script>
 
