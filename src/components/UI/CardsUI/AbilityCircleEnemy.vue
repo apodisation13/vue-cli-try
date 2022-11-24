@@ -27,8 +27,8 @@ export default {
   position: absolute;
   width: 25px;
   height: 25px;
-  top: 5px;
-  left: 5px;
+  top: -3px;
+  left: -3px;
   background-repeat: no-repeat;
 }
 </style>
