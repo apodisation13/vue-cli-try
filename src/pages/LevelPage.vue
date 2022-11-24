@@ -154,10 +154,12 @@ div {
   height: 100px;
   background: linear-gradient(
     180deg,
-    #1d252d 0%,
-    rgba(0, 0, 0, 0.85) 50%,
-    #282d33 98.96%
+    rgba(187, 132, 24, 0.8) 0%,
+    rgba(252, 211, 132, 0.8) 50%,
+    rgba(187, 132, 24, 0.8) 98.44%
   );
+  box-shadow: inset -4px -4px 10px rgba(0, 0, 0, 0.25),
+    inset 4px 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 .mode {
@@ -167,29 +169,14 @@ div {
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   margin: 0;
-
   font-family: "Philosopher", serif;
   font-style: normal;
   font-weight: 700;
   font-size: 25px;
   line-height: 100%;
-
-  /* identical to box height, or 25px */
-  /*text-align: center;*/
   letter-spacing: -0.02em;
   font-feature-settings: "calt" off;
-
-  /* текст градиент */
-  background: linear-gradient(
-    183.6deg,
-    #edb13e 2.96%,
-    #f4d977 65.79%,
-    #eeb850 129.95%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
+  color: #5f4209;
 }
 
 .backBtn {
@@ -204,22 +191,8 @@ div {
   font-weight: 700;
   font-size: 25px;
   line-height: 100%;
-
-  /* identical to box height, or 25px */
-  /*text-align: center;*/
   letter-spacing: -0.02em;
   font-feature-settings: "calt" off;
-
-  /* текст градиент */
-  background: linear-gradient(
-    183.6deg,
-    #edb13e 2.96%,
-    #f4d977 65.79%,
-    #eeb850 129.95%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
+  color: #5f4209;
 }
 </style>

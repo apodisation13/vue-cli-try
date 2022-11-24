@@ -9,12 +9,14 @@
       @dblclick="exec_enemy_leader"
       :id="`enemy_leader_${enemy_leader.name}`"
     >
-      <img
-        class="img"
-        :src="enemy_leader.image"
-        alt=""
+      <div
         v-if="enemy_leader.hp > 0 || isNaN(enemy_leader.hp)"
-      />
+        class="card-enemy"
+        :style="[
+          { backgroundImage: `url(${enemy_leader.image})` },
+          card_margin(enemy_leader),
+        ]"
+      ></div>
 
       <card-damage-icon
         v-if="enemy_leader.damage_per_turn"
@@ -44,7 +46,11 @@
 </template>
 
 <script>
-import { background_color, border_leader } from "@/logic/border_styles"
+import {
+  background_color,
+  border_leader,
+  card_margin,
+} from "@/logic/border_styles"
 import EnemyLeaderModal from "@/components/ModalWindows/EnemyLeaderModal"
 import EnemyLocked from "@/components/UI/CardsUI/EnemyLocked"
 import CardDamageIcon from "@/components/UI/CardsUI/CardDamageIcon"
@@ -81,6 +87,9 @@ export default {
     background_color(leader) {
       return background_color(leader)
     },
+    card_margin(card) {
+      return card_margin(card)
+    },
     style(leader) {
       if (isNaN(leader.hp) && leader.hp.includes("-"))
         return { backgroundColor: "red" }
@@ -107,12 +116,16 @@ export default {
   position: relative;
 }
 
-.img {
-  width: 99%;
-  height: 99%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.card-enemy {
   position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 2px;
+  overflow: hidden;
 }
 </style>

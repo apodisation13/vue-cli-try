@@ -24,7 +24,6 @@ export default {
 .enemies {
   width: 90%;
   height: 60vh;
-  position: relative;
   overflow-y: scroll;
   border: solid 2px red;
 }
@@ -32,7 +31,6 @@ export default {
 .enemy {
   width: 30%;
   display: inline-block;
-  position: relative;
   text-align: justify;
   margin: 3px;
 }

@@ -29,12 +29,11 @@ export default {
   },
   computed: {
     play_price() {
-      if (this.$store.state.game.level.difficulty === "easy")
-        return this.$store.state.user_actions.game_prices.play_level_easy
-      else if (this.$store.state.game.level.difficulty === "normal")
-        return this.$store.state.user_actions.game_prices.play_level_normal
-      else if (this.$store.state.game.level.difficulty === "hard")
-        return this.$store.state.user_actions.game_prices.play_level_hard
+      const diff = this.$store.state.game.level.difficulty
+      const price = this.$store.state.user_actions.game_prices
+      if (diff === "easy") return price.play_level_easy
+      else if (diff === "normal") return price.play_level_normal
+      else if (diff === "hard") return price.play_level_hard
       else return "Уровень не выбран!"
     },
   },
