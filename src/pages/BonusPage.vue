@@ -1,75 +1,48 @@
 <template>
-  <div class="d">
+  <div>
+  <div class="d" v-if="false">
     <div class="title">
       <div class="title__text">
-        <b>ДОБРО ПОЖАЛОВАТЬ НА <br />БОНУСНУЮ СТРАНИЦУ!</b>
+        <h1>Страница бонусов</h1>
       </div>
     </div>
+    <div class="resources">
+      <!--Строка открытия и приобретения kegs-->
+      <bonus-page-resource
+        resourceName="kegs"
+        :resourceCount="resource.kegs"
+        :resourcePrice="kegs_price"
+        @openItem="open_keg"
+        @addItem="add_kegs"
+      />
 
-    <!--Строка открытия и приобретения kegs-->
-    <div class="element">
-      <div class="open_icon" @dblclick="open_keg"></div>
-      <div class="line">
-        <resource-item name="kegs" :count="resource.kegs" />
-      </div>
-      <div class="line">
-        <div class="kegs" @dblclick="add_kegs">
-          +++ {{ $store.state.user_actions.game_prices.pay_for_kegs }}
-          <img
-            :src="require(`@/assets/icons/resources/wood.svg`)"
-            alt=""
-            class="wood"
-          />
-        </div>
-      </div>
-    </div>
+      <!--Строка открытия и приобретения big_kegs-->
+      <bonus-page-resource
+        resourceName="big_kegs"
+        :resourceCount="resource.big_kegs"
+        :resourcePrice="big_kegs_price"
+        @openItem="open_big_keg"
+        @addItem="add_big_kegs"
+      />
 
-    <!--Строка открытия и приобретения big_kegs-->
-    <div class="element">
-      <div class="open_icon" @dblclick="open_big_keg"></div>
-      <div class="line">
-        <resource-item name="big_kegs" :count="resource.big_kegs" />
-      </div>
-      <div class="line">
-        <div class="kegs" @dblclick="add_big_kegs">
-          +++
-          {{ $store.state.user_actions.game_prices.pay_for_big_kegs }}
-          <img
-            :src="require(`@/assets/icons/resources/wood.svg`)"
-            class="wood"
-            alt=""
-          />
-        </div>
-      </div>
-    </div>
+      <!--Строка открытия и приобретения chests-->
+      <bonus-page-resource
+        resourceName="chests"
+        :resourceCount="resource.chests"
+        :resourcePrice="chests_price"
+        @openItem="open_chest"
+        @addItem="add_chests"
+      />
 
-    <!--Строка открытия и приобретения chests-->
-    <div class="element">
-      <div class="open_icon" @dblclick="open_chest"></div>
-      <div class="line">
-        <resource-item name="chests" :count="resource.chests" />
-      </div>
-      <div class="line">
-        <div class="kegs" @dblclick="add_chests">
-          +++
-          {{ $store.state.user_actions.game_prices.pay_for_chests }}
-          <img
-            :src="require(`@/assets/icons/resources/wood.svg`)"
-            alt=""
-            class="wood"
-          />
-        </div>
-      </div>
+      <!--Строка открытия keys-->
+      <bonus-page-resource
+        resourceName="keys"
+        :resourceCount="resource.keys"
+        @openItem="open_key"
+      />
     </div>
 
     <!--Строка открытия и приобретения chests-->
-    <div class="element">
-      <div class="open_icon" @dblclick="open_key"></div>
-      <div class="line">
-        <resource-item name="keys" :count="resource.keys" />
-      </div>
-    </div>
-
     <div class="cards_list" v-if="show_keg">
       <card-list-component
         :cards="random_cards"
@@ -101,14 +74,17 @@
       </div>
     </div>
   </div>
+  <yesno-modal v-if="true" visible="true"/>
+</div>
 </template>
 
 <script>
 import CardListComponent from "@/components/CardListComponent"
 import { getRandomReward } from "@/logic/random_rewards"
-import ResourceItem from "@/components/UI/ResourceItem"
+import BonusPageResource from "@/components/UI/BonusPageResource"
+import YesnoModal from "@/components/ModalWindows/YesnoModal"
 export default {
-  components: { ResourceItem, CardListComponent },
+  components: { CardListComponent, BonusPageResource, YesnoModal },
   created() {
     this.cards.forEach(card => {
       if (card.card.color === "Bronze") {
@@ -129,6 +105,15 @@ export default {
     },
     resource() {
       return this.$store.getters["resource"]
+    },
+    kegs_price() {
+      return this.$store.getters["get_kegs_price"]
+    },
+    big_kegs_price() {
+      return this.$store.getters["get_big_kegs_price"]
+    },
+    chests_price() {
+      return this.$store.getters["get_chests_price"]
     },
   },
   data() {
@@ -151,10 +136,9 @@ export default {
     },
 
     async add_kegs() {
+      if (this.resource.wood < (this.kegs_price * -1)) return;
       await this.$store.dispatch("pay_resource", {
-        wood:
-          this.resource.wood +
-          this.$store.state.user_actions.game_prices.pay_for_kegs,
+        wood: this.resource.wood + this.kegs_price,
         kegs: this.resource.kegs + 1,
       })
     },
@@ -173,10 +157,9 @@ export default {
     },
 
     async add_big_kegs() {
+      if (this.resource.wood < (this.big_kegs_price * -1)) return;
       await this.$store.dispatch("pay_resource", {
-        wood:
-          this.resource.wood +
-          this.$store.state.user_actions.game_prices.pay_for_big_kegs,
+        wood: this.resource.wood + this.big_kegs_price,
         big_kegs: this.resource.big_kegs + 1,
       })
     },
@@ -195,10 +178,9 @@ export default {
     },
 
     async add_chests() {
+      if (this.resource.wood < (this.chests_price * -1)) return;
       await this.$store.dispatch("pay_resource", {
-        wood:
-          this.resource.wood +
-          this.$store.state.user_actions.game_prices.pay_for_chests,
+        wood: this.resource.wood + this.chests_price,
         chests: this.resource.chests + 1,
       })
     },
@@ -226,6 +208,7 @@ export default {
     },
 
     async open_key() {
+      if (this.resource.keys <= 0) return
       await this.$store.dispatch("pay_resource", {
         keys: this.resource.keys - 1,
       })
@@ -248,7 +231,7 @@ export default {
 .d {
   width: 98%;
   height: 80vh;
-  border: solid 1px blueviolet;
+  /* border: solid 1px blueviolet; */
   margin: 1%;
   /*background-image: url('~@/assets/brick.jpg');*/
 }
@@ -260,34 +243,23 @@ div {
 }
 
 .title {
-  justify-content: center;
-  display: flex;
-}
-
-.title__text {
   text-align: center;
-}
-
-.element {
-  /*border: solid 2px red;*/
   margin-top: 10px;
 }
 
-.line {
-  display: inline-block;
-  margin-right: 30px;
+.title__text h1 {
+  font-family: "Philosopher";
+  font-size: 2rem;
+  line-height: 2rem;
+  color: hsl(39, 82%, 62%)
 }
 
-.open_icon {
-  width: 30px;
-  height: 30px;
-  background-image: url("~@/assets/icons/buttons/open_icon.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  margin-left: 20px;
-  margin-right: 30px;
-  display: inline-block;
+.resources {
+  min-height: 90%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .wood {
@@ -308,14 +280,6 @@ div {
 .inlines {
   display: table;
   margin: 1%;
-}
-
-.kegs {
-  border-radius: 50% 20% / 10% 40%;
-  width: 200px;
-  border: dashed 2px brown;
-  text-align: center;
-  line-height: 7vh;
 }
 
 .cards_list {

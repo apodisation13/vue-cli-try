@@ -18,7 +18,23 @@ const state = {
   win_redirect: false,
 }
 
-const getters = {}
+const getters = {
+  get_kegs_price: () => {
+    return state.game_prices.pay_for_kegs
+      ? state.game_prices.pay_for_kegs
+      : 0
+  },
+  get_big_kegs_price: () => {
+    return state.game_prices.pay_for_big_kegs
+      ? state.game_prices.pay_for_big_kegs
+      : 0
+  },
+  get_chests_price: () => {
+    return state.game_prices.pay_for_chests
+      ? state.game_prices.pay_for_chests
+      : 0
+  },
+}
 
 const mutations = {
   // устанавливаем все игровые цены на крафт, милл итп
