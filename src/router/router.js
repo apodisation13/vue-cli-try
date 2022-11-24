@@ -141,6 +141,9 @@ router.beforeEach((to, from, next) => {
     if (store.getters.isLoggedIn) next()
     else next("/")
   } else next()
+
+  // если мы уже играли и оттуда вышли, переустановим колоду
+  if (from.path === "/game") store.dispatch("re_set_deck")
 })
 
 export default router

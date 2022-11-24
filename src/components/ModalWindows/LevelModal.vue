@@ -39,7 +39,6 @@ export default {
 <style scoped>
 .enemy_leader {
   width: 30%;
-  right: -35%;
-  position: relative;
+  margin: auto;
 }
 </style>

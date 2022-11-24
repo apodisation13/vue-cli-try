@@ -23,17 +23,14 @@ export default {
 <style scoped>
 .enemies {
   width: 90%;
-  height: 60%;
-  position: relative;
-  overflow: scroll;
+  height: 60vh;
+  overflow-y: scroll;
   border: solid 2px red;
 }
 
 .enemy {
-  top: 20%;
   width: 30%;
   display: inline-block;
-  position: relative;
   text-align: justify;
   margin: 3px;
 }

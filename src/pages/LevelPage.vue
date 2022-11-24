@@ -16,20 +16,24 @@
       <div class="backBtn" @click="cancelGameMod">Назад</div>
       <div>Выбранный режим: {{ gameMod }}</div>
       <div v-if="gameMod === 'seasons'">
-        <div
-          class="seasons"
-          v-for="season in seasons"
-          :key="season.id"
-          @dblclick="setSeason(season)"
-        >
-          <div class="seasons__element">
-            <div>{{ season.id }}:</div>
-            <div>{{ season.name }}</div>
-            <div>{{ season.description }}</div>
+        <div v-if="!seasonSelected">
+          <div
+            class="game_modes"
+            v-for="season in seasons"
+            :key="season.id"
+            @click="setSeason(season)"
+          >
+            <div class="seasons__element">
+              <div>{{ season.name }}</div>
+              <div>{{ season.description }}</div>
+            </div>
           </div>
           <br />
         </div>
-        <LevelTree :levels="seasonLevels" v-if="seasonLevels" />
+        <LevelTree
+          :levels="seasonLevels"
+          v-if="seasonLevels && seasonSelected"
+        />
       </div>
       <div v-if="gameMod === 'random'">
         <div
@@ -72,6 +76,7 @@ export default {
       gameTypes: ["seasons", "random", "arena"],
       gameMod: null,
       seasonLevels: null,
+      seasonSelected: false,
     }
   },
   computed: {
@@ -84,11 +89,16 @@ export default {
       this.gameMod = mode
     },
     cancelGameMod() {
+      if (this.seasonSelected) {
+        this.seasonSelected = null
+        return
+      }
       this.gameMod = null
     },
     setSeason(season) {
       this.seasonLevels = season.levels
       this.$store.commit("set_season", season)
+      this.seasonSelected = true
     },
     set_random_level(index) {
       this.toast.success(`Выбран рандомный уровень!`, { timeout: 1000 })
@@ -139,14 +149,34 @@ div {
 }
 
 .game_modes {
-  display: inline-block;
+  position: relative;
   width: 99%;
+  height: 100px;
+  background: linear-gradient(
+    180deg,
+    rgba(187, 132, 24, 0.8) 0%,
+    rgba(252, 211, 132, 0.8) 50%,
+    rgba(187, 132, 24, 0.8) 98.44%
+  );
+  box-shadow: inset -4px -4px 10px rgba(0, 0, 0, 0.25),
+    inset 4px 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 .mode {
-  width: 30%;
-  height: 20vh;
-  border: solid 2px blue;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  margin: 0;
+  font-family: "Philosopher", serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 25px;
+  line-height: 100%;
+  letter-spacing: -0.02em;
+  font-feature-settings: "calt" off;
+  color: #5f4209;
 }
 
 .backBtn {
@@ -155,13 +185,14 @@ div {
   background-color: greenyellow;
 }
 
-.seasons {
-  display: inline;
-  background-color: yellow;
-}
-
 .seasons__element {
-  border: solid 2px black;
-  margin: 1px;
+  font-family: "Philosopher", serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 25px;
+  line-height: 100%;
+  letter-spacing: -0.02em;
+  font-feature-settings: "calt" off;
+  color: #5f4209;
 }
 </style>

@@ -225,6 +225,10 @@ export default {
 </script>
 
 <style scoped>
+div {
+  color: black;
+}
+
 .enemy_border {
   width: 65%;
   height: 60%;

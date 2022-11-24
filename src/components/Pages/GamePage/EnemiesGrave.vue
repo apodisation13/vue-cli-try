@@ -3,7 +3,7 @@
     <button class="enemies_grave_btn" @click="visible = true">
       КлВр {{ enemies_len }}
     </button>
-    <modal-window v-if="visible" v-touch:swipe="close_self">
+    <modal-window v-if="visible" v-touch:swipe.left="close_self">
       <button-close @close_self="close_self" />
       <enemy-list :enemies="enemies_grave" />
     </modal-window>

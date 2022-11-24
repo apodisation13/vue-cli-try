@@ -2,7 +2,9 @@
   <div>
     <v-stage :config="configKonva">
       <v-layer>
+        <!--для каждого уровня из списка уровней текущего сезона-->
         <div v-for="(level, index) in levs" :key="level.id">
+          <!--рисуем звезды сложности, 1,2 или 3-->
           <v-star :config="starConfig(level, 0)"></v-star>
           <v-star
             :config="starConfig(level, w / 2)"
@@ -15,6 +17,7 @@
             :config="starConfig(level, w)"
             v-if="level.level.difficulty === 'hard'"
           ></v-star>
+          <!--Прямоугольник уровня, пройден\открыт\закрыт, свечение по фракции-->
           <v-rect
             :config="squareConfig(level)"
             @dblclick="setLevel(index)"
@@ -22,13 +25,26 @@
             @pointerup="end(level)"
             @pointerdown="start(level)"
           ></v-rect>
+          <!--Текст внутри прямоугольника, или id или значок замка (закрыт)-->
           <v-text
+            v-if="level.unlocked"
             :config="textConfig(level)"
             @dblclick="setLevel(index)"
             @dbltap="setLevel(index)"
             @pointerup="end(level)"
             @pointerdown="start(level)"
           ></v-text>
+          <!--Значок замка-->
+          <v-image
+            v-else
+            :config="imageConfig(level)"
+            @dblclick="setLevel(index)"
+            @dbltap="setLevel(index)"
+            @pointerup="end(level)"
+            @pointerdown="start(level)"
+          ></v-image>
+          <!--Линии связей-->
+          <!--Для каждой линии из линии связей-->
           <v-line
             v-for="line in level.level.lines"
             :key="line"
@@ -72,7 +88,7 @@ export default {
   },
   data() {
     return {
-      w: 25,
+      w: 28,
       configKonva: { width: 1000, height: 1000 },
       levs: [],
       timer: 0,
@@ -97,15 +113,19 @@ export default {
         width: this.w,
         height: this.w,
         fill: this.levelColor(item),
-        stroke: this.levelFaction(item),
+        stroke: this.levelBorder(item),
+        shadowColor: this.levelFaction(item),
+        shadowBlur: 7,
       }
     },
     levelColor(item) {
-      if (item.finished) return "green"
-      else {
-        if (item.unlocked) return "grey"
-        else return "orange"
-      }
+      if (item.finished) return "rgba(255, 231, 183, 1)"
+      if (item.unlocked) return "rgba(237, 177, 62, 1)"
+      return "silver"
+    },
+    levelBorder(item) {
+      if (item.finished) return ""
+      return "rgba(0, 0, 0, 0.13)"
     },
     levelFaction(item) {
       if (item.level.enemy_leader.faction === "Soldiers") return "blue"
@@ -115,11 +135,26 @@ export default {
     textConfig(item) {
       return {
         text: item.level.id,
-        fontSize: 12,
+        fontSize: 16,
+        x:
+          item.level.id >= 10
+            ? item.level.x + this.w / 4
+            : item.level.x + this.w / 4 + 2,
+        y:
+          item.level.id >= 10
+            ? item.level.y + this.w / 4
+            : item.level.y + this.w / 4 + 2,
+      }
+    },
+    imageConfig(item) {
+      const image = new Image()
+      image.src = require("@/assets/icons/locked_level.png")
+      return {
         x: item.level.x + this.w / 4,
         y: item.level.y + this.w / 4,
-        align: "center",
-        verticalAlign: "middle",
+        width: this.w / 2,
+        height: this.w / 2,
+        image: image,
       }
     },
     lineConfig(arrow) {
@@ -190,7 +225,7 @@ export default {
           level.lines.push({
             x: x2,
             y: y2,
-            fill: "green",
+            fill: "rgba(255, 246, 193, 1)",
             points: [0, 0, x1, y1],
           })
           return
@@ -199,7 +234,7 @@ export default {
       level.lines.push({
         x: x2,
         y: y2,
-        fill: "red",
+        fill: "rgba(74, 66, 55, 1)",
         points: [0, 0, x1, y1],
       })
     },

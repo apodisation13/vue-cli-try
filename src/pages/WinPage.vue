@@ -43,6 +43,7 @@ export default {
   },
   async created() {
     if (!this.$store.state.user_actions.win_redirect) return
+    this.$store.dispatch("re_set_deck") // и тут переустанавливаем выбранную деку
     await this.pay_resources() // получаем ресурсы за выигрыш
     await this.open_levels() // открываем связанные уровни в дереве
     this.$store.commit("set_win_redirect", false)
