@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import EnemyComp from "@/components/EnemyComp"
+import EnemyComp from "@/components/Cards/EnemyComp"
 export default {
   name: "EnemyList",
   components: { EnemyComp },
@@ -25,7 +25,8 @@ export default {
   width: 90%;
   height: 60vh;
   overflow-y: scroll;
-  border: solid 2px red;
+  /*border: solid 2px red;*/
+  margin: auto;
 }
 
 .enemy {

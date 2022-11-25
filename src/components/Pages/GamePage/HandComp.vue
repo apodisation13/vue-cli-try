@@ -24,7 +24,7 @@
 
 <script>
 import draggable from "vuedraggable"
-import CardItem from "@/components/CardItem"
+import CardItem from "@/components/Cards/CardItem"
 export default {
   name: "hand-comp",
   components: { CardItem, draggable },

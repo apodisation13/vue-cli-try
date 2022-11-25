@@ -12,7 +12,7 @@ function passive_end_turn_destroy_2_enemies_after_3_turns(card, gameObj) {
     return
   }
 
-  const { field, enemy_leader, hand, grave, deck } = gameObj
+  const { field, enemy_leader, hand, grave } = gameObj
 
   let all_enemies = get_all_enemies(field, enemy_leader)
   const target_1 = choice_pop(all_enemies) || null
@@ -23,8 +23,8 @@ function passive_end_turn_destroy_2_enemies_after_3_turns(card, gameObj) {
   targets.forEach(e => {
     if (e) enemy_takes_damage(e, { damage: e.hp }, gameObj, 1000)
     card.charges = 0
-    remove_dead_card(card, grave, hand, deck)
   })
+  remove_dead_card(card, grave, hand, undefined)
 }
 
 export { passive_end_turn_destroy_2_enemies_after_3_turns }

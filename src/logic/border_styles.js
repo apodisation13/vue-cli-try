@@ -107,6 +107,21 @@ function background_color_charges(color) {
   }
 }
 
+function background_color_leader(factionColor) {
+  switch (factionColor) {
+    case "Soldiers":
+      return "blue"
+    case "Monsters":
+      return "red"
+    case "Animals":
+      return "green"
+    case "Neutrals":
+      return "brown"
+    default:
+      return "#fd69b5"
+  }
+}
+
 function background_color_deck(deck) {
   if (deck.leader.faction === "Soldiers") return { backgroundColor: "blue" }
   else if (deck.leader.faction === "Monsters") return { backgroundColor: "red" }
@@ -123,4 +138,5 @@ export {
   background_color_deck,
   background_color_hp,
   background_color_charges,
+  background_color_leader,
 }

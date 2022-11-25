@@ -24,7 +24,7 @@
 
 <script>
 import draggable from "vuedraggable"
-import CardItem from "@/components/CardItem.vue"
+import CardItem from "@/components/Cards/CardItem.vue"
 export default {
   components: {
     draggable,

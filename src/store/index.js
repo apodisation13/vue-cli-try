@@ -23,9 +23,6 @@ const store = createStore({
     set_play_sound(state, payload) {
       state.play_sound = payload
     },
-    set_show_menu(state, payload) {
-      state.show_menu = payload
-    },
   },
   actions: {},
 })

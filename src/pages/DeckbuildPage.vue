@@ -79,7 +79,7 @@ import DecksListModal from "@/components/ModalWindows/DecksListModal"
 import DeckbuilderTopButtonsBlock from "@/components/Pages/DeckbuildPage/DeckbuilderTopButtonsBlock"
 import BlockAssemblingTheDeck from "@/components/Pages/DeckbuildPage/BlockAssemblingTheDeck"
 import DeckbuilderFilters from "@/components/Pages/DeckbuildPage/DeckbuilderFilters"
-import CardListComponent from "@/components/CardListComponent"
+import CardListComponent from "@/components/Cards/CardListComponent"
 import ButtonDecks from "@/components/Pages/DeckbuildPage/Buttons/ButtonDecks"
 
 export default {

@@ -58,7 +58,6 @@ const routes = [
     meta: {
       requireAuth: true,
       notRequireMenu: true,
-      sideMenu: true,
       image: images.field,
     },
   },
@@ -133,10 +132,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  // прячем боковое меню по переходу в любую вкладку
-  store.commit("set_show_menu", false)
-
-  // если требуется АУФ, и мы залогинены, все ок. Если не залогинены, идем на главную. Если не требуется АУФ - все ок
+  // Если требуется АУФ, и мы залогинены, все ок. Если не залогинены, идем на главную. Если не требуется АУФ - все ок
   if (to.matched.some(record => record.meta.requireAuth)) {
     if (store.getters.isLoggedIn) next()
     else next("/")
