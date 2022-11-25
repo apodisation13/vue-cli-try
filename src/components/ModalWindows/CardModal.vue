@@ -5,9 +5,11 @@
   >
     <button-close @close_self="close_self" />
 
+    <!--Имя у карты есть всегда-->
     <h2>{{ card.name }}</h2>
 
-    <div class="card-ui" :style="[border(card)]">
+    <!--Карта игрока-->
+    <div class="card-ui" :style="[border(card)]" v-if="!forEnemy">
       <card-ui
         :count="count"
         :card="card"
@@ -18,32 +20,14 @@
         :is_leader="is_leader"
       />
     </div>
-
-    <div>
-      <div
-        class="inlines"
-        :style="{
-          'background-image':
-            'url(' + require(`@/assets/icons/card/sword.svg`) + ')',
-        }"
-        @click="show_passive = !show_passive"
-      ></div>
-      <div
-        class="inlines"
-        @click="show_passive = !show_passive"
-        v-if="card.has_passive"
-        :style="{
-          'background-image':
-            'url(' + require(`@/assets/icons/card/passive_clock.svg`) + ')',
-        }"
-      >
-        <span v-if="card.timer !== 0">{{ card.timer }}</span>
-      </div>
+    <!--А это соответственно карта врага, у неё есть card.move-->
+    <div class="card-ui" :style="[border(card)]" v-if="forEnemy">
+      <enemy-ui :enemy="card" />
     </div>
 
-    <div class="text" v-if="!show_passive">{{ card.ability.description }}</div>
-    <div class="text" v-else>{{ card.passive_ability.description }}</div>
+    <card-descriptions :card="card" :forEnemy="forEnemy" />
 
+    <!--Блок кнопок милл, крафт (ТОЛЬКО ДЛЯ ДЕКБИЛДЕРА!!!-->
     <div class="mill_craft_block" v-if="deckbuilder">
       <div class="divb" v-if="!bonus">
         <button class="b" @click="mill">Уничтожить</button>
@@ -77,9 +61,13 @@ import ButtonClose from "@/components/UI/Buttons/ButtonClose"
 import ModalWindow from "@/components/ModalWindows/ModalWindow"
 import YesnoModal from "@/components/ModalWindows/YesnoModal"
 import CardUi from "@/components/Cards/CardUi"
+import EnemyUi from "@/components/Cards/EnemyUi"
+import CardDescriptions from "@/components/Cards/CardDescriptions"
 export default {
   name: "card-modal",
   components: {
+    CardDescriptions,
+    EnemyUi,
     CardUi,
     ModalWindow,
     ButtonClose,
@@ -118,6 +106,12 @@ export default {
     },
     deckbuilder: {
       type: Boolean,
+      default: false,
+    },
+    // отображать описание для врага или нет
+    forEnemy: {
+      type: Boolean,
+      required: false,
       default: false,
     },
   },
@@ -197,22 +191,6 @@ export default {
   padding-top: 143%;
 }
 
-.inlines {
-  display: inline-block;
-  margin: 1%;
-  font-weight: bolder;
-  border: solid 2px brown;
-  width: 100px;
-  height: 5vh;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-}
-
-.text {
-  margin-bottom: 1%;
-  font-size: 12pt;
-}
 .divb {
   width: 98%;
   height: 3vh;
