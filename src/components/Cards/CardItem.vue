@@ -42,7 +42,7 @@ import {
   card_margin,
 } from "@/logic/border_styles"
 import CardModal from "@/components/ModalWindows/CardModal"
-import CardUi from "@/components/CardUi"
+import CardUi from "@/components/Cards/CardUi"
 export default {
   components: {
     CardUi,

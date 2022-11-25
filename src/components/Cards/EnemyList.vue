@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import EnemyComp from "@/components/EnemyComp"
+import EnemyComp from "@/components/Cards/EnemyComp"
 export default {
   name: "EnemyList",
   components: { EnemyComp },

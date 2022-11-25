@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import EnemyList from "@/components/EnemyList"
+import EnemyList from "@/components/Cards/EnemyList"
 import ButtonClose from "@/components/UI/Buttons/ButtonClose"
 import ModalWindow from "@/components/ModalWindows/ModalWindow"
 

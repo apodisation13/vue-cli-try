@@ -13,7 +13,7 @@
 <script>
 import ModalWindow from "@/components/ModalWindows/ModalWindow"
 import ButtonClose from "@/components/UI/Buttons/ButtonClose"
-import EnemyList from "@/components/EnemyList"
+import EnemyList from "@/components/Cards/EnemyList"
 export default {
   name: "remaining-enemies",
   components: { EnemyList, ButtonClose, ModalWindow },

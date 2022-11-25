@@ -17,8 +17,8 @@
 <script>
 import ModalWindow from "@/components/ModalWindows/ModalWindow"
 import ButtonClose from "@/components/UI/Buttons/ButtonClose"
-import EnemyLeader from "@/components/EnemyLeader"
-import EnemyList from "@/components/EnemyList"
+import EnemyLeader from "@/components/Cards/EnemyLeader"
+import EnemyList from "@/components/Cards/EnemyList"
 export default {
   name: "level-modal",
   components: { EnemyList, EnemyLeader, ButtonClose, ModalWindow },

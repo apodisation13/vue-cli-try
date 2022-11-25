@@ -62,7 +62,7 @@
 import AssemblingPoolList from "@/components/Pages/DeckbuildPage/AssemblingPoolList"
 import InputNameForDeck from "@/components/Pages/DeckbuildPage/InputNameForDeck"
 import CreateButton from "@/components/Pages/DeckbuildPage/Buttons/CreateButton"
-import CardItem from "@/components/CardItem"
+import CardItem from "@/components/Cards/CardItem"
 export default {
   components: {
     AssemblingPoolList,

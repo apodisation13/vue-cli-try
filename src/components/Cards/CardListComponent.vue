@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import CardItem from "@/components/CardItem"
+import CardItem from "@/components/Cards/CardItem"
 export default {
   components: {
     CardItem,

@@ -13,8 +13,8 @@
 <script>
 import ModalWindow from "@/components/ModalWindows/ModalWindow"
 import ButtonClose from "@/components/UI/Buttons/ButtonClose"
-import CardListComponent from "@/components/CardListComponent"
-import CardItem from "@/components/CardItem"
+import CardListComponent from "@/components/Cards/CardListComponent"
+import CardItem from "@/components/Cards/CardItem"
 export default {
   name: "deck-modal",
   components: {

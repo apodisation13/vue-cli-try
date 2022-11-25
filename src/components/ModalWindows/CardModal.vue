@@ -76,7 +76,7 @@ import { border_for_card, background_color } from "@/logic/border_styles"
 import ButtonClose from "@/components/UI/Buttons/ButtonClose"
 import ModalWindow from "@/components/ModalWindows/ModalWindow"
 import YesnoModal from "@/components/ModalWindows/YesnoModal"
-import CardUi from "@/components/CardUi"
+import CardUi from "@/components/Cards/CardUi"
 export default {
   name: "card-modal",
   components: {

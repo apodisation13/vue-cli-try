@@ -85,7 +85,7 @@ import execaimove from "@/mixins/GamePage/execaimove"
 import startgame from "@/mixins/GamePage/startgame"
 
 import FieldComp from "@/components/Pages/GamePage/FieldComp"
-import EnemyLeader from "@/components/EnemyLeader"
+import EnemyLeader from "@/components/Cards/EnemyLeader"
 import RemainingEnemies from "@/components/Pages/GamePage/EnemiesRemaining"
 import EnemiesGrave from "@/components/Pages/GamePage/EnemiesGrave"
 import DrawComp from "@/components/Pages/GamePage/DrawComp"
@@ -95,7 +95,7 @@ import DeckComp from "@/components/Pages/GamePage/DeckComp"
 import LeaderComp from "@/components/Pages/GamePage/LeaderComp"
 import HealthComp from "@/components/Pages/GamePage/HealthComp"
 import HandComp from "@/components/Pages/GamePage/HandComp"
-import SpecialCaseAbilities from "@/components/AbilitiesComponents/SpecialCaseAbilities"
+import SpecialCaseAbilities from "@/components/Pages/GamePage/SpecialCaseAbilities"
 import RedrawComp from "@/components/Pages/GamePage/RedrawComp"
 export default {
   components: {

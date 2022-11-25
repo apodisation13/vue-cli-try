@@ -113,7 +113,7 @@ export default {
 .card-enemy-component {
   position: relative;
   width: 100%;
-  box-shadow: -4px 0px 4px rgb(0 0 0 / 50%);
+  box-shadow: -4px 0 4px rgb(0 0 0 / 50%);
 }
 
 .card-enemy-component::before {

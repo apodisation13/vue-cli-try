@@ -104,7 +104,7 @@
 </template>
 
 <script>
-import CardListComponent from "@/components/CardListComponent"
+import CardListComponent from "@/components/Cards/CardListComponent"
 import { getRandomReward } from "@/logic/random_rewards"
 import ResourceItem from "@/components/UI/ResourceItem"
 export default {

@@ -11,7 +11,7 @@
 <script>
 import ModalWindow from "@/components/ModalWindows/ModalWindow"
 import ButtonClose from "@/components/UI/Buttons/ButtonClose"
-import CardListComponent from "@/components/CardListComponent"
+import CardListComponent from "@/components/Cards/CardListComponent"
 export default {
   name: "deck-comp",
   components: { CardListComponent, ButtonClose, ModalWindow },
