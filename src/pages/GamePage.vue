@@ -96,7 +96,7 @@ import LeaderComp from "@/components/Pages/GamePage/LeaderComp"
 import HealthComp from "@/components/Pages/GamePage/HealthComp"
 import HandComp from "@/components/Pages/GamePage/HandComp"
 import SpecialCaseAbilities from "@/components/AbilitiesComponents/SpecialCaseAbilities"
-import RedrawComp from "@/components/RedrawComp"
+import RedrawComp from "@/components/Pages/GamePage/RedrawComp"
 export default {
   components: {
     RedrawComp,
