@@ -37,13 +37,13 @@
 </template>
 
 <script>
-import CardCountTriangle from "@/components/UI/CardCountTriangle"
-import CardCharges from "@/components/UI/CardsUI/CardCharges"
+import CardCountTriangle from "@/components/UI/CardsUI/Cards/CardCountTriangle"
+import CardCharges from "@/components/UI/CardsUI/Cards/CardCharges"
 import CardPassive from "@/components/UI/CardsUI/CardPassive"
-import CardAbilityCircle from "@/components/UI/CardsUI/AbilityCircleCard"
+import CardAbilityCircle from "@/components/UI/CardsUI/Cards/AbilityCircleCard"
 import CardDamageIcon from "@/components/UI/CardsUI/CardDamageIcon"
 import HeartIcon from "@/components/UI/CardsUI/HeartIcon"
-import SpecialTypeOfCard from "@/components/UI/CardsUI/SpecialTypeOfCard"
+import SpecialTypeOfCard from "@/components/UI/CardsUI/Cards/SpecialTypeOfCard"
 import {
   background_color,
   background_color_charges,

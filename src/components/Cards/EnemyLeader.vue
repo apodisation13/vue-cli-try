@@ -52,10 +52,10 @@ import {
   card_margin,
 } from "@/logic/border_styles"
 import EnemyLeaderModal from "@/components/ModalWindows/EnemyLeaderModal"
-import EnemyLocked from "@/components/UI/CardsUI/EnemyLocked"
+import EnemyLocked from "@/components/UI/CardsUI/Enemies/EnemyLocked"
 import CardDamageIcon from "@/components/UI/CardsUI/CardDamageIcon"
 import HeartIcon from "@/components/UI/CardsUI/HeartIcon"
-import HealAbility from "@/components/UI/Abilities/HealAbility"
+import HealAbility from "@/components/UI/CardsUI/HealAbility"
 
 export default {
   name: "enemy-leader",
