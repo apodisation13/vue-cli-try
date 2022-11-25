@@ -17,6 +17,7 @@
       <card-passive :card="card" v-if="card.has_passive" />
 
       <card-charges
+        v-if="card?.charges >= 0"
         :charge="card.charges"
         :bgColor="background_color_charges(card.color)"
       />
@@ -47,9 +48,8 @@ import SpecialTypeOfCard from "@/components/UI/CardsUI/Cards/SpecialTypeOfCard"
 import {
   background_color,
   background_color_charges,
+  background_color_leader,
   background_color_hp,
-  border_for_card,
-  border_leader,
   card_margin,
 } from "@/logic/border_styles"
 
@@ -65,45 +65,40 @@ export default {
     SpecialTypeOfCard,
   },
   props: {
-    is_leader: {
-      // брать границу карты как для лидеров
-      type: Boolean,
-      default: false,
-    },
-    is_previev: {
-      // брать границу карты как для лидеров
-      type: Boolean,
-      default: false,
-    },
+    // собственно сама карта
     card: {
       type: Object,
       required: true,
     },
-    user_card: {
-      type: Object,
-      default() {
-        return null
-      },
-    },
-    hp_needed: {
-      // hp только для декбилдера, для игры не нужно оно
+    // брать ли границу карты как для карт (по цвету), ДЕФОЛТНОЕ, или как для лидеров (по фракции)
+    is_leader: {
       type: Boolean,
       default: false,
     },
+    // показывать или не показывать hp (в игре не нужны жизни, везде нужны)
+    hp_needed: {
+      type: Boolean,
+      default: false,
+    },
+    // показывать или не показывать зону кнопок милл\крафт, только для декбилдера
     deckbuilder: {
       type: Boolean,
       default: false,
     },
-    count: {
-      type: Number,
-    },
-    index: {
-      type: Number,
-    },
+    // на странице бонусов мы показываем count, но не показываем mill/craft
     bonus: {
       type: Boolean,
       default: false,
       required: false,
+    },
+    // сколько у юзера этой карты
+    count: {
+      type: Number,
+    },
+    // FIXME: че это
+    is_previev: {
+      type: Boolean,
+      default: false,
     },
   },
   methods: {
@@ -111,13 +106,12 @@ export default {
       return background_color_hp(color)
     },
     background_color_charges(color) {
-      return background_color_charges(color)
+      return this.is_leader
+        ? background_color_leader(this.card.faction)
+        : background_color_charges(color)
     },
     background_color(card) {
       return background_color(card)
-    },
-    border(card) {
-      return this.is_leader ? border_leader(card) : border_for_card(card)
     },
     card_margin(card) {
       return card_margin(card)

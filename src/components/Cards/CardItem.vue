@@ -11,7 +11,6 @@
       <card-ui
         :count="count"
         :card="card"
-        :user_card="user_card"
         :hp_needed="hp_needed"
         :deckbuilder="deckbuilder"
         :bonus="bonus"
@@ -33,14 +32,7 @@
 </template>
 
 <script>
-import {
-  background_color,
-  background_color_hp,
-  background_color_charges,
-  border_for_card,
-  border_leader,
-  card_margin,
-} from "@/logic/border_styles"
+import { border_for_card, border_leader } from "@/logic/border_styles"
 import CardModal from "@/components/ModalWindows/CardModal"
 import CardUi from "@/components/Cards/CardUi"
 export default {
@@ -49,48 +41,52 @@ export default {
     CardModal,
   },
   props: {
-    // брать границу карты как для лидеров
-    is_leader: {
-      type: Boolean,
-      default: false,
-    },
-    // FIXME: че это
-    is_previev: {
-      type: Boolean,
-      default: false,
-    },
+    // собственно сама карта
     card: {
       type: Object,
       required: true,
     },
+    // весь объект карты, включая верхний уровень (где есть user_card_id, count)
     user_card: {
       type: Object,
       default() {
         return null
       },
     },
-    // показывать или нет hp - нужно только для deckbuilder, в игре не нужно
+    // брать ли границу карты как для карт (по цвету), ДЕФОЛТНОЕ, или как для лидеров (по фракции)
+    is_leader: {
+      type: Boolean,
+      default: false,
+    },
+    // показывать или не показывать hp (в игре не нужны жизни, везде нужны)
     hp_needed: {
       type: Boolean,
       default: false,
     },
+    // показывать или не показывать зону кнопок милл\крафт, только для декбилдера
     deckbuilder: {
       type: Boolean,
       default: false,
+    },
+    // на странице бонусов мы показываем count, но не показываем mill/craft
+    bonus: {
+      type: Boolean,
+      default: false,
+      required: false,
     },
     // сколько у юзера этой карты
     count: {
       type: Number,
     },
-    // индекс карты в руке, по нему считается id карты, чтобы потом понять за какую карту потянули
-    index: {
-      type: Number,
-    },
-    // флаг для бонусов, чтобы там показать count, жизни, но НЕ показать кнопки милл\крафт
-    bonus: {
+    // FIXME: че это
+    is_previev: {
       type: Boolean,
       default: false,
-      required: false,
+    },
+    // индекс карты в руке, по нему считается id карты, чтобы потом понять за какую карту потянули
+    // ПРИХОДИТ ИЗ HAND_COMP!
+    index: {
+      type: Number,
     },
   },
   data() {
@@ -99,15 +95,6 @@ export default {
     }
   },
   methods: {
-    background_color_hp(color) {
-      return background_color_hp(color)
-    },
-    background_color_charges(color) {
-      return background_color_charges(color)
-    },
-    background_color(card) {
-      return background_color(card)
-    },
     make_id(card, index) {
       if (!index && index !== 0) return ""
       return `${card.name}_${index}`
@@ -117,9 +104,6 @@ export default {
     },
     border(card) {
       return this.is_leader ? border_leader(card) : border_for_card(card)
-    },
-    card_margin(card) {
-      return card_margin(card)
     },
   },
   emits: ["open_card_modal"],

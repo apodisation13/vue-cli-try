@@ -60,7 +60,11 @@
 </template>
 
 <script>
-import { border_for_card, background_color } from "@/logic/border_styles"
+import {
+  border_for_card,
+  background_color,
+  border_leader,
+} from "@/logic/border_styles"
 import ButtonClose from "@/components/UI/Buttons/ButtonClose"
 import ModalWindow from "@/components/ModalWindows/ModalWindow"
 import YesnoModal from "@/components/ModalWindows/YesnoModal"
@@ -78,8 +82,8 @@ export default {
     YesnoModal,
   },
   props: {
+    // брать границу карты как для лидеров
     is_leader: {
-      // брать границу карты как для лидеров
       type: Boolean,
       default: false,
     },
@@ -137,8 +141,8 @@ export default {
     close_self() {
       this.$emit("close_card_modal")
     },
-    border(e) {
-      return border_for_card(e)
+    border(card) {
+      return this.is_leader ? border_leader(card) : border_for_card(card)
     },
     background_color(e) {
       return background_color(e)

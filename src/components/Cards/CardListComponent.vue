@@ -29,6 +29,11 @@ export default {
       required: true,
       type: Array,
     },
+    // брать ли границу карты как для карт (по цвету), ДЕФОЛТНОЕ, или как для лидеров (по фракции)
+    is_leader: {
+      type: Boolean,
+      default: false,
+    },
     // показывать или не показывать hp (в игре не нужны жизни, везде нужны)
     hp_needed: {
       type: Boolean,
@@ -36,11 +41,6 @@ export default {
     },
     // показывать или не показывать зону кнопок милл\крафт, только для декбилдера
     deckbuilder: {
-      type: Boolean,
-      default: false,
-    },
-    // брать ли границу карты как для карт (по цвету), ДЕФОЛТНОЕ, или как для лидеров (по фракции)
-    is_leader: {
       type: Boolean,
       default: false,
     },
