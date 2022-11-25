@@ -5,16 +5,22 @@
       :style="[{ backgroundImage: `url(${enemy.image})` }, card_margin(enemy)]"
     ></div>
     <div class="card-enemy-information">
+      <!--Иконка хода для всех врагов, а лидеру врагов не надо, отсюда и условие-->
       <ability-circle-enemy :enemy="enemy" v-if="enemy.move" />
+
+      <!--Иконка урона, для всех врагов или если у лидера врага есть урон-->
       <card-damage-icon
         v-if="enemy.damage || enemy.damage_per_turn"
         :style="background_color(enemy)"
         :damage="enemy.damage_per_turn ? enemy.damage_per_turn : enemy.damage"
       />
+
+      <!--У лидера врагов есть абилка на самолечение-->
       <heal-ability
         v-if="enemy.heal_self_per_turn"
         :heal="enemy.heal_self_per_turn"
       />
+
       <card-passive v-if="enemy.has_passive" :card="enemy" />
       <enemy-shield v-if="enemy.shield" />
       <enemy-locked v-if="enemy.locked" />

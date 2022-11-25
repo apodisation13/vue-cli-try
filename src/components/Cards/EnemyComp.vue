@@ -33,6 +33,8 @@ export default {
     enemy: {
       required: true,
     },
+    // индекс карты в руке, по нему считается id карты, чтобы потом понять на какую карту ткнули!
+    // ПРИХОДИТ ИЗ FIELD COMP!
     index: {
       type: Number,
     },

@@ -14,6 +14,7 @@
     <card-modal
       :card="enemy_leader"
       :for-enemy-leader="true"
+      :is_leader="true"
       v-if="show_enemy_leader_modal"
       @close_card_modal="show_enemy_leader_modal = false"
     />
@@ -21,11 +22,7 @@
 </template>
 
 <script>
-import {
-  background_color,
-  border_leader,
-  card_margin,
-} from "@/logic/border_styles"
+import { border_leader } from "@/logic/border_styles"
 import CardModal from "@/components/ModalWindows/CardModal"
 import EnemyUi from "@/components/Cards/EnemyUi"
 
@@ -53,19 +50,6 @@ export default {
     border(leader) {
       return border_leader(leader)
     },
-    background_color(leader) {
-      return background_color(leader)
-    },
-    card_margin(card) {
-      return card_margin(card)
-    },
-    style(leader) {
-      if (isNaN(leader.hp) && leader.hp.includes("-"))
-        return { backgroundColor: "red" }
-      else if (isNaN(leader.hp) && leader.hp.includes("+"))
-        return { backgroundColor: "lime" }
-      else return { backgroundColor: "green" }
-    },
     exec_enemy_leader() {
       this.$emit("exec_enemy_leader")
     },
@@ -83,18 +67,5 @@ export default {
   margin-bottom: 2px;
   margin-top: 2px;
   position: relative;
-}
-
-.card-enemy {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  border-radius: 2px;
-  overflow: hidden;
 }
 </style>

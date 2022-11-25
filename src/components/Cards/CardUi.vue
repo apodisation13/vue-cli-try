@@ -11,13 +11,18 @@
         v-if="card.type === 'Special'"
       />
 
-      <card-damage-icon :style="background_color(card)" :damage="card.damage" />
+      <!--Здесь мы показываем все уроны, включая лидера врагов, отсюда и условие-->
+      <card-damage-icon
+        :style="background_color(card)"
+        :damage="'damage_per_turn' in card ? card.damage_per_turn : card.damage"
+      />
 
       <card-ability-circle :card="card" />
       <card-passive :card="card" v-if="card.has_passive" />
 
+      <!--Условие для лидера врагов, который тоже приходит сюда, у него нет зарядов-->
       <card-charges
-        v-if="card?.charges >= 0"
+        v-if="'charges' in card"
         :charge="card.charges"
         :bgColor="background_color_charges(card.color)"
       />
@@ -103,7 +108,9 @@ export default {
   },
   methods: {
     background_color_hp(color) {
-      return background_color_hp(color)
+      return this.is_leader
+        ? background_color_leader(this.card.faction)
+        : background_color_hp(color)
     },
     background_color_charges(color) {
       return this.is_leader
