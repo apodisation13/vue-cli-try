@@ -59,9 +59,9 @@
     <div class="text" v-if="show_ability && forEnemy">
       {{ card.move.description }}
     </div>
-    <!--Описание пассивной абилки-->
+    <!--Описание пассивной абилки, разделение для карты или для лидера врагов-->
     <div class="text" v-if="show_passive">
-      {{ card.passive_ability.description }}
+      {{ card?.passive_ability?.description || card.ability.description }}
     </div>
     <!--Описание абилки deathwish, только для врага-->
     <div class="text" v-if="show_deathwish && forEnemy">

@@ -9,38 +9,13 @@
       @dblclick="exec_enemy_leader"
       :id="`enemy_leader_${enemy_leader.name}`"
     >
-      <div
-        v-if="enemy_leader.hp > 0 || isNaN(enemy_leader.hp)"
-        class="card-enemy"
-        :style="[
-          { backgroundImage: `url(${enemy_leader.image})` },
-          card_margin(enemy_leader),
-        ]"
-      ></div>
-
-      <card-damage-icon
-        v-if="enemy_leader.damage_per_turn"
-        :style="background_color(enemy_leader)"
-        :damage="enemy_leader.damage_per_turn"
-      />
-
-      <heal-ability
-        v-if="enemy_leader.heal_self_per_turn"
-        :heal="enemy_leader.heal_self_per_turn"
-      />
-
-      <heart-icon
-        :health="enemy_leader.hp"
-        :style="background_color(enemy_leader)"
-      />
-
-      <enemy-locked v-if="enemy_leader.locked" />
+      <enemy-ui :enemy="enemy_leader" />
     </div>
-
-    <enemy-leader-modal
+    <card-modal
+      :card="enemy_leader"
+      :for-enemy-leader="true"
       v-if="show_enemy_leader_modal"
-      :enemy_leader="enemy_leader"
-      @close_enemy_leader_modal="show_enemy_leader_modal = false"
+      @close_card_modal="show_enemy_leader_modal = false"
     />
   </div>
 </template>
@@ -51,20 +26,14 @@ import {
   border_leader,
   card_margin,
 } from "@/logic/border_styles"
-import EnemyLeaderModal from "@/components/ModalWindows/EnemyLeaderModal"
-import EnemyLocked from "@/components/UI/CardsUI/Enemies/EnemyLocked"
-import CardDamageIcon from "@/components/UI/CardsUI/CardDamageIcon"
-import HeartIcon from "@/components/UI/CardsUI/HeartIcon"
-import HealAbility from "@/components/UI/CardsUI/HealAbility"
+import CardModal from "@/components/ModalWindows/CardModal"
+import EnemyUi from "@/components/Cards/EnemyUi"
 
 export default {
   name: "enemy-leader",
   components: {
-    HealAbility,
-    HeartIcon,
-    CardDamageIcon,
-    EnemyLocked,
-    EnemyLeaderModal,
+    EnemyUi,
+    CardModal,
   },
   props: {
     enemy_leader: {

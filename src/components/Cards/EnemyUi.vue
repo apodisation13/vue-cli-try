@@ -5,10 +5,15 @@
       :style="[{ backgroundImage: `url(${enemy.image})` }, card_margin(enemy)]"
     ></div>
     <div class="card-enemy-information">
-      <ability-circle-enemy :enemy="enemy" />
+      <ability-circle-enemy :enemy="enemy" v-if="enemy.move" />
       <card-damage-icon
+        v-if="enemy.damage || enemy.damage_per_turn"
         :style="background_color(enemy)"
-        :damage="enemy.damage"
+        :damage="enemy.damage_per_turn ? enemy.damage_per_turn : enemy.damage"
+      />
+      <heal-ability
+        v-if="enemy.heal_self_per_turn"
+        :heal="enemy.heal_self_per_turn"
       />
       <card-passive v-if="enemy.has_passive" :card="enemy" />
       <enemy-shield v-if="enemy.shield" />
@@ -23,6 +28,11 @@
 </template>
 
 <script>
+import {
+  background_color,
+  background_color_hp,
+  card_margin,
+} from "@/logic/border_styles"
 import DeathwishAbility from "@/components/UI/CardsUI/Enemies/DeathwishAbility"
 import HeartIcon from "@/components/UI/CardsUI/HeartIcon"
 import CardDamageIcon from "@/components/UI/CardsUI/CardDamageIcon"
@@ -30,11 +40,7 @@ import EnemyLocked from "@/components/UI/CardsUI/Enemies/EnemyLocked"
 import AbilityCircleEnemy from "@/components/UI/CardsUI/Enemies/AbilityCircleEnemy"
 import EnemyShield from "@/components/UI/CardsUI/Enemies/EnemyShield"
 import CardPassive from "@/components/UI/CardsUI/CardPassive"
-import {
-  background_color,
-  background_color_hp,
-  card_margin,
-} from "@/logic/border_styles"
+import HealAbility from "@/components/UI/CardsUI/HealAbility"
 
 export default {
   name: "EnemyUi",
@@ -46,6 +52,7 @@ export default {
     AbilityCircleEnemy,
     EnemyShield,
     CardPassive,
+    HealAbility,
   },
   props: {
     enemy: {

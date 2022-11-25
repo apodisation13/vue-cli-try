@@ -8,8 +8,12 @@
     <!--Имя у карты есть всегда-->
     <h2>{{ card.name }}</h2>
 
-    <!--Карта игрока-->
-    <div class="card-ui" :style="[border(card)]" v-if="!forEnemy">
+    <!--Карта игрока, или карта лидера врагов!-->
+    <div
+      class="card-ui"
+      :style="[border(card)]"
+      v-if="!forEnemy || forEnemyLeader"
+    >
       <card-ui
         :count="count"
         :card="card"
@@ -110,6 +114,12 @@ export default {
     },
     // отображать описание для врага или нет
     forEnemy: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    // отображать описание для лидера врагов или нет
+    forEnemyLeader: {
       type: Boolean,
       required: false,
       default: false,
