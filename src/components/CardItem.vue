@@ -8,36 +8,15 @@
       :id="make_id(card, index)"
       :style="[border(card)]"
     >
-      <div
-        class="card-item"
-        :style="[{ backgroundImage: `url(${card.image})` }, card_margin(card)]"
-        :class="{ disable: count === 0 }"
-      ></div>
-      <div class="card-item-information" v-if="!is_previev">
-        <special-type-of-card
-          :color="card.color"
-          v-if="card.type === 'Special'"
-        />
-
-        <card-damage-icon
-          :style="background_color(card)"
-          :damage="card.damage"
-        />
-
-        <card-ability-circle :card="card" />
-        <card-passive :card="card" v-if="card.has_passive" />
-
-        <card-charges
-          :charge="card.charges"
-          :bgColor="background_color_charges(card.color)"
-        />
-
-        <heart-icon
-          v-if="hp_needed"
-          :health="card.hp"
-          :bgColor="background_color_hp(card.color)"
-        />
-      </div>
+      <card-ui
+        :count="count"
+        :card="card"
+        :user_card="user_card"
+        :hp_needed="hp_needed"
+        :deckbuilder="deckbuilder"
+        :bonus="bonus"
+        :is_leader="is_leader"
+      />
     </div>
     <card-modal
       v-if="show_card_modal"
@@ -47,6 +26,7 @@
       :hp_needed="hp_needed"
       :deckbuilder="deckbuilder"
       :bonus="bonus"
+      :is_leader="is_leader"
       @close_card_modal="show_card_modal = false"
     />
   </div>
@@ -62,30 +42,20 @@ import {
   card_margin,
 } from "@/logic/border_styles"
 import CardModal from "@/components/ModalWindows/CardModal"
-import CardAbilityCircle from "@/components/UI/CardsUI/AbilityCircleCard"
-import CardPassive from "@/components/UI/CardsUI/CardPassive"
-import CardCharges from "@/components/UI/CardsUI/CardCharges"
-import CardDamageIcon from "@/components/UI/CardsUI/CardDamageIcon"
-import HeartIcon from "@/components/UI/CardsUI/HeartIcon"
-import SpecialTypeOfCard from "@/components/UI/CardsUI/SpecialTypeOfCard"
+import CardUi from "@/components/CardUi"
 export default {
   components: {
-    CardCharges,
-    CardPassive,
-    CardAbilityCircle,
+    CardUi,
     CardModal,
-    CardDamageIcon,
-    HeartIcon,
-    SpecialTypeOfCard,
   },
   props: {
+    // брать границу карты как для лидеров
     is_leader: {
-      // брать границу карты как для лидеров
       type: Boolean,
       default: false,
     },
+    // FIXME: че это
     is_previev: {
-      // брать границу карты как для лидеров
       type: Boolean,
       default: false,
     },
@@ -99,8 +69,8 @@ export default {
         return null
       },
     },
+    // показывать или нет hp - нужно только для deckbuilder, в игре не нужно
     hp_needed: {
-      // hp только для декбилдера, для игры не нужно оно
       type: Boolean,
       default: false,
     },
@@ -108,12 +78,15 @@ export default {
       type: Boolean,
       default: false,
     },
+    // сколько у юзера этой карты
     count: {
       type: Number,
     },
+    // индекс карты в руке, по нему считается id карты, чтобы потом понять за какую карту потянули
     index: {
       type: Number,
     },
+    // флаг для бонусов, чтобы там показать count, жизни, но НЕ показать кнопки милл\крафт
     bonus: {
       type: Boolean,
       default: false,
@@ -157,44 +130,12 @@ export default {
 .card-item-component {
   position: relative;
   width: 100%;
-  box-shadow: -4px 0px 4px rgb(0 0 0 / 50%);
+  box-shadow: -4px 0 4px rgb(0 0 0 / 50%);
 }
 
 .card-item-component::before {
   content: "";
   display: block;
   padding-top: 143%;
-}
-
-.card-item,
-.card-item-information {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-.card-item {
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.disable::after {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: rgb(0, 0, 0, 0.85);
-  z-index: 1;
-}
-
-.card-item-information {
-  z-index: 2;
 }
 </style>
