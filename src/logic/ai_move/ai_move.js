@@ -8,6 +8,7 @@ import { stand_still } from "@/logic/ai_move/moves/move_stand_still"
 import { check_lose } from "@/logic/ai_move/service/check_lose"
 import { set_already_jumped } from "@/logic/ai_move/service/service_for_ai_move"
 import { get_all_enemies } from "@/logic/player_move/service/service_for_player_move"
+import { right_move } from "@/logic/ai_move/moves/move_right"
 
 const toast = useToast()
 
@@ -34,6 +35,8 @@ function ai_move(field) {
         random_move(field, field.indexOf(enemies[i]))
       } else if (enemies[i].move.name === "down") {
         down_move(field, field.indexOf(enemies[i]))
+      } else if (enemies[i].move.name === "right") {
+        right_move(field, field.indexOf(enemies[i]))
       }
 
       i += 1
