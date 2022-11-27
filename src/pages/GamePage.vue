@@ -72,6 +72,7 @@
     <redraw-comp
       v-if="draw"
       :game-obj="gameObj"
+      :redraw-number="redraws"
       @redraw_finished="redraw_finished"
     />
   </div>

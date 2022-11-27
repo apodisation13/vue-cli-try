@@ -17,8 +17,7 @@ export default {
           card => card.type === "Unit" && card.id !== this.selected_card.id
         )
       } else if (ability === "draw-two-cards") {
-        if (this.calc_can_draw()) this.draw_one_card()
-        if (this.calc_can_draw()) this.draw_one_card()
+        this.draw_one_card()
       } else if (ability === "give-charges-to-card-in-hand-1") {
         this.cards_pool = this.gameObj.hand.filter(
           card => card.color === "Bronze" && card.id !== this.selected_card.id
@@ -52,8 +51,7 @@ export default {
       } else if (this.ability === "discard-draw-2") {
         this.gameObj.grave.push(card)
         this.gameObj.hand.splice(this.gameObj.hand.indexOf(card), 1)
-        if (this.calc_can_draw()) this.draw_one_card()
-        if (this.calc_can_draw()) this.draw_one_card()
+        this.draw_one_card()
       } else if (
         this.ability === "play-from-deck" ||
         this.ability === "play-from-grave"
