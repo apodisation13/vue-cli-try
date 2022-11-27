@@ -67,7 +67,7 @@ table tr,
 td {
   /* width: 50%; */
   height: 18vh;
-  border: dashed 0.5px black;
+  /*border: dashed 0.5px black;*/
   overflow: hidden;
   padding: 5px;
   /*position: relative;*/
