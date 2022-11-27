@@ -8,24 +8,11 @@
       :id="make_id(card, index)"
       :style="[border(card)]"
     >
-      <card-ui
-        :count="count"
-        :card="card"
-        :hp_needed="hp_needed"
-        :deckbuilder="deckbuilder"
-        :bonus="bonus"
-        :is_leader="is_leader"
-      />
+      <card-ui v-bind="$props" />
     </div>
     <card-modal
       v-if="show_card_modal"
-      :count="count"
-      :card="card"
-      :user_card="user_card"
-      :hp_needed="hp_needed"
-      :deckbuilder="deckbuilder"
-      :bonus="bonus"
-      :is_leader="is_leader"
+      v-bind="$props"
       @close_card_modal="show_card_modal = false"
     />
   </div>
