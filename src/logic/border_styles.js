@@ -130,6 +130,42 @@ function background_color_deck(deck) {
   else return {}
 }
 
+// используется для определения значка способности в зависимости от способности карты
+// сейчас юзается в CardModal/CardDescriptions
+function ability_icon(ability) {
+  if (ability === "damage-one")
+    return `url(${require("@/assets/icons/card/sword.svg")})`
+  else if (ability === "damage-all")
+    return `url(${require("@/assets/icons/card/all_attack.svg")})`
+  else if (ability === "heal")
+    return `url(${require("@/assets/icons/card/emerald.svg")})`
+  else if (ability === "damage-row")
+    return `url(${require("@/assets/icons/card/row_attack.svg")})`
+  else if (ability === "damage-column")
+    return `url(${require("@/assets/icons/card/column_attack.svg")})`
+  else if (ability === "spread-damage")
+    return `url(${require("@/assets/icons/card/spread_attack.svg")})`
+  else if (ability === "lock")
+    return `url(${require("@/assets/icons/card/locked.svg")})`
+  else if (
+    ability === "destroy-highest-hp" ||
+    ability === "destroy-highest-damage" ||
+    ability === "destroy-random" ||
+    ability === "destroy-all-same-hp"
+  )
+    return `url(${require("@/assets/icons/card/destroy.svg")})`
+  else if (
+    ability === "resurrect" ||
+    ability === "draw-two-cards" ||
+    ability === "give-charges-to-card-in-hand-1" ||
+    ability === "play-from-deck" ||
+    ability === "discard-draw-2" ||
+    ability === "play-from-grave"
+  )
+    return `url(${require("@/assets/icons/card/additional_card.svg")})`
+  else return ""
+}
+
 export {
   border_for_card,
   card_margin,
@@ -139,4 +175,5 @@ export {
   background_color_hp,
   background_color_charges,
   background_color_leader,
+  ability_icon,
 }

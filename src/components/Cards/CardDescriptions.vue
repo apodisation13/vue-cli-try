@@ -6,10 +6,7 @@
         v-if="!forEnemy"
         @click="showMainAbility"
         class="inlines"
-        :style="{
-          'background-image':
-            'url(' + require(`@/assets/icons/card/sword.svg`) + ')',
-        }"
+        :style="{ 'background-image': icon }"
       ></div>
 
       <!--Описание абилки хода - для карт врагов-->
@@ -71,6 +68,7 @@
 </template>
 
 <script>
+import { ability_icon } from "@/logic/border_styles"
 export default {
   name: "CardDescriptions",
   props: {
@@ -92,6 +90,11 @@ export default {
       show_passive: false,
       show_deathwish: false,
     }
+  },
+  computed: {
+    icon() {
+      return ability_icon(this.card.ability.name)
+    },
   },
   methods: {
     showMainAbility() {
