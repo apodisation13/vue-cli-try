@@ -149,6 +149,7 @@ export default {
     rgba(16, 22, 28, 0.29) 41.27%,
     #10161c 100%
   );
+  white-space: pre-line;
 }
 .news__item {
   padding-bottom: 40px;
