@@ -66,6 +66,7 @@ const routes = [
     component: AboutPage,
     meta: {
       requireAuth: false,
+      image: images.work_in_progress,
     },
   },
   {
@@ -90,6 +91,7 @@ const routes = [
     component: SettingsPage,
     meta: {
       requireAuth: true,
+      image: images.work_in_progress,
     },
   },
   {
@@ -105,6 +107,7 @@ const routes = [
     component: RulesPage,
     meta: {
       requireAuth: false,
+      image: images.work_in_progress,
     },
   },
   {

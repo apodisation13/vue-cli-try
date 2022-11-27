@@ -14,15 +14,7 @@
       :style="[border(card)]"
       v-if="!forEnemy || forEnemyLeader"
     >
-      <card-ui
-        :count="count"
-        :card="card"
-        :user_card="user_card"
-        :hp_needed="hp_needed"
-        :deckbuilder="deckbuilder"
-        :bonus="bonus"
-        :is_leader="is_leader"
-      />
+      <card-ui v-bind="$props" />
     </div>
     <!--А это соответственно карта врага, у неё есть card.move-->
     <div class="card-ui" :style="[border(card)]" v-if="forEnemy">

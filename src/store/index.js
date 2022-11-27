@@ -18,10 +18,13 @@ const store = createStore({
     user_actions,
     news,
   },
+  state: {
+    play_sound: true,
+  },
   getters: {},
   mutations: {
-    set_play_sound(state, payload) {
-      state.play_sound = payload
+    set_play_sound(state) {
+      state.play_sound = !state.play_sound
     },
   },
   actions: {},

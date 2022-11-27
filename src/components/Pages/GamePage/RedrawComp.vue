@@ -23,7 +23,7 @@ export default {
   data() {
     return {
       visible: true,
-      redraws: 3,
+      redraws: this.redrawNumber,
       hand: this.gameObj.hand.slice(),
       deck: this.gameObj.deck.slice(),
       redraw_array: [],
@@ -33,6 +33,10 @@ export default {
     gameObj: {
       required: true,
       type: Object,
+    },
+    redrawNumber: {
+      type: Number,
+      required: true,
     },
   },
   created() {
