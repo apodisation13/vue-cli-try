@@ -1,17 +1,27 @@
 <template>
-  <div class="resource-count__container">
-      <div class="resource-count__value">
-        <slot></slot>
-      </div>
+  <div 
+    class="resource-count__container" 
+    :class="{ zero:isZero }"
+  >
+    <div class="resource-count__value">
+      <slot></slot>
+    </div>
   </div>
 </template>
 <script>
 export default {
   name: "resource-count-rombus",
+  props: {
+    isZero: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  },
 }
 </script>
 <style>
-  .resource-count__container {
+.resource-count__container {
   position: absolute;
   width: 35px;
   height: 35px;
@@ -28,6 +38,10 @@ export default {
 
   background-color: whitesmoke;
   box-shadow: inset 0 0 2px 2px gray;
+}
+
+.zero {
+  background-color: hsl(359, 92%, 33%);
 }
 
 .resource-count__value {

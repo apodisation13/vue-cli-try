@@ -1,46 +1,86 @@
 <template>
-  <div class="element">
-    <div class="price" v-if="resourceName !== 'keys'">
-      <img :src="require(`@/assets/icons/resources/wood.svg`)" alt="" class="wood" />
-      <span class="price-value">{{ formatResourcePrice(resourcePrice) }}</span>
-    </div>
-    <div class="line">
-      <bonus-page-resource-item :name="resourceName" :count="resourceCount" @dblclick="openItem" />
-    </div>
-    <div class="item-add" v-if="resourceName !== 'keys'" @dblclick="addItem">
-      <div class="test"></div>
+  <div>
+    <div class="element">
+      <div class="price" v-if="resource_name !== 'keys'">
+        <img
+          :src="require(`@/assets/icons/resources/wood.svg`)"
+          alt=""
+          class="wood"
+        />
+        <span class="price-value">{{
+          format_resource_price(resource_price)
+        }}</span>
+      </div>
+
+      <div class="line">
+        <bonus-page-resource-item
+          :name="resource_name"
+          :count="resource_count"
+          @open_item="open_item"
+          @add_item="purchase_item"
+        />
+      </div>
+
+      <div
+        class="item-add"
+        v-if="resource_name !== 'keys'"
+        @dblclick="purchase_item"
+      >
+        <div class="item-add_border"></div>
         <span>+</span>
+      </div>
     </div>
+    <yesno-modal
+      v-if="modal_visible"
+      :is_purchase="true"
+      :item_price="resource_price"
+      @confirm="add_item"
+      @cancel="cancel"
+    />
   </div>
 </template>
 <script>
 import BonusPageResourceItem from "@/components/UI/BonusPageResourceItem"
+import YesnoModal from "../ModalWindows/YesnoModal"
 export default {
-  components: { BonusPageResourceItem },
+  components: { BonusPageResourceItem, YesnoModal },
   props: {
-    resourceName: {
+    resource_name: {
       type: String,
     },
-    resourceCount: {
+    resource_count: {
       type: Number,
       required: true,
     },
-    resourcePrice: {
+    resource_price: {
       type: Number,
     },
   },
-  methods: {
-    openItem: function () {
-      this.$emit("open-item")
-    },
-    addItem: function () {
-      this.$emit("add-item")
-    },
-    formatResourcePrice: function(price) {
-      price *= -1; 
-      return price >= 1000 ? price / 1000 + "k" : price;
+  data() {
+    return {
+      modal_visible: false,
     }
   },
+  methods: {
+    open_item() {
+      this.$emit("open_item")
+    },
+    add_item() {
+      console.log("1")
+      this.modal_visible = false
+      this.$emit("add_item")
+    },
+    format_resource_price: function (price) {
+      return price >= 1000 ? price / 1000 + "k" : price
+    },
+    purchase_item() {
+      this.modal_visible = true
+    },
+    cancel() {
+      this.modal_visible = false
+    },
+  },
+  emits: ["open_item", "add_item"],
 }
 </script>
 <style>
@@ -52,7 +92,12 @@ export default {
 
 .price-value {
   font-size: 1.5rem;
-  background: linear-gradient(183.6deg, #EDB13E 2.96%, #F4D977 65.79%, #EEB850 129.95%);
+  background: linear-gradient(
+    183.6deg,
+    hsl(39, 83%, 59%) 2.96%,
+    hsl(47, 85%, 71%) 65.79%,
+    hsl(39, 82%, 62%) 129.95%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -79,21 +124,31 @@ export default {
   left: 1px;
 }
 
-.test {
+.item-add_border {
   position: absolute;
-top: -4px;
-left: -4px;
-bottom: -4px;
-right: -4px;
-border-radius: 50%;
-background: linear-gradient(to bottom, #B07B15, #FACF5D, #B48328);
-z-index: -2;
+  top: -4px;
+  left: -4px;
+  bottom: -4px;
+  right: -4px;
+  border-radius: 50%;
+  background: linear-gradient(
+    to bottom,
+    hsl(39, 79%, 39%),
+    hsl(44, 94%, 67%),
+    hsl(39, 64%, 43%)
+  );
+  z-index: -2;
 }
 
 .item-add span {
   font-family: "Philosopher";
   font-size: 3rem;
-  background: linear-gradient(183.6deg, #B07B15 100%, #FACF5D 100%, #B48328 100%);
+  background: linear-gradient(
+    183.6deg,
+    hsl(39, 79%, 39%) 100%,
+    hsl(44, 94%, 67%) 100%,
+    hsl(39, 64%, 43%) 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -117,17 +172,6 @@ z-index: -2;
 .btn-plus {
   width: 50px;
   height: 50px;
-}
-
-.scraps_wood {
-  width: 30vh;
-  height: 5vh;
-  margin: 1%;
-  border-radius: 50% 20% / 10% 40%;
-  border: dashed 2px dodgerblue;
-  text-align: center;
-  line-height: 5vh;
-  display: table-cell;
 }
 
 .inlines {
