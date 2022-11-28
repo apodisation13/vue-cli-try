@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import NewsList from "@/components/NewsList.vue"
+import NewsList from "@/components/Pages/MainPage/NewsList.vue"
 
 export default {
   computed: {

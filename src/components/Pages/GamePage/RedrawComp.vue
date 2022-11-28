@@ -16,14 +16,14 @@
 import ModalWindow from "@/components/ModalWindows/ModalWindow"
 import ButtonClose from "@/components/UI/Buttons/ButtonClose"
 import { choice } from "@/lib/utils"
-import CardListComponent from "@/components/CardListComponent"
+import CardListComponent from "@/components/Cards/CardListComponent"
 export default {
   name: "redraw-comp",
   components: { CardListComponent, ButtonClose, ModalWindow },
   data() {
     return {
       visible: true,
-      redraws: 3,
+      redraws: this.redrawNumber,
       hand: this.gameObj.hand.slice(),
       deck: this.gameObj.deck.slice(),
       redraw_array: [],
@@ -33,6 +33,10 @@ export default {
     gameObj: {
       required: true,
       type: Object,
+    },
+    redrawNumber: {
+      type: Number,
+      required: true,
     },
   },
   created() {

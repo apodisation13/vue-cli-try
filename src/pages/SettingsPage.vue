@@ -4,6 +4,7 @@
     <div class="settings-list">
       <setting-logout class="setting-item" />
       <setting-delete-all-levels class="setting-item" />
+      <setting-sound class="setting-item" />
     </div>
   </div>
 </template>
@@ -11,9 +12,9 @@
 <script>
 import SettingLogout from "@/components/Pages/SettingsPage/SettingLogout"
 import SettingDeleteAllLevels from "@/components/Pages/SettingsPage/SettingDeleteAllLevels"
-
+import SettingSound from "@/components/Pages/SettingsPage/SettingSound"
 export default {
-  components: { SettingDeleteAllLevels, SettingLogout },
+  components: { SettingSound, SettingDeleteAllLevels, SettingLogout },
 }
 </script>
 

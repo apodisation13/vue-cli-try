@@ -31,14 +31,14 @@
 </template>
 
 <script>
-import HealAbility from "@/components/UI/Abilities/HealAbility"
-import RowAttackAbility from "@/components/UI/Abilities/RowAttackAbility"
-import ColumnAttackAbility from "@/components/UI/Abilities/ColumnAttackAbility"
-import AllAttackAbility from "@/components/UI/Abilities/AllAttackAbility"
-import SpreadAttackAbility from "@/components/UI/Abilities/SpreadAttackAbility"
-import LockAbility from "@/components/UI/Abilities/LockAbility"
-import DestroyAbility from "@/components/UI/Abilities/DestroyAbility"
-import CardInteractionAbility from "@/components/UI/Abilities/CardInteractionAbility"
+import HealAbility from "@/components/UI/CardsUI/HealAbility"
+import RowAttackAbility from "@/components/UI/CardsUI/Cards/Abilities/RowAttackAbility"
+import ColumnAttackAbility from "@/components/UI/CardsUI/Cards/Abilities/ColumnAttackAbility"
+import AllAttackAbility from "@/components/UI/CardsUI/Cards/Abilities/AllAttackAbility"
+import SpreadAttackAbility from "@/components/UI/CardsUI/Cards/Abilities/SpreadAttackAbility"
+import LockAbility from "@/components/UI/CardsUI/Cards/Abilities/LockAbility"
+import DestroyAbility from "@/components/UI/CardsUI/Cards/Abilities/DestroyAbility"
+import CardInteractionAbility from "@/components/UI/CardsUI/Cards/Abilities/CardInteractionAbility"
 export default {
   name: "card-ability-circle",
   components: {

@@ -17,8 +17,8 @@
 
 <script>
 import ModalWindow from "@/components/ModalWindows/ModalWindow"
-import CardListComponent from "@/components/CardListComponent"
-import CardItem from "@/components/CardItem"
+import CardListComponent from "@/components/Cards/CardListComponent"
+import CardItem from "@/components/Cards/CardItem"
 export default {
   name: "special-case-abilities",
   components: { CardItem, CardListComponent, ModalWindow },

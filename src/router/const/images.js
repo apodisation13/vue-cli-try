@@ -47,6 +47,9 @@ export const images = {
     morning: `${path}/lose_morning.png`,
   },
   field: {
-    default: `${path}/field.png`,
+    default: `${path}/field2.png`,
+  },
+  work_in_progress: {
+    default: `${path}/library.jpg`,
   },
 }
