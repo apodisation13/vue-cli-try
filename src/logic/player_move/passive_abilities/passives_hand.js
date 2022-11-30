@@ -10,7 +10,7 @@ export function hand_passives(card, gameObj, hand) {
   if (pa === "damage-random-enemy") {
     damage_random_enemy(card, gameObj)
   } else if (pa === "increase-damage-to-card-in-hand") {
-    increase_damage_in_hand(hand)
+    increase_damage_in_hand(card, hand)
   } else if (pa === "heal-leader") {
     heal_leader(card)
   } else if (pa === "increase-self-damage") {
