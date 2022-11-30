@@ -117,18 +117,18 @@ const actions = {
     else await dispatch("craft_leader", card)
   },
 
-  async craft_card({ dispatch, getters }, card) {
+  async craft_card({ dispatch, getters, commit }, card) {
     let header = getters["getHeader"]
     let user_id = getters["getUser"].user_id
 
     if (card.count === 0) {
       try {
-        await axios.post(
+        const response = await axios.post(
           craft_card,
           { user: user_id, card: card.card.id },
           header
         )
-        await dispatch("get_user_database")
+        commit("set_cards", response.data.cards)
       } catch (err) {
         dispatch("error_action", err)
         throw new Error("Какая-то ошибка при создании карты")
@@ -137,12 +137,12 @@ const actions = {
       try {
         // card.id - id записи, которую надо патчить (usercard), card.card.id - id самой карты
         let url = `${craft_card}${card.id}/`
-        await axios.patch(
+        const response = await axios.patch(
           url,
           { user: user_id, card: card.card.id, count: card.count },
           header
         )
-        await dispatch("get_user_database")
+        commit("set_cards", response.data.cards)
       } catch (err) {
         dispatch("error_action", err)
         throw new Error("Какая-то ошибка при создании карты")
