@@ -50,11 +50,11 @@ function enemy_leader_ai_move_once(leader, deck) {
     store.commit("change_health", -leader.damage_once)
     toast.error(`лидер ослабил вас на ${leader.damage_once}`)
     check_lose()
-  } else if (leader.ability.name === "decrease-all-player-damage-1") {
+  } else if (leader.ability.name === "decrease-all-player-damage") {
     deck.forEach(card => {
-      if (card.damage > 0) card.damage -= 1
+      if (card.damage > 0) card.damage -= leader.value
     })
-    toast.error(`лидер врага уменьшил урон ВСЕХ ваших карт на 1`)
+    toast.error(`лидер врага уменьшил урон ВСЕХ ваших карт на ${leader.value}`)
   }
 }
 
