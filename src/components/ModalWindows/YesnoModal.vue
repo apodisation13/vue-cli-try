@@ -9,7 +9,11 @@
       <div class="text text-purchase" v-else-if="is_purchase">
         <div class="price">
           <span>{{ item_price }}</span>
-          <img :src="require(`@/assets/icons/resources/wood.svg`)" alt="" class="wood" />
+          <img
+            :src="require(`@/assets/icons/resources/wood.svg`)"
+            alt=""
+            class="wood"
+          />
         </div>
         <div class="quantity">
           <button class="btn btn_dec" @click="decrement">-</button>
@@ -27,7 +31,11 @@
       <div class="text text-craft-card" v-else-if="is_craft_card">
         <div class="price">
           <span>Стоимость — {{ craft_price * -1 }}</span>
-          <img :src="require(`@/assets/icons/resources/scraps.svg`)" alt="" class="scraps" />
+          <img
+            :src="require(`@/assets/icons/resources/scraps.svg`)"
+            alt=""
+            class="scraps"
+          />
         </div>
         <span>Создать?</span>
       </div>
@@ -35,7 +43,11 @@
       <div class="text text-mill-card" v-else-if="is_mill_card">
         <div class="price">
           <span>Вы получите — {{ mill_value }}</span>
-          <img :src="require(`@/assets/icons/resources/scraps.svg`)" alt="" class="scraps" />
+          <img
+            :src="require(`@/assets/icons/resources/scraps.svg`)"
+            alt=""
+            class="scraps"
+          />
         </div>
         <span>Уничтожить?</span>
       </div>
@@ -105,8 +117,7 @@ export default {
   },
   methods: {
     onClick(e) {
-      if (e.target.classList.contains("yes_no_modal-fade"))
-        this.cancel()
+      if (e.target.classList.contains("yes_no_modal-fade")) this.cancel()
     },
     increment() {
       if (this.item_price * (this.quantity + 1) > this.resource.wood) return
@@ -186,10 +197,12 @@ export default {
   line-height: 100%;
 
   text-align: center;
-  background: linear-gradient(153.5deg,
-      #b07b15 34.99%,
-      #facf5d 57.14%,
-      #b48328 82.81%);
+  background: linear-gradient(
+    153.5deg,
+    #b07b15 34.99%,
+    #facf5d 57.14%,
+    #b48328 82.81%
+  );
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;

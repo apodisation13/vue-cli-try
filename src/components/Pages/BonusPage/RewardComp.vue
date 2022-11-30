@@ -1,7 +1,11 @@
 <template>
   <div class="reward-comp" @click="clear_reward">
     <div class="reward-image__container">
-      <img class="reward-image__image" :src="require(`@/assets/icons/resources/${name}_open.svg`)" alt="" />
+      <img
+        class="reward-image__image"
+        :src="require(`@/assets/icons/resources/${name}_open.svg`)"
+        alt=""
+      />
     </div>
 
     <div class="reward-text">
@@ -10,14 +14,27 @@
 
     <div class="reward-content">
       <!-- Если не ключ, то отображается этот компонент -->
-      <card-list-component class="reward-card-list" v-if="!show_key_content" :cards="reward" :deckbuilder="true"
-        :bonus="true" @chose_player_card="accept_reward" />
+      <card-list-component
+        class="reward-card-list"
+        v-if="!show_key_content"
+        :cards="reward"
+        :deckbuilder="true"
+        :bonus="true"
+        @chose_player_card="accept_reward"
+      />
       <!-- Иначе. для ключа отображается этот компонент -->
       <div v-if="show_key_content" class="reward-resources">
-        <div class="reward-resources__wrapper" @dblclick="accept_random_reward(resource)"
-          v-for="(resource, index) in key_reward" :key="index">
-          <img :src="require(`@/assets/icons/resources/${resource.resource}.svg`)" alt=""
-            class="reward-resources__item" />
+        <div
+          class="reward-resources__wrapper"
+          @dblclick="accept_random_reward(resource)"
+          v-for="(resource, index) in key_reward"
+          :key="index"
+        >
+          <img
+            :src="require(`@/assets/icons/resources/${resource.resource}.svg`)"
+            alt=""
+            class="reward-resources__item"
+          />
           <resource-count-rombus>
             {{ resource.value }}
           </resource-count-rombus>
@@ -79,7 +96,7 @@ export default {
     },
     clear_reward() {
       if (this.name === "chests") this.$emit("clear_reward")
-    }
+    },
   },
   mounted() {
     this.accept_chest_reward()
