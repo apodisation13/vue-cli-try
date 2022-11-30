@@ -150,18 +150,18 @@ const actions = {
     }
   },
 
-  async craft_leader({ dispatch, getters }, card) {
+  async craft_leader({ dispatch, getters, commit }, card) {
     let header = getters["getHeader"]
     let user_id = getters["getUser"].user_id
 
     if (card.count === 0) {
       try {
-        await axios.post(
+        const response = await axios.post(
           craft_leader,
           { user: user_id, leader: card.card.id },
           header
         )
-        await dispatch("get_user_database")
+        commit("set_leaders", response.data.leaders)
       } catch (err) {
         dispatch("error_action", err)
         throw new Error("Какая-то ошибка при создании лидера")
@@ -170,12 +170,12 @@ const actions = {
       try {
         // card.id - id записи, которую надо патчить (usercard), card.card.id - id самой карты
         let url = `${craft_leader}${card.id}/`
-        await axios.patch(
+        const response = await axios.patch(
           url,
           { user: user_id, leader: card.card.id, count: card.count },
           header
         )
-        await dispatch("get_user_database")
+        commit("set_leaders", response.data.leaders)
       } catch (err) {
         dispatch("error_action", err)
         throw new Error("Какая-то ошибка при создании лидера")
