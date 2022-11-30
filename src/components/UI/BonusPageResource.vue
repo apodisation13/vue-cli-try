@@ -7,9 +7,7 @@
           alt=""
           class="wood"
         />
-        <span class="price-value">{{
-          format_resource_price(resource_price)
-        }}</span>
+        <span class="price-value">{{ resource_price }}</span>
       </div>
 
       <div class="line">
@@ -32,6 +30,7 @@
     </div>
     <yesno-modal
       v-if="modal_visible"
+      :visible="modal_visible"
       :is_purchase="true"
       :item_price="resource_price"
       @confirm="add_item"
@@ -65,13 +64,9 @@ export default {
     open_item() {
       this.$emit("open_item")
     },
-    add_item() {
-      console.log("1")
+    add_item(quantity) {
       this.modal_visible = false
-      this.$emit("add_item")
-    },
-    format_resource_price: function (price) {
-      return price >= 1000 ? price / 1000 + "k" : price
+      this.$emit("add_item", quantity)
     },
     purchase_item() {
       this.modal_visible = true

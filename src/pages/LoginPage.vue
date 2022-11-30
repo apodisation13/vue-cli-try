@@ -134,7 +134,7 @@ export default {
 
 <style scoped>
 .container {
-  background: url("../assets/page_images/deckbuild_default1.jpg")
+  /* background: url("../assets/page_images/deckbuild_default1.jpg"); */
 }
 .header {
   background-color: cornflowerblue;

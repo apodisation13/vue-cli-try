@@ -1,24 +1,32 @@
 <template>
   <div>
-  <div class="resource-item" @dblclick="modal_open">
-    <img :src="require(`@/assets/icons/resources/${name}.svg`)" :alt="name" class="resource-image" />
-    <resource-count-rombus :isZero="!count">{{ count }}</resource-count-rombus>
+    <div class="resource-item" @dblclick="modal_open">
+      <img
+        :src="require(`@/assets/icons/resources/${name}.svg`)"
+        :alt="name"
+        class="resource-image"
+      />
+      <resource-count-rombus :isZero="!count">{{
+        count
+      }}</resource-count-rombus>
+    </div>
+    <yesno-modal
+      v-if="open_item_visible"
+      :visible="open_item_visible"
+      :is_open_item="true"
+      :name="name"
+      @confirm="open_item"
+      @cancel="cancel"
+    />
+    <yesno-modal
+      v-if="no_item_visible"
+      :visible="no_item_visible"
+      :is_zero_purchase="true"
+      :name="name"
+      @confirm="add_item"
+      @cancel="cancel"
+    />
   </div>
-  <yesno-modal 
-    v-if="open_item_visible" 
-    :is_open_item="true"
-    :name="name"
-    @confirm="open_item"
-    @cancel="cancel"
-  />
-  <yesno-modal 
-    v-if="no_item_visible" 
-    :is_zero_purchase="true"
-    :name="name"
-    @confirm="add_item"
-    @cancel="cancel"
-  />
-</div>
 </template>
 <script>
 import ResourceCountRombus from "@/components/UI/ResourceCountRombus"
@@ -30,7 +38,7 @@ export default {
   data() {
     return {
       open_item_visible: false,
-      no_item_visible: false
+      no_item_visible: false,
     }
   },
   props: {
@@ -46,16 +54,16 @@ export default {
   methods: {
     modal_open() {
       if (this.count === 0) {
-        this.no_item_visible = true;
-        return;
+        this.no_item_visible = true
+        return
       }
       this.open_item_visible = true
     },
     open_item() {
       this.open_item_visible = false
-      if (this.count <= 0)  {
+      if (this.count <= 0) {
         this.no_item_visible = true
-        return 
+        return
       }
       this.$emit("open_item")
     },

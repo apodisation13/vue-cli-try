@@ -1,11 +1,7 @@
 <template>
-  <div class="reward-page">
+  <div class="reward-comp" @click="clear_reward">
     <div class="reward-image__container">
-      <img
-        class="reward-image__image"
-        :src="require(`@/assets/icons/resources/${name}_open.svg`)"
-        alt=""
-      />
+      <img class="reward-image__image" :src="require(`@/assets/icons/resources/${name}_open.svg`)" alt="" />
     </div>
 
     <div class="reward-text">
@@ -14,27 +10,14 @@
 
     <div class="reward-content">
       <!-- Если не ключ, то отображается этот компонент -->
-      <card-list-component
-        class="reward-card-list"
-        v-if="!show_key_content"
-        :cards="reward"
-        :deckbuilder="true"
-        :bonus="true"
-        @chose_player_card="accept_reward"
-      />
+      <card-list-component class="reward-card-list" v-if="!show_key_content" :cards="reward" :deckbuilder="true"
+        :bonus="true" @chose_player_card="accept_reward" />
       <!-- Иначе. для ключа отображается этот компонент -->
       <div v-if="show_key_content" class="reward-resources">
-        <div
-          class="reward-resources__wrapper"
-          @dblclick="accept_random_reward(resource)"
-          v-for="(resource, index) in key_reward"
-          :key="index"
-        >
-          <img
-            :src="require(`@/assets/icons/resources/${resource.resource}.svg`)"
-            alt=""
-            class="reward-resources__item"
-          />
+        <div class="reward-resources__wrapper" @dblclick="accept_random_reward(resource)"
+          v-for="(resource, index) in key_reward" :key="index">
+          <img :src="require(`@/assets/icons/resources/${resource.resource}.svg`)" alt=""
+            class="reward-resources__item" />
           <resource-count-rombus>
             {{ resource.value }}
           </resource-count-rombus>
@@ -44,11 +27,11 @@
   </div>
 </template>
 <script>
-import CardListComponent from "@/components/CardListComponent"
+import CardListComponent from "@/components/Cards/CardListComponent"
 import ResourceCountRombus from "@/components/UI/ResourceCountRombus"
 export default {
   components: { CardListComponent, ResourceCountRombus },
-  name: "reward-page",
+  name: "reward-comp",
   data() {
     return {
       show_key_content: !!this.key_reward, //Если не передается награда за ключ, значит это либо бочки, либо сундук
@@ -78,13 +61,7 @@ export default {
 
     //Функция принятия наград с картами
     async accept_reward(card) {
-      //Если сундук - клик на любую карту принимает все три
-      if (this.name === "chests") {
-        for (const elem of this.reward) {
-          await this.$store.dispatch("craft_card_action", elem)
-        }
-        //Иначе это бочка или большая бочка, тогда принимается карта, по которой кликнули
-      } else {
+      if (this.name !== "chests") {
         await this.$store.dispatch("craft_card_action", card)
       }
       this.$emit("clear_reward")
@@ -92,11 +69,26 @@ export default {
     async accept_random_reward(res) {
       this.$emit("accept_key_reward", res)
     },
+    async accept_chest_reward() {
+      if (this.name === "chests") {
+        for (const elem of this.reward) {
+          await this.$store.dispatch("craft_card_action", elem)
+        }
+      }
+      setTimeout(() => this.$emit("clear_reward"), 10000)
+    },
+    clear_reward() {
+      if (this.name === "chests") this.$emit("clear_reward")
+    }
+  },
+  mounted() {
+    this.accept_chest_reward()
   },
 }
 </script>
 <style scoped>
-.reward-page {
+.reward-comp {
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;

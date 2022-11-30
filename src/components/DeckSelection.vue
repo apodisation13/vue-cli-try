@@ -26,7 +26,8 @@
       </button>
     </div>
 
-    <yesno-modal v-if="show_yesno"
+    <yesno-modal
+      v-if="show_yesno"
       @confirm="confirm_delete"
       @cancel="cancel_delete"
     />

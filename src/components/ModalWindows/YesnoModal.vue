@@ -1,7 +1,6 @@
 <template>
-  <div class="yes_no_modal-fade">
+  <div class="yes_no_modal-fade" @click="onClick">
     <div class="yes_no_modal">
-
       <div class="text text-zero" v-if="is_zero_purchase">
         <span>У вас нет ресурса {{ name }}</span>
         <span>Желаете приобрести?</span>
@@ -25,6 +24,22 @@
         <span>Вы уверены?</span>
       </div>
 
+      <div class="text text-craft-card" v-else-if="is_craft_card">
+        <div class="price">
+          <span>Стоимость — {{ craft_price * -1 }}</span>
+          <img :src="require(`@/assets/icons/resources/scraps.svg`)" alt="" class="scraps" />
+        </div>
+        <span>Создать?</span>
+      </div>
+
+      <div class="text text-mill-card" v-else-if="is_mill_card">
+        <div class="price">
+          <span>Вы получите — {{ mill_value }}</span>
+          <img :src="require(`@/assets/icons/resources/scraps.svg`)" alt="" class="scraps" />
+        </div>
+        <span>Уничтожить?</span>
+      </div>
+
       <div class="text text-confirm" v-else>
         <span>Вы уверены?</span>
       </div>
@@ -36,26 +51,42 @@
     </div>
   </div>
 </template>
- 
+
 <script>
 export default {
   name: "yesno-modal",
   props: {
     name: {
       type: String,
-      required: false
+      required: false,
     },
     is_zero_purchase: {
       type: Boolean,
-      required: false
+      required: false,
     },
     is_purchase: {
       type: Boolean,
-      required: false
+      required: false,
     },
     is_open_item: {
       type: Boolean,
-      required: false
+      required: false,
+    },
+    is_craft_card: {
+      type: Boolean,
+      required: false,
+    },
+    is_mill_card: {
+      type: Boolean,
+      required: false,
+    },
+    mill_value: {
+      type: Number,
+      required: false,
+    },
+    craft_price: {
+      type: Number,
+      required: false,
     },
     item_price: {
       type: Number,
@@ -67,16 +98,26 @@ export default {
       quantity: 1,
     }
   },
+  computed: {
+    resource() {
+      return this.$store.getters["resource"]
+    },
+  },
   methods: {
+    onClick(e) {
+      if (e.target.classList.contains("yes_no_modal-fade"))
+        this.cancel()
+    },
     increment() {
+      if (this.item_price * (this.quantity + 1) > this.resource.wood) return
       this.quantity += 1
     },
     decrement() {
-      if (this.quantity === 1) return;
+      if (this.quantity === 1) return
       this.quantity -= 1
     },
     confirm() {
-      this.$emit("confirm")
+      this.$emit("confirm", this.quantity)
     },
     cancel() {
       this.$emit("cancel")
@@ -89,7 +130,7 @@ export default {
 <style scoped>
 .yes_no_modal-fade {
   position: fixed;
-  content: '';
+  content: "";
   left: 0;
   top: 0;
   background-color: rgba(0, 0, 0, 0.3);
@@ -116,12 +157,13 @@ export default {
 
   /* Градиентная обводка */
   border: 3px solid transparent;
-  background: linear-gradient(to bottom, #4A4237 0, #C5A87E 50%, #4A4237 100%);
+  background: linear-gradient(to bottom, #4a4237 0, #c5a87e 50%, #4a4237 100%);
   box-shadow: inset 0px 0px 0px 100vw hsl(356, 89%, 18%);
 }
 
 .text {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 6px;
@@ -137,14 +179,17 @@ export default {
 }
 
 .text span {
-  font-family: 'Philosopher';
+  font-family: "Philosopher";
   font-style: normal;
   font-weight: 700;
   font-size: 26px;
   line-height: 100%;
 
   text-align: center;
-  background: linear-gradient(153.5deg, #B07B15 34.99%, #FACF5D 57.14%, #B48328 82.81%);
+  background: linear-gradient(153.5deg,
+      #b07b15 34.99%,
+      #facf5d 57.14%,
+      #b48328 82.81%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -166,8 +211,8 @@ export default {
   width: 20px;
   height: 20px;
   background-color: transparent;
-  color: #FDDC4C;
-  border: 2px solid #FDDC4C;
+  color: #fddc4c;
+  border: 2px solid #fddc4c;
   border-radius: 50%;
 }
 
@@ -191,13 +236,13 @@ export default {
   background: hsl(44, 94%, 67%);
   box-shadow: inset 0 0 5px 5px rgba(0, 0, 0, 0.25);
 
-  font-family: 'Inter';
+  font-family: "Inter";
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
-  color: #58050A;
+  color: #58050a;
 
-  border: 1px solid #CFB369;
+  border: 1px solid #cfb369;
   border-radius: 6px;
 }
 

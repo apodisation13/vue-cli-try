@@ -44,8 +44,9 @@
     </div>
 
     <!-- Страница обработки наград -->
-    <reward-page
+    <reward-comp
       v-else
+      :visible="show_reward_page"
       :name="reward_name"
       :reward="random_cards"
       :key_reward="random_reward_choice"
@@ -58,9 +59,9 @@
 <script>
 import { getRandomReward } from "@/logic/random_rewards"
 import BonusPageResource from "@/components/UI/BonusPageResource"
-import RewardPage from "@/pages/RewardPage.vue"
+import RewardComp from "@/components/Pages/BonusPage/RewardComp.vue"
 export default {
-  components: { BonusPageResource, RewardPage },
+  components: { BonusPageResource, RewardComp },
   created() {
     this.cards.forEach(card => {
       if (card.card.color === "Bronze") {
@@ -117,12 +118,13 @@ export default {
       this.show_reward_page = false
     },
 
-    async add_kegs() {
+    async add_kegs(quantity) {
+      const final_price = quantity * this.kegs_price
       this.resource.wood += 5000 //добавить дров для проверки
-      if (!this.is_enough_wood(this.kegs_price)) return
+      if (!this.is_enough_wood(final_price)) return
       await this.$store.dispatch("pay_resource", {
-        wood: this.resource.wood - this.kegs_price,
-        kegs: this.resource.kegs + 1,
+        wood: this.resource.wood - final_price,
+        kegs: this.resource.kegs + quantity,
       })
     },
 
@@ -141,11 +143,12 @@ export default {
       })
     },
 
-    async add_big_kegs() {
-      if (!this.is_enough_wood(this.big_kegs_price)) return
+    async add_big_kegs(quantity) {
+      const final_price = quantity * this.big_kegs_price
+      if (!this.is_enough_wood(final_price)) return
       await this.$store.dispatch("pay_resource", {
-        wood: this.resource.wood - this.big_kegs_price,
-        big_kegs: this.resource.big_kegs + 1,
+        wood: this.resource.wood - final_price,
+        big_kegs: this.resource.big_kegs + quantity,
       })
     },
 
@@ -164,11 +167,12 @@ export default {
       })
     },
 
-    async add_chests() {
-      if (!this.is_enough_wood(this.chests_price)) return
+    async add_chests(quantity) {
+      const final_price = quantity * this.chests_price
+      if (!this.is_enough_wood(final_price)) return
       await this.$store.dispatch("pay_resource", {
-        wood: this.resource.wood - this.chests_price,
-        chests: this.resource.chests + 1,
+        wood: this.resource.wood - final_price,
+        chests: this.resource.chests + quantity,
       })
     },
     async open_chest() {
