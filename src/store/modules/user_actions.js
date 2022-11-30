@@ -188,36 +188,35 @@ const actions = {
     else await dispatch("mill_leader", user_card)
   },
 
-  async mill_card({ dispatch, getters }, user_card) {
+  async mill_card({ dispatch, getters, commit }, user_card) {
     let header = getters["getHeader"]
     let user_id = getters["getUser"].user_id
     let url = `${mill_card}${user_card.id}/`
 
     try {
-      await axios.patch(
+      const response = await axios.patch(
         url,
         { user: user_id, card: user_card.card.id, count: user_card.count },
         header
       )
-      await dispatch("get_user_database")
+      commit("set_cards", response.data.cards)
     } catch (err) {
       dispatch("error_action", err)
       throw new Error("Какая-то ошибка при размалывании карты")
     }
   },
 
-  async mill_leader({ dispatch, getters }, user_card) {
+  async mill_leader({ dispatch, getters, commit }, user_card) {
     let header = getters["getHeader"]
     let user_id = getters["getUser"].user_id
     let url = `${mill_leader}${user_card.id}/`
-
     try {
-      await axios.patch(
+      const response = await axios.patch(
         url,
         { user: user_id, leader: user_card.card.id, count: user_card.count },
         header
       )
-      await dispatch("get_user_database")
+      commit("set_leaders", response.data.leaders)
     } catch (err) {
       dispatch("error_action", err)
       throw new Error("Какая-то ошибка при размалывании лидера")

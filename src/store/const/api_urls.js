@@ -17,7 +17,7 @@ export const user_resource = `${API_URL}/api/v1/user_resource/`
 export const craft_card = `${API_URL}/api/v1/patchcards/craft_user_cards/`
 export const mill_card = `${API_URL}/api/v1/patchcards/mill_user_cards/`
 export const craft_leader = `${API_URL}/api/v1/patchleaders/craft_user_leaders/`
-export const mill_leader = `${API_URL}u/api/v1/patchleaders/mill_user_leaders/`
+export const mill_leader = `${API_URL}/api/v1/patchleaders/mill_user_leaders/`
 
 // для получения новостей
 export const all_news = `${API_URL}/api/v1/news/`
