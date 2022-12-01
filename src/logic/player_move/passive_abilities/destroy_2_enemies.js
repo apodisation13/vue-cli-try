@@ -2,11 +2,12 @@ import {
   get_all_enemies,
   remove_dead_card,
 } from "@/logic/player_move/service/service_for_player_move"
-import { sound_destroy_enemy } from "@/logic/play_sounds"
+import { sound_destroy_enemy, sound_timer_down } from "@/logic/play_sounds"
 import { choice_pop } from "@/lib/utils"
 import { enemy_takes_damage } from "@/logic/player_move/abilities/enemy_takes_damage"
 
 function destroy_2_enemies(card, gameObj) {
+  sound_timer_down()
   card.timer -= 1
   if (card.timer !== 0) {
     return

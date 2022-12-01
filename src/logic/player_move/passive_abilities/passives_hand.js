@@ -2,7 +2,7 @@ import { damage_random_enemy } from "@/logic/player_move/passive_abilities/damag
 import { increase_damage_in_hand } from "@/logic/player_move/passive_abilities/increase_damage_to-card_in_hand"
 import { heal_leader } from "@/logic/player_move/passive_abilities/heal_leader"
 import { increase_self_damage } from "@/logic/player_move/passive_abilities/increase_self_damage"
-import { destroy_2_enemies } from "@/logic/player_move/passive_abilities/destroy_2_enemies_after_3_turns"
+import { destroy_2_enemies } from "@/logic/player_move/passive_abilities/destroy_2_enemies"
 
 export function hand_passives(card, gameObj, hand) {
   // ДИСПЕТЧЕР ПАССИВНЫХ АБИЛОК В РУКЕ!
