@@ -34,7 +34,7 @@ export default {
 .modal {
   max-width: 335px;
   width: 100%;
-  background: #fff;
+  background: linear-gradient(#0f2845, #000000);
   border-radius: 18px;
   padding: 45px 22px;
   display: flex;
