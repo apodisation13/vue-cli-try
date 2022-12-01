@@ -4,7 +4,7 @@ import {
   enemy_passive_abilities_end_turn,
   passive_leader_ai_move,
 } from "@/logic/ai_move/ai_passive_abilties"
-import { appear_new_enemy } from "@/logic/place_enemies"
+import { appear_new_enemy } from "@/logic/game_logic/place_enemies"
 
 export default {
   methods: {

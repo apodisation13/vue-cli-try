@@ -1,16 +1,16 @@
 import { sound_passive_increase_damage } from "@/logic/play_sounds"
 
-function passive_end_turn_increase_self_damage(card) {
+function increase_self_damage(card) {
   let temp = card.damage
 
-  card.damage = `${card.damage}+1`
+  card.damage = `${card.damage}+${card.value}`
 
   setTimeout(() => {
     card.damage = temp
-    card.damage += 1
+    card.damage += card.value
   }, 750)
 
   sound_passive_increase_damage()
 }
 
-export { passive_end_turn_increase_self_damage }
+export { increase_self_damage }

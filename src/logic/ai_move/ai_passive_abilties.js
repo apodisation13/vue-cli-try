@@ -1,14 +1,14 @@
 import store from "@/store"
 
-import { passive_end_turn_increase_damage } from "@/logic/ai_move/passive_abilities/increase_damage"
+import { incr_self_dmg } from "@/logic/ai_move/passive_abilities/increase_damage"
 import {
   enemy_leader_heal_self,
-  passive_end_turn_heal_all,
-  passive_end_turn_heal_enemy_leader,
-  passive_end_turn_heal_self,
+  heal_all,
+  heal_enemy_leader,
+  heal_self,
 } from "@/logic/ai_move/passive_abilities/heal"
-import { passive_end_turn_regain_shield } from "@/logic/ai_move/passive_abilities/regain_shield"
-import { passive_end_turn_decrease_player_damage } from "@/logic/ai_move/passive_abilities/decrease_player_damage"
+import { regain_shield } from "@/logic/ai_move/passive_abilities/regain_shield"
+import { decrease_player_damage } from "@/logic/ai_move/passive_abilities/decrease_player_damage"
 
 import { damage_player_by_enemy_leader } from "@/logic/ai_move/moves/damage"
 
@@ -25,20 +25,19 @@ function enemy_passive_abilities_end_turn(field, enemy_leader, hand) {
       store.commit("set_epa_end_turn", false)
     } else {
       // ДИСПЕТЧЕР пассивных абилок врагов
-      if (passive_enemies[i].passive_ability.name === "increase-damage") {
-        passive_end_turn_increase_damage(passive_enemies[i])
-      } else if (passive_enemies[i].passive_ability.name === "heal") {
-        passive_end_turn_heal_self(passive_enemies[i])
-      } else if (passive_enemies[i].passive_ability.name === "heal-leader") {
-        passive_end_turn_heal_enemy_leader(passive_enemies[i], enemy_leader)
-      } else if (passive_enemies[i].passive_ability.name === "heal-all-by-1") {
-        passive_end_turn_heal_all(field, enemy_leader)
-      } else if (passive_enemies[i].passive_ability.name === "regain-shield") {
-        passive_end_turn_regain_shield(passive_enemies[i])
-      } else if (
-        passive_enemies[i].passive_ability.name === "decrease-player-damage"
-      ) {
-        passive_end_turn_decrease_player_damage(passive_enemies[i], hand)
+      const pea = passive_enemies[i].passive_ability.name
+      if (pea === "incr-self-dmg") {
+        incr_self_dmg(passive_enemies[i])
+      } else if (pea === "heal-self") {
+        heal_self(passive_enemies[i])
+      } else if (pea === "heal-leader") {
+        heal_enemy_leader(passive_enemies[i], enemy_leader)
+      } else if (pea === "heal-all") {
+        heal_all(passive_enemies[i], field, enemy_leader)
+      } else if (pea === "regain-shield") {
+        regain_shield(passive_enemies[i])
+      } else if (pea === "decrease-player-damage") {
+        decrease_player_damage(passive_enemies[i], hand)
       }
 
       i += 1

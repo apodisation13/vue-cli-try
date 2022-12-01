@@ -1,18 +1,18 @@
 import { sound_passive_increase_damage } from "@/logic/play_sounds"
 
-function passive_end_turn_increase_damage_in_hand(hand) {
+function increase_damage_in_hand(card, hand) {
   let random = Math.floor(Math.random() * hand.length)
 
   let temp = hand[random].damage
 
-  hand[random].damage = `${hand[random].damage}+1`
+  hand[random].damage = `${hand[random].damage}+${card.value}`
 
   setTimeout(() => {
     hand[random].damage = temp
-    hand[random].damage += 1
+    hand[random].damage += card.value
   }, 750)
 
   sound_passive_increase_damage()
 }
 
-export { passive_end_turn_increase_damage_in_hand }
+export { increase_damage_in_hand }
