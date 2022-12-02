@@ -50,19 +50,24 @@
     <!--А дальше сами описания!!!-->
     <!--Описание абилки для карты игрока-->
     <div class="text" v-if="show_ability && !forEnemy">
-      {{ card.ability.description }}
+      {{ card.ability.description }} <br />
+      damage = {{ card.damage || card.damage_per_turn }}
     </div>
     <!--Описание абилки для карты врага-->
     <div class="text" v-if="show_ability && forEnemy">
-      {{ card.move.description }}
+      {{ card.move.description }} <br />
+      damage = {{ card.damage }}
     </div>
     <!--Описание пассивной абилки, разделение для карты или для лидера врагов-->
     <div class="text" v-if="show_passive">
       {{ card?.passive_ability?.description || card.ability.description }}
+      <br />
+      value = {{ card.value }}
     </div>
     <!--Описание абилки deathwish, только для врага-->
     <div class="text" v-if="show_deathwish && forEnemy">
-      {{ card.deathwish.description }}
+      {{ card.deathwish.description }} <br />
+      value = {{ card.deathwish_value }}
     </div>
   </div>
 </template>
