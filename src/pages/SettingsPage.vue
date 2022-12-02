@@ -42,6 +42,7 @@
         @select-setting="selectPersonalSetting"
       >
         <setting-choose-theme v-if="selectedPersonalSetting === 0" />
+        <setting-avatar v-if="selectedPersonalSetting === 1" />
         <!--Сюда так же добавим ещё настройки-->
       </settings-list>
     </div>
@@ -54,8 +55,10 @@ import SettingDeleteAllLevels from "@/components/Pages/SettingsPage/SettingDelet
 import SettingSound from "@/components/Pages/SettingsPage/SettingSound"
 import SettingChooseTheme from "@/components/Pages/SettingsPage/SettingChooseTheme.vue"
 import SettingsList from "@/components/Pages/SettingsPage/SettingsList.vue"
+import SettingAvatar from "@/components/Pages/SettingsPage/SettingAvatar.vue"
 export default {
   components: {
+    SettingAvatar,
     SettingsList,
     SettingChooseTheme,
     SettingSound,
