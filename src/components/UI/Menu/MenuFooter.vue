@@ -66,12 +66,12 @@ export default {
 }
 
 .footer__text {
-  font-family: "Philosopher",serif;
+  font-family: "Philosopher", serif;
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 22px;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
   background: linear-gradient(
     183.6deg,
     #edb13e 2.96%,

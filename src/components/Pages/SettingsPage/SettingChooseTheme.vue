@@ -6,7 +6,10 @@
       class="themes"
       @dblclick="setSettingTheme(el)"
     >
-      <button class="theme" :class="{ selected_theme: el === selectedTheme }">
+      <button
+        class="theme"
+        :class="{ selected_theme: el === $store.getters['selectedTheme'] }"
+      >
         <div class="game__outer-wrapper" :style="styleOuter(el)">
           <div class="game__wrapper" :style="styleWrapper(el)"></div>
         </div>
@@ -23,7 +26,6 @@ export default {
   data() {
     return {
       themes: [1, 2, 3, 4],
-      selectedTheme: this.$store.getters["selectedTheme"],
     }
   },
   methods: {
@@ -34,7 +36,6 @@ export default {
       return styleWrapper(el)
     },
     setSettingTheme(el) {
-      this.selectedTheme = el
       this.$store.commit("set_theme", el)
     },
   },
