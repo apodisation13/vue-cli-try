@@ -129,7 +129,7 @@ export default {
   display: inline-block;
   margin: 1%;
   font-weight: bolder;
-  border: solid 2px brown;
+  border: solid 2px white;
   width: 50px;
   height: 5vh;
   background-repeat: no-repeat;
