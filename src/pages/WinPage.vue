@@ -1,18 +1,46 @@
 <template>
   <div class="start">
     <div class="win_price">
-      ВАШ ВЫИГРЫШ <br />
-      scraps: <b>{{ pay_data.scraps }}</b
-      ><br />
-      wood: <b>{{ pay_data.wood }}</b
-      ><br />
-      kegs: <b>{{ pay_data.kegs }}</b
-      ><br />
-      big kegs: <b>{{ pay_data.big_kegs }}</b
-      ><br />
-      keys: <b>{{ pay_data.keys }}</b
-      ><br />
-      <div>Вы открыли уровни: {{ related_levels }}</div>
+      ВАШ ВЫИГРЫШ <br /><br />
+      scraps: <b>{{ pay_data.scraps }}</b>
+      <img
+        :src="require(`@/assets/icons/resources/scraps.svg`)"
+        alt=""
+        class="wood"
+      />
+      <br /><br />
+      wood: <b>{{ pay_data.wood }}</b>
+      <img
+        :src="require(`@/assets/icons/resources/wood.svg`)"
+        alt=""
+        class="wood"
+      />
+      <br /><br />
+      kegs: <b>{{ pay_data.kegs }}</b>
+      <img
+        :src="require(`@/assets/icons/resources/kegs.svg`)"
+        alt=""
+        class="wood"
+      />
+      <br /><br />
+      big kegs: <b>{{ pay_data.big_kegs }}</b>
+      <img
+        :src="require(`@/assets/icons/resources/big_kegs.svg`)"
+        alt=""
+        class="wood"
+      />
+      <br /><br />
+      keys: <b>{{ pay_data.keys }}</b>
+      <img
+        :src="require(`@/assets/icons/resources/keys.svg`)"
+        alt=""
+        class="wood"
+      />
+      <br /><br />
+      <div v-if="related_levels.length">
+        Вы открыли уровни: <br />
+        {{ related_levels }}
+      </div>
     </div>
   </div>
 </template>
@@ -98,17 +126,21 @@ div {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50%;
-  height: 40vh;
+  width: 75%;
+  height: 70vh;
   border: solid 2px black;
 }
 
 .win_price {
   width: 100%;
   text-align: center;
-  top: 70%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  position: relative;
+  position: absolute;
+}
+
+.wood {
+  max-height: 30px;
 }
 </style>

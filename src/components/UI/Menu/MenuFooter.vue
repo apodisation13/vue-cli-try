@@ -4,11 +4,7 @@
       <span class="footer__text">Режимы</span>
     </button>
     <button class="game footer__btn" @click="$router.push('/start_game')">
-      <div class="game__outer-wrapper" :style="styleOuter">
-        <div class="game__wrapper" :style="styleWrapper">
-          <div class="footer__text">Игра</div>
-        </div>
-      </div>
+      <themed-button title="Игра" />
     </button>
     <button class="deckbuilder footer__btn" @click="$router.push('/deckbuild')">
       <span class="footer__text">Склад</span>
@@ -17,20 +13,15 @@
 </template>
 
 <script>
-import { styleOuter, styleWrapper } from "@/logic/border_styles"
+import ThemedButton from "@/components/UI/Buttons/ThemedButton.vue"
 
 export default {
   name: "MenuFooter",
+  components: { ThemedButton },
   computed: {
     // меню не нужны, если в роутере есть notRequireMenu (страницы загрузки, игры)
     menuNeeded() {
       return !this.$router.currentRoute.value.meta.notRequireMenu
-    },
-    styleOuter() {
-      return styleOuter(this.$store.getters["selectedTheme"])
-    },
-    styleWrapper() {
-      return styleWrapper(this.$store.getters["selectedTheme"])
     },
   },
 }
@@ -103,49 +94,9 @@ export default {
   width: 30%;
 }
 
-.game__wrapper {
-  box-shadow: inset -4px -4px 4px rgba(0, 0, 0, 0.25),
-    inset 4px 4px 10px rgba(186, 218, 255, 0.4);
-  padding: 4px;
-  /* border-radius: 3px;
-  border: 3px solid; */
-  /* border-image-source: linear-gradient(100.28deg, #11941E 0.7%, #2FB53C 20.71%, #CEFFDC 49.22%, #2FB53C 91.17%, #11941E 100%);
-  border-image-slice: 1; */
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.game__outer-wrapper {
-  /*background: linear-gradient(*/
-  /*  100.28deg,*/
-  /*  #11941e 0.7%,*/
-  /*  #2fb53c 20.71%,*/
-  /*  #ceffdc 49.22%,*/
-  /*  #2fb53c 91.17%,*/
-  /*  #11941e 100%*/
-  /*);*/
-  height: 100%;
-  width: 100%;
-  padding: 3px;
-  border-radius: 5px;
-}
-
-/* .game__wrapper :before{
-  display: block;
-  position: absolute;
-  padding: 5px;
-  content: "";
-} */
-
 .game .footer__text {
   font-size: 27px;
   padding: 5px;
   border-radius: 3px;
-  /* box-shadow: 0px 0px 3px 3px; */
-  /* background: linear-gradient(92.75deg, #1AFF4C -14.41%, rgba(141, 255, 166, 0) 57.8%, #1AFF4C 122.86%); */
-  /* linear-gradient(92.75deg, #1AFF4C -14.41
-  %, rgba(141, 255, 166, 0) 57.8%, #1AFF4C 122.86%) */
 }
 </style>
