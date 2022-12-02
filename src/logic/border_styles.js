@@ -166,6 +166,58 @@ function ability_icon(ability) {
   else return ""
 }
 
+// цвета доступных тем в игре, рамки
+function styleOuter(el) {
+  if (el === 1)
+    // зеленый
+    return {
+      background:
+        "linear-gradient(100.28deg, #11941e 0.7%, #2fb53c 20.71%, #ceffdc 49.22%, #2fb53c 91.17%, #11941e 100%)",
+    }
+  else if (el === 2)
+    // синий
+    return {
+      background:
+        "linear-gradient(100.28deg, #0085FF -0.5%, #00E0FF 17.29%, #CEF3FF 49.22%, #00D1FF 81.68%, #0650BE 100%)",
+    }
+  else if (el === 3)
+    // красный
+    return {
+      background:
+        "linear-gradient(100.28deg, #FF0000 -0.5%, #F34B4B 17.29%, #FFCECE 49.22%, #F34B4B 81.68%, #FF0000 100%)",
+    }
+  else if (el === 4)
+    // розовый
+    return {
+      background:
+        "linear-gradient(100.28deg, #AF06BE -0.5%, #FA00FF 17.29%, #F2CEFF 49.22%, #EB00FF 81.68%, #AF06BE 100%)",
+    }
+}
+
+function styleWrapper(el) {
+  if (el === 1)
+    // зеленый
+    return {
+      background:
+        "linear-gradient(180deg, #2A5607 -45.45%, #62C217 49.84%, #2A5607 133.33%)",
+    }
+  else if (el === 2)
+    return {
+      background:
+        "linear-gradient(180deg, #00C2FF -45.45%, #2E69AC 49.76%, #00C2FF 133.33%)",
+    }
+  else if (el === 3)
+    return {
+      background:
+        "linear-gradient(180deg, #F90000 -45.45%, #730000 48.48%, #FF0000 133.33%)",
+    }
+  else if (el === 4)
+    return {
+      background:
+        "linear-gradient(180deg, #FF00E5 -45.45%, #821A71 49.76%, #FF00E5 133.33%)",
+    }
+}
+
 export {
   border_for_card,
   card_margin,
@@ -176,4 +228,6 @@ export {
   background_color_charges,
   background_color_leader,
   ability_icon,
+  styleOuter,
+  styleWrapper,
 }

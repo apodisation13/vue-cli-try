@@ -4,8 +4,8 @@
       <span class="footer__text">Режимы</span>
     </button>
     <button class="game footer__btn" @click="$router.push('/start_game')">
-      <div class="game__outer-wrapper">
-        <div class="game__wrapper">
+      <div class="game__outer-wrapper" :style="styleOuter">
+        <div class="game__wrapper" :style="styleWrapper">
           <div class="footer__text">Игра</div>
         </div>
       </div>
@@ -17,12 +17,20 @@
 </template>
 
 <script>
+import { styleOuter, styleWrapper } from "@/logic/border_styles"
+
 export default {
   name: "MenuFooter",
   computed: {
     // меню не нужны, если в роутере есть notRequireMenu (страницы загрузки, игры)
     menuNeeded() {
       return !this.$router.currentRoute.value.meta.notRequireMenu
+    },
+    styleOuter() {
+      return styleOuter(this.$store.getters["selectedTheme"])
+    },
+    styleWrapper() {
+      return styleWrapper(this.$store.getters["selectedTheme"])
     },
   },
 }
@@ -58,7 +66,7 @@ export default {
 }
 
 .footer__text {
-  font-family: "Philosopher";
+  font-family: "Philosopher",serif;
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -96,12 +104,6 @@ export default {
 }
 
 .game__wrapper {
-  background: linear-gradient(
-    180deg,
-    #62c217 -45.45%,
-    #2a5607 50.76%,
-    #62c217 133.33%
-  );
   box-shadow: inset -4px -4px 4px rgba(0, 0, 0, 0.25),
     inset 4px 4px 10px rgba(186, 218, 255, 0.4);
   padding: 4px;
@@ -116,14 +118,14 @@ export default {
 }
 
 .game__outer-wrapper {
-  background: linear-gradient(
-    100.28deg,
-    #11941e 0.7%,
-    #2fb53c 20.71%,
-    #ceffdc 49.22%,
-    #2fb53c 91.17%,
-    #11941e 100%
-  );
+  /*background: linear-gradient(*/
+  /*  100.28deg,*/
+  /*  #11941e 0.7%,*/
+  /*  #2fb53c 20.71%,*/
+  /*  #ceffdc 49.22%,*/
+  /*  #2fb53c 91.17%,*/
+  /*  #11941e 100%*/
+  /*);*/
   height: 100%;
   width: 100%;
   padding: 3px;
