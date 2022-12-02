@@ -8,7 +8,7 @@
 
       <div class="text text-purchase" v-else-if="is_purchase">
         <div class="price">
-          <span>{{ item_price }}</span>
+          <span>{{ item_price * quantity }}</span>
           <img
             :src="require(`@/assets/icons/resources/wood.svg`)"
             alt=""
