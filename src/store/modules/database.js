@@ -122,7 +122,8 @@ const mutations = {
 }
 
 const actions = {
-  // в ответе user_database: cards,leaders,u_d(колоды),levels, resources: тут ресурсы
+  // САМЫЙ БОЛЬШОЙ ЗАПРОС! выполняется один раз при входе на сайт! В ответе приходят поля:
+  // user_database: cards, leaders, u_d(колоды); seasons: тут список сезонов с уровнями в них;
   async get_user_database({ commit, getters, dispatch }) {
     let user_id = getters["getUser"].user_id
     let header = getters["getHeader"]
@@ -143,7 +144,7 @@ const actions = {
       commit("set_cards", user_database.cards)
 
       commit("set_decks", user_database.u_d)
-      dispatch("set_deck_in_play", user_database.u_d[0]) // устанавливаем для игры первую колоду
+      dispatch("set_deck_in_play") // устанавливаем для игры первую колоду, которая всегда последняя
 
       commit("set_seasons", seasons)
       commit("set_season", seasons[0])
