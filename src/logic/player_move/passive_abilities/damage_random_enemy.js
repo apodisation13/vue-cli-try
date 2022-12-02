@@ -2,7 +2,7 @@ import { get_random_enemy } from "@/logic/player_move/service/service_for_player
 import { hit_one_enemy } from "@/logic/player_move/abilities/hit_one_enemy"
 import { sound_damage_one } from "@/logic/play_sounds"
 
-function passive_end_turn_damage_random_enemy(card, gameObj) {
+function damage_random_enemy(card, gameObj) {
   const { field, enemy_leader } = gameObj
   let target = get_random_enemy(field, enemy_leader) // взяли всех врагов, из них взяли одного
 
@@ -10,10 +10,10 @@ function passive_end_turn_damage_random_enemy(card, gameObj) {
 
   card.damages_enemy = true
   sound_damage_one()
-  hit_one_enemy(target, { damage: 1 }, gameObj, 500)
+  hit_one_enemy(target, { damage: card.value }, gameObj, 500)
   setTimeout(() => {
     card.damages_enemy = false
   }, 500)
 }
 
-export { passive_end_turn_damage_random_enemy }
+export { damage_random_enemy }

@@ -67,3 +67,7 @@ export function sound_lose_game() {
 export function sound_deathwish() {
   sound("./../../audio/sounds/deathwish.wav")
 }
+
+export function sound_timer_down() {
+  sound("./../../audio/sounds/timer_count_down.wav")
+}

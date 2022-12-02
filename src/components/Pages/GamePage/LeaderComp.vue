@@ -63,18 +63,17 @@ export default {
 
       if (event_type === "dragend") {
         console.log("РАНЕЕ ПОТАЩИЛИ ЛИДЕРА, С КОМПА!!!!")
-        console.log(event.originalEvent.clientX, event.originalEvent.clientY)
-        const elems = document.elementsFromPoint(
-          event.originalEvent.clientX,
-          event.originalEvent.clientY
-        )
+        const x = event?.originalEvent?.clientX
+        const y = event?.originalEvent?.clientY
+        if (!x || !y) return
+        const elems = document.elementsFromPoint(x, y)
         this.get_target(elems)
       } else {
         console.log("РАНЕЕ ПОТАЩИЛИ ЛИДЕРА, МЫ С ТЕЛЕФОНА!!!")
-        const elems = document.elementsFromPoint(
-          event.originalEvent.changedTouches[0].clientX,
-          event.originalEvent.changedTouches[0].clientY
-        )
+        const x = event?.originalEvent?.changedTouches?.[0].clientX
+        const y = event?.originalEvent?.changedTouches?.[0].clientY
+        if (!x || !y) return
+        const elems = document.elementsFromPoint(x, y)
         this.get_target(elems)
       }
     },

@@ -184,6 +184,9 @@ export default {
 </script>
 
 <style scoped>
+div {
+  color: black;
+}
 .card-ui {
   position: relative;
   margin: auto;

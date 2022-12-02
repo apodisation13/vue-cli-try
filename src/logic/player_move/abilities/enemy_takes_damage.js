@@ -21,6 +21,7 @@ export function enemy_takes_damage(enemy, card, gameObj, timeout) {
       } else {
         field[field.indexOf(enemy)] = ""
         console.log("враг умер")
+        enemy.hp = enemy.base_hp
         enemies_grave.push(enemy)
         if (enemy.has_deathwish) deathwish([enemy], field)
       }
