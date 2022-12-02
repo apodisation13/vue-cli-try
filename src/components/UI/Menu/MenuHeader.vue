@@ -14,6 +14,13 @@
           class="avatar__btn"
           :src="require('@/assets/icons/' + 'Avatar.svg')"
           alt=""
+          v-if="!path_to_icon"
+        />
+        <img
+          :src="require(`@/assets/icons/resources/${path_to_icon}.svg`)"
+          alt=""
+          class="avatar__btn"
+          v-else
         />
       </button>
       <resource-list @click="$router.push('/bonus')" v-if="isLoggedIn" />
@@ -63,6 +70,9 @@ export default {
     },
     isLoggedIn() {
       return this.$store.getters["isLoggedIn"]
+    },
+    path_to_icon() {
+      return this.$store.getters["selectedAvatar"]
     },
   },
   data() {

@@ -4,6 +4,7 @@ import database from "@/store/modules/database"
 import game from "@/store/modules/game"
 import user_actions from "@/store/modules/user_actions"
 import news from "@/store/modules/news"
+import settings from "@/store/modules/settings"
 
 // ИНСТРУКЦИЯ:
 // в шаблонах $store. state, getters['name'], commit('name', чё) для мутаций
@@ -17,6 +18,7 @@ const store = createStore({
     game,
     user_actions,
     news,
+    settings,
   },
   state: {
     play_sound: true,

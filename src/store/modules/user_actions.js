@@ -51,6 +51,7 @@ const actions = {
       const response = await axios.delete(url, header)
       toast.success("Успешно удалили колоду")
       commit("set_decks", response.data)
+      dispatch("set_deck_in_play") // после удаления колоды, устанавливаем базовую деку для игры
     } catch (err) {
       dispatch("error_action", err)
       throw new Error("Какая-то ошибка при удалении деки")
@@ -65,6 +66,8 @@ const actions = {
       const response = await axios.patch(url, deck, header)
       toast.success("Успешно изменили колоду")
       commit("set_decks", response.data)
+      // после изменения колоды тоже, устанавливаем базовую деку для игры (вдруг мы изменили ту, которая уже была)
+      dispatch("set_deck_in_play")
     } catch (err) {
       dispatch("error_action", err)
       throw new Error("Какая-то ошибка при изменении деки")
