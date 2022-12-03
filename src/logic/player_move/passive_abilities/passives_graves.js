@@ -1,4 +1,4 @@
-import { if_in_grave_increase_self_damage } from "@/logic/player_move/passive_abilities/if_in_grave_increase_self_damage"
+import { if_in_grave_increase_self_damage } from "@/logic/player_move/passive_abilities/passives_in_grave/if_in_grave_increase_self_damage"
 
 export function grave_passives(card) {
   // ДИСПЕТЧЕР ПАССИВНЫХ АБИЛОК В КЛАДБИЩЕ

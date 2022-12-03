@@ -1,15 +1,19 @@
 import store from "@/store"
-import { add_charges_to_leader_if_play_special } from "@/logic/player_move/passive_abilities/add-charges-to-leader-if-play-special"
+import { add_charges_to_leader_if_play_special } from "@/logic/player_move/passive_abilities/passives_leader/add-charges-to-leader-if-play-special"
 import { hand_passives } from "@/logic/player_move/passive_abilities/passives_hand"
 import { deck_passives } from "@/logic/player_move/passive_abilities/passives_deck"
 import { grave_passives } from "@/logic/player_move/passive_abilities/passives_graves"
+import { add_charges_if_playing_d_all } from "@/logic/player_move/passive_abilities/passives_leader/add-charges-if-playing-d-all"
 
 // диспетчер вызова пассивных абилок
 function player_passive_abilities_upon_playing_a_card(player_card, leader) {
   // здесь карты из руки проверяем
   if (!leader.has_passive) return
-  if (leader.passive_ability.name === "add-charges-to-leader-if-play-special") {
+  const lpa = leader.passive_ability.name
+  if (lpa === "add-charges-to-leader-if-play-special") {
     add_charges_to_leader_if_play_special(player_card, leader)
+  } else if (lpa === "add-charges-to-leader-if-play-d-all") {
+    add_charges_if_playing_d_all(player_card, leader, true)
   }
 }
 
