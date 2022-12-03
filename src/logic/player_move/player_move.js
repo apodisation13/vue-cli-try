@@ -55,7 +55,6 @@ function damage_ai_card(card, enemy, isCard, gameObj) {
   if (isCard) remove_dead_card(card, grave, hand, deck)
 
   // пассивные абилки от хода
-  // пока только лидер игрока, +заряд от спецкарты
   player_passive_abilities_upon_playing_a_card(card, leader)
 }
 
