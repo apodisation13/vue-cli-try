@@ -4,10 +4,7 @@ import { sound_destroy_enemy, sound_enemy_move_down } from "@/logic/play_sounds"
 export function move_enemy(enemy, gameObj) {
   // это если мы ткнули на лидера врагов! то здесь ничего не выполним
   const c = enemy.hp.split("-")
-  if (!enemy.color || c[0] - c[1] <= 0) {
-    console.log("ЫЫЫЫЫЫЫЫЫЫ")
-    return
-  }
+  if (!enemy.color || c[0] - c[1] <= 0) return
 
   const { field, enemies_grave } = gameObj
 
