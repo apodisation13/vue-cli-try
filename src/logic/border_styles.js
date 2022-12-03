@@ -163,6 +163,8 @@ function ability_icon(ability) {
     ability === "play-from-grave"
   )
     return `url(${require("@/assets/icons/card/additional_card.svg")})`
+  else if (ability === "move-enemy")
+    return `url(${require("@/assets/icons/card/field_interaction.svg")})`
   else return ""
 }
 

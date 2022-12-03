@@ -27,6 +27,7 @@
         card.ability.name === 'play-from-grave'
       "
     />
+    <field-interaction-ability v-else-if="card.ability.name === 'move-enemy'" />
   </div>
 </template>
 
@@ -39,9 +40,11 @@ import SpreadAttackAbility from "@/components/UI/CardsUI/Cards/Abilities/SpreadA
 import LockAbility from "@/components/UI/CardsUI/Cards/Abilities/LockAbility"
 import DestroyAbility from "@/components/UI/CardsUI/Cards/Abilities/DestroyAbility"
 import CardInteractionAbility from "@/components/UI/CardsUI/Cards/Abilities/CardInteractionAbility"
+import FieldInteractionAbility from "@/components/UI/CardsUI/Cards/Abilities/FieldInteractionAbility.vue"
 export default {
   name: "card-ability-circle",
   components: {
+    FieldInteractionAbility,
     CardInteractionAbility,
     DestroyAbility,
     LockAbility,
