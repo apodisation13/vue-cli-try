@@ -133,9 +133,7 @@ function background_color_deck(deck) {
 // используется для определения значка способности в зависимости от способности карты
 // сейчас юзается в CardModal/CardDescriptions
 function ability_icon(ability) {
-  if (ability === "damage-one")
-    return `url(${require("@/assets/icons/card/sword.svg")})`
-  else if (ability === "damage-all")
+  if (ability === "damage-all")
     return `url(${require("@/assets/icons/card/all_attack.svg")})`
   else if (ability === "heal")
     return `url(${require("@/assets/icons/card/emerald.svg")})`
@@ -151,7 +149,8 @@ function ability_icon(ability) {
     ability === "destroy-highest-hp" ||
     ability === "destroy-highest-damage" ||
     ability === "destroy-random" ||
-    ability === "destroy-all-same-hp"
+    ability === "destroy-all-same-hp" ||
+    ability === "destroy-random-enemy-in-deck"
   )
     return `url(${require("@/assets/icons/card/destroy.svg")})`
   else if (
@@ -160,12 +159,27 @@ function ability_icon(ability) {
     ability === "give-charges-to-card-in-hand-1" ||
     ability === "play-from-deck" ||
     ability === "discard-draw-2" ||
-    ability === "play-from-grave"
+    ability === "play-from-grave" ||
+    ability === "incr-dmg-to-hand-by-self-dmg" ||
+    ability === "play-enemy-from-grave" ||
+    ability === "play-special-from-deck" ||
+    ability === "play-special-from-grave" ||
+    ability === "decr-dmg-to-hand-incr-to-random-hand" ||
+    ability === "incr-dmg-by-n-charges" ||
+    ability === "create-special" ||
+    ability === "create-any-unit" ||
+    ability === "create-and-put-to-deck" ||
+    ability === "draw-exact"
   )
     return `url(${require("@/assets/icons/card/additional_card.svg")})`
-  else if (ability === "move-enemy")
+  else if (
+    ability === "move-enemy" ||
+    ability === "set-enemy-as-token" ||
+    ability === "place-self-in-field" ||
+    ability === "spawn-effect-in-row"
+  )
     return `url(${require("@/assets/icons/card/field_interaction.svg")})`
-  else return ""
+  else return `url(${require("@/assets/icons/card/sword.svg")})`
 }
 
 // цвета доступных тем в игре, рамки
