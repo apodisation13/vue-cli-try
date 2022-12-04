@@ -34,8 +34,8 @@
 
         <!-- кнопки кладбища и колоды -->
         <div class="div-two-buttons">
-          <grave-comp :grave="gameObj.grave" />
           <deck-comp :deck="gameObj.deck" />
+          <grave-comp :grave="gameObj.grave" />
         </div>
 
         <!-- лидер игрока -->
@@ -320,6 +320,9 @@ export default {
   /* border: solid 1px red; */
   margin-bottom: 1%;
   margin-top: 1%;
+  display: flex;
+  flex-direction: row;
+  gap: 1px;
 }
 
 .draw {

@@ -46,7 +46,7 @@ export default {
 
 <style scoped>
 .field {
-  width: 75%;
+  width: 72%;
   overflow: hidden;
 }
 
