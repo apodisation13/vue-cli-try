@@ -12,7 +12,7 @@ export default {
 .draw-btn {
   height: 70%;
   width: 98%;
-  border: solid 1px yellow;
+  border: solid 1px green;
   margin-bottom: 1%;
   margin-top: 1%;
   position: relative;

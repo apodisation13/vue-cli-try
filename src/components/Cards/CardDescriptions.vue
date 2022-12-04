@@ -32,7 +32,7 @@
             'url(' + require(`@/assets/icons/card/passive_clock.svg`) + ')',
         }"
       >
-        <span v-if="card.timer !== 0">{{ card.timer }}</span>
+        <span v-if="card.timer !== 0" class="ss">{{ card.timer }}</span>
       </div>
 
       <!--Описание абилки deathwish - для карт врагов-->
@@ -140,5 +140,9 @@ export default {
 .text {
   margin-bottom: 1%;
   font-size: 12pt;
+}
+
+.ss {
+  position: absolute;
 }
 </style>

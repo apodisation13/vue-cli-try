@@ -1,7 +1,7 @@
 <template>
   <div>
     <button class="enemies_grave_btn" @click="visible = true">
-      КлВр {{ enemies_len }}
+      Сброс {{ enemies_len }}
     </button>
     <modal-window v-if="visible" v-touch:swipe.left="close_self">
       <button-close @close_self="close_self" />
@@ -44,11 +44,10 @@ export default {
 
 <style scoped>
 .enemies_grave_btn {
-  height: 40%;
-  width: 98%;
-  border: solid 1px yellow;
-  margin-bottom: 1%;
-  margin-top: 1%;
+  height: 98%;
+  width: 47px;
+  border: solid 1px red;
   position: relative;
+  border-radius: 10px;
 }
 </style>

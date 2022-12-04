@@ -14,7 +14,8 @@
         card.ability.name === 'destroy-highest-hp' ||
         card.ability.name === 'destroy-highest-damage' ||
         card.ability.name === 'destroy-random' ||
-        card.ability.name === 'destroy-all-same-hp'
+        card.ability.name === 'destroy-all-same-hp' ||
+        card.ability.name === 'destroy-random-enemy-in-deck'
       "
     />
     <card-interaction-ability
@@ -24,10 +25,27 @@
         card.ability.name === 'give-charges-to-card-in-hand-1' ||
         card.ability.name === 'play-from-deck' ||
         card.ability.name === 'discard-draw-2' ||
-        card.ability.name === 'play-from-grave'
+        card.ability.name === 'play-from-grave' ||
+        card.ability.name === 'incr-dmg-to-hand-by-self-dmg' ||
+        card.ability.name === 'play-enemy-from-grave' ||
+        card.ability.name === 'play-special-from-deck' ||
+        card.ability.name === 'play-special-from-grave' ||
+        card.ability.name === 'decr-dmg-to-hand-incr-to-random-hand' ||
+        card.ability.name === 'incr-dmg-by-n-charges' ||
+        card.ability.name === 'create-special' ||
+        card.ability.name === 'create-any-unit' ||
+        card.ability.name === 'create-and-put-to-deck' ||
+        card.ability.name === 'draw-exact'
       "
     />
-    <field-interaction-ability v-else-if="card.ability.name === 'move-enemy'" />
+    <field-interaction-ability
+      v-else-if="
+        card.ability.name === 'move-enemy' ||
+        card.ability.name === 'set-enemy-as-token' ||
+        card.ability.name === 'place-self-in-field' ||
+        card.ability.name === 'spawn-effect-in-row'
+      "
+    />
   </div>
 </template>
 

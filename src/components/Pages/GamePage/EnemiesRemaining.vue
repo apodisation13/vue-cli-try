@@ -43,11 +43,10 @@ export default {
 
 <style scoped>
 .remaining-enemies-btn {
-  height: 40%;
-  width: 98%;
+  height: 98%;
+  width: 47px;
   border: solid 1px yellow;
-  margin-bottom: 1%;
-  margin-top: 1%;
   position: relative;
+  border-radius: 10px;
 }
 </style>

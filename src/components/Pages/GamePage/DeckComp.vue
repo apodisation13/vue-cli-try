@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 3.5vh">
+  <div>
     <button class="deck-btn" @click="flag = true">Колода {{ deck_len }}</button>
     <modal-window v-if="flag" v-touch:swipe="close_self">
       <button-close @close_self="close_self" />
@@ -42,10 +42,9 @@ export default {
 <style scoped>
 .deck-btn {
   height: 98%;
-  width: 98%;
+  width: 47px;
   border: solid 1px yellow;
-  margin-bottom: 1%;
-  margin-top: 1%;
   position: relative;
+  border-radius: 10px;
 }
 </style>
