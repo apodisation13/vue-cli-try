@@ -195,7 +195,7 @@ export default {
         keys: this.resource.keys - 1,
       })
       const key_reward = []
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 3; i++) {
         key_reward.push(getRandomReward())
       }
       this.reward_name = "keys"

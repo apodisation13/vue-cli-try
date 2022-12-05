@@ -91,8 +91,8 @@ export default {
         for (const elem of this.reward) {
           await this.$store.dispatch("craft_card_action", elem)
         }
+        setTimeout(() => this.$emit("clear_reward"), 10000)
       }
-      setTimeout(() => this.$emit("clear_reward"), 10000)
     },
     clear_reward() {
       if (this.name === "chests") this.$emit("clear_reward")
