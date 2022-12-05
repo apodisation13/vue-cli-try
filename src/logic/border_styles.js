@@ -133,9 +133,7 @@ function background_color_deck(deck) {
 // используется для определения значка способности в зависимости от способности карты
 // сейчас юзается в CardModal/CardDescriptions
 function ability_icon(ability) {
-  if (ability === "damage-one")
-    return `url(${require("@/assets/icons/card/sword.svg")})`
-  else if (ability === "damage-all")
+  if (ability === "damage-all")
     return `url(${require("@/assets/icons/card/all_attack.svg")})`
   else if (ability === "heal")
     return `url(${require("@/assets/icons/card/emerald.svg")})`
@@ -151,7 +149,8 @@ function ability_icon(ability) {
     ability === "destroy-highest-hp" ||
     ability === "destroy-highest-damage" ||
     ability === "destroy-random" ||
-    ability === "destroy-all-same-hp"
+    ability === "destroy-all-same-hp" ||
+    ability === "destroy-random-enemy-in-deck"
   )
     return `url(${require("@/assets/icons/card/destroy.svg")})`
   else if (
@@ -160,10 +159,79 @@ function ability_icon(ability) {
     ability === "give-charges-to-card-in-hand-1" ||
     ability === "play-from-deck" ||
     ability === "discard-draw-2" ||
-    ability === "play-from-grave"
+    ability === "play-from-grave" ||
+    ability === "incr-dmg-to-hand-by-self-dmg" ||
+    ability === "play-enemy-from-grave" ||
+    ability === "play-special-from-deck" ||
+    ability === "play-special-from-grave" ||
+    ability === "decr-dmg-to-hand-incr-to-random-hand" ||
+    ability === "incr-dmg-by-n-charges" ||
+    ability === "create-special" ||
+    ability === "create-any-unit" ||
+    ability === "create-and-put-to-deck" ||
+    ability === "draw-exact"
   )
     return `url(${require("@/assets/icons/card/additional_card.svg")})`
-  else return ""
+  else if (
+    ability === "move-enemy" ||
+    ability === "set-enemy-as-token" ||
+    ability === "place-self-in-field" ||
+    ability === "spawn-effect-in-row"
+  )
+    return `url(${require("@/assets/icons/card/field_interaction.svg")})`
+  else return `url(${require("@/assets/icons/card/sword.svg")})`
+}
+
+// цвета доступных тем в игре, рамки
+function styleOuter(el) {
+  if (el === 1)
+    // зеленый
+    return {
+      background:
+        "linear-gradient(100.28deg, #11941e 0.7%, #2fb53c 20.71%, #ceffdc 49.22%, #2fb53c 91.17%, #11941e 100%)",
+    }
+  else if (el === 2)
+    // синий
+    return {
+      background:
+        "linear-gradient(100.28deg, #0085FF -0.5%, #00E0FF 17.29%, #CEF3FF 49.22%, #00D1FF 81.68%, #0650BE 100%)",
+    }
+  else if (el === 3)
+    // красный
+    return {
+      background:
+        "linear-gradient(100.28deg, #FF0000 -0.5%, #F34B4B 17.29%, #FFCECE 49.22%, #F34B4B 81.68%, #FF0000 100%)",
+    }
+  else if (el === 4)
+    // розовый
+    return {
+      background:
+        "linear-gradient(100.28deg, #AF06BE -0.5%, #FA00FF 17.29%, #F2CEFF 49.22%, #EB00FF 81.68%, #AF06BE 100%)",
+    }
+}
+
+function styleWrapper(el) {
+  if (el === 1)
+    // зеленый
+    return {
+      background:
+        "linear-gradient(180deg, #2A5607 -45.45%, #62C217 49.84%, #2A5607 133.33%)",
+    }
+  else if (el === 2)
+    return {
+      background:
+        "linear-gradient(180deg, #00C2FF -45.45%, #2E69AC 49.76%, #00C2FF 133.33%)",
+    }
+  else if (el === 3)
+    return {
+      background:
+        "linear-gradient(180deg, #F90000 -45.45%, #730000 48.48%, #FF0000 133.33%)",
+    }
+  else if (el === 4)
+    return {
+      background:
+        "linear-gradient(180deg, #FF00E5 -45.45%, #821A71 49.76%, #FF00E5 133.33%)",
+    }
 }
 
 export {
@@ -176,4 +244,6 @@ export {
   background_color_charges,
   background_color_leader,
   ability_icon,
+  styleOuter,
+  styleWrapper,
 }

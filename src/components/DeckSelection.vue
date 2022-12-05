@@ -1,29 +1,33 @@
 <template>
-  <div :class="deckbuilder ? 'deck_pool_for_deckbuilder' : 'deck_pool'">
+  <div
+    class="deck_selection"
+    :style="{ height: deckbuilder ? '80vh' : '25vh' }"
+  >
     ВЫБЕРЕТЕ ДЕКУ (дважды ЛКМ)<br />
 
     <div
-      class="deck"
-      :style="background_color(deck.deck)"
+      class="decks"
       v-for="(deck, index) in decks"
       :key="deck"
       @dblclick="select_deck(index)"
     >
-      <deck-preview-comp :deck="deck.deck" />
+      <deck-preview-comp
+        :deck="deck.deck"
+        class="deck"
+        :style="{ width: deckbuilder ? '80%' : '98%' }"
+      />
 
-      <button
+      <div
         v-if="deckbuilder && deck.deck.id !== 1"
         @click="change_deck(index)"
-      >
-        Изменить
-      </button>
+        class="icon change"
+      ></div>
 
-      <button
+      <div
         v-if="deckbuilder && deck.deck.id !== 1"
         @click="delete_deck(deck.deck)"
-      >
-        Удалить
-      </button>
+        class="icon delete"
+      ></div>
     </div>
 
     <yesno-modal
@@ -35,7 +39,6 @@
 </template>
 
 <script>
-import { background_color_deck } from "@/logic/border_styles"
 import DeckPreviewComp from "@/components/DeckPreviewComp"
 import YesnoModal from "@/components/ModalWindows/YesnoModal"
 export default {
@@ -56,10 +59,6 @@ export default {
     }
   },
   methods: {
-    background_color(deck) {
-      return background_color_deck(deck)
-    },
-
     // осуществить выбор деки для игры, дважды ЛКМ
     select_deck(i) {
       this.is_selected = true
@@ -101,7 +100,7 @@ export default {
 </script>
 
 <style scoped>
-.deck_pool {
+.deck_selection {
   margin: 1%;
   width: 95%;
   height: 25vh;
@@ -109,21 +108,37 @@ export default {
   overflow: scroll;
 }
 
-.deck_pool_for_deckbuilder {
-  margin: 1%;
-  width: 95%;
-  height: 80vh;
-  border: solid 1px orchid;
-  overflow: scroll;
+.decks {
+  margin: 1% 1% 3%;
+  display: flex;
+  flex-direction: row;
 }
 
 .deck {
-  width: 85%;
-  height: 3vh;
+  height: 30px;
   font-size: 10pt;
   border-radius: 5%;
   padding-left: 1%;
-  margin: 1% 1% 3%;
-  /*display: inline-block;*/
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.change {
+  background-image: url("~@/assets/icons/buttons/edit-2.svg");
+}
+
+.delete {
+  background-image: url("~@/assets/icons/buttons/trash-2.svg");
 }
 </style>

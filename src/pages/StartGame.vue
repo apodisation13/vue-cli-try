@@ -2,10 +2,16 @@
   <div class="start-game__page">
     <div class="start">
       <div class="play_price">
-        Для этой игры надо заплатить <b>{{ play_price }}</b> wood!
+        Для этой игры надо заплатить <br />
+        <b> {{ play_price * -1 }} </b>
+        <img
+          :src="require(`@/assets/icons/resources/wood.svg`)"
+          alt=""
+          class="wood"
+        />
       </div>
-      <button class="btn_start" @click="start_game" :disabled="loading">
-        НАЧАТЬ
+      <button @click="start_game" :disabled="loading" class="btn_start">
+        <themed-button title="НАЧАТЬ" />
       </button>
     </div>
     <div class="decks">
@@ -19,9 +25,10 @@
 <script>
 import DeckSelection from "@/components/DeckSelection"
 import SelectedDeck from "@/components/Pages/LevelPage/SelectedDeck"
+import ThemedButton from "@/components/UI/Buttons/ThemedButton.vue"
 export default {
   name: "StartGame",
-  components: { SelectedDeck, DeckSelection },
+  components: { ThemedButton, SelectedDeck, DeckSelection },
   data() {
     return {
       loading: false,
@@ -72,7 +79,6 @@ export default {
 .start {
   width: 70%;
   height: 30vh;
-  border: solid 2px black;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -80,9 +86,9 @@ export default {
 }
 
 .btn_start {
-  display: block;
   margin-top: 15px;
-  padding: 20px 50px;
+  width: 80%;
+  height: 100px;
 }
 
 .play_price {
@@ -92,5 +98,9 @@ export default {
 .decks {
   width: 99%;
   bottom: 10%;
+}
+
+.wood {
+  max-height: 30px;
 }
 </style>

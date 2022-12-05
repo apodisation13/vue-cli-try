@@ -88,8 +88,17 @@ const mutations = {
 }
 
 const actions = {
-  set_deck_in_play({ commit, getters }, deck) {
-    const index = getters["all_decks"].findIndex(d => d.id === deck.id)
+  // устанавливает колоду для игры и запоминает её индекс в списке дек
+  // если дека пришла (из выбора дек), то запоминает её для игры, иначе просто базовую (которая последняя в списке)
+  set_deck_in_play({ commit, getters }, deck = null) {
+    let index = undefined
+    if (deck) {
+      index = getters["all_decks"].findIndex(d => d.id === deck.id)
+    }
+    if (!deck) {
+      deck = getters["all_decks"].at(-1)
+      index = getters["all_decks"].length - 1
+    }
     commit("set_current_deck", deck.deck.cards)
     commit("set_current_deck_index", index)
     commit("set_health", deck.deck.health)

@@ -127,7 +127,7 @@ export default {
 
 <style scoped>
 .hand {
-  width: 100%;
+  width: 99%;
   margin-top: 2%;
 }
 

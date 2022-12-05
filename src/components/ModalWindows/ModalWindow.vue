@@ -1,19 +1,26 @@
 <template>
-  <div class="modal_window">
+  <div class="modal_window" :style="styleWrapper">
     <div>Щёлкните дважды для выбора карты</div>
     <slot></slot>
   </div>
 </template>
 
 <script>
+import { styleWrapper } from "@/logic/border_styles"
+
 export default {
   name: "modal-window",
+  computed: {
+    styleWrapper() {
+      return styleWrapper(this.$store.getters["selectedTheme"])
+    },
+  },
 }
 </script>
 
 <style scoped>
 .modal_window {
-  background-color: springgreen;
+  /*background-color: springgreen;*/
   text-align: center;
   position: absolute;
   top: 0;
@@ -22,13 +29,5 @@ export default {
   left: 0;
   z-index: 9999;
   font-size: 12pt;
-
-  /*background-color: limegreen;*/
-  /*width: 100%;*/
-  /*height: 90%;*/
-  /*border-radius: 12px;*/
-  /*text-align: center;*/
-  /*position: absolute;*/
-  /*z-index: 9999;*/
 }
 </style>
