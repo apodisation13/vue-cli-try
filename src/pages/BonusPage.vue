@@ -120,7 +120,6 @@ export default {
 
     async add_kegs(quantity) {
       const final_price = quantity * this.kegs_price
-      this.resource.wood += 5000 //добавить дров для проверки
       if (!this.is_enough_wood(final_price)) return
       await this.$store.dispatch("pay_resource", {
         wood: this.resource.wood - final_price,
