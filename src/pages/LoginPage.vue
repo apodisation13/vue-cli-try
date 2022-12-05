@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <div class="header" @click="choseFormRegister" v-if="formLogin">
       <div class="auth">
         <span>ВХОД</span>
@@ -133,9 +133,6 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  /* background: url("../assets/page_images/deckbuild_default1.jpg"); */
-}
 .header {
   background-color: cornflowerblue;
   width: 80%;
