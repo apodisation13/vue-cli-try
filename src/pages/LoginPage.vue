@@ -157,7 +157,12 @@ export default {
   line-height: 100%;
   /* identical to box height, or 29px */
   font-feature-settings: "calt" off;
-  background: linear-gradient(153.5deg, #B07B15 16.64%, #FACF5D 47.22%, #B48328 82.67%);
+  background: linear-gradient(
+    153.5deg,
+    #b07b15 16.64%,
+    #facf5d 47.22%,
+    #b48328 82.67%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -224,10 +229,17 @@ span {
   margin-top: 100%;
   width: 100%;
   height: 48px;
-  background: linear-gradient(180deg, #1D252D -21.82%, rgba(0, 0, 0, 0.13) 44.55%, #282D33 109.53%);
+  background: linear-gradient(
+    180deg,
+    #1d252d -21.82%,
+    rgba(0, 0, 0, 0.13) 44.55%,
+    #282d33 109.53%
+  );
   /* Цвет текста на кнопках */
-  border: 2px solid #FACF5D;
-  box-shadow: 5px 9px 20px rgba(0, 0, 0, 0.25), inset -5px -5px 5px rgba(0, 0, 0, 0.25), inset 5px 5px 5px rgba(0, 0, 0, 0.25);
+  border: 2px solid #facf5d;
+  box-shadow: 5px 9px 20px rgba(0, 0, 0, 0.25),
+    inset -5px -5px 5px rgba(0, 0, 0, 0.25),
+    inset 5px 5px 5px rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(10px);
   /* Note: backdrop-filter has minimal browser support */
   border-radius: 2px;
