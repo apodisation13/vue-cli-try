@@ -35,10 +35,10 @@
           v-on:keyup.enter="login"
         />
       </div>
-      <div class="auth__password-check" v-if="!formLogin">Подтвердите пароль</div>
+      <div class="auth__input-name" v-if="!formLogin">Подтвердите пароль</div>
       <div v-if="!formLogin">
         <input
-          class="data"
+          class="auth__data"
           v-model="confirmPassword"
           type="password"
           autocomplete="confirmPassword"
