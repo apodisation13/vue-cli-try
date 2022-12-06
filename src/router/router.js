@@ -58,7 +58,7 @@ const routes = [
     meta: {
       requireAuth: true,
       notRequireMenu: true,
-      sideMenu: true,
+      image: images.field,
     },
   },
   {
@@ -66,6 +66,7 @@ const routes = [
     component: AboutPage,
     meta: {
       requireAuth: false,
+      image: images.work_in_progress,
     },
   },
   {
@@ -90,6 +91,7 @@ const routes = [
     component: SettingsPage,
     meta: {
       requireAuth: true,
+      image: images.work_in_progress,
     },
   },
   {
@@ -105,6 +107,7 @@ const routes = [
     component: RulesPage,
     meta: {
       requireAuth: false,
+      image: images.work_in_progress,
     },
   },
   {
@@ -132,14 +135,14 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  // прячем боковое меню по переходу в любую вкладку
-  store.commit("set_show_menu", false)
-
-  // если требуется АУФ, и мы залогинены, все ок. Если не залогинены, идем на главную. Если не требуется АУФ - все ок
+  // Если требуется АУФ, и мы залогинены, все ок. Если не залогинены, идем на главную. Если не требуется АУФ - все ок
   if (to.matched.some(record => record.meta.requireAuth)) {
     if (store.getters.isLoggedIn) next()
     else next("/")
   } else next()
+
+  // если мы уже играли и оттуда вышли, переустановим колоду
+  if (from.path === "/game") store.dispatch("re_set_deck")
 })
 
 export default router

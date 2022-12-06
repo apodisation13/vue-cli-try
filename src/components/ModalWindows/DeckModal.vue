@@ -3,7 +3,7 @@
     <button-close @close_self="close_self" />
 
     <div class="leader">
-      <leader-comp :leader="leader" />
+      <card-item :card="leader" :is_leader="true" />
     </div>
 
     <card-list-component :cards="deck" />
@@ -11,13 +11,18 @@
 </template>
 
 <script>
-import ModalWindow from "@/components/UI/ModalWindow"
-import ButtonClose from "@/components/UI/ButtonClose"
-import LeaderComp from "@/components/LeaderComp"
-import CardListComponent from "@/components/CardListComponent"
+import ModalWindow from "@/components/ModalWindows/ModalWindow"
+import ButtonClose from "@/components/UI/Buttons/ButtonClose"
+import CardListComponent from "@/components/Cards/CardListComponent"
+import CardItem from "@/components/Cards/CardItem"
 export default {
   name: "deck-modal",
-  components: { CardListComponent, LeaderComp, ButtonClose, ModalWindow },
+  components: {
+    CardItem,
+    CardListComponent,
+    ButtonClose,
+    ModalWindow,
+  },
   props: {
     deck: {
       type: Object,
@@ -39,12 +44,7 @@ export default {
 
 <style scoped>
 .leader {
-  height: 18vh;
   width: 30%;
-  border-radius: 2%;
-  margin-bottom: 2px;
-  margin-top: 2px;
-  position: relative;
-  /*border: solid 1px black;*/
+  margin: auto;
 }
 </style>

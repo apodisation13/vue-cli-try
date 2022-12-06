@@ -13,7 +13,7 @@
 
 <script>
 import ConfirmModal from "@/components/ModalWindows/ConfirmModal"
-import BaseButton from "@/components/UI/BaseButton"
+import BaseButton from "@/components/UI/Buttons/BaseButton"
 
 export default {
   components: {
@@ -41,7 +41,7 @@ export default {
 .title-modal {
   font-weight: 700;
   font-size: 1.5rem;
-  color: #667080;
+  color: gold;
   margin-bottom: 20px;
 }
 </style>

@@ -8,6 +8,7 @@ import { stand_still } from "@/logic/ai_move/moves/move_stand_still"
 import { check_lose } from "@/logic/ai_move/service/check_lose"
 import { set_already_jumped } from "@/logic/ai_move/service/service_for_ai_move"
 import { get_all_enemies } from "@/logic/player_move/service/service_for_player_move"
+import { right_move } from "@/logic/ai_move/moves/move_right"
 
 const toast = useToast()
 
@@ -34,6 +35,8 @@ function ai_move(field) {
         random_move(field, field.indexOf(enemies[i]))
       } else if (enemies[i].move.name === "down") {
         down_move(field, field.indexOf(enemies[i]))
+      } else if (enemies[i].move.name === "right") {
+        right_move(field, field.indexOf(enemies[i]))
       }
 
       i += 1
@@ -47,11 +50,11 @@ function enemy_leader_ai_move_once(leader, deck) {
     store.commit("change_health", -leader.damage_once)
     toast.error(`лидер ослабил вас на ${leader.damage_once}`)
     check_lose()
-  } else if (leader.ability.name === "decrease-all-player-damage-1") {
+  } else if (leader.ability.name === "decrease-all-player-damage") {
     deck.forEach(card => {
-      if (card.damage > 0) card.damage -= 1
+      if (card.damage > 0) card.damage -= leader.value
     })
-    toast.error(`лидер врага уменьшил урон ВСЕХ ваших карт на 1`)
+    toast.error(`лидер врага уменьшил урон ВСЕХ ваших карт на ${leader.value}`)
   }
 }
 

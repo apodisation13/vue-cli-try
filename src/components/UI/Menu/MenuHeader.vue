@@ -1,51 +1,53 @@
 <template>
   <div class="header" v-if="menuNeeded">
-    <div v-if="isLoggedIn">
-      <img
-        class="header__border"
-        :src="require('@/assets/icons/VectorDown.svg')"
-      />
-      <div class="wrapper__avatar-resources">
-        <button
-          class="avatar"
-          @click="showExpandedMenu"
-          v-touch:swipe.bottom="showExpandedMenu"
-        >
-          <img
-            class="avatar__btn"
-            :src="require('@/assets/icons/' + 'Avatar.svg')"
-            alt=""
-          />
-        </button>
-        <resource-list @click="$router.push('/bonus')" v-if="isLoggedIn" />
-      </div>
-      <img
-        class="header__border"
-        :src="require('@/assets/icons/VectorUp.svg')"
-      />
-      <div
-        class="expand-menu"
-        v-if="expanded"
-        v-touch:swipe.top="showExpandedMenu"
-        @click.self="showExpandedMenu"
+    <img
+      class="header__border"
+      :src="require('@/assets/icons/VectorDown.svg')"
+    />
+    <div class="wrapper__avatar-resources">
+      <button
+        class="avatar"
+        @click="showExpandedMenu"
+        v-touch:swipe.bottom="showExpandedMenu"
       >
-        <div class="expand-menu__wrapper">
-          <div class="expand-menu__content">
-            <div class="expand-menu__top">
-              <button
-                v-for="button in routes"
-                :key="button"
-                class="menu-btn"
-                @click="push(button.path)"
-              >
-                <span class="menu-btn__text">{{ button.title }}</span>
-              </button>
-            </div>
-            <div class="expand-menu__footer" @click="showExpandedMenu">
-              <button class="menu-btn">
-                <span class="menu-btn__text">Закрыть</span>
-              </button>
-            </div>
+        <img
+          class="avatar__btn"
+          :src="require('@/assets/icons/' + 'Avatar.svg')"
+          alt=""
+          v-if="!path_to_icon"
+        />
+        <img
+          :src="require(`@/assets/icons/resources/${path_to_icon}.svg`)"
+          alt=""
+          class="avatar__btn"
+          v-else
+        />
+      </button>
+      <resource-list @click="$router.push('/bonus')" v-if="isLoggedIn" />
+    </div>
+    <img class="header__border" :src="require('@/assets/icons/VectorUp.svg')" />
+    <div
+      class="expand-menu"
+      v-if="expanded"
+      v-touch:swipe.top="showExpandedMenu"
+      @click.self="showExpandedMenu"
+    >
+      <div class="expand-menu__wrapper">
+        <div class="expand-menu__content">
+          <div class="expand-menu__top">
+            <button
+              v-for="button in routes"
+              :key="button"
+              class="menu-btn"
+              @click="push(button.path)"
+            >
+              <span class="menu-btn__text">{{ button.title }}</span>
+            </button>
+          </div>
+          <div class="expand-menu__footer" @click="showExpandedMenu">
+            <button class="menu-btn">
+              <span class="menu-btn__text">Закрыть</span>
+            </button>
           </div>
         </div>
       </div>
@@ -68,6 +70,9 @@ export default {
     },
     isLoggedIn() {
       return this.$store.getters["isLoggedIn"]
+    },
+    path_to_icon() {
+      return this.$store.getters["selectedAvatar"]
     },
   },
   data() {

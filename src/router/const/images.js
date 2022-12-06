@@ -46,4 +46,10 @@ export const images = {
     evening: `${path}/lose_evening.png`,
     morning: `${path}/lose_morning.png`,
   },
+  field: {
+    default: `${path}/field2.png`,
+  },
+  work_in_progress: {
+    default: `${path}/library.jpg`,
+  },
 }

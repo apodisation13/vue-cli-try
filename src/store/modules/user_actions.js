@@ -18,7 +18,23 @@ const state = {
   win_redirect: false,
 }
 
-const getters = {}
+const getters = {
+  get_kegs_price: () => {
+    return state.game_prices.pay_for_kegs
+      ? state.game_prices.pay_for_kegs * -1
+      : 0
+  },
+  get_big_kegs_price: () => {
+    return state.game_prices.pay_for_big_kegs
+      ? state.game_prices.pay_for_big_kegs * -1
+      : 0
+  },
+  get_chests_price: () => {
+    return state.game_prices.pay_for_chests
+      ? state.game_prices.pay_for_chests * -1
+      : 0
+  },
+}
 
 const mutations = {
   // устанавливаем все игровые цены на крафт, милл итп
@@ -32,54 +48,57 @@ const mutations = {
 }
 
 const actions = {
-  async post_deck({ getters, dispatch }, body) {
+  async post_deck({ getters, dispatch, commit }, body) {
     try {
       let header = getters["getHeader"]
-      await axios.post(post_deck, body, header)
+      const response = await axios.post(post_deck, body, header)
       toast.success("Успешно добавили колоду")
-      await dispatch("get_user_database")
+      commit("set_decks", response.data)
     } catch (err) {
       dispatch("error_action", err)
       throw new Error("Какая-то ошибка при добавлении деки")
     }
   },
 
-  async delete_deck({ getters, dispatch }, deck_id) {
+  async delete_deck({ getters, dispatch, commit }, deck_id) {
     try {
       let header = getters["getHeader"]
       let url = `${post_deck}${deck_id}`
-      await axios.delete(url, header)
+      const response = await axios.delete(url, header)
       toast.success("Успешно удалили колоду")
-      await dispatch("get_user_database")
+      commit("set_decks", response.data)
+      dispatch("set_deck_in_play") // после удаления колоды, устанавливаем базовую деку для игры
     } catch (err) {
       dispatch("error_action", err)
       throw new Error("Какая-то ошибка при удалении деки")
     }
   },
 
-  async patch_deck({ getters, dispatch }, deck) {
+  async patch_deck({ getters, dispatch, commit }, deck) {
     // ВНИМАНИЕ: в PATCH методе не забыть поставть слэш в конце!
     try {
       let header = getters["getHeader"]
       let url = `${post_deck}${deck.id}/`
-      await axios.patch(url, deck, header)
+      const response = await axios.patch(url, deck, header)
       toast.success("Успешно изменили колоду")
-      await dispatch("get_user_database")
+      commit("set_decks", response.data)
+      // после изменения колоды тоже, устанавливаем базовую деку для игры (вдруг мы изменили ту, которая уже была)
+      dispatch("set_deck_in_play")
     } catch (err) {
       dispatch("error_action", err)
       throw new Error("Какая-то ошибка при изменении деки")
     }
   },
 
-  async pay_resource({ getters, dispatch }, body) {
+  async pay_resource({ commit, getters, dispatch }, body) {
     let header = getters["getHeader"]
     let user_id = getters["getUser"].user_id
     const url = `${user_resource}${user_id}/`
 
     try {
-      await axios.patch(url, body, header)
-      await dispatch("get_resource")
-      return true
+      const response = await axios.patch(url, body, header)
+      commit("set_resource", response.data)
+      return response.data
     } catch (err) {
       dispatch("error_action", err)
       throw new Error("Какая-то ошибка при менеджменте ресурсов")
@@ -117,18 +136,19 @@ const actions = {
     else await dispatch("craft_leader", card)
   },
 
-  async craft_card({ dispatch, getters }, card) {
+  async craft_card({ dispatch, getters, commit }, card) {
     let header = getters["getHeader"]
     let user_id = getters["getUser"].user_id
 
     if (card.count === 0) {
       try {
-        await axios.post(
+        const response = await axios.post(
           craft_card,
           { user: user_id, card: card.card.id },
           header
         )
-        await dispatch("get_user_database")
+        toast.success("Успешно создали карту")
+        commit("set_cards", response.data.cards)
       } catch (err) {
         dispatch("error_action", err)
         throw new Error("Какая-то ошибка при создании карты")
@@ -137,12 +157,13 @@ const actions = {
       try {
         // card.id - id записи, которую надо патчить (usercard), card.card.id - id самой карты
         let url = `${craft_card}${card.id}/`
-        await axios.patch(
+        const response = await axios.patch(
           url,
-          { user: user_id, card: card.card.id, count: card.count },
+          { user: user_id, card: card.card.id },
           header
         )
-        await dispatch("get_user_database")
+        toast.success("Успешно создали карту")
+        commit("set_cards", response.data.cards)
       } catch (err) {
         dispatch("error_action", err)
         throw new Error("Какая-то ошибка при создании карты")
@@ -150,18 +171,19 @@ const actions = {
     }
   },
 
-  async craft_leader({ dispatch, getters }, card) {
+  async craft_leader({ dispatch, getters, commit }, card) {
     let header = getters["getHeader"]
     let user_id = getters["getUser"].user_id
 
     if (card.count === 0) {
       try {
-        await axios.post(
+        const response = await axios.post(
           craft_leader,
           { user: user_id, leader: card.card.id },
           header
         )
-        await dispatch("get_user_database")
+        toast.success("Успешно создали лидера")
+        commit("set_leaders", response.data.leaders)
       } catch (err) {
         dispatch("error_action", err)
         throw new Error("Какая-то ошибка при создании лидера")
@@ -170,12 +192,13 @@ const actions = {
       try {
         // card.id - id записи, которую надо патчить (usercard), card.card.id - id самой карты
         let url = `${craft_leader}${card.id}/`
-        await axios.patch(
+        const response = await axios.patch(
           url,
-          { user: user_id, leader: card.card.id, count: card.count },
+          { user: user_id, leader: card.card.id },
           header
         )
-        await dispatch("get_user_database")
+        toast.success("Успешно создали лидера")
+        commit("set_leaders", response.data.leaders)
       } catch (err) {
         dispatch("error_action", err)
         throw new Error("Какая-то ошибка при создании лидера")
@@ -188,36 +211,37 @@ const actions = {
     else await dispatch("mill_leader", user_card)
   },
 
-  async mill_card({ dispatch, getters }, user_card) {
+  async mill_card({ dispatch, getters, commit }, user_card) {
     let header = getters["getHeader"]
     let user_id = getters["getUser"].user_id
     let url = `${mill_card}${user_card.id}/`
 
     try {
-      await axios.patch(
+      const response = await axios.patch(
         url,
-        { user: user_id, card: user_card.card.id, count: user_card.count },
+        { user: user_id, card: user_card.card.id },
         header
       )
-      await dispatch("get_user_database")
+      toast.success("Успешно уничтожили карту")
+      commit("set_cards", response.data.cards)
     } catch (err) {
       dispatch("error_action", err)
       throw new Error("Какая-то ошибка при размалывании карты")
     }
   },
 
-  async mill_leader({ dispatch, getters }, user_card) {
+  async mill_leader({ dispatch, getters, commit }, user_card) {
     let header = getters["getHeader"]
     let user_id = getters["getUser"].user_id
     let url = `${mill_leader}${user_card.id}/`
-
     try {
-      await axios.patch(
+      const response = await axios.patch(
         url,
-        { user: user_id, leader: user_card.card.id, count: user_card.count },
+        { user: user_id, leader: user_card.card.id },
         header
       )
-      await dispatch("get_user_database")
+      toast.success("Успешно уничтожили лидера")
+      commit("set_leaders", response.data.leaders)
     } catch (err) {
       dispatch("error_action", err)
       throw new Error("Какая-то ошибка при размалывании лидера")

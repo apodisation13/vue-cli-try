@@ -1,54 +1,56 @@
 <template>
-  <div>
-    <!-- поле с врагами -->
-    <field-comp
-      :field="gameObj.field"
-      @exec_damage_ai_card="exec_damage_enemy_card"
-    />
-
-    <!-- правая часть экрана -->
-    <div class="right-panel">
-      <!-- лидер врага -->
-      <enemy-leader
-        :enemy_leader="gameObj.enemy_leader"
-        @exec_enemy_leader="exec_damage_enemy_leader"
-      />
-
-      <!-- колода оставшихся врагов и кладбище врагов -->
-      <div class="div-two-buttons">
-        <remaining-enemies :enemies="gameObj.enemies" />
-        <enemies-grave />
-      </div>
-
-      <!-- возможность вытянуть карту, дро -->
-      <div class="draw">
-        <draw-comp
-          v-show="can_draw && $store.state.game.player_turn"
-          @click="draw_one_card"
-        />
-      </div>
-
-      <!-- чисто кнопка пас -->
-      <pass-comp @click="exec_ai_move" />
-
-      <!-- кнопки кладбища и колоды -->
-      <div class="div-two-buttons">
-        <grave-comp :grave="gameObj.grave" />
-        <deck-comp :deck="gameObj.deck" />
-      </div>
-
-      <!-- лидер игрока -->
-      <leader-comp
-        :leader="gameObj.leader"
+  <div class="game-page">
+    <div class="game-block">
+      <!-- поле с врагами -->
+      <field-comp
         :field="gameObj.field"
-        :enemy_leader="gameObj.enemy_leader"
-        @exec_leader="chose_leader"
-        @target_enemy="exec_damage_enemy_card"
-        @target_enemy_leader="exec_damage_enemy_leader"
+        @exec_damage_ai_card="exec_damage_enemy_card"
       />
 
-      <!-- Просто полоска с жизнями (пока что) -->
-      <health-comp />
+      <!-- правая часть экрана -->
+      <div class="right-panel">
+        <!-- лидер врага -->
+        <enemy-leader
+          :enemy_leader="gameObj.enemy_leader"
+          @exec_enemy_leader="exec_damage_enemy_leader"
+        />
+
+        <!-- колода оставшихся врагов и кладбище врагов -->
+        <div class="div-two-buttons">
+          <remaining-enemies :enemies="gameObj.enemies" />
+          <enemies-grave :enemies_grave="gameObj.enemies_grave" />
+        </div>
+
+        <!-- возможность вытянуть карту, дро -->
+        <div class="draw">
+          <draw-comp
+            v-show="can_draw && $store.state.game.player_turn"
+            @click="draw_one_card"
+          />
+        </div>
+
+        <!-- чисто кнопка пас -->
+        <pass-comp @dblclick="exec_ai_move" />
+
+        <!-- кнопки кладбища и колоды -->
+        <div class="div-two-buttons">
+          <deck-comp :deck="gameObj.deck" />
+          <grave-comp :grave="gameObj.grave" />
+        </div>
+
+        <!-- лидер игрока -->
+        <leader-comp
+          :leader="gameObj.leader"
+          :field="gameObj.field"
+          :enemy_leader="gameObj.enemy_leader"
+          @exec_leader="chose_leader"
+          @target_enemy="exec_damage_enemy_card"
+          @target_enemy_leader="exec_damage_enemy_leader"
+        />
+
+        <!-- Просто полоска с жизнями (пока что) -->
+        <health-comp />
+      </div>
     </div>
 
     <hand-comp
@@ -67,9 +69,10 @@
       @confirm_selection="confirm_selection"
     />
 
-    <redraw-modal
+    <redraw-comp
       v-if="draw"
       :game-obj="gameObj"
+      :redraw-number="redraws"
       @redraw_finished="redraw_finished"
     />
   </div>
@@ -83,21 +86,21 @@ import execaimove from "@/mixins/GamePage/execaimove"
 import startgame from "@/mixins/GamePage/startgame"
 
 import FieldComp from "@/components/Pages/GamePage/FieldComp"
-import EnemyLeader from "@/components/EnemyLeader"
+import EnemyLeader from "@/components/Cards/EnemyLeader"
 import RemainingEnemies from "@/components/Pages/GamePage/EnemiesRemaining"
 import EnemiesGrave from "@/components/Pages/GamePage/EnemiesGrave"
 import DrawComp from "@/components/Pages/GamePage/DrawComp"
 import PassComp from "@/components/Pages/GamePage/PassComp"
 import GraveComp from "@/components/Pages/GamePage/GraveComp"
 import DeckComp from "@/components/Pages/GamePage/DeckComp"
-import LeaderComp from "@/components/LeaderComp"
+import LeaderComp from "@/components/Pages/GamePage/LeaderComp"
 import HealthComp from "@/components/Pages/GamePage/HealthComp"
 import HandComp from "@/components/Pages/GamePage/HandComp"
-import SpecialCaseAbilities from "@/components/AbilitiesComponents/SpecialCaseAbilities"
-import RedrawModal from "@/components/RedrawModal"
+import SpecialCaseAbilities from "@/components/Pages/GamePage/SpecialCaseAbilities"
+import RedrawComp from "@/components/Pages/GamePage/RedrawComp"
 export default {
   components: {
-    RedrawModal,
+    RedrawComp,
     FieldComp,
     EnemyLeader,
     RemainingEnemies,
@@ -133,7 +136,7 @@ export default {
         field: ["", "", "", "", "", "", "", "", "", "", "", ""],
         enemy_leader: null,
         enemies: [], // враги, копия из стора, приходит из start_game
-        enemy_grave: [], // кладбище врагов
+        enemies_grave: [], // кладбище врагов
       },
       // объект активны ли разные карты, то есть можно ли на них тыкать
       isActive: {
@@ -291,15 +294,24 @@ export default {
 </script>
 
 <style scoped>
+/* стилизация всей страницы */
+.game-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.game-block {
+  display: flex;
+  justify-content: center;
+}
+
 /* Панель справа - лидер врага, кнопки, пас, лидер игрока */
 .right-panel {
-  display: inline;
-  float: right;
   width: 24.5%;
-  height: 74vh;
-  /* border: solid 1px orange; */
-  position: relative;
-  margin-right: 0.4%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .div-two-buttons {
@@ -308,7 +320,9 @@ export default {
   /* border: solid 1px red; */
   margin-bottom: 1%;
   margin-top: 1%;
-  position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: 1px;
 }
 
 .draw {
@@ -317,6 +331,5 @@ export default {
   /* border: solid 1px red; */
   margin-bottom: 1%;
   margin-top: 1%;
-  position: relative;
 }
 </style>

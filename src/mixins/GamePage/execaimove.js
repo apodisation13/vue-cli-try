@@ -4,7 +4,7 @@ import {
   enemy_passive_abilities_end_turn,
   passive_leader_ai_move,
 } from "@/logic/ai_move/ai_passive_abilties"
-import { appear_new_enemy } from "@/logic/place_enemies"
+import { appear_new_enemy } from "@/logic/game_logic/place_enemies"
 
 export default {
   methods: {
@@ -20,15 +20,7 @@ export default {
       // - появление нового врага
       // - переход хода снова игроку
 
-      player_passive_abilities_end_turn(
-        this.gameObj.hand,
-        this.gameObj.leader,
-        this.gameObj.deck,
-        this.gameObj.grave,
-        this.gameObj.field,
-        this.gameObj.enemy_leader,
-        this.gameObj.enemies
-      )
+      player_passive_abilities_end_turn(this.gameObj)
 
       let await_ppa_end_turn = setInterval(() => {
         if (!this.$store.state.game.ppa_end_turn) {

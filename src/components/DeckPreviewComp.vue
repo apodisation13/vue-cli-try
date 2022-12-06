@@ -3,6 +3,7 @@
     @click.right="open_deck_view"
     v-touch:longtap="open_deck_view"
     @contextmenu.prevent
+    :style="background_color(deck)"
   >
     {{ deck.name }}, жизни {{ deck.health }}
     <deck-modal
@@ -16,6 +17,8 @@
 
 <script>
 import DeckModal from "@/components/ModalWindows/DeckModal"
+import { background_color_deck } from "@/logic/border_styles"
+
 export default {
   name: "deck-preview-comp",
   components: { DeckModal },
@@ -33,6 +36,9 @@ export default {
   methods: {
     open_deck_view() {
       this.show_deck = true
+    },
+    background_color(deck) {
+      return background_color_deck(deck)
     },
   },
 }

@@ -3,11 +3,13 @@
     <div class="deck-block">
       <div class="leader-block">
         <div class="leader-img-block">
-          <card-item-preview
+          <card-item
             v-if="!!deck.leader"
             class="leader-selected"
-            :user_card="deck.leader"
+            :card="deck.leader ? deck.leader : leader"
+            :user_card="deck.leader ? deck : null"
             :is_leader="true"
+            :is_previev="true"
           />
           <div class="leader-empty" v-else></div>
         </div>
@@ -24,6 +26,7 @@
         class="pool-block"
         :deck_is_progress="deck.deck_is_progress"
         @delete_card_from_deck="delete_card_from_deck"
+        @change_order_deck="change_order_deck"
       />
     </div>
     <div class="deck-info-block">
@@ -56,16 +59,16 @@
 </template>
 
 <script>
-import CardItemPreview from "@/components/CardItemPreview"
 import AssemblingPoolList from "@/components/Pages/DeckbuildPage/AssemblingPoolList"
 import InputNameForDeck from "@/components/Pages/DeckbuildPage/InputNameForDeck"
 import CreateButton from "@/components/Pages/DeckbuildPage/Buttons/CreateButton"
+import CardItem from "@/components/Cards/CardItem"
 export default {
   components: {
-    CardItemPreview,
     AssemblingPoolList,
     InputNameForDeck,
     CreateButton,
+    CardItem,
   },
   props: {
     deck: {
@@ -83,6 +86,9 @@ export default {
   methods: {
     delete_card_from_deck(emit) {
       this.$emit("delete_card", emit)
+    },
+    change_order_deck(emit) {
+      this.$emit("change_order_deck", emit)
     },
     save_deck() {
       this.$emit("save_deck")
@@ -102,7 +108,13 @@ export default {
       )
     },
   },
-  emits: ["delete_card", "save_deck", "patch_deck", "change_name_deck"],
+  emits: [
+    "delete_card",
+    "save_deck",
+    "patch_deck",
+    "change_name_deck",
+    "change_order_deck",
+  ],
 }
 </script>
 

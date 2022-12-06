@@ -1,21 +1,52 @@
 <template>
   <div class="start">
     <div class="win_price">
-      ВАШ ВЫИГРЫШ <br />
-      scraps: <b>{{ pay_data.scraps }}</b
-      ><br />
-      wood: <b>{{ pay_data.wood }}</b
-      ><br />
-      kegs: <b>{{ pay_data.kegs }}</b
-      ><br />
-      big kegs: <b>{{ pay_data.big_kegs }}</b
-      ><br />
-      <div>Вы открыли уровни: {{ related_levels }}</div>
+      ВАШ ВЫИГРЫШ <br /><br />
+      scraps: <b>{{ pay_data.scraps }}</b>
+      <img
+        :src="require(`@/assets/icons/resources/scraps.svg`)"
+        alt=""
+        class="wood"
+      />
+      <br /><br />
+      wood: <b>{{ pay_data.wood }}</b>
+      <img
+        :src="require(`@/assets/icons/resources/wood.svg`)"
+        alt=""
+        class="wood"
+      />
+      <br /><br />
+      kegs: <b>{{ pay_data.kegs }}</b>
+      <img
+        :src="require(`@/assets/icons/resources/kegs.svg`)"
+        alt=""
+        class="wood"
+      />
+      <br /><br />
+      big kegs: <b>{{ pay_data.big_kegs }}</b>
+      <img
+        :src="require(`@/assets/icons/resources/big_kegs.svg`)"
+        alt=""
+        class="wood"
+      />
+      <br /><br />
+      keys: <b>{{ pay_data.keys }}</b>
+      <img
+        :src="require(`@/assets/icons/resources/keys.svg`)"
+        alt=""
+        class="wood"
+      />
+      <br /><br />
+      <div v-if="related_levels.length">
+        Вы открыли уровни: <br />
+        {{ related_levels }}
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { getRewardForLevel } from "@/logic/random_rewards"
 export default {
   name: "win-page",
   computed: {
@@ -40,22 +71,15 @@ export default {
   },
   async created() {
     if (!this.$store.state.user_actions.win_redirect) return
+    this.$store.dispatch("re_set_deck") // и тут переустанавливаем выбранную деку
     await this.pay_resources() // получаем ресурсы за выигрыш
     await this.open_levels() // открываем связанные уровни в дереве
     this.$store.commit("set_win_redirect", false)
   },
   methods: {
+    // оплата ресурсов за прохождение уровня
     async pay_resources() {
-      this.pay_data.wood = this.win_price
-      this.pay_data.scraps = this.win_price
-      let kegs = [0, 0, 0, 1] // 25%!!!
-      let chance = kegs[Math.floor(Math.random() * kegs.length)]
-      if (chance === 1) this.pay_data.kegs = 1
-      else this.pay_data.kegs = 0
-      let big_kegs = [0, 0, 0, 0, 0, 0, 0, 1] // 18%!!!
-      let chance2 = big_kegs[Math.floor(Math.random() * big_kegs.length)]
-      if (chance2 === 1) this.pay_data.big_kegs = 1
-      else this.pay_data.big_kegs = 0
+      this.pay_data = getRewardForLevel(this.win_price)
 
       await this.$store.dispatch("pay_resource", {
         wood: this.$store.getters["resource"].wood + this.pay_data.wood,
@@ -63,14 +87,17 @@ export default {
         kegs: this.$store.getters["resource"].kegs + this.pay_data.kegs,
         big_kegs:
           this.$store.getters["resource"].big_kegs + this.pay_data.big_kegs,
+        keys: this.$store.getters["resource"].keys + this.pay_data.keys,
       })
     },
+    // открытие всех связанных уровней при прохождении уровня
     async open_levels() {
-      const id = this.$store.state.game.level.id // id уровня, в который мы играли
+      const currentLevel = this.$store.getters["currentLevel"]
+      if (currentLevel.random) return // при рандомном уровне сразу выходим отсюда
 
       const season = this.$store.getters["get_season"] // выбранный сезон из стора, выбирается по открытию дерева
-      const level = season.levels.filter(lev => lev.level.id === id)[0] // ищем уровень из списка уровней сезона
-      if (level.finished) return // если уровень УЖЕ пройден, то нет смысла открывать его детей
+      const level = season.levels.find(lev => lev.level.id === currentLevel.id) // ищем уровень из списка уровней сезона
+      if (!level || level.finished) return // если уровень УЖЕ пройден, то нет смысла открывать его детей
 
       this.related_levels = level.level.related_levels
       if (this.related_levels.length === 0) return // если связанных уровней нет, открывать нечего
@@ -99,17 +126,21 @@ div {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50%;
-  height: 40vh;
+  width: 75%;
+  height: 70vh;
   border: solid 2px black;
 }
 
 .win_price {
   width: 100%;
   text-align: center;
-  top: 70%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  position: relative;
+  position: absolute;
+}
+
+.wood {
+  max-height: 30px;
 }
 </style>

@@ -1,11 +1,17 @@
 <template>
-  <div>
+  <div class="start-game__page">
     <div class="start">
       <div class="play_price">
-        Для этой игры надо заплатить <b>{{ play_price }}</b> wood!
+        Для этой игры надо заплатить <br />
+        <b> {{ play_price * -1 }} </b>
+        <img
+          :src="require(`@/assets/icons/resources/wood.svg`)"
+          alt=""
+          class="wood"
+        />
       </div>
-      <button class="btn_start" @click="start_game" :disabled="loading">
-        НАЧАТЬ
+      <button @click="start_game" :disabled="loading" class="btn_start">
+        <themed-button title="НАЧАТЬ" />
       </button>
     </div>
     <div class="decks">
@@ -19,9 +25,10 @@
 <script>
 import DeckSelection from "@/components/DeckSelection"
 import SelectedDeck from "@/components/Pages/LevelPage/SelectedDeck"
+import ThemedButton from "@/components/UI/Buttons/ThemedButton.vue"
 export default {
   name: "StartGame",
-  components: { SelectedDeck, DeckSelection },
+  components: { ThemedButton, SelectedDeck, DeckSelection },
   data() {
     return {
       loading: false,
@@ -29,12 +36,11 @@ export default {
   },
   computed: {
     play_price() {
-      if (this.$store.state.game.level.difficulty === "easy")
-        return this.$store.state.user_actions.game_prices.play_level_easy
-      else if (this.$store.state.game.level.difficulty === "normal")
-        return this.$store.state.user_actions.game_prices.play_level_normal
-      else if (this.$store.state.game.level.difficulty === "hard")
-        return this.$store.state.user_actions.game_prices.play_level_hard
+      const diff = this.$store.state.game.level.difficulty
+      const price = this.$store.state.user_actions.game_prices
+      if (diff === "easy") return price.play_level_easy
+      else if (diff === "normal") return price.play_level_normal
+      else if (diff === "hard") return price.play_level_hard
       else return "Уровень не выбран!"
     },
   },
@@ -60,41 +66,41 @@ export default {
 </script>
 
 <style scoped>
-div {
+.start-game__page {
+  padding: 10px;
+  height: calc((var(--vh) * 100) - 178px);
   color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .start {
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: 70%;
   height: 30vh;
-  border: solid 2px black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn_start {
-  bottom: 5%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 60%;
-  height: 20%;
-  position: absolute;
+  margin-top: 15px;
+  width: 80%;
+  height: 100px;
 }
 
 .play_price {
-  width: 100%;
   text-align: center;
-  top: 35%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: relative;
 }
 
 .decks {
-  position: absolute;
   width: 99%;
   bottom: 10%;
+}
+
+.wood {
+  max-height: 30px;
 }
 </style>

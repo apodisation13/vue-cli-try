@@ -15,10 +15,10 @@
 </template>
 
 <script>
-import ModalWindow from "@/components/UI/ModalWindow"
-import ButtonClose from "@/components/UI/ButtonClose"
-import EnemyLeader from "@/components/EnemyLeader"
-import EnemyList from "@/components/EnemyList"
+import ModalWindow from "@/components/ModalWindows/ModalWindow"
+import ButtonClose from "@/components/UI/Buttons/ButtonClose"
+import EnemyLeader from "@/components/Cards/EnemyLeader"
+import EnemyList from "@/components/Cards/EnemyList"
 export default {
   name: "level-modal",
   components: { EnemyList, EnemyLeader, ButtonClose, ModalWindow },
@@ -39,23 +39,6 @@ export default {
 <style scoped>
 .enemy_leader {
   width: 30%;
-  right: -35%;
-  position: relative;
-}
-
-.enemies {
-  width: 90%;
-  height: 60%;
-  position: relative;
-  overflow: scroll;
-  border: solid 2px red;
-}
-
-.enemy {
-  top: 20%;
-  width: 30%;
-  display: inline-block;
-  position: relative;
-  text-align: justify;
+  margin: auto;
 }
 </style>

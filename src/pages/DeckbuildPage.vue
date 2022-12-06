@@ -16,7 +16,13 @@
         <div class="database_of_cards-wrapper">
           <div
             class="database_of_cards"
-            :class="deckBuilding ? 'pool_deckbuild' : 'pool_full'"
+            :class="
+              disable_start_animation
+                ? 'pool_full__start'
+                : deckBuilding
+                ? 'pool_deckbuild'
+                : 'pool_full'
+            "
           >
             <!-- база карт -->
             <card-list-component
@@ -47,11 +53,9 @@
           @save_deck="save_deck"
           @patch_deck="patch_deck"
           @change_name_deck="change_name_deck"
+          @change_order_deck="change_order_deck"
         />
       </div>
-      <!-- <div class="deckbuilder-bottom-buttons-block">
-        <div class="decks_btn" @click="trigger_decks_list_modal(true)">КОЛОДЫ!</div>
-      </div> -->
       <button-decks @click="trigger_decks_list_modal(true)" />
       <decks-list-modal
         v-if="show_decks_list_modal"
@@ -75,7 +79,7 @@ import DecksListModal from "@/components/ModalWindows/DecksListModal"
 import DeckbuilderTopButtonsBlock from "@/components/Pages/DeckbuildPage/DeckbuilderTopButtonsBlock"
 import BlockAssemblingTheDeck from "@/components/Pages/DeckbuildPage/BlockAssemblingTheDeck"
 import DeckbuilderFilters from "@/components/Pages/DeckbuildPage/DeckbuilderFilters"
-import CardListComponent from "@/components/CardListComponent"
+import CardListComponent from "@/components/Cards/CardListComponent"
 import ButtonDecks from "@/components/Pages/DeckbuildPage/Buttons/ButtonDecks"
 
 export default {
@@ -89,6 +93,7 @@ export default {
   },
   data() {
     return {
+      disable_start_animation: true, // флаг выключение первичной анимации
       showingList: "pool", // показывать список игровых карт ('pool') или список лидеров ('leaders')
       deckBuilding: false, // флаг - собираем мы колоду, или нет
       showFilters: false, // флаг, показать ли окно с фильтрами
@@ -126,6 +131,14 @@ export default {
       this.deckBuilding = false
       this.patch = false
       this.new_deck()
+    },
+
+    change_order_deck(index) {
+      this.deck.deck_is_progress.push(
+        ...this.deck.deck_is_progress.splice(index, 1)
+      )
+
+      this.deck.deck_body.push(...this.deck.deck_body.splice(index, 1))
     },
 
     // новая дека, обнуляем фильтры и сбрасываем все добавления
@@ -241,15 +254,16 @@ export default {
     },
     // фильтр карт и лидеров по фракции по нажатию на кнопку фракции
     select_faction(prop, value) {
+      this.disable_start_animation = this.disable_start_animation && false
       this.deckBuilding = true
       this.setFilter(prop, value) // для this.query.cards
     },
 
     show_deck(index) {
+      this.disable_start_animation = this.disable_start_animation && false
       this.new_deck()
       this.deckBuilding = true
       const { deck } = _.cloneDeep(this.$store.getters["all_decks"][index])
-
       ;(this.deck.deck_id = deck.id),
         (this.deck.deck_name = deck.name),
         (this.deck.deck_is_progress = [...deck.cards]), // колода в процессе - целиком объекты, для отображения
@@ -335,17 +349,12 @@ export default {
   overflow: hidden;
 }
 
-.database_of_cards-wrapper {
-  position: relative;
-}
-
 .database_of_cards-wrapper::after {
   content: "";
   display: block;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  margin-top: -28px;
+  position: relative;
+  z-index: 10;
   height: 28px;
   background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
 }
@@ -360,6 +369,10 @@ export default {
   overflow-x: hidden;
 }
 /*база карт*/
+
+.pool_full__start {
+  height: calc((var(--vh) * 100) - 318px);
+}
 .pool_full {
   height: calc((var(--vh) * 100) - 318px);
   /* 318 это сумма высот хедера фильтровнижних кнопок */

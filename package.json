@@ -11,6 +11,8 @@
     "@capacitor/android": "^3.6.0",
     "@capacitor/cli": "^3.6.0",
     "@capacitor/core": "^3.6.0",
+    "@sentry/tracing": "^7.19.0",
+    "@sentry/vue": "^7.19.0",
     "axios": "^0.24.0",
     "core-js": "^3.6.5",
     "konva": "^8.3.13",

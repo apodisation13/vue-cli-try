@@ -3,7 +3,7 @@
     <button class="remaining-enemies-btn" @click="visible = true">
       Враги {{ enemies_len }}
     </button>
-    <modal-window v-if="visible" v-touch:swipe="close_self">
+    <modal-window v-if="visible" v-touch:swipe.left="close_self">
       <button-close @close_self="close_self" />
       <enemy-list :enemies="enemies" />
     </modal-window>
@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import ModalWindow from "@/components/UI/ModalWindow"
-import ButtonClose from "@/components/UI/ButtonClose"
-import EnemyList from "@/components/EnemyList"
+import ModalWindow from "@/components/ModalWindows/ModalWindow"
+import ButtonClose from "@/components/UI/Buttons/ButtonClose"
+import EnemyList from "@/components/Cards/EnemyList"
 export default {
   name: "remaining-enemies",
   components: { EnemyList, ButtonClose, ModalWindow },
@@ -43,11 +43,10 @@ export default {
 
 <style scoped>
 .remaining-enemies-btn {
-  height: 40%;
-  width: 98%;
+  height: 98%;
+  width: 47px;
   border: solid 1px yellow;
-  margin-bottom: 1%;
-  margin-top: 1%;
   position: relative;
+  border-radius: 10px;
 }
 </style>

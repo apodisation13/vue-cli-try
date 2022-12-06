@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 3.5vh">
+  <div>
     <button class="grave-btn" @click="flag = true">
       Сброс {{ grave_len }}
     </button>
@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import ModalWindow from "@/components/UI/ModalWindow"
-import ButtonClose from "@/components/UI/ButtonClose"
-import CardListComponent from "@/components/CardListComponent"
+import ModalWindow from "@/components/ModalWindows/ModalWindow"
+import ButtonClose from "@/components/UI/Buttons/ButtonClose"
+import CardListComponent from "@/components/Cards/CardListComponent"
 export default {
   name: "grave-comp",
   components: { CardListComponent, ButtonClose, ModalWindow },
@@ -44,10 +44,9 @@ export default {
 <style scoped>
 .grave-btn {
   height: 98%;
-  width: 98%;
-  border: solid 1px yellow;
-  margin-bottom: 1%;
-  margin-top: 1%;
+  width: 47px;
+  border: solid 1px red;
   position: relative;
+  border-radius: 10px;
 }
 </style>
