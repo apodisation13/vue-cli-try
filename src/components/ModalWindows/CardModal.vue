@@ -35,16 +35,16 @@
       </div>
     </div>
     <yesno-modal
-      v-if="deckbuilder"
-      :visible="show_yesno_mill"
-      :resource_value="resource_value"
+      v-if="show_yesno_mill"
+      :is_mill_card="show_yesno_mill"
+      :mill_value="resource_value"
       @confirm="confirm_mill"
       @cancel="cancel"
     />
     <yesno-modal
-      v-if="deckbuilder"
-      :visible="show_yesno_craft"
-      :resource_value="resource_value"
+      v-if="show_yesno_craft"
+      :is_craft_card="show_yesno_craft"
+      :craft_price="resource_value"
       @confirm="confirm_craft"
       @cancel="cancel"
     />

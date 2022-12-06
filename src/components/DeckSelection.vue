@@ -31,7 +31,7 @@
     </div>
 
     <yesno-modal
-      :visible="show_yesno"
+      v-if="show_yesno"
       @confirm="confirm_delete"
       @cancel="cancel_delete"
     />

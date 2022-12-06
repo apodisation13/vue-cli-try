@@ -38,8 +38,7 @@ export function getRewardForLevel(win_price) {
 
   let kegs = [0, 0, 0, 1] // 25%!!!
   let chance = kegs[choice(kegs)]
-  if (chance === 1) pay_data.kegs = 1
-  else pay_data.kegs = 0
+  pay_data.kegs = chance === 1 ? 1 : 0
 
   let big_kegs = [0, 0, 0, 0, 0, 0, 0, 1] // 18%!!!
   let chance2 = big_kegs[choice(big_kegs)]
