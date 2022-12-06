@@ -221,16 +221,9 @@ span {
 }
 
 .login {
-  font-family: "Philosopher";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 22px;
-  /* identical to box height, or 138% */
-  letter-spacing: -0.02em;
-  font-feature-settings: "calt" off;
-  background: linear-gradient(183.6deg, #EDB13E 2.96%, #F4D977 65.79%, #EEB850 129.95%);
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+  margin-top: 100%;
+  width: 100%;
+  height: 48px;
   background: linear-gradient(180deg, #1D252D -21.82%, rgba(0, 0, 0, 0.13) 44.55%, #282D33 109.53%);
   /* Цвет текста на кнопках */
   border: 2px solid #FACF5D;

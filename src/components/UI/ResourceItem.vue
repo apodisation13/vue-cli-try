@@ -1,11 +1,11 @@
 <template>
   <div class="resource-item">
     <div class="wrapper__resource-image">
-      <img
+      <!-- <img
         :src="require(`@/assets/icons/resources/${name}.svg`)"
         :alt="name"
         class="resource-image"
-      />
+      /> -->
     </div>
     <div class="resource-count">{{ count }}</div>
   </div>
