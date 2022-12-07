@@ -58,23 +58,13 @@
 
 <script>
 import { getRandomReward } from "@/logic/random_rewards"
+import { choice } from "@/lib/utils"
 import BonusPageResource from "@/components/UI/BonusPageResource"
 import RewardComp from "@/components/Pages/BonusPage/RewardComp.vue"
 export default {
   components: { BonusPageResource, RewardComp },
   created() {
-    this.cards.forEach(card => {
-      if (card.card.color === "Bronze") {
-        for (let i = 0; i < 20; i++) {
-          this.pool.push(card)
-        }
-      } else if (card.card.color === "Silver") {
-        this.pool.push(card)
-        this.pool.push(card)
-      } else if (card.card.color === "Gold") {
-        this.pool.push(card)
-      }
-    })
+    this.init()
   },
   computed: {
     cards() {
@@ -95,27 +85,40 @@ export default {
   },
   data() {
     return {
-      pool: [],
-      random_cards: [],
-      keg_len: 3,
-      show_keg: false,
-      show_chest: false,
-      show_key_content: false,
-      random_reward_choice: null,
-
+      pool: [], // список всех карт, из которых мы будем брать рандомные для награды
+      random_cards: [], // список рандомных карт для награды
+      keg_len: 3, // в бочке по дефолту 3 карты, а в большой бочке 5 карт
+      random_reward_choice: null, // выбор рандомной награды из ключа
       reward_name: "",
       show_reward_page: false,
     }
   },
   methods: {
+    init() {
+      this.pool = []
+      this.cards.forEach(card => {
+        if (card.card.color === "Bronze") {
+          for (let i = 0; i < 20; i++) {
+            this.pool.push(card)
+          }
+        } else if (card.card.color === "Silver") {
+          this.pool.push(card)
+          this.pool.push(card)
+        } else if (card.card.color === "Gold") {
+          this.pool.push(card)
+        }
+      })
+    },
+
     is_enough_wood(value) {
       return this.resource.wood > value
     },
 
-    async clear_reward() {
+    clear_reward() {
       this.random_cards = []
       this.random_reward_choice = null
       this.show_reward_page = false
+      this.init() // если мы выбрали награду, у нас изменились карты, надо их заново собрать в pool
     },
 
     async add_kegs(quantity) {
@@ -134,8 +137,7 @@ export default {
       this.reward_name = "kegs"
       this.show_reward_page = true
       for (let i = 0; i < this.keg_len; i++) {
-        let random = Math.floor(Math.random() * this.pool.length)
-        this.random_cards.push(this.pool[random])
+        this.random_cards.push(this.pool[choice(this.pool)])
       }
       await this.$store.dispatch("pay_resource", {
         kegs: this.resource.kegs - 1,
@@ -158,8 +160,7 @@ export default {
       this.reward_name = "big_kegs"
       this.show_reward_page = true
       for (let i = 0; i < this.keg_len; i++) {
-        let random = Math.floor(Math.random() * this.pool.length)
-        this.random_cards.push(this.pool[random])
+        this.random_cards.push(this.pool[choice(this.pool)])
       }
       await this.$store.dispatch("pay_resource", {
         big_kegs: this.resource.big_kegs - 1,
@@ -181,8 +182,7 @@ export default {
       this.reward_name = "chests"
       this.show_reward_page = true
       for (let i = 0; i < this.keg_len; i++) {
-        let random = Math.floor(Math.random() * this.pool.length)
-        this.random_cards.push(this.pool[random])
+        this.random_cards.push(this.pool[choice(this.pool)])
       }
       await this.$store.dispatch("pay_resource", {
         chests: this.resource.chests - 1,
@@ -203,9 +203,7 @@ export default {
       this.show_reward_page = true
     },
 
-    //Функцию принятия награды с ключа проще было оставить на этой странице,
-    //Принятие карточных наград, делал первыми поэтому логика описана в RewardPage,
-    //Возможно лучше будет через эмит тоже перенести сюда
+    // функция принятия награды с ключа
     async accept_random_reward(res) {
       const { resource, value } = res
       let reward = {}
@@ -239,7 +237,7 @@ div {
 }
 
 .title__text h1 {
-  font-family: "Philosopher";
+  font-family: "Philosopher", serif;
   font-size: 2rem;
   line-height: 2rem;
   color: hsl(39, 82%, 62%);
@@ -252,22 +250,4 @@ div {
   flex-wrap: wrap;
   justify-content: space-around;
 }
-
-.wood {
-  max-height: 25px;
-}
-
-.inlines {
-  display: table;
-  margin: 1%;
-}
-
-.test-button {
-  z-index: 9999;
-  position: relative;
-  bottom: 50px;
-}
-/* .cards_list {
-  height: 50vh;
-} */
 </style>

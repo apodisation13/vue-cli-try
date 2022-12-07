@@ -1,8 +1,5 @@
 <template>
-  <modal-window
-    :style="{ backgroundColor: 'floralwhite' }"
-    v-touch:swipe="close_self"
-  >
+  <modal-window v-touch:swipe="close_self">
     <button-close @close_self="close_self" />
 
     <!--Имя у карты есть всегда-->
@@ -36,15 +33,14 @@
     </div>
     <yesno-modal
       v-if="show_yesno_mill"
-      :is_mill_card="show_yesno_mill"
-      :mill_value="resource_value"
+      :item_price="resource_value"
       @confirm="confirm_mill"
       @cancel="cancel"
     />
     <yesno-modal
       v-if="show_yesno_craft"
-      :is_craft_card="show_yesno_craft"
-      :craft_price="resource_value"
+      is_craft
+      :item_price="resource_value"
       @confirm="confirm_craft"
       @cancel="cancel"
     />
@@ -185,7 +181,7 @@ export default {
 
 <style scoped>
 div {
-  color: black;
+  color: white;
 }
 .card-ui {
   position: relative;

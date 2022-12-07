@@ -21,7 +21,7 @@ export default {
     },
     count: {
       type: Number,
-      default: 0,
+      // default: 0,
     },
   },
 }
@@ -46,7 +46,7 @@ export default {
 }
 
 .resource-count {
-  font-family: "Philosopher";
+  font-family: "Philosopher", serif;
   font-style: normal;
   font-weight: 700;
   font-size: 12px;
