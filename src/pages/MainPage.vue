@@ -57,12 +57,7 @@ button {
   font-size: 29px;
   line-height: 100%;
   text-align: center;
-  background: linear-gradient(
-    153.5deg,
-    #b07b15 16.59%,
-    #facf5d 47.17%,
-    #b48328 82.62%
-  );
+  background: var(--six-gold-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

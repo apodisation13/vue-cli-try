@@ -131,11 +131,7 @@ export default {
 
 .avatar {
   position: absolute;
-  background: linear-gradient(
-    180deg, 
-    #b07b15 0%, 
-    #facf5d 45%, 
-    #b48328 98.96%);
+  background: var(--five-gold-gradient);
   border-radius: 40px;
   padding: 3px;
   border: 5px solid #1a1d24;

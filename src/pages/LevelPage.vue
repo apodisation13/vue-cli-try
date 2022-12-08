@@ -152,12 +152,7 @@ div {
   position: relative;
   width: 99%;
   height: 100px;
-  background: linear-gradient(
-    180deg,
-    rgba(187, 132, 24, 0.8) 0%,
-    rgba(252, 211, 132, 0.8) 50%,
-    rgba(187, 132, 24, 0.8) 98.44%
-  );
+  background: var(--five-gold-gradient);
   box-shadow: inset -4px -4px 10px rgba(0, 0, 0, 0.25),
     inset 4px 4px 10px rgba(0, 0, 0, 0.25);
 }

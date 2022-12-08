@@ -20,8 +20,22 @@
 
   --four-gold-gradient: linear-gradient(
     183.6deg,
-    hsl(39, 79%, 39%),
-    hsl(44, 94%, 67%),
-    hsl(39, 64%, 43%)
+    #b27b15,
+    #fad05c,
+    #b48327
+  );
+
+  --five-gold-gradient: linear-gradient(
+    180deg,
+    #bb8418cc 0%,
+    #fcd384cc 50%,
+    #bb8418cc 98.44%
+  );
+
+  --six-gold-gradient: linear-gradient(
+    153.5deg,
+    #b07b15 16.59%,
+    #facf5d 47.17%,
+    #b48328 82.62%
   );
 }  
