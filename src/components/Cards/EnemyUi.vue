@@ -1,6 +1,7 @@
 <template>
   <div>
     <div
+      v-if="!(enemy.hp <= 0)"
       class="card-enemy"
       :style="[{ backgroundImage: `url(${enemy.image})` }, card_margin(enemy)]"
     ></div>
