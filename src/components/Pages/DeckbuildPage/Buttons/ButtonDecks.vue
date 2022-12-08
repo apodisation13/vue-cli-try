@@ -20,13 +20,7 @@ export default {}
   height: 82px;
   position: relative;
   border: 2px solid;
-  border-image: linear-gradient(
-      153.5deg,
-      #b07b15 34.99%,
-      #facf5d 57.14%,
-      #b48328 82.81%
-    )
-    1;
+  border-image: var(--third-gold-gradient);
   border-left: none;
   border-right: none;
   border-bottom: none;
@@ -45,12 +39,7 @@ export default {}
   font-family: "Philosopher";
   font-weight: 700;
   font-size: 20px;
-  background: linear-gradient(
-    183.6deg,
-    #edb13e 2.96%,
-    #f4d977 65.79%,
-    #eeb850 129.95%
-  );
+  background: var(--primary-gold-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -66,13 +55,7 @@ export default {}
 .bottom-line {
   width: calc(30% - 6px);
   border: 2px solid;
-  border-image: linear-gradient(
-      153.5deg,
-      #b07b15 34.99%,
-      #facf5d 57.14%,
-      #b48328 82.81%
-    )
-    1;
+  border-image: var(--third-gold-gradient);
   border-left: none;
   border-right: none;
   border-bottom: none;
@@ -82,13 +65,7 @@ export default {}
   width: calc(40% + 12px);
   height: 28px;
   border: 2px solid;
-  border-image: linear-gradient(
-      153.5deg,
-      #b07b15 34.99%,
-      #facf5d 57.14%,
-      #b48328 82.81%
-    )
-    1;
+  border-image: var(--third-gold-gradient);
   border-bottom: none;
   background-color: #203449;
 }

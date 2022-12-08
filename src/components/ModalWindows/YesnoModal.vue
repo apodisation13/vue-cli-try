@@ -197,12 +197,7 @@ export default {
   line-height: 100%;
 
   text-align: center;
-  background: linear-gradient(
-    153.5deg,
-    #b07b15 34.99%,
-    #facf5d 57.14%,
-    #b48328 82.81%
-  );
+  background: var(--third-gold-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
