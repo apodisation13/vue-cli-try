@@ -1,6 +1,12 @@
 <template>
   <div>
-    <button class="deck-btn" @click="flag = true">Колода {{ deck_len }}</button>
+    <button
+      @click="flag = true"
+      class="deck-btn"
+      :style="{ backgroundColor: trigger_passive ? 'yellow' : '' }"
+    >
+      Колода {{ deck_len }}
+    </button>
     <modal-window v-if="flag" v-touch:swipe="close_self">
       <button-close @close_self="close_self" />
       <card-list-component :cards="deck" />
@@ -29,6 +35,12 @@ export default {
   computed: {
     deck_len() {
       return this.deck.length
+    },
+    trigger_passive() {
+      for (const card of this.deck) {
+        if (card.trigger_deck_passive) return true
+      }
+      return false
     },
   },
   methods: {
