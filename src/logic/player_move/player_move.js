@@ -14,6 +14,9 @@ import { move_enemy } from "@/logic/player_move/abilities/ability_move_enemy"
 import { remove_dead_card } from "@/logic/player_move/service/service_for_player_move"
 import { check_win } from "@/logic/player_move/service/check_win"
 import { player_passive_abilities_upon_playing_a_card } from "@/logic/player_move/player_passive_abilities_upon_playing_a_card"
+import { set_enemy_as_token } from "@/logic/player_move/abilities/ability_set_enemy_as_token"
+import { spawn_self_at_deck } from "@/logic/player_move/abilities/ability_spawn_self_at_deck"
+import { spawn_self_at_grave } from "@/logic/player_move/abilities/ability_spawn_self_at_grave"
 
 // Сюда заходим если там есть враг
 // card - карта, которую мы играем (или из руки, или лидер).
@@ -49,6 +52,14 @@ function damage_ai_card(card, enemy, isCard, gameObj) {
   } else if (card.ability.name === "move-enemy") {
     damage_one(enemy, card, gameObj)
     move_enemy(enemy, gameObj)
+  } else if (card.ability.name === "set-enemy-as-token") {
+    set_enemy_as_token(enemy)
+  } else if (card.ability.name === "spawn-self-at-deck") {
+    spawn_self_at_deck(card, gameObj)
+    damage_one(enemy, card, gameObj)
+  } else if (card.ability.name === "spawn-self-at-grave") {
+    spawn_self_at_grave(card, gameObj)
+    damage_one(enemy, card, gameObj)
   } else damage_one(enemy, card, gameObj)
 
   // убираем карту игрока, если в ней не осталось зарядов, из руки и из колоды, если играли оттуда

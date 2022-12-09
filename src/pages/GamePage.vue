@@ -161,6 +161,7 @@ export default {
     // по нажатию на лидера игрока
     chose_leader() {
       if (this.gameObj.leader.charges <= 0) return
+      this.selected_card = this.gameObj.leader // ВОТ ЗДЕСЬ МЫ ЗАПОМНИЛИ ЛИДЕРА ДЛЯ special_case
       this.isActive.player_leader = true
       this.setActive()
     },
@@ -173,6 +174,14 @@ export default {
     setNotActive() {
       this.isActive.enemy_cards = false
       this.isActive.enemy_leader = false
+    },
+    // после хода картой или лидером, открываем sp-case-abilities, обнуляем карту которой изначально играли
+    afterDamage() {
+      // особие абилки, которые требуют открытия окон
+      this.special_case_abilities()
+      this.selected_card = null // обнуляем карту, за которую изначально тянули
+      this.show_picked_card = false // из specialcaseabilities.js!!!
+      this.setNotActive()
     },
 
     // если ткнули ранее на карту игрока или лидера, а потом на поле, ходим // enemy - объект врага (field[i])
@@ -194,26 +203,22 @@ export default {
         true,
         this.gameObj
       )
-      // особие абилки, которые требуют открытия окон
-      this.special_case_abilities()
-
-      this.selected_card = null
-      this.show_picked_card = false // из specialcaseabilities.js!!!
+      this.afterDamage()
       // снимаем флаг активности карт игрока, ОДНА КАРТА ЗА ХОД! станет ТРУ только после окончания хода компа!
       this.isActive.player_cards = false
-      this.setNotActive()
     },
     // если ранее ткнули на лидера, а потом на поле
     damageEnemyByLeader() {
       if (!this.targetEnemyByLeader) return
+
       damage_ai_card(
         this.gameObj.leader,
         this.selected_enemy,
         false,
         this.gameObj
       )
+      this.afterDamage()
       this.isActive.player_leader = false // лидер снова неактивен, чтобы ходить им снова - надо опять на него тыкать
-      this.setNotActive()
     },
 
     // если ранее ткнули на карту игрока или лидера игрока, а потом на лидера врагов!
@@ -233,14 +238,9 @@ export default {
         true,
         this.gameObj
       )
-      // особие абилки, которые требуют открытия окон
-      this.special_case_abilities()
-
-      this.selected_card = null
-      this.show_picked_card = false // из specialcaseabilities.js!!!
+      this.afterDamage()
       // снимаем флаг активности карт игрока, ОДНА КАРТА ЗА ХОД! станет ТРУ только после окончания хода компа!
       this.isActive.player_cards = false
-      this.setNotActive()
     },
     // ткнули на лидера игрока, а потом на лидера врагов
     damageEnemyLeaderByLeader() {
@@ -252,8 +252,8 @@ export default {
         false,
         this.gameObj
       )
+      this.afterDamage()
       this.isActive.player_leader = false // лидер снова неактивен, чтобы ходить им снова - надо опять на него тыкать
-      this.setNotActive()
     },
   },
   computed: {
