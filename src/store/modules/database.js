@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useToast } from "vue-toastification"
-import { user_database, user_resource } from "@/store/const/api_urls"
+import { user_database } from "@/store/const/api_urls"
 
 const toast = useToast()
 
@@ -164,34 +164,6 @@ const actions = {
       dispatch("error_action", err)
       throw new Error("Ошибка загрузки базы данных!")
     }
-  },
-
-  async get_resource({ commit, getters, dispatch }) {
-    let header = getters["getHeader"]
-    let user_id = getters["getUser"].user_id
-    const url = `${user_resource}${user_id}/`
-    try {
-      let response = await axios.get(url, header)
-      commit("set_resource", response.data)
-      toast.success("Успешно загрузили ресурсы")
-      return true
-    } catch (err) {
-      dispatch("error_action", err)
-      throw new Error("Ошибка при загрузке ресурсов")
-    }
-  },
-
-  async get_cards() {
-    // let header = getters["getHeader"]
-  },
-  async get_leaders() {
-    // let header = getters["getHeader"]
-  },
-  async get_decks() {
-    // let header = getters["getHeader"]
-  },
-  async get_levels() {
-    // let header = getters["getHeader"]
   },
 
   error_action({ commit }, err) {

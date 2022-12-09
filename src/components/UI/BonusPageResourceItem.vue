@@ -11,19 +11,10 @@
       }}</resource-count-rombus>
     </div>
     <yesno-modal
-      v-if="open_item_visible"
-      :visible="open_item_visible"
-      :is_open_item="true"
+      v-if="open_item_visible && count > 0"
+      bonus
       :name="name"
       @confirm="open_item"
-      @cancel="cancel"
-    />
-    <yesno-modal
-      v-if="no_item_visible"
-      :visible="no_item_visible"
-      :is_zero_purchase="true"
-      :name="name"
-      @confirm="add_item"
       @cancel="cancel"
     />
   </div>
@@ -38,7 +29,6 @@ export default {
   data() {
     return {
       open_item_visible: false,
-      no_item_visible: false,
     }
   },
   props: {
@@ -53,30 +43,17 @@ export default {
   },
   methods: {
     modal_open() {
-      if (this.count === 0) {
-        this.no_item_visible = true
-        return
-      }
       this.open_item_visible = true
     },
     open_item() {
       this.open_item_visible = false
-      if (this.count <= 0) {
-        this.no_item_visible = true
-        return
-      }
       this.$emit("open_item")
     },
-    add_item() {
-      this.no_item_visible = false
-      this.$emit("add_item")
-    },
     cancel() {
-      this.no_item_visible = false
       this.open_item_visible = false
     },
   },
-  emits: ["open_item", "add_item"],
+  emits: ["open_item"],
 }
 </script>
 

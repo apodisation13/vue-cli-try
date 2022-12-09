@@ -58,7 +58,6 @@ export default {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-fill-color: transparent;
   text-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
 }
 </style>

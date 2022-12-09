@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="element">
+      <!--Значок дерева и цены, сколько он стоит, кроме ключа у которого цены нет, так как нельзя купить-->
       <div class="price" v-if="resource_name !== 'keys'">
         <img
           :src="require(`@/assets/icons/resources/wood.svg`)"
@@ -10,15 +11,16 @@
         <span class="price-value">{{ resource_price }}</span>
       </div>
 
+      <!--Сам значок соответственного ресурса с ромбом сколько его-->
       <div class="line">
         <bonus-page-resource-item
           :name="resource_name"
           :count="resource_count"
           @open_item="open_item"
-          @add_item="purchase_item"
         />
       </div>
 
+      <!--Кнопка + для покупки, для всех кроме ключа, который опять же нельзя купить-->
       <div
         class="item-add"
         v-if="resource_name !== 'keys'"
@@ -28,11 +30,14 @@
         <span>+</span>
       </div>
     </div>
+
+    <!--Модальное окно с подтверждением покупки и кнопками +- для покупки-->
     <yesno-modal
       v-if="modal_visible"
-      :visible="modal_visible"
-      :is_purchase="true"
+      bonus
+      is_purchase
       :item_price="resource_price"
+      :name="resource_name"
       @confirm="add_item"
       @cancel="cancel"
     />
@@ -52,7 +57,7 @@ export default {
       required: true,
     },
     resource_price: {
-      type: Number,
+      type: [Number, Object], // По умолчанию в геттере пустой объект, вот чтобы не ругалось
     },
   },
   data() {
@@ -96,7 +101,6 @@ export default {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-fill-color: transparent;
 }
 
 .wood {
@@ -136,7 +140,7 @@ export default {
 }
 
 .item-add span {
-  font-family: "Philosopher";
+  font-family: "Philosopher", serif;
   font-size: 3rem;
   background: linear-gradient(
     183.6deg,
@@ -147,7 +151,6 @@ export default {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-fill-color: transparent;
 }
 
 .element {
@@ -162,34 +165,5 @@ export default {
 .line {
   display: inline-block;
   margin-right: 30px;
-}
-
-.btn-plus {
-  width: 50px;
-  height: 50px;
-}
-
-.inlines {
-  display: table;
-  margin: 1%;
-}
-
-.kegs {
-  position: relative;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 200px;
-  background-color: hsl(0, 0%, 55%);
-  border: ridge 5px hsl(0, 0%, 55%);
-  text-align: center;
-  line-height: 7vh;
-}
-
-.kegs:active {
-  top: 1px;
-  left: 1px;
-  background-color: hsl(0, 0%, 45%);
-  border: ridge 5px hsl(0, 0%, 45%);
 }
 </style>
