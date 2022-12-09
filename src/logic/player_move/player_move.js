@@ -17,6 +17,7 @@ import { player_passive_abilities_upon_playing_a_card } from "@/logic/player_mov
 import { set_enemy_as_token } from "@/logic/player_move/abilities/ability_set_enemy_as_token"
 import { spawn_self_at_deck } from "@/logic/player_move/abilities/ability_spawn_self_at_deck"
 import { spawn_self_at_grave } from "@/logic/player_move/abilities/ability_spawn_self_at_grave"
+import { destroy_random_enemy_in_deck } from "@/logic/player_move/abilities/ability_destroy_random_enemy_in_deck"
 
 // Сюда заходим если там есть враг
 // card - карта, которую мы играем (или из руки, или лидер).
@@ -59,6 +60,9 @@ function damage_ai_card(card, enemy, isCard, gameObj) {
     damage_one(enemy, card, gameObj)
   } else if (card.ability.name === "spawn-self-at-grave") {
     spawn_self_at_grave(card, gameObj)
+    damage_one(enemy, card, gameObj)
+  } else if (card.ability.name === "destroy-random-enemy-in-deck") {
+    destroy_random_enemy_in_deck(gameObj)
     damage_one(enemy, card, gameObj)
   } else damage_one(enemy, card, gameObj)
 
