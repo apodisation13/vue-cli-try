@@ -66,6 +66,11 @@ export default {
   created() {
     this.init()
   },
+  watch: {
+    cards() {
+      this.init()
+    },
+  },
   computed: {
     cards() {
       return this.$store.getters["all_cards"]
@@ -118,7 +123,6 @@ export default {
       this.random_cards = []
       this.random_reward_choice = null
       this.show_reward_page = false
-      this.init() // если мы выбрали награду, у нас изменились карты, надо их заново собрать в pool
     },
 
     async add_kegs(quantity) {
