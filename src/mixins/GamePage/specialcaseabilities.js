@@ -148,7 +148,7 @@ export default {
 
         // Показать эту выбранную для игры карту. А снимаем этот ФЛАГ уже в самом GamePage!
         this.show_picked_card = true
-        this.selected_card = card // ВОТ ЗДЕСЬ МЫ ЗАПОМНИЛИ КАРТУ ИЗ РУКИ НА КОТОРУЮ ТКНУЛИ
+        this.selected_card = card // ВОТ ЗДЕСЬ МЫ ЗАПОМНИЛИ ЭТУ КАРТУ НА КОТОРУЮ ТКНУЛИ ИЗ ОКНА
         this.isActive.player_cards = true
         this.isActive.player_leader = false // а лидер теперь неактивен
         this.setActive() // поле и лидер врагов теперь активны
