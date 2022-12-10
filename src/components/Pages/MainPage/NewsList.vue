@@ -236,5 +236,3 @@ export default {
   margin-right: 30px;
 }
 </style>
-
-
