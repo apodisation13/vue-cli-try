@@ -78,27 +78,31 @@ export default {
 
     //Функция принятия наград с картами
     async accept_reward(card) {
-      if (this.name !== "chests") {
-        await this.$store.dispatch("craft_card_action", card)
+      // Если мы открыли сундук, то в маунтеде мы уже сделали запросы на 3 карты.
+      // Если же мы ещё ткнули на карту, то приходим сюда и просто закрываем окно
+      if (this.name === "chests") {
+        this.$emit("clear_reward")
+        return
       }
+      // В противном случае мы выполним эмит только после окончания запроса! (потому что там карты перезагрузятся!)
+      await this.$store.dispatch("craft_card_action", card)
       this.$emit("clear_reward")
     },
     async accept_random_reward(res) {
       this.$emit("accept_key_reward", res)
     },
     async accept_chest_reward() {
-      if (this.name === "chests") {
-        for (const elem of this.reward) {
-          await this.$store.dispatch("craft_card_action", elem)
-        }
-        setTimeout(() => this.$emit("clear_reward"), 10000)
+      if (this.name !== "chests") return
+      for (const elem of this.reward) {
+        await this.$store.dispatch("craft_card_action", elem)
       }
+      setTimeout(() => this.$emit("clear_reward"), 10000)
     },
     clear_reward() {
       if (this.name === "chests") this.$emit("clear_reward")
     },
   },
-  mounted() {
+  created() {
     this.accept_chest_reward()
   },
 }
@@ -114,7 +118,7 @@ export default {
 }
 
 .reward-text span {
-  font-family: "Philosopher";
+  font-family: "Philosopher", serif;
   font-style: normal;
   font-weight: 700;
   font-size: 26px;
@@ -133,10 +137,6 @@ export default {
   justify-content: center;
   grid-template-columns: repeat(3, 25%);
   column-gap: 25px;
-}
-
-.resource-count {
-  position: relative;
 }
 
 .reward-resources__wrapper {

@@ -34,6 +34,7 @@ const getters = {
       ? state.game_prices.pay_for_chests * -1
       : 0
   },
+  game_prices: state => state.game_prices,
 }
 
 const mutations = {

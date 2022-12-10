@@ -33,8 +33,8 @@ export function getRandomReward() {
 export function getRewardForLevel(win_price) {
   let pay_data = {}
 
-  pay_data.wood = win_price
-  pay_data.scraps = win_price
+  pay_data.wood = randInt(win_price - 25, win_price + 25)
+  pay_data.scraps = randInt(win_price - 25, win_price + 25)
 
   let kegs = [0, 0, 0, 1] // 25%!!!
   let chance = kegs[choice(kegs)]

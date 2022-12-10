@@ -10,7 +10,6 @@ function check_win(field, enemy_list, enemy_leader) {
     if (field[i]) return
   }
 
-  alert("ВЫ ВЫИГРАЛИ!!!")
   store.commit("set_win_redirect", true)
   router.push("win")
 }

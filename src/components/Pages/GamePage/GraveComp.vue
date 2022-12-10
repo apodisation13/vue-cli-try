@@ -1,6 +1,10 @@
 <template>
   <div>
-    <button class="grave-btn" @click="flag = true">
+    <button
+      @click="flag = true"
+      class="grave-btn"
+      :style="{ backgroundColor: trigger_passive ? 'red' : '' }"
+    >
       Сброс {{ grave_len }}
     </button>
     <modal-window v-if="flag" v-touch:swipe="close_self">
@@ -31,6 +35,12 @@ export default {
   computed: {
     grave_len() {
       return this.grave.length
+    },
+    trigger_passive() {
+      for (const card of this.grave) {
+        if (card.trigger_grave_passive) return true
+      }
+      return false
     },
   },
   methods: {

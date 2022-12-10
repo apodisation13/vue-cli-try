@@ -51,13 +51,12 @@ export default {
   name: "win-page",
   computed: {
     win_price() {
-      if (this.$store.state.game.level.difficulty === "easy")
-        return this.$store.state.user_actions.game_prices.win_level_easy
-      else if (this.$store.state.game.level.difficulty === "normal")
-        return this.$store.state.user_actions.game_prices.win_level_normal
-      else if (this.$store.state.game.level.difficulty === "hard")
-        return this.$store.state.user_actions.game_prices.win_level_hard
-      else return "Уровень не выбран!"
+      const diff = this.$store.state.game.level.difficulty
+      const game_prices = this.$store.getters["game_prices"]
+      if (diff === "easy") return game_prices.win_level_easy
+      else if (diff === "normal") return game_prices.win_level_normal
+      else if (diff === "hard") return game_prices.win_level_hard
+      else return 0
     },
     all_seasons() {
       return this.$store.getters["all_seasons"]
