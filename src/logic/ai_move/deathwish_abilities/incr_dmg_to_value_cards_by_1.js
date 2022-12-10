@@ -9,5 +9,12 @@ export function incr_dmg_to_value_cards_by_1(enemy, gameObj) {
   for (let i = 0; i < enemy.deathwish_value; i++) {
     const random_hand = choice_element(hand)
     random_hand.damage += 1
+    random_hand.incr_dmg = true
   }
+
+  setTimeout(() => {
+    hand.forEach(c => {
+      if (c.incr_dmg) c.incr_dmg = false
+    })
+  }, 500)
 }

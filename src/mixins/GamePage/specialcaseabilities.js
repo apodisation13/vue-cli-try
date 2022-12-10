@@ -112,6 +112,10 @@ export default {
         this.setActive() // поле и лидер врагов теперь активны
       } else if (this.ability === "incr-dmg-to-hand-by-self-dmg") {
         card.damage += this.special_case_value
+        card.incr_dmg = true // чтобы показать фиолетовую рамку для этой карты
+        setTimeout(() => {
+          card.incr_dmg = false
+        }, 500)
       } else if (this.ability === "move-enemy-from-deck-to-grave") {
         const cd = this.gameObj.enemies.findIndex(c => c.id === card.id)
         this.gameObj.enemies.splice(cd, 1)
@@ -122,6 +126,10 @@ export default {
         if (card.damage < 0) card.damage = 0
         const random_card = choice_element(this.gameObj.hand)
         random_card.damage += this.special_case_value
+        random_card.incr_dmg = true // чтобы показать фиолетовую рамку для этой карты
+        setTimeout(() => {
+          random_card.incr_dmg = false
+        }, 500)
       }
 
       this.show_pick_a_card_selection = false
