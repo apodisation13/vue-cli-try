@@ -1,8 +1,8 @@
 <template>
   <div>
     <div
-      v-if="!(enemy.hp <= 0)"
       class="card-enemy"
+      :class="{'not-charges': enemy.hp <= 0}"
       :style="[{ backgroundImage: `url(${enemy.image})` }, card_margin(enemy)]"
     ></div>
     <div class="card-enemy-information">
@@ -99,5 +99,18 @@ export default {
 
 .card-enemy-information {
   z-index: 2;
+}
+
+
+/* добавляем псевдоэлемент к семантичному селектору card-item-component*/
+.not-charges::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.9);
 }
 </style>
