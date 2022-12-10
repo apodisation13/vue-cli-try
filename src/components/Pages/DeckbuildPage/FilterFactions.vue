@@ -1,19 +1,23 @@
 <template>
   <div class="filter_factions">
-    <div class="factions" v-for="faction in factions" :key="faction">
-      <button
-        class="faction"
-        @click="filtering(faction)"
-        :style="{ backgroundColor: faction.color }"
-      >
-        {{ faction.name[0] }}
-      </button>
-    </div>
+      <div class="filter_title">
+        Фракции
+      </div>
+      <div class="factions">
+        <faction-item 
+          v-for="faction in factions" 
+          :key="faction" 
+          :faction="faction"
+        />
+      </div>
   </div>
 </template>
 
 <script>
+import FactionItem from '@/components/Pages/DeckbuildPage/FactionItem'
+
 export default {
+  components: { FactionItem },
   name: "filter-factions",
   computed: {
     factions() {
@@ -32,17 +36,27 @@ export default {
 </script>
 
 <style scoped>
-.filter_factions {
-  margin-bottom: 12%;
+
+.filter_title {
+  background: linear-gradient(
+    183.6deg, 
+    #EDB13E 2.96%, 
+    #F4D977 65.79%, 
+    #EEB850 129.95%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  font-family: 'Philosopher';
+  font-weight: 700;
+  font-size: 25px;
+  margin-bottom: 15px;
+  text-align: center;
 }
+
 .factions {
-  margin: 0.05%;
-  display: inline;
-}
-.faction {
-  height: 4vh;
-  width: 45%;
-  margin: 1%;
-  font-size: 8pt;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 </style>

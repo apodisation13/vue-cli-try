@@ -1,13 +1,14 @@
 <template>
-  <div class="wrapper_modal" @click.stop="hideModal">
-    <div @click.stop class="modal" :style="styleWrapper">
-      <slot></slot>
+  <div class="background_layout_modal" @click.stop="hideModal">
+    <div class="wrapper_modal">
+      <div @click.stop class="modal">
+        <slot></slot>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { styleWrapper } from "@/logic/border_styles"
 
 export default {
   methods: {
@@ -15,17 +16,12 @@ export default {
       this.$emit("close-modal")
     },
   },
-  computed: {
-    styleWrapper() {
-      return styleWrapper(this.$store.getters["selectedTheme"])
-    },
-  },
   emits: ["close-modal"],
 }
 </script>
 
 <style scoped>
-.wrapper_modal {
+.background_layout_modal {
   position: absolute;
   top: 0;
   right: 0;
@@ -36,15 +32,29 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  backdrop-filter: blur(5px);
+}
+
+.wrapper_modal {
+  padding: 1px;
+  background-image: linear-gradient(
+    180deg,
+    #4A4237 0%,
+    #C5A87E 50%,
+    #4A4237 100%
+    );
+  border-radius: 20px;
+  max-width: 340px;
+  width: 100%;
+  margin: 10px;
 }
 
 .modal {
-  max-width: 335px;
-  width: 100%;
-  /*background: linear-gradient(#0f2845, #000000);*/
-  border-radius: 18px;
-  padding: 45px 22px;
-  display: flex;
-  flex-direction: column;
+  background: linear-gradient(
+    180deg, 
+    #1E2834 0%, 
+    #0A0B0C 100%
+  );
+  border-radius: 20px;
 }
 </style>
