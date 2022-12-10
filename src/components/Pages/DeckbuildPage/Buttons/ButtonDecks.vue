@@ -20,7 +20,7 @@ export default {}
   height: 82px;
   position: relative;
   border: 2px solid;
-  border-image: var(--third-gold-gradient);
+  border-image: var(--third-gold-gradient-border);
   border-left: none;
   border-right: none;
   border-bottom: none;
@@ -55,7 +55,7 @@ export default {}
 .bottom-line {
   width: calc(30% - 6px);
   border: 2px solid;
-  border-image: var(--third-gold-gradient);
+  border-image: var(--third-gold-gradient-border);
   border-left: none;
   border-right: none;
   border-bottom: none;
@@ -65,7 +65,7 @@ export default {}
   width: calc(40% + 12px);
   height: 28px;
   border: 2px solid;
-  border-image: var(--third-gold-gradient);
+  border-image: var(--third-gold-gradient-border);
   border-bottom: none;
   background-color: #203449;
 }
