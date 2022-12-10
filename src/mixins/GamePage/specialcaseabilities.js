@@ -1,3 +1,5 @@
+import { choice } from "@/lib/utils"
+
 export default {
   data() {
     return {
@@ -11,6 +13,9 @@ export default {
   methods: {
     // !!!МЕНЕДЖЕР особых абилок, которые требуют каких-либо окон!!!
     special_case_abilities() {
+      // в этой функции мы подготавливаем cards_pool - список карт, которые будут в открывшемся окне
+      // ещё мы запоминаем способность (ability) и если есть то значение (speical_case_value)
+      // сам выбор карты - в следующей функции
       const ability = this.selected_card.ability.name
 
       if (ability === "resurrect") {
@@ -42,7 +47,7 @@ export default {
           card => card.color === "Bronze" || card.color === "Silver"
         )
       } else if (ability === "incr-dmg-to-hand-by-self-dmg") {
-        this.special_case_value = this.selected_card.damage
+        this.special_case_value = this.selected_card.damage // сохранили значение урона
         this.cards_pool = this.gameObj.hand.filter(
           card => card.id !== this.selected_card.id
         )
@@ -62,6 +67,11 @@ export default {
       } else if (ability === "move-enemy-from-deck-to-grave") {
         this.cards_pool = this.gameObj.enemies
         this.forEnemy()
+      } else if (ability === "decr-dmg-to-hand-incr-to-random-hand") {
+        this.special_case_value = this.selected_card.value // сохранили значение урона
+        this.cards_pool = this.gameObj.hand.filter(
+          card => card.id !== this.selected_card.id
+        )
       }
       this.ability = this.selected_card.ability.name
       if (this.cards_pool.length) this.show_pick_a_card_selection = true
@@ -107,6 +117,11 @@ export default {
         this.gameObj.enemies.splice(cd, 1)
         card.hp = card.base_hp
         this.gameObj.enemies_grave.push(card)
+      } else if (this.ability === "decr-dmg-to-hand-incr-to-random-hand") {
+        card.damage -= this.special_case_value
+        if (card.damage < 0) card.damage = 0
+        const random_card = this.gameObj.hand[choice(this.gameObj.hand)]
+        random_card.damage += this.special_case_value
       }
 
       this.show_pick_a_card_selection = false

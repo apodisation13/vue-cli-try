@@ -19,6 +19,7 @@ import { spawn_self_at_deck } from "@/logic/player_move/abilities/ability_spawn_
 import { spawn_self_at_grave } from "@/logic/player_move/abilities/ability_spawn_self_at_grave"
 import { destroy_random_enemy_in_deck } from "@/logic/player_move/abilities/ability_destroy_random_enemy_in_deck"
 import { place_self_in_field } from "@/logic/player_move/abilities/ability_place_self_in_field"
+import { set_lowest_dmg_to_as_highest } from "@/logic/player_move/abilities/ability_set_lowest_dmg_to_as_highest"
 
 // Сюда заходим если там есть враг
 // card - карта, которую мы играем (или из руки, или лидер).
@@ -67,6 +68,9 @@ function damage_ai_card(card, enemy, isCard, gameObj) {
     damage_one(enemy, card, gameObj)
   } else if (card.ability.name === "place-self-in-field") {
     place_self_in_field(card, enemy, gameObj)
+  } else if (card.ability.name === "set-lowest-dmg-to-as-highest") {
+    set_lowest_dmg_to_as_highest(gameObj)
+    damage_one(enemy, card, gameObj)
   } else damage_one(enemy, card, gameObj)
 
   // убираем карту игрока, если в ней не осталось зарядов, из руки и из колоды, если играли оттуда
