@@ -46,6 +46,22 @@ export default {
         this.cards_pool = this.gameObj.hand.filter(
           card => card.id !== this.selected_card.id
         )
+      } else if (ability === "play-enemy-from-grave") {
+        this.cards_pool = this.gameObj.enemies_grave.filter(
+          e => e.color === "Bronze"
+        )
+        this.forEnemy()
+      } else if (ability === "play-special-from-deck") {
+        this.cards_pool = this.gameObj.deck.filter(
+          card => card.type === "Special"
+        )
+      } else if (ability === "play-special-from-grave") {
+        this.cards_pool = this.gameObj.grave.filter(
+          card => card.type === "Special"
+        )
+      } else if (ability === "move-enemy-from-deck-to-grave") {
+        this.cards_pool = this.gameObj.enemies
+        this.forEnemy()
       }
       this.ability = this.selected_card.ability.name
       if (this.cards_pool.length) this.show_pick_a_card_selection = true
@@ -66,8 +82,18 @@ export default {
       } else if (
         this.ability === "play-from-deck" ||
         this.ability === "play-from-grave" ||
-        this.ability === "play-from-deck-2"
+        this.ability === "play-from-deck-2" ||
+        this.ability === "play-enemy-from-grave" ||
+        this.ability === "play-special-from-deck" ||
+        this.ability === "play-special-from-grave"
       ) {
+        if (
+          this.ability === "play-from-grave" ||
+          this.ability === "play-special-from-grave"
+        ) {
+          card.charges = 1
+        }
+
         // Показать эту выбранную для игры карту. А снимаем этот ФЛАГ уже в самом GamePage!
         this.show_picked_card = true
         this.selected_card = card // ВОТ ЗДЕСЬ МЫ ЗАПОМНИЛИ КАРТУ ИЗ РУКИ НА КОТОРУЮ ТКНУЛИ
@@ -76,12 +102,27 @@ export default {
         this.setActive() // поле и лидер врагов теперь активны
       } else if (this.ability === "incr-dmg-to-hand-by-self-dmg") {
         card.damage += this.special_case_value
+      } else if (this.ability === "move-enemy-from-deck-to-grave") {
+        const cd = this.gameObj.enemies.findIndex(c => c.id === card.id)
+        this.gameObj.enemies.splice(cd, 1)
+        card.hp = card.base_hp
+        this.gameObj.enemies_grave.push(card)
       }
 
       this.show_pick_a_card_selection = false
       this.ability = ""
       this.cards_pool = []
       this.special_case_value = null
+    },
+
+    forEnemy() {
+      this.cards_pool.forEach(card => {
+        card["ability"] = {
+          name: "damage-one",
+          description: "Нанести {damage} урона одному врагу",
+        }
+        card["charges"] = 1
+      })
     },
   },
 }
