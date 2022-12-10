@@ -21,6 +21,7 @@ import { destroy_random_enemy_in_deck } from "@/logic/player_move/abilities/abil
 import { place_self_in_field } from "@/logic/player_move/abilities/ability_place_self_in_field"
 import { set_lowest_dmg_to_as_highest } from "@/logic/player_move/abilities/ability_set_lowest_dmg_to_as_highest"
 import { spawn_tokens_at_enemy_deck } from "@/logic/player_move/abilities/ability_spawn_tokens_at_enemy_deck"
+import { incr_dmg_to_all_hand } from "@/logic/player_move/abilities/ability_incr_dmg_to_all_hand"
 
 // Сюда заходим если там есть враг
 // card - карта, которую мы играем (или из руки, или лидер).
@@ -75,6 +76,9 @@ function damage_ai_card(card, enemy, isCard, gameObj) {
   } else if (card.ability.name === "spawn-tokens-at-enemy-deck") {
     spawn_tokens_at_enemy_deck(card, enemy, gameObj)
     damage_one(enemy, card, gameObj)
+  } else if (card.ability.name === "incr-dmg-to-all-hand") {
+    damage_one(enemy, card, gameObj)
+    incr_dmg_to_all_hand(card, gameObj)
   } else damage_one(enemy, card, gameObj)
 
   // убираем карту игрока, если в ней не осталось зарядов, из руки и из колоды, если играли оттуда
