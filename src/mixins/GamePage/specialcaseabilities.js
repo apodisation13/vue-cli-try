@@ -1,4 +1,4 @@
-import { choice } from "@/lib/utils"
+import { choice_element } from "@/lib/utils"
 
 export default {
   data() {
@@ -120,7 +120,7 @@ export default {
       } else if (this.ability === "decr-dmg-to-hand-incr-to-random-hand") {
         card.damage -= this.special_case_value
         if (card.damage < 0) card.damage = 0
-        const random_card = this.gameObj.hand[choice(this.gameObj.hand)]
+        const random_card = choice_element(this.gameObj.hand)
         random_card.damage += this.special_case_value
       }
 
