@@ -1,7 +1,7 @@
 <template>
   <div>
     <button class="enemies_grave_btn" @click="visible = true">
-      КлВр {{ enemies_len }}
+      Сброс {{ enemies_len }}
     </button>
     <modal-window v-if="visible" v-touch:swipe.left="close_self">
       <button-close @close_self="close_self" />
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import EnemyList from "@/components/EnemyList"
+import EnemyList from "@/components/Cards/EnemyList"
 import ButtonClose from "@/components/UI/Buttons/ButtonClose"
 import ModalWindow from "@/components/ModalWindows/ModalWindow"
 
@@ -44,11 +44,10 @@ export default {
 
 <style scoped>
 .enemies_grave_btn {
-  height: 40%;
-  width: 98%;
-  border: solid 1px yellow;
-  margin-bottom: 1%;
-  margin-top: 1%;
+  height: 98%;
+  width: 47px;
+  border: solid 1px red;
   position: relative;
+  border-radius: 10px;
 }
 </style>

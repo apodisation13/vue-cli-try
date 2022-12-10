@@ -1,6 +1,10 @@
 <template>
-  <div style="height: 3.5vh">
-    <button class="grave-btn" @click="flag = true">
+  <div>
+    <button
+      @click="flag = true"
+      class="grave-btn"
+      :style="{ backgroundColor: trigger_passive ? 'red' : '' }"
+    >
       Сброс {{ grave_len }}
     </button>
     <modal-window v-if="flag" v-touch:swipe="close_self">
@@ -13,7 +17,7 @@
 <script>
 import ModalWindow from "@/components/ModalWindows/ModalWindow"
 import ButtonClose from "@/components/UI/Buttons/ButtonClose"
-import CardListComponent from "@/components/CardListComponent"
+import CardListComponent from "@/components/Cards/CardListComponent"
 export default {
   name: "grave-comp",
   components: { CardListComponent, ButtonClose, ModalWindow },
@@ -32,6 +36,12 @@ export default {
     grave_len() {
       return this.grave.length
     },
+    trigger_passive() {
+      for (const card of this.grave) {
+        if (card.trigger_grave_passive) return true
+      }
+      return false
+    },
   },
   methods: {
     close_self() {
@@ -44,10 +54,9 @@ export default {
 <style scoped>
 .grave-btn {
   height: 98%;
-  width: 98%;
-  border: solid 1px yellow;
-  margin-bottom: 1%;
-  margin-top: 1%;
+  width: 47px;
+  border: solid 1px red;
   position: relative;
+  border-radius: 10px;
 }
 </style>

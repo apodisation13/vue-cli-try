@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import NewsList from "@/components/NewsList.vue"
+import NewsList from "@/components/Pages/MainPage/NewsList.vue"
 
 export default {
   computed: {
@@ -51,7 +51,7 @@ button {
 
 .not_logged_in__text {
   width: 70%;
-  font-family: "Philosopher";
+  font-family: "Philosopher", serif;
   font-style: normal;
   font-weight: 700;
   font-size: 29px;
@@ -66,7 +66,7 @@ button {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0px 3.64345px 3.64345px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 3.64345px 3.64345px rgba(0, 0, 0, 0.25);
   height: 60px;
 }
 

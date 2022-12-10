@@ -24,7 +24,7 @@
 
 <script>
 import draggable from "vuedraggable"
-import CardItem from "@/components/CardItem"
+import CardItem from "@/components/Cards/CardItem"
 export default {
   name: "hand-comp",
   components: { CardItem, draggable },
@@ -76,22 +76,21 @@ export default {
       this.$emit("chose_player_card", this.hand[index])
     },
     onDragEnd(event) {
-      const event_type = event.originalEvent.type // если мы с компа, то там есть этот параметр
+      const event_type = event?.originalEvent?.type // если мы с компа, то там есть этот параметр
 
       if (event_type === "dragend") {
         console.log("МЫ С КОМПА!!!!")
-        console.log(event.originalEvent.clientX, event.originalEvent.clientY)
-        const elems = document.elementsFromPoint(
-          event.originalEvent.clientX,
-          event.originalEvent.clientY
-        )
+        const x = event?.originalEvent?.clientX
+        const y = event?.originalEvent?.clientY
+        if (!x || !y) return
+        const elems = document.elementsFromPoint(x, y)
         this.get_target(elems)
       } else {
         console.log("МЫ С ТЕЛЕФОНА!!!")
-        const elems = document.elementsFromPoint(
-          event.originalEvent.changedTouches[0].clientX,
-          event.originalEvent.changedTouches[0].clientY
-        )
+        const x = event?.originalEvent?.changedTouches?.[0].clientX
+        const y = event?.originalEvent?.changedTouches?.[0].clientY
+        if (!x || !y) return
+        const elems = document.elementsFromPoint(x, y)
         this.get_target(elems)
       }
     },
@@ -128,7 +127,7 @@ export default {
 
 <style scoped>
 .hand {
-  width: 100%;
+  width: 99%;
   margin-top: 2%;
 }
 

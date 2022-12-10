@@ -3,6 +3,7 @@ import { choice_pop } from "@/lib/utils"
 export default {
   data() {
     return {
+      redraws: 3, // ИЗНАЧАЛЬНОЕ ЗНАЧЕНИЕ 3, А ДАЛЬШЕ БУДЕТ 1!!!
       can_draw: false, // возможность вытянуть карту
       draw: false, // показать ли модальное окно с редро
     }
@@ -19,9 +20,15 @@ export default {
 
     // тянем одну карту из деки, блокируем карты игрока чтобы ходить было нельзя
     draw_one_card() {
+      if (this.calc_can_draw()) {
+        let card1 = choice_pop(this.gameObj.deck)
+        this.gameObj.hand.push(card1)
+      }
+      if (this.calc_can_draw()) {
+        let card2 = choice_pop(this.gameObj.deck)
+        this.gameObj.hand.push(card2)
+      }
       this.draw = true // показать окно редро
-      let card = choice_pop(this.gameObj.deck)
-      this.gameObj.hand.push(card) // FIXME: добавить в список на 1е место )))) потому что там в руке float:right
       this.isActive.player_cards = false
       this.can_draw = false
     },
@@ -30,6 +37,7 @@ export default {
       this.draw = false // закрыть модальное окно с редро
       this.gameObj.hand = dict.hand
       this.gameObj.deck = dict.deck
+      this.redraws = 1 // после первого редро устанавливаем до конца игры значение 1
     },
   },
 }

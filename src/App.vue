@@ -1,13 +1,10 @@
 <template>
   <div class="wrapper__bg">
-    <div class="app" v-touch:swipe.right="show">
+    <div class="app">
       <!--картинка страницы по параметрам из роутера-->
       <page-image />
       <!--верхняя часть меню, хэдер-->
       <menu-header />
-
-      <!--боковое меню слева, TODO: убрать это на страницу GAME-->
-      <menu-bar v-if="showMenu" />
 
       <!--собственно рендер самого приложения через роутер, формат {путь(роут): компонент}-->
       <router-view />
@@ -19,7 +16,6 @@
 </template>
 
 <script>
-import MenuBar from "@/components/UI/Menu/MenuBar"
 import MenuFooter from "@/components/UI/Menu/MenuFooter"
 import MenuHeader from "@/components/UI/Menu/MenuHeader"
 import PageImage from "@/components/PageImage"
@@ -28,7 +24,6 @@ export default {
     PageImage,
     MenuHeader,
     MenuFooter,
-    MenuBar,
   },
   async created() {
     //устанавливаем корректное значение вьюпорта переменную css для работы c var(--vh)
@@ -49,22 +44,6 @@ export default {
     } finally {
       await this.$router.push("/")
     }
-  },
-  computed: {
-    showMenu() {
-      return (
-        this.$store.state.show_menu &&
-        this.$router.currentRoute.value.meta.sideMenu
-      )
-    },
-  },
-  methods: {
-    show() {
-      this.$store.commit("set_show_menu", true)
-    },
-    close_menu() {
-      this.show_menu = false
-    },
   },
 }
 </script>

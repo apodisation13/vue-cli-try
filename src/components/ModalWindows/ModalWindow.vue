@@ -13,7 +13,7 @@ export default {
 
 <style scoped>
 .modal_window {
-  background-color: springgreen;
+  background: linear-gradient(180deg, #1e2834 0%, #0a0b0c 100%);
   text-align: center;
   position: absolute;
   top: 0;
@@ -22,13 +22,5 @@ export default {
   left: 0;
   z-index: 9999;
   font-size: 12pt;
-
-  /*background-color: limegreen;*/
-  /*width: 100%;*/
-  /*height: 90%;*/
-  /*border-radius: 12px;*/
-  /*text-align: center;*/
-  /*position: absolute;*/
-  /*z-index: 9999;*/
 }
 </style>

@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import EnemyComp from "@/components/EnemyComp"
+import EnemyComp from "@/components/Cards/EnemyComp"
 export default {
   name: "field-comp",
   components: { EnemyComp },
@@ -39,14 +39,6 @@ export default {
       // эмиттим ВСЕГО врага
       this.$emit("exec_damage_ai_card", this.field[i])
     },
-    // onDrop(e, index) {
-    //   const card = e.dataTransfer.getData('card')
-    //   console.log(e)
-    //   console.log(JSON.parse(card))
-    //   console.log(index)
-    //   console.log(this.field[index])
-    //   this.$emit('exec_damage_ai_card', this.field[index])
-    // },
   },
   emits: ["exec_damage_ai_card"],
 }
@@ -54,7 +46,7 @@ export default {
 
 <style scoped>
 .field {
-  width: 75%;
+  width: 72%;
   overflow: hidden;
 }
 
@@ -67,9 +59,9 @@ table tr,
 td {
   /* width: 50%; */
   height: 18vh;
-  border: dashed 0.5px black;
+  /*border: dashed 0.5px black;*/
   overflow: hidden;
-  padding: 5px;
+  padding: 3px;
   /*position: relative;*/
 }
 </style>

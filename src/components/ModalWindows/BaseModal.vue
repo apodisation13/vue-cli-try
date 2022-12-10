@@ -1,16 +1,23 @@
 <template>
   <div class="wrapper_modal" @click.stop="hideModal">
-    <div @click.stop class="modal">
+    <div @click.stop class="modal" :style="styleWrapper">
       <slot></slot>
     </div>
   </div>
 </template>
 
 <script>
+import { styleWrapper } from "@/logic/border_styles"
+
 export default {
   methods: {
     hideModal() {
       this.$emit("close-modal")
+    },
+  },
+  computed: {
+    styleWrapper() {
+      return styleWrapper(this.$store.getters["selectedTheme"])
     },
   },
   emits: ["close-modal"],
@@ -34,7 +41,7 @@ export default {
 .modal {
   max-width: 335px;
   width: 100%;
-  background: #fff;
+  /*background: linear-gradient(#0f2845, #000000);*/
   border-radius: 18px;
   padding: 45px 22px;
   display: flex;

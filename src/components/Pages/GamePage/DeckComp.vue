@@ -1,6 +1,12 @@
 <template>
-  <div style="height: 3.5vh">
-    <button class="deck-btn" @click="flag = true">Колода {{ deck_len }}</button>
+  <div>
+    <button
+      @click="flag = true"
+      class="deck-btn"
+      :style="{ backgroundColor: trigger_passive ? 'yellow' : '' }"
+    >
+      Колода {{ deck_len }}
+    </button>
     <modal-window v-if="flag" v-touch:swipe="close_self">
       <button-close @close_self="close_self" />
       <card-list-component :cards="deck" />
@@ -11,7 +17,7 @@
 <script>
 import ModalWindow from "@/components/ModalWindows/ModalWindow"
 import ButtonClose from "@/components/UI/Buttons/ButtonClose"
-import CardListComponent from "@/components/CardListComponent"
+import CardListComponent from "@/components/Cards/CardListComponent"
 export default {
   name: "deck-comp",
   components: { CardListComponent, ButtonClose, ModalWindow },
@@ -30,6 +36,12 @@ export default {
     deck_len() {
       return this.deck.length
     },
+    trigger_passive() {
+      for (const card of this.deck) {
+        if (card.trigger_deck_passive) return true
+      }
+      return false
+    },
   },
   methods: {
     close_self() {
@@ -42,10 +54,9 @@ export default {
 <style scoped>
 .deck-btn {
   height: 98%;
-  width: 98%;
+  width: 47px;
   border: solid 1px yellow;
-  margin-bottom: 1%;
-  margin-top: 1%;
   position: relative;
+  border-radius: 10px;
 }
 </style>
