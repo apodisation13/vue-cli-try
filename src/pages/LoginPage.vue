@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-
     <!-- HEADER -->
     <div class="header" v-if="formLogin">
       <div class="header__welcome">Добрый день!</div>
@@ -23,16 +22,34 @@
         <div class="inputs">
           <div class="form__auth">
             <label for="email" class="form__label">Почта</label>
-            <input class="form__data" v-model="email" id="email" autocomplete="email" />
+            <input
+              class="form__data"
+              v-model="email"
+              id="email"
+              autocomplete="email"
+            />
           </div>
           <div class="form__auth" v-if="!formLogin">
-            <label class="form__label" for="username">Введите имя пользователя</label>
-            <input class="form__data" v-model="username" id="username" autocomplete="username" />
+            <label class="form__label" for="username"
+              >Введите имя пользователя</label
+            >
+            <input
+              class="form__data"
+              v-model="username"
+              id="username"
+              autocomplete="username"
+            />
           </div>
           <div class="form__auth form__auth_pass">
             <label class="form__label" for="password">Пароль</label>
-            <input class="form__data" v-model="password" id="password" type="password" autocomplete="password"
-              v-on:keyup.enter="login" />
+            <input
+              class="form__data"
+              v-model="password"
+              id="password"
+              type="password"
+              autocomplete="password"
+              v-on:keyup.enter="login"
+            />
             <div class="eye" @click="toggle_pass_visibility">
               <div class="eye__apple"></div>
             </div>
@@ -41,8 +58,14 @@
             <label class="form__label" for="confirm-password">
               Подтверждение пароля
             </label>
-            <input class="form__data" v-model="confirmPassword" id="confirm-password" type="password"
-              autocomplete="confirmPassword" v-on:keyup.enter="userRegister" />
+            <input
+              class="form__data"
+              v-model="confirmPassword"
+              id="confirm-password"
+              type="password"
+              autocomplete="confirmPassword"
+              v-on:keyup.enter="userRegister"
+            />
             <div class="eye" @click="toggle_pass_visibility">
               <div class="eye__apple"></div>
             </div>
@@ -67,13 +90,25 @@
           <div class="form__agree">
             <div class="agree__user">
               <div class="checkbox" @click="toggleCheckbox">
-                <input id="user-checkbox" type="checkbox" class="custom-checkbox" v-model="is_user_agree" />
+                <input
+                  id="user-checkbox"
+                  type="checkbox"
+                  class="custom-checkbox"
+                  v-model="is_user_agree"
+                />
               </div>
-              <label for="user-checkbox"> Я ознакомился с Пользовательским соглашением </label>
+              <label for="user-checkbox">
+                Я ознакомился с Пользовательским соглашением
+              </label>
             </div>
             <div class="agree__policy">
               <div class="checkbox" @click="toggleCheckbox">
-                <input id="policy-checkbox" type="checkbox" class="custom-checkbox" v-model="is_policy_agree" />
+                <input
+                  id="policy-checkbox"
+                  type="checkbox"
+                  class="custom-checkbox"
+                  v-model="is_policy_agree"
+                />
               </div>
               <label for="policy-checkbox">
                 Я согласен с
@@ -86,10 +121,20 @@
 
       <!-- Кнопки входа и регистрации -->
       <div class="form__btn">
-        <button class="btn__login" v-if="formLogin" :disabled="!(email && password)" @click="login">
+        <button
+          class="btn__login"
+          v-if="formLogin"
+          :disabled="!(email && password)"
+          @click="login"
+        >
           <span>Войти</span>
         </button>
-        <button class="btn__login" v-else @click="userRegister" :disabled="!(is_policy_agree & is_user_agree)">
+        <button
+          class="btn__login"
+          v-else
+          @click="userRegister"
+          :disabled="!(is_policy_agree & is_user_agree)"
+        >
           <span>Регистрация</span>
         </button>
       </div>
@@ -109,7 +154,7 @@ export default {
       error: "",
       formLogin: true,
       is_user_agree: false,
-      is_policy_agree: false
+      is_policy_agree: false,
     }
   },
   methods: {
@@ -170,7 +215,8 @@ export default {
       if (!e.target.querySelector("input")) return
       const checkbox = e.target.querySelector("input")
       checkbox.checked = !checkbox.checked
-      if (checkbox.id === "policy-checkbox") this.is_policy_agree = checkbox.checked
+      if (checkbox.id === "policy-checkbox")
+        this.is_policy_agree = checkbox.checked
       if (checkbox.id === "user-checkbox") this.is_user_agree = checkbox.checked
     },
 
@@ -233,10 +279,12 @@ export default {
   line-height: 29px;
   letter-spacing: 0em;
 
-  background: linear-gradient(153.5deg,
-      hsl(39, 79%, 39%) 16.64%,
-      hsl(44, 94%, 67%) 47.22%,
-      hsl(39, 64%, 43%) 82.67%);
+  background: linear-gradient(
+    153.5deg,
+    hsl(39, 79%, 39%) 16.64%,
+    hsl(44, 94%, 67%) 47.22%,
+    hsl(39, 64%, 43%) 82.67%
+  );
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
@@ -317,17 +365,22 @@ span {
   margin: 2% auto auto;
   text-align: center;
   border-radius: 1%;
-  border-image: linear-gradient(180deg,
+  border-image: linear-gradient(
+      180deg,
       hsl(36, 15%, 25%) -43.75%,
       hsl(36, 38%, 63%) 52.08%,
-      hsl(35, 15%, 25%) 145.92%) 1;
+      hsl(35, 15%, 25%) 145.92%
+    )
+    1;
   font-size: 14pt;
   color: hsl(43, 91%, 86%);
 
-  background: linear-gradient(180deg,
-      #1d252d -43.75%,
-      rgba(0, 0, 0, 0.13) 52.08%,
-      #282d33 145.92%);
+  background: linear-gradient(
+    180deg,
+    #1d252d -43.75%,
+    rgba(0, 0, 0, 0.13) 52.08%,
+    #282d33 145.92%
+  );
 }
 
 .form__data:focus {
@@ -400,7 +453,7 @@ span {
 }
 
 .checkbox:has(.custom-checkbox:checked) {
-  background-image: url("~@/assets/icons/buttons/checkbox_checked.svg")
+  background-image: url("~@/assets/icons/buttons/checkbox_checked.svg");
 }
 
 .custom-checkbox {
@@ -416,10 +469,12 @@ span {
   cursor: pointer;
   width: 100%;
   padding: 12px;
-  background: linear-gradient(180deg,
-      #1d252d -21.82%,
-      rgba(0, 0, 0, 0.13) 44.55%,
-      #282d33 109.53%);
+  background: linear-gradient(
+    180deg,
+    #1d252d -21.82%,
+    rgba(0, 0, 0, 0.13) 44.55%,
+    #282d33 109.53%
+  );
   font-size: 14pt;
   border-radius: 1%;
   border: 2px solid #facf5d;
@@ -431,10 +486,12 @@ span {
 }
 
 .btn__login span {
-  background: linear-gradient(183.6deg,
-      #edb13e 2.96%,
-      #f4d977 65.79%,
-      #eeb850 129.95%);
+  background: linear-gradient(
+    183.6deg,
+    #edb13e 2.96%,
+    #f4d977 65.79%,
+    #eeb850 129.95%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
