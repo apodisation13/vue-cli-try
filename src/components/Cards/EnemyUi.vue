@@ -2,7 +2,7 @@
   <div>
     <div
       class="card-enemy"
-      :class="{'not-charges': enemy.hp <= 0}"
+      :class="{ 'not-charges': enemy.hp <= 0 }"
       :style="[{ backgroundImage: `url(${enemy.image})` }, card_margin(enemy)]"
     ></div>
     <div class="card-enemy-information">
@@ -100,7 +100,6 @@ export default {
 .card-enemy-information {
   z-index: 2;
 }
-
 
 /* добавляем псевдоэлемент к семантичному селектору card-item-component*/
 .not-charges::after {

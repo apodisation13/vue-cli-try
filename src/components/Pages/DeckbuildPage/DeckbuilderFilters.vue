@@ -1,7 +1,7 @@
 <template>
   <base-modal @close-modal="closeModal">
     <div class="deck_builder_filters">
-      <button-close-img @click="closeModal"/>
+      <button-close-img @click="closeModal" />
       <filter-factions @set-filter="setFilter" v-if="!deckBuilding" />
       <filter-types @set-filter="setFilter" />
       <filter-colors @set-filter="setFilter" />
@@ -19,7 +19,7 @@ import FilterColors from "@/components/Pages/DeckbuildPage/FilterColors"
 import FilterPassives from "@/components/Pages/DeckbuildPage/FilterPassives"
 import FilterUnlocked from "@/components/Pages/DeckbuildPage/FilterUnlocked"
 import BaseModal from "@/components/ModalWindows/BaseModal"
-import ButtonCloseImg from '@/components/UI/Buttons/ButtonCloseImg'
+import ButtonCloseImg from "@/components/UI/Buttons/ButtonCloseImg"
 
 export default {
   components: {
@@ -52,9 +52,8 @@ export default {
 </script>
 
 <style scoped>
-  .deck_builder_filters {
-    position: relative;
-    padding: 55px 40px 40px;
-  }
-
+.deck_builder_filters {
+  position: relative;
+  padding: 55px 40px 40px;
+}
 </style>

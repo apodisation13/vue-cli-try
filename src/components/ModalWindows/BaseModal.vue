@@ -9,7 +9,6 @@
 </template>
 
 <script>
-
 export default {
   methods: {
     hideModal() {
@@ -39,10 +38,10 @@ export default {
   padding: 1px;
   background-image: linear-gradient(
     180deg,
-    #4A4237 0%,
-    #C5A87E 50%,
-    #4A4237 100%
-    );
+    #4a4237 0%,
+    #c5a87e 50%,
+    #4a4237 100%
+  );
   border-radius: 20px;
   max-width: 340px;
   width: 100%;
@@ -50,11 +49,7 @@ export default {
 }
 
 .modal {
-  background: linear-gradient(
-    180deg, 
-    #1E2834 0%, 
-    #0A0B0C 100%
-  );
+  background: linear-gradient(180deg, #1e2834 0%, #0a0b0c 100%);
   border-radius: 20px;
 }
 </style>
