@@ -131,7 +131,7 @@ export default {
 
 .avatar {
   position: absolute;
-  background: linear-gradient(180deg, #b07b15 0%, #facf5d 45%, #b48328 98.96%);
+  background: var(--five-gold-gradient);
   border-radius: 40px;
   padding: 3px;
   border: 5px solid #1a1d24;
@@ -199,12 +199,7 @@ export default {
   inset: 0;
   border-radius: 5px;
   padding: 2px;
-  background: linear-gradient(
-    183.6deg,
-    #edb13e 2.96%,
-    #f4d977 65.79%,
-    #eeb850 129.95%
-  );
+  background: var(--primary-gold-gradient);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -258,12 +253,7 @@ export default {
   /* identical to box height, or 110% */
   letter-spacing: -0.02em;
   /* текст градиент */
-  background: linear-gradient(
-    183.6deg,
-    #edb13e 2.96%,
-    #f4d977 65.79%,
-    #eeb850 129.95%
-  );
+  background: var(--primary-gold-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

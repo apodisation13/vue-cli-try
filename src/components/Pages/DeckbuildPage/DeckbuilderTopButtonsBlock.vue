@@ -1,5 +1,5 @@
 <template>
-  <div class="deckbuilder-filters">
+  <div>
     <div class="button-filters">
       <button-icon
         class="filter_btn"
@@ -28,8 +28,7 @@
       v-if="showNewDeckFactionSelect"
       @close-modal="showNewDeckFactionSelect = false"
     >
-      <div>Выберете фракцию!</div>
-      <filter-factions @set-filter="setFilter" />
+      <filter-factions title="Выберите фракцию" @set-filter="setFilter" />
     </base-modal>
   </div>
 </template>

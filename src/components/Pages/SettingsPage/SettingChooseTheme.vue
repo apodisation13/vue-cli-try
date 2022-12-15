@@ -62,12 +62,7 @@ export default {
   );
 }
 .selected_theme {
-  border-image-source: linear-gradient(
-    93.48deg,
-    #b07b15 -6.47%,
-    #facf5d 41.82%,
-    #b48328 97.8%
-  );
+  border-image-source: var(--secondary-gold-gradient);
 }
 
 .game__outer-wrapper {

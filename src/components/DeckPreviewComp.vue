@@ -5,7 +5,13 @@
     @contextmenu.prevent
     :style="background_color(deck)"
   >
-    {{ deck.name }}, жизни {{ deck.health }}
+    <div class="global_text deck_info deck_name">
+      {{ deck.name }}
+    </div>
+    <div class="deck_info deck_hp">
+      <div class="heart"></div>
+      <div>{{ deck.health }}</div>
+    </div>
     <deck-modal
       v-if="show_deck"
       :deck="deck.cards"
@@ -44,4 +50,27 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.deck_info {
+  display: inline;
+}
+.deck_name {
+  padding-left: 20px;
+  font-size: 20px;
+  background: var(--primary-gold-gradient);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+.deck_hp {
+  float: right;
+  padding-right: 20px;
+}
+.heart {
+  width: 20px;
+  height: 20px;
+  background-image: url("~@/assets/icons/card/heart_green.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  /*margin-right: 3px;*/
+}
+</style>

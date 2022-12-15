@@ -92,12 +92,7 @@ export default {
 
 .price-value {
   font-size: 1.5rem;
-  background: linear-gradient(
-    183.6deg,
-    hsl(39, 83%, 59%) 2.96%,
-    hsl(47, 85%, 71%) 65.79%,
-    hsl(39, 82%, 62%) 129.95%
-  );
+  background: var(--primary-gold-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -130,24 +125,14 @@ export default {
   bottom: -4px;
   right: -4px;
   border-radius: 50%;
-  background: linear-gradient(
-    to bottom,
-    hsl(39, 79%, 39%),
-    hsl(44, 94%, 67%),
-    hsl(39, 64%, 43%)
-  );
+  background: var(--four-gold-gradient);
   z-index: -2;
 }
 
 .item-add span {
   font-family: "Philosopher", serif;
   font-size: 3rem;
-  background: linear-gradient(
-    183.6deg,
-    hsl(39, 79%, 39%) 100%,
-    hsl(44, 94%, 67%) 100%,
-    hsl(39, 64%, 43%) 100%
-  );
+  background: var(--four-gold-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

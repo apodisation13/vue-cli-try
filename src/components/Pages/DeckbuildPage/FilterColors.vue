@@ -1,6 +1,8 @@
 <template>
   <div class="filter_colors">
-    <div @click="reset_filter_colors">Цвет</div>
+    <div class="global_text filter_title" @click="reset_filter_colors">
+      Цвет
+    </div>
     <div class="colors" v-for="color in colors" :key="color">
       <button
         class="color"
@@ -40,6 +42,13 @@ export default {
 <style scoped>
 .filter_colors {
   margin-bottom: 12%;
+}
+.filter_title {
+  font-size: 25px;
+  margin-bottom: 15px;
+  background: var(--primary-gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .colors {
   display: inline;

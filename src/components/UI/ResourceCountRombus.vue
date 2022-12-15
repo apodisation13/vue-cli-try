@@ -30,7 +30,7 @@ export default {
   rotate: 45deg;
   border-width: 3px;
   border-style: solid;
-  border-image-source: linear-gradient(to bottom, #b07b15, #facf5d, #b48328);
+  border-image-source: var(--four-gold-gradient);
   border-image-slice: 1;
 
   background-color: whitesmoke;
@@ -49,9 +49,9 @@ export default {
   line-height: 120%;
   background: linear-gradient(
     183.6deg,
-    hsl(39, 83%, 30%) 2.96%,
-    hsl(47, 85%, 40%) 65.79%,
-    hsl(39, 82%, 30%) 129.95%
+    #8c600d 2.96%,
+    #bd970f 65.79%,
+    #8b5f0e 129.95%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
