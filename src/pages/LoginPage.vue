@@ -1,14 +1,20 @@
 <template>
   <div class="container">
     <!-- HEADER -->
-    <div class="header" v-if="formLogin">
+    <div class="header" v-if="error">
+      <div class="header__welcome">Введены некорректные данные</div>
+      <div class="header__login">
+        {{ error }}
+      </div>
+    </div>
+    <div class="header" v-else-if="formLogin">
       <div class="header__welcome">Добрый день!</div>
       <div class="header__login">
         Войдите в систему ниже<br />
         или <a @click.prevent="choseFormRegister">создайте учетную запись</a>
       </div>
     </div>
-    <div class="header" v-if="!formLogin">
+    <div class="header" v-else-if="!formLogin">
       <div class="header__welcome">Создать аккаунт</div>
       <div class="header__login">
         Введите данные своей учетной записи ниже или
@@ -22,34 +28,16 @@
         <div class="inputs">
           <div class="form__auth">
             <label for="email" class="form__label">Почта</label>
-            <input
-              class="form__data"
-              v-model="email"
-              id="email"
-              autocomplete="email"
-            />
+            <input class="form__data" v-model="email" id="email" autocomplete="email" />
           </div>
           <div class="form__auth" v-if="!formLogin">
-            <label class="form__label" for="username"
-              >Введите имя пользователя</label
-            >
-            <input
-              class="form__data"
-              v-model="username"
-              id="username"
-              autocomplete="username"
-            />
+            <label class="form__label" for="username">Введите имя пользователя</label>
+            <input class="form__data" v-model="username" id="username" autocomplete="username" />
           </div>
           <div class="form__auth form__auth_pass">
             <label class="form__label" for="password">Пароль</label>
-            <input
-              class="form__data"
-              v-model="password"
-              id="password"
-              type="password"
-              autocomplete="password"
-              v-on:keyup.enter="login"
-            />
+            <input class="form__data" v-model="password" id="password" type="password" autocomplete="password"
+              v-on:keyup.enter="login" />
             <div class="eye" @click="toggle_pass_visibility">
               <div class="eye__apple"></div>
             </div>
@@ -58,14 +46,8 @@
             <label class="form__label" for="confirm-password">
               Подтверждение пароля
             </label>
-            <input
-              class="form__data"
-              v-model="confirmPassword"
-              id="confirm-password"
-              type="password"
-              autocomplete="confirmPassword"
-              v-on:keyup.enter="userRegister"
-            />
+            <input class="form__data" v-model="confirmPassword" id="confirm-password" type="password"
+              autocomplete="confirmPassword" v-on:keyup.enter="userRegister" />
             <div class="eye" @click="toggle_pass_visibility">
               <div class="eye__apple"></div>
             </div>
@@ -90,30 +72,20 @@
           <div class="form__agree">
             <div class="agree__user">
               <div class="checkbox" @click="toggleCheckbox">
-                <input
-                  id="user-checkbox"
-                  type="checkbox"
-                  class="custom-checkbox"
-                  v-model="is_user_agree"
-                />
+                <input id="user-checkbox" type="checkbox" class="custom-checkbox" v-model="is_user_agree" />
               </div>
-              <label for="user-checkbox">
-                Я ознакомился с Пользовательским соглашением
-              </label>
+              <p for="user-checkbox">
+                Я ознакомился с <a class="agree__policy_link" @click="toggle_agreement_modal">Пользовательским соглашением</a>
+              </p>
             </div>
             <div class="agree__policy">
               <div class="checkbox" @click="toggleCheckbox">
-                <input
-                  id="policy-checkbox"
-                  type="checkbox"
-                  class="custom-checkbox"
-                  v-model="is_policy_agree"
-                />
+                <input id="policy-checkbox" type="checkbox" class="custom-checkbox" v-model="is_policy_agree" />
               </div>
-              <label for="policy-checkbox">
+              <p for="policy-checkbox">
                 Я согласен с
-                <a class="agree__policy_link">Политикой конфиденциальности</a>
-              </label>
+                <a class="agree__policy_link" @click="toggle_policy_modal">Политикой конфиденциальности</a>
+              </p>
             </div>
           </div>
         </div>
@@ -121,30 +93,32 @@
 
       <!-- Кнопки входа и регистрации -->
       <div class="form__btn">
-        <button
-          class="btn__login"
-          v-if="formLogin"
-          :disabled="!(email && password)"
-          @click="login"
-        >
+        <button class="btn__login" v-if="formLogin" @click="login" :disabled="!(email && password)">
           <span>Войти</span>
         </button>
-        <button
-          class="btn__login"
-          v-else
-          @click="userRegister"
-          :disabled="!(is_policy_agree & is_user_agree)"
-        >
+        <button class="btn__login" v-else @click="userRegister" :disabled="!(is_policy_agree & is_user_agree)">
           <span>Регистрация</span>
         </button>
       </div>
-      <div class="error" v-if="error">{{ error }}</div>
     </form>
+    <policy-modal 
+    v-if="show_policy_modal" 
+    class="policy-modal"
+    @close-modal="toggle_policy_modal"
+    />
+    <agreement-modal 
+    v-if="show_agreement_modal" 
+    class="policy-modal"
+    @close-modal="toggle_agreement_modal"
+    />
   </div>
 </template>
 
 <script>
+import AgreementModal from "@/components/ModalWindows/AgreementModal"
+import PolicyModal from "@/components/ModalWindows/PolicyModal"
 export default {
+  components: { PolicyModal, AgreementModal },
   data() {
     return {
       username: "",
@@ -153,32 +127,37 @@ export default {
       confirmPassword: "",
       error: "",
       formLogin: true,
+      show_agreement_modal: false,
+      show_policy_modal: false,
       is_user_agree: false,
       is_policy_agree: false,
     }
   },
   methods: {
     async login() {
+      this.reset_highlight()
       this.error = this.validate_form(false)
       if (this.error) return
 
-      await this.$router.push("/loading")
       try {
         await this.$store.dispatch("login", {
           username: this.email,
           password: this.password,
         })
+        await this.$router.push("/loading")
         await this.$store.dispatch("get_user_database")
         await this.$store.dispatch("render_all_images")
-      } catch (err) {
-        this.error = err
-        throw err
-      } finally {
         await this.$router.push("/")
+      } catch (err) {
+        this.error = err.message
+        document.getElementById("email").classList.toggle("form__data_error")
+        document.getElementById("password").classList.toggle("form__data_error")
+        return
       }
     },
 
     async userRegister() {
+      this.reset_highlight()
       this.error = this.validate_form(true)
       if (this.error) return
 
@@ -195,6 +174,13 @@ export default {
       }
     },
 
+    toggle_policy_modal() {
+      this.show_policy_modal = !this.show_policy_modal
+    },
+
+    toggle_agreement_modal() {
+      this.show_agreement_modal = !this.show_agreement_modal
+    },
     toggle_pass_visibility(e) {
       const pass_field = e.target
         .closest(".form__auth_pass")
@@ -230,18 +216,37 @@ export default {
       this.email = ""
       this.password = ""
     },
+    // :disabled="!(email && password)"
+    reset_highlight() {
+      document.getElementById("username")?.classList.remove("form__data_error")
+      document.getElementById("email").classList.remove("form__data_error")
+      document.getElementById("password").classList.remove("form__data_error")
+      document.getElementById("confirm-password")?.classList.remove("form__data_error")
+    },
 
     validate_form(register) {
-      if (register && !this.username) return "Поле имя не может быть пустым"
+      if (register && !this.username) {
+        document.getElementById("username").classList.toggle("form__data_error")
+        return "Поле имя не может быть пустым"
+      }
 
-      if (!this.email) return "Поле почта не может быть пустым"
-      if (!this.email.includes("@")) return "Почта некорректна"
-
-      if (this.password.length < 8)
+      if (!this.email) {
+        document.getElementById("email").classList.toggle("form__data_error")
+        return "Поле почта не может быть пустым"
+      }
+      if (!this.email.includes("@")) {
+        document.getElementById("email").classList.toggle("form__data_error")
+        return "Почта некорректна"
+      }
+      if (this.password.length < 8) {
+        document.getElementById("password").classList.toggle("form__data_error")
         return "Пароль должен быть не менее 8 символов!"
-      if (register && this.password !== this.confirmPassword)
+      }
+      if (register && this.password !== this.confirmPassword) {
+        document.getElementById("password").classList.toggle("form__data_error")
+        document.getElementById("confirm-password").classList.toggle("form__data_error")
         return "Пароли не совпадают!"
-
+      }
       return ""
     },
   },
@@ -279,12 +284,10 @@ export default {
   line-height: 29px;
   letter-spacing: 0em;
 
-  background: linear-gradient(
-    153.5deg,
-    hsl(39, 79%, 39%) 16.64%,
-    hsl(44, 94%, 67%) 47.22%,
-    hsl(39, 64%, 43%) 82.67%
-  );
+  background: linear-gradient(153.5deg,
+      hsl(39, 79%, 39%) 16.64%,
+      hsl(44, 94%, 67%) 47.22%,
+      hsl(39, 64%, 43%) 82.67%);
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
@@ -325,10 +328,11 @@ span {
 .form__content {
   flex: 1 0 auto;
 }
+
 .form__auth {
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
   margin-top: 5px;
 }
 
@@ -365,22 +369,27 @@ span {
   margin: 2% auto auto;
   text-align: center;
   border-radius: 1%;
-  border-image: linear-gradient(
-      180deg,
+  border-image: linear-gradient(180deg,
       hsl(36, 15%, 25%) -43.75%,
       hsl(36, 38%, 63%) 52.08%,
-      hsl(35, 15%, 25%) 145.92%
-    )
-    1;
+      hsl(35, 15%, 25%) 145.92%) 1;
   font-size: 14pt;
   color: hsl(43, 91%, 86%);
 
-  background: linear-gradient(
-    180deg,
-    #1d252d -43.75%,
-    rgba(0, 0, 0, 0.13) 52.08%,
-    #282d33 145.92%
-  );
+  background: linear-gradient(180deg,
+      #1d252d -43.75%,
+      rgba(0, 0, 0, 0.13) 52.08%,
+      #282d33 145.92%);
+}
+
+.form__data_error {
+  background: linear-gradient(180deg,
+      #DD0505 -43.75%,
+      rgba(205, 33, 33, 0.19) 52.08%,
+      #CF0E0E 145.92%);
+  border-image: linear-gradient(hsla(0, 86%, 73%, 1),
+      hsla(0, 86%, 73%, 1)) 1;
+
 }
 
 .form__data:focus {
@@ -465,16 +474,15 @@ span {
 .form__btn {
   margin-bottom: 60px;
 }
+
 .btn__login {
   cursor: pointer;
   width: 100%;
   padding: 12px;
-  background: linear-gradient(
-    180deg,
-    #1d252d -21.82%,
-    rgba(0, 0, 0, 0.13) 44.55%,
-    #282d33 109.53%
-  );
+  background: linear-gradient(180deg,
+      #1d252d -21.82%,
+      rgba(0, 0, 0, 0.13) 44.55%,
+      #282d33 109.53%);
   font-size: 14pt;
   border-radius: 1%;
   border: 2px solid #facf5d;
@@ -486,12 +494,10 @@ span {
 }
 
 .btn__login span {
-  background: linear-gradient(
-    183.6deg,
-    #edb13e 2.96%,
-    #f4d977 65.79%,
-    #eeb850 129.95%
-  );
+  background: linear-gradient(183.6deg,
+      #edb13e 2.96%,
+      #f4d977 65.79%,
+      #eeb850 129.95%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
