@@ -132,12 +132,7 @@ export default {
   height: 38vh;
   width: 250px;
   border: 3px solid;
-  border-image-source: linear-gradient(
-    93.48deg,
-    #b07b15 -6.47%,
-    #facf5d 41.82%,
-    #b48328 97.8%
-  );
+  border-image-source: var(--secondary-gold-gradient);
   border-image-slice: 1;
   border-radius: 10px;
   color: #fceabc;
@@ -157,12 +152,7 @@ export default {
 .rombica {
   position: absolute;
   border: 3px solid;
-  border-image-source: linear-gradient(
-    93.48deg,
-    #b07b15 -6.47%,
-    #facf5d 41.82%,
-    #b48328 97.8%
-  );
+  border-image-source: var(--secondary-gold-gradient);
   border-image-slice: 1;
   height: 49.5px;
   width: 49.5px;
@@ -175,12 +165,7 @@ export default {
 }
 .rombica__bottom-date {
   border-top: 0.5px solid;
-  border-image-source: linear-gradient(
-    153.5deg,
-    #b07b15 34.99%,
-    #facf5d 57.14%,
-    #b48328 82.81%
-  );
+  border-image-source: var(--third-gold-gradient);
   border-image-slice: 1;
   display: flex;
   align-items: flex-end;
@@ -196,12 +181,7 @@ export default {
   font-size: 13.0909px;
   line-height: 100%;
   font-family: "Philosopher";
-  background: linear-gradient(
-    153.5deg,
-    #b07b15 34.99%,
-    #facf5d 57.14%,
-    #b48328 82.81%
-  );
+  background: var(--third-gold-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

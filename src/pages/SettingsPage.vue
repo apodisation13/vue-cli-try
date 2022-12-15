@@ -1,6 +1,6 @@
 <template>
   <div class="settings">
-    <h1 class="text">Настройки</h1>
+    <h1 class="global_text text">Настройки</h1>
     <div
       @click="goBack"
       class="back_icon"
@@ -121,25 +121,12 @@ export default {
 }
 
 .text {
-  font-family: "Philosopher", serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 29px;
-  line-height: 22px;
-  text-align: center;
-  letter-spacing: -0.02em;
-  font-feature-settings: "calt" off;
-  background: linear-gradient(
-    183.6deg,
-    #edb13e 2.96%,
-    #f4d977 65.79%,
-    #eeb850 129.95%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
   margin-bottom: 50px;
   margin-top: 8px;
+  font-size: 29px;
+  letter-spacing: -0.02em;
+  background: var(--primary-gold-gradient);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
 }
 </style>
