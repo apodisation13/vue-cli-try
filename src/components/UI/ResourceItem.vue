@@ -51,12 +51,7 @@ export default {
   font-weight: 700;
   font-size: 12px;
   line-height: 120%;
-  background: linear-gradient(
-    183.6deg,
-    #edb13e 2.96%,
-    #f4d977 65.79%,
-    #eeb850 129.95%
-  );
+  background: var(--primary-gold-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

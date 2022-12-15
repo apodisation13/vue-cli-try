@@ -1,6 +1,8 @@
 <template>
   <div class="filter_unlocked">
-    <div @click="reset_filter_types">Наличие</div>
+    <div class="global_text filter_title" @click="reset_filter_types">
+      Наличие
+    </div>
     <div class="types" v-for="count in [1, 2, 0]" :key="count">
       <button class="type" @click="filtering(count)">
         {{ count }}
@@ -27,6 +29,14 @@ export default {
 <style scoped>
 .filter_unlocked {
   margin-top: 12%;
+  margin-bottom: 10px;
+}
+.filter_title {
+  font-size: 25px;
+  margin-bottom: 15px;
+  background: var(--primary-gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .types {
   display: inline;
