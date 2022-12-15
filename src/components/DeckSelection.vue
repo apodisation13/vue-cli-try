@@ -3,7 +3,7 @@
     class="deck_selection"
     :style="{ height: deckbuilder ? '80vh' : '25vh' }"
   >
-    ВЫБЕРЕТЕ ДЕКУ (дважды ЛКМ)<br />
+    <div class="global_text text">Выберите деку</div>
 
     <div
       class="decks"
@@ -14,7 +14,7 @@
       <deck-preview-comp
         :deck="deck.deck"
         class="deck"
-        :style="{ width: deckbuilder ? '80%' : '98%' }"
+        :style="{ width: deckbuilder ? '80%' : '90%' }"
       />
 
       <div
@@ -104,8 +104,15 @@ export default {
   margin: 1%;
   width: 95%;
   height: 25vh;
-  border: solid 1px orchid;
   overflow: scroll;
+}
+
+.text {
+  margin-bottom: 10px;
+  font-size: 32px;
+  background: var(--primary-gold-gradient);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
 }
 
 .decks {
@@ -115,10 +122,10 @@ export default {
 }
 
 .deck {
-  height: 30px;
-  font-size: 10pt;
-  border-radius: 5%;
-  padding-left: 1%;
+  height: 35px;
+  width: 210px;
+  font-size: 14px;
+  border-radius: 8px;
 }
 
 .icon {

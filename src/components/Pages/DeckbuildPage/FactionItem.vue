@@ -1,6 +1,6 @@
 <template>
   <div class="faction" :class="getTypeFaction(faction.name)">
-    <div class="faction-name">
+    <div class="global_text faction-name">
       {{ faction.name[0] }}
     </div>
   </div>
@@ -42,19 +42,10 @@ export default {
 }
 
 .faction-name {
-  background: linear-gradient(
-    183.6deg,
-    #edb13e 2.96%,
-    #f4d977 65.79%,
-    #eeb850 129.95%
-  );
+  font-size: 21px;
+  background: var(--primary-gold-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
-  font-family: "Philosopher";
-  font-weight: 700;
-  font-size: 21px;
 }
 
 .faction-n {

@@ -8,7 +8,7 @@
         :key="mode"
         @click="selectGameMode(mode)"
       >
-        <div class="mode">{{ mode }}</div>
+        <div class="global_text mode">{{ mode }}</div>
       </div>
     </div>
 
@@ -23,7 +23,7 @@
             :key="season.id"
             @click="setSeason(season)"
           >
-            <div class="seasons__element">
+            <div class="global_text seasons__element">
               <div>{{ season.name }}</div>
               <div>{{ season.description }}</div>
             </div>
@@ -164,13 +164,7 @@ div {
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   margin: 0;
-  font-family: "Philosopher", serif;
-  font-style: normal;
-  font-weight: 700;
   font-size: 25px;
-  line-height: 100%;
-  letter-spacing: -0.02em;
-  font-feature-settings: "calt" off;
   color: #5f4209;
 }
 
@@ -181,13 +175,7 @@ div {
 }
 
 .seasons__element {
-  font-family: "Philosopher", serif;
-  font-style: normal;
-  font-weight: 700;
   font-size: 25px;
-  line-height: 100%;
-  letter-spacing: -0.02em;
-  font-feature-settings: "calt" off;
   color: #5f4209;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="button-decks-wrapper">
     <div class="button-decks">
-      <span class="button-text"> Колоды </span>
+      <span class="global_text button-text"> Колоды </span>
     </div>
     <div class="bottom-lines-button">
       <div class="bottom-line"></div>
@@ -36,14 +36,10 @@ export default {}
 }
 
 .button-text {
-  font-family: "Philosopher";
-  font-weight: 700;
   font-size: 20px;
   background: var(--primary-gold-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
 }
 
 .bottom-lines-button {

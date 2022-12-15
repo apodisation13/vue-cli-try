@@ -3,12 +3,15 @@
     <!--Цвет окна настраивается в зависимости от выбранной настройки благодаря styleWrapper-->
     <div class="yes_no_modal" :style="styleWrapper">
       <!--По дефолту если мы не передали item_price, покажем просто вы уверены, да\нет-->
-      <div class="text text-confirm" v-if="!item_price && !bonus">
+      <div class="global_text text text-confirm" v-if="!item_price && !bonus">
         <span>Вы уверены?</span>
       </div>
 
       <!--Вот это показывает нам кнопки +- для режима бонуса, для покупки ресурсов!-->
-      <div class="text text-purchase" v-else-if="bonus && is_purchase">
+      <div
+        class="global_text text text-purchase"
+        v-else-if="bonus && is_purchase"
+      >
         <resource-item name="wood" :count="item_price * quantity" />
         <div class="quantity">
           <button class="btn btn_dec" @click="decrement">-</button>
@@ -19,13 +22,13 @@
       </div>
 
       <!--Вот это показывает нам открытие ресурса из бонусов, но без покупок, само открытие-->
-      <div class="text text-zero" v-else-if="bonus && !is_purchase">
+      <div class="global_text text text-zero" v-else-if="bonus && !is_purchase">
         <span class="price">Открытие <resource-item :name="name" /></span>
         <span>Вы уверены?</span>
       </div>
 
       <!--Крафт карты-->
-      <div class="text" v-else-if="!bonus && is_craft">
+      <div class="global_text text" v-else-if="!bonus && is_craft">
         <div class="price">
           <span>Стоимость - </span>
           <resource-item name="scraps" :count="item_price * -1" class="price" />
@@ -34,7 +37,7 @@
       </div>
 
       <!--Милл карты-->
-      <div class="text" v-else-if="!bonus && !is_craft">
+      <div class="global_text text" v-else-if="!bonus && !is_craft">
         <div class="price">
           <span>Вы получите - </span>
           <resource-item name="scraps" :count="item_price" class="price" />
@@ -151,8 +154,6 @@ export default {
   font-size: 15pt;
   z-index: 9999;
   border: 1px solid #c5a87e;
-  /*background: linear-gradient(to bottom, #4a4237 0, #c5a87e 50%, #4a4237 100%);*/
-  /*box-shadow: inset 0 0 0 100vw hsl(356, 89%, 18%);*/
 }
 
 .text {
@@ -173,16 +174,9 @@ export default {
 }
 
 .text span {
-  font-family: "Philosopher", serif;
-  font-style: normal;
-  font-weight: 700;
   font-size: 26px;
-  line-height: 100%;
-
-  text-align: center;
   background: var(--third-gold-gradient);
   -webkit-background-clip: text;
-  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 

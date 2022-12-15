@@ -1,7 +1,7 @@
 <template>
   <div class="game__outer-wrapper" :style="styleOuter">
     <div class="game__wrapper" :style="styleWrapper">
-      <div class="footer__text">{{ title }}</div>
+      <div class="global_text footer__text">{{ title }}</div>
     </div>
   </div>
 </template>
@@ -47,14 +47,9 @@ export default {
 }
 
 .footer__text {
-  font-family: "Philosopher", serif;
-  font-style: normal;
-  font-weight: 700;
   font-size: 27px;
-  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
   background: var(--primary-gold-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 </style>

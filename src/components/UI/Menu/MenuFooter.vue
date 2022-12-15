@@ -1,13 +1,13 @@
 <template>
   <div class="footer" v-if="menuNeeded">
     <button class="levels footer__btn" @click="$router.push('/levelselect')">
-      <span class="footer__text">Режимы</span>
+      <span class="global_text footer__text">Режимы</span>
     </button>
     <button class="game footer__btn" @click="$router.push('/start_game')">
       <themed-button title="Игра" />
     </button>
     <button class="deckbuilder footer__btn" @click="$router.push('/deckbuild')">
-      <span class="footer__text">Склад</span>
+      <span class="global_text footer__text">Склад</span>
     </button>
   </div>
 </template>
@@ -52,16 +52,10 @@ export default {
 }
 
 .footer__text {
-  font-family: "Philosopher", serif;
-  font-style: normal;
-  font-weight: 700;
   font-size: 16px;
-  line-height: 22px;
-  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
   background: var(--primary-gold-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .game {

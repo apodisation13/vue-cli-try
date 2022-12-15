@@ -7,7 +7,7 @@
       <filter-colors @set-filter="setFilter" />
       <filter-passives @set-filter="setFilter" />
       <filter-unlocked @set-filter="setFilter" />
-      <button class="new" @click="resetFilters">Сброс фильтров</button>
+      <button class="cancel" @click="resetFilters">Сброс фильтров</button>
     </div>
   </base-modal>
 </template>
@@ -55,5 +55,10 @@ export default {
 .deck_builder_filters {
   position: relative;
   padding: 55px 40px 40px;
+}
+.cancel {
+  margin: auto;
+  width: 98%;
+  height: 30px;
 }
 </style>
