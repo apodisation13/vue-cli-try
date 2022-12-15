@@ -111,6 +111,18 @@ export default {
           const r = choice_element(pool)
           this.cards_pool.push(r.card)
         }
+      } else if (ability === "create-and-put-to-deck") {
+        // выбираем 3 случайных ЮНИТА из всех карт вообще и кладем его в КОЛОДУ
+        for (let i = 0; i < 3; i++) {
+          const pool = this.$store.getters["all_cards"].filter(
+            c => c.card.type === "Unit"
+          )
+          const r = choice_element(pool)
+          this.cards_pool.push(r.card)
+        }
+      } else if (ability === "draw-exact") {
+        // берем из колоды ЛЮБУЮ КАРТУ!
+        if (this.calc_can_draw()) this.cards_pool = this.gameObj.deck
       }
       this.ability = this.selected_card.ability.name
       if (this.cards_pool.length) this.show_pick_a_card_selection = true
@@ -169,6 +181,11 @@ export default {
       } else if (this.ability === "incr-dmg-by-n-charges") {
         card.damage += card.charges
         this.incrDmg(card)
+      } else if (this.ability === "create-and-put-to-deck") {
+        this.gameObj.deck.push(card)
+      } else if (this.ability === "draw-exact") {
+        this.gameObj.deck.splice(card, 1)
+        this.gameObj.hand.push(card)
       }
 
       this.show_pick_a_card_selection = false
