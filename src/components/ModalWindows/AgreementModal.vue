@@ -6,7 +6,7 @@
         src="@/assets/icons/buttons/x-circle.svg"
         @click="hideModal"
       />
-      <h2 class="header">Пользовательское соглашение</h2>
+      <h2 class="header global_text">Пользовательское соглашение</h2>
       <div class="content">
         <ol>
           <li>
@@ -634,19 +634,7 @@ export default {
 
 .header {
   margin-bottom: 3rem;
-  font-family: "Philosopher";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 25px;
-  line-height: 100%;
-  text-align: center;
-  font-feature-settings: "calt" off;
-  background: linear-gradient(
-    153.5deg,
-    #b07b15 16.64%,
-    #facf5d 58.23%,
-    #b48328 106.44%
-  );
+  background: var(--six-gold-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -670,12 +658,7 @@ export default {
   height: 80%;
   max-width: 335px;
   width: 100%;
-  background: linear-gradient(
-    180deg,
-    #1d252d -21.82%,
-    rgba(0, 0, 0, 0.13) 44.55%,
-    #282d33 109.53%
-  );
+  background: var(--third-dark-gradient);
   border-radius: 18px;
   padding: 45px 22px;
   display: flex;

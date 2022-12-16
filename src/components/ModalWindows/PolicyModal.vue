@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper_modal" @click.stop="hideModal">
     <div @click.stop class="modal">
-      <h2 class="header"></h2>
+      <h2 class="header global_text"></h2>
       <div class="content"></div>
     </div>
   </div>
@@ -40,16 +40,6 @@ export default {
 }
 
 .header {
-  font-family: "Philosopher", serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 25px;
-  line-height: 100%;
-  /* or 25px */
-
-  text-align: center;
-  font-feature-settings: "calt" off;
-
   background: linear-gradient(
     153.5deg,
     #b07b15 16.64%,

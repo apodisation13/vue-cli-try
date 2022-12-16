@@ -29,10 +29,11 @@
           <div class="form__auth">
             <label for="email" class="form__label">Почта</label>
             <input
+              :class="email_valid ? '' : 'form__data_error'"
               class="form__data"
               v-model="email"
               id="email"
-              autocomplete="email"
+              autocomplete="off"
               @focus="input_enabled = true"
               @blur="input_enabled = false"
             />
@@ -45,7 +46,7 @@
               class="form__data"
               v-model="username"
               id="username"
-              autocomplete="username"
+              autocomplete="off"
               @focus="input_enabled = true"
               @blur="input_enabled = false"
             />
@@ -53,11 +54,12 @@
           <div class="form__auth form__auth_pass">
             <label class="form__label" for="password">Пароль</label>
             <input
+              :class="password_valid ? '' : 'form__data_error'"
               class="form__data"
               v-model="password"
               id="password"
               type="password"
-              autocomplete="password"
+              autocomplete="off"
               v-on:keyup.enter="login"
               @focus="input_enabled = true"
               @blur="input_enabled = false"
@@ -71,11 +73,12 @@
               Подтверждение пароля
             </label>
             <input
+              :class="confirm_password_valid ? '' : 'form__data_error'"
               class="form__data"
-              v-model="confirmPassword"
+              v-model="confirm_password"
               id="confirm-password"
               type="password"
-              autocomplete="confirmPassword"
+              autocomplete="off"
               v-on:keyup.enter="userRegister"
               @focus="input_enabled = true"
               @blur="input_enabled = false"
@@ -173,9 +176,13 @@ export default {
   data() {
     return {
       username: "",
+      username_valid: true,
       email: "",
+      email_valid: true,
       password: "",
-      confirmPassword: "",
+      password_valid: true,
+      confirm_password: "",
+      confirm_password_valid: true,
       error: "",
       formLogin: true,
       show_agreement_modal: false,
@@ -193,7 +200,7 @@ export default {
         !this.username ||
         !this.email ||
         !this.password ||
-        !this.confirmPassword
+        !this.confirm_password
       )
     },
   },
@@ -279,37 +286,33 @@ export default {
     },
     // :disabled="!(email && password)"
     reset_highlight() {
-      document.getElementById("username")?.classList.remove("form__data_error")
-      document.getElementById("email").classList.remove("form__data_error")
-      document.getElementById("password").classList.remove("form__data_error")
-      document
-        .getElementById("confirm-password")
-        ?.classList.remove("form__data_error")
+      this.username_valid = true
+      this.email_valid = true
+      this.password_valid = true
+      this.confirm_password_valid = true
     },
 
     validate_form(register) {
       if (register && !this.username) {
-        document.getElementById("username").classList.toggle("form__data_error")
+        this.username_valid = false
         return "Поле имя не может быть пустым"
       }
 
       if (!this.email) {
-        document.getElementById("email").classList.toggle("form__data_error")
+        this.email_valid = false
         return "Поле почта не может быть пустым"
       }
       if (!this.email.includes("@")) {
-        document.getElementById("email").classList.toggle("form__data_error")
+        this.email_valid = false
         return "Почта некорректна"
       }
       if (this.password.length < 8) {
-        document.getElementById("password").classList.toggle("form__data_error")
+        this.password_valid = false
         return "Пароль должен быть не менее 8 символов!"
       }
-      if (register && this.password !== this.confirmPassword) {
-        document.getElementById("password").classList.toggle("form__data_error")
-        document
-          .getElementById("confirm-password")
-          .classList.toggle("form__data_error")
+      if (register && this.password !== this.confirm_password) {
+        this.password_valid = false
+        this.confirm_password_valid = false
         return "Пароли не совпадают!"
       }
       return ""
@@ -334,7 +337,7 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 25vh;
+  height: 15vh;
   margin: 1% auto 0 auto;
   border-radius: 1%;
   font-size: 14pt;
@@ -424,32 +427,15 @@ span {
   margin: 2% auto auto;
   text-align: center;
   border-radius: 1%;
-  border-image: linear-gradient(
-      180deg,
-      hsl(36, 15%, 25%) -43.75%,
-      hsl(36, 38%, 63%) 52.08%,
-      hsl(35, 15%, 25%) 145.92%
-    )
-    1;
+  border-image: var(--dark-gold-gradient-border);
   font-size: 14pt;
   color: hsl(43, 91%, 86%);
-
-  background: linear-gradient(
-    180deg,
-    #1d252d -43.75%,
-    rgba(0, 0, 0, 0.13) 52.08%,
-    #282d33 145.92%
-  );
+  background: var(--dark-gradient);
 }
 
 .form__data_error {
-  background: linear-gradient(
-    180deg,
-    #dd0505 -43.75%,
-    rgba(205, 33, 33, 0.19) 52.08%,
-    #cf0e0e 145.92%
-  );
-  border-image: linear-gradient(hsla(0, 86%, 73%, 1), hsla(0, 86%, 73%, 1)) 1;
+  background: var(--red-gradient);
+  border-image: var(--orange-gradient-border);
 }
 
 .form__data:focus {
@@ -528,12 +514,7 @@ span {
   cursor: pointer;
   width: 100%;
   padding: 12px;
-  background: linear-gradient(
-    180deg,
-    #1d252d -21.82%,
-    rgba(0, 0, 0, 0.13) 44.55%,
-    #282d33 109.53%
-  );
+  background: var(--secondary-dark-gradient);
   font-size: 14pt;
   border-radius: 1%;
   border: 2px solid #facf5d;
@@ -546,6 +527,7 @@ span {
 
 .btn__login span {
   background: var(--primary-gold-gradient);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

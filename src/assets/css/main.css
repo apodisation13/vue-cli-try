@@ -45,6 +45,46 @@
     #facf5d 57.14%,
     #b48328 82.81%
   ) 1;
+
+  --dark-gold-gradient-border: linear-gradient(
+    180deg,
+    hsl(36, 15%, 25%) -43.75%,
+    hsl(36, 38%, 63%) 52.08%,
+    hsl(35, 15%, 25%) 145.92%
+  ) 1;
+
+  --dark-gradient: linear-gradient(
+    180deg,
+    #1d252d -43.75%,
+    rgba(0, 0, 0, 0.13) 52.08%,
+    #282d33 145.92%
+  );
+
+  --secondary-dark-gradient: linear-gradient(
+    180deg,
+    #1d252d -21.82%,
+    rgba(0, 0, 0, 0.13) 44.55%,
+    #282d33 109.53%
+  );
+
+  --third-dark-gradient: linear-gradient(
+    180deg,
+    #1d252d -21.82%,
+    rgba(0, 0, 0, 0.13) 44.55%,
+    #282d33 109.53%
+  );
+
+  --red-gradient: linear-gradient(
+    180deg,
+    #dd0505 -43.75%,
+    rgba(205, 33, 33, 0.19) 52.08%,
+    #cf0e0e 145.92%
+  );
+
+  --orange-gradient-border: linear-gradient(
+    hsla(0, 86%, 73%, 1),
+    hsla(0, 86%, 73%, 1)
+  ) 1;
 }
 
 .global_text {
