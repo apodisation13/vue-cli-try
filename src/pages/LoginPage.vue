@@ -2,20 +2,20 @@
   <div class="container">
     <!-- HEADER -->
     <div class="header" v-if="error">
-      <div class="header__welcome">Введены некорректные данные</div>
+      <div class="global_text header__welcome">Введены некорректные данные</div>
       <div class="header__login">
         {{ error }}
       </div>
     </div>
     <div class="header" v-else-if="formLogin">
-      <div class="header__welcome">Добрый день!</div>
+      <div class="global_text header__welcome">Добрый день!</div>
       <div class="header__login">
         Войдите в систему ниже<br />
         или <a @click.prevent="choseFormRegister">создайте учетную запись</a>
       </div>
     </div>
     <div class="header" v-else-if="!formLogin">
-      <div class="header__welcome">Создать аккаунт</div>
+      <div class="global_text header__welcome">Создать аккаунт</div>
       <div class="header__login">
         Введите данные своей учетной записи ниже или
         <a @click.prevent="choseFormLogin">войдите в систему</a>
@@ -33,6 +33,8 @@
               v-model="email"
               id="email"
               autocomplete="email"
+              @focus="input_enabled = true"
+              @blur="input_enabled = false"
             />
           </div>
           <div class="form__auth" v-if="!formLogin">
@@ -44,6 +46,8 @@
               v-model="username"
               id="username"
               autocomplete="username"
+              @focus="input_enabled = true"
+              @blur="input_enabled = false"
             />
           </div>
           <div class="form__auth form__auth_pass">
@@ -55,6 +59,8 @@
               type="password"
               autocomplete="password"
               v-on:keyup.enter="login"
+              @focus="input_enabled = true"
+              @blur="input_enabled = false"
             />
             <div class="eye" @click="toggle_pass_visibility">
               <div class="eye__apple"></div>
@@ -71,6 +77,8 @@
               type="password"
               autocomplete="confirmPassword"
               v-on:keyup.enter="userRegister"
+              @focus="input_enabled = true"
+              @blur="input_enabled = false"
             />
             <div class="eye" @click="toggle_pass_visibility">
               <div class="eye__apple"></div>
@@ -92,18 +100,15 @@
             <a class="forgot__text">Забыли пароль?</a>
           </div>
         </div>
-        <div class="form__additional" v-else>
+        <div class="form__additional" v-else-if="!formLogin && !input_enabled">
           <div class="form__agree">
             <div class="agree__user">
-              <div class="checkbox" @click="toggleCheckbox">
-                <input
-                  id="user-checkbox"
-                  type="checkbox"
-                  class="custom-checkbox"
-                  v-model="is_user_agree"
-                />
-              </div>
-              <p for="user-checkbox">
+              <div
+                class="checkbox"
+                @click="is_user_agree = !is_user_agree"
+                :style="bgImage(is_user_agree)"
+              ></div>
+              <p>
                 Я ознакомился с
                 <a class="agree__policy_link" @click="toggle_agreement_modal"
                   >Пользовательским соглашением</a
@@ -111,15 +116,12 @@
               </p>
             </div>
             <div class="agree__policy">
-              <div class="checkbox" @click="toggleCheckbox">
-                <input
-                  id="policy-checkbox"
-                  type="checkbox"
-                  class="custom-checkbox"
-                  v-model="is_policy_agree"
-                />
-              </div>
-              <p for="policy-checkbox">
+              <div
+                class="checkbox"
+                :style="bgImage(is_policy_agree)"
+                @click="is_policy_agree = !is_policy_agree"
+              ></div>
+              <p>
                 Я согласен с
                 <a class="agree__policy_link" @click="toggle_policy_modal"
                   >Политикой конфиденциальности</a
@@ -131,7 +133,7 @@
       </div>
 
       <!-- Кнопки входа и регистрации -->
-      <div class="form__btn">
+      <div class="form__btn" v-if="!input_enabled">
         <button
           class="btn__login"
           v-if="formLogin"
@@ -144,7 +146,7 @@
           class="btn__login"
           v-else
           @click="userRegister"
-          :disabled="!(is_policy_agree & is_user_agree)"
+          :disabled="userRegisterDisabled"
         >
           <span>Регистрация</span>
         </button>
@@ -167,7 +169,7 @@
 import AgreementModal from "@/components/ModalWindows/AgreementModal"
 import PolicyModal from "@/components/ModalWindows/PolicyModal"
 export default {
-  components: { PolicyModal, AgreementModal },
+  components: { AgreementModal, PolicyModal },
   data() {
     return {
       username: "",
@@ -180,7 +182,20 @@ export default {
       show_policy_modal: false,
       is_user_agree: false,
       is_policy_agree: false,
+      input_enabled: false,
     }
+  },
+  computed: {
+    userRegisterDisabled() {
+      return (
+        !this.is_user_agree ||
+        !this.is_policy_agree ||
+        !this.username ||
+        !this.email ||
+        !this.password ||
+        !this.confirmPassword
+      )
+    },
   },
   methods: {
     async login() {
@@ -201,7 +216,6 @@ export default {
         this.error = err.message
         document.getElementById("email").classList.toggle("form__data_error")
         document.getElementById("password").classList.toggle("form__data_error")
-        return
       }
     },
 
@@ -242,17 +256,15 @@ export default {
       pass_field.setAttribute("type", "password")
     },
 
-    // Обрати внимание!!
-    // пытался сделать проверку галочек на согласие пользователя сделать без if
-    // но с кастомными чекбоксами это оказалось не так-то просто, может есть идея
-    // как сделать привязку к чекбоксам проще?
-    toggleCheckbox(e) {
-      if (!e.target.querySelector("input")) return
-      const checkbox = e.target.querySelector("input")
-      checkbox.checked = !checkbox.checked
-      if (checkbox.id === "policy-checkbox")
-        this.is_policy_agree = checkbox.checked
-      if (checkbox.id === "user-checkbox") this.is_user_agree = checkbox.checked
+    bgImage(state) {
+      if (!state) {
+        return {
+          backgroundImage: `url(${require("@/assets/icons/buttons/checkbox.svg")})`,
+        }
+      } else
+        return {
+          backgroundImage: `url(${require("@/assets/icons/buttons/checkbox_checked.svg")})`,
+        }
     },
 
     choseFormLogin() {
@@ -331,27 +343,15 @@ export default {
 }
 
 .header__welcome {
-  font-family: "Philosopher";
   font-size: 29px;
-  font-weight: 700;
-  line-height: 29px;
-  letter-spacing: 0em;
-
-  background: linear-gradient(
-    153.5deg,
-    hsl(39, 79%, 39%) 16.64%,
-    hsl(44, 94%, 67%) 47.22%,
-    hsl(39, 64%, 43%) 82.67%
-  );
+  background: var(--six-gold-gradient);
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
-  background-clip: text;
-  text-fill-color: transparent;
 }
 
 .header__login {
   color: hsla(43, 91%, 86%, 0.6);
-  font-family: "Inter";
+  font-family: "Inter", serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -481,7 +481,7 @@ span {
 
 .form__forgot,
 .form__agree {
-  font-family: "Inter";
+  font-family: "Inter", serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -516,19 +516,8 @@ span {
 .checkbox {
   width: 30px;
   height: 30px;
-  background-image: url("~@/assets/icons/buttons/checkbox.svg");
   background-repeat: no-repeat;
   background-position: center center;
-}
-
-.checkbox:has(.custom-checkbox:checked) {
-  background-image: url("~@/assets/icons/buttons/checkbox_checked.svg");
-}
-
-.custom-checkbox {
-  position: absolute;
-  z-index: -1;
-  opacity: 0;
 }
 
 .form__btn {
@@ -556,22 +545,8 @@ span {
 }
 
 .btn__login span {
-  background: linear-gradient(
-    183.6deg,
-    #edb13e 2.96%,
-    #f4d977 65.79%,
-    #eeb850 129.95%
-  );
+  background: var(--primary-gold-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
-}
-
-.error {
-  margin-bottom: 3%;
-  margin-top: 5%;
-  font-size: 14pt;
-  color: red;
 }
 </style>

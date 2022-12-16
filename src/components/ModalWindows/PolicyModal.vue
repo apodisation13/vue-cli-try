@@ -13,7 +13,7 @@ export default {
   props: {
     text: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   methods: {
@@ -40,7 +40,7 @@ export default {
 }
 
 .header {
-  font-family: "Philosopher";
+  font-family: "Philosopher", serif;
   font-style: normal;
   font-weight: 700;
   font-size: 25px;
@@ -59,11 +59,10 @@ export default {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-fill-color: transparent;
 }
 
 .content {
-  font-family: "Inter";
+  font-family: "Inter", serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
