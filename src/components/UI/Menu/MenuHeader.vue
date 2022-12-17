@@ -161,12 +161,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(
-    180deg,
-    #1d252d -12.73%,
-    rgba(0, 0, 0, 0.13) 56.36%,
-    #282d33 129.82%
-  );
+  background: var(--dark-gradient);
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25), 0 -4px 10px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(2px);
   margin: 0;
