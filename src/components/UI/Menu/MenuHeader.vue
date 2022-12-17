@@ -3,6 +3,7 @@
     <img
       class="header__border"
       :src="require('@/assets/icons/VectorDown.svg')"
+      alt=""
     />
     <div class="wrapper__avatar-resources">
       <button
@@ -25,7 +26,11 @@
       </button>
       <resource-list @click="$router.push('/bonus')" v-if="isLoggedIn" />
     </div>
-    <img class="header__border" :src="require('@/assets/icons/VectorUp.svg')" />
+    <img
+      class="header__border"
+      :src="require('@/assets/icons/VectorUp.svg')"
+      alt=""
+    />
     <div
       class="expand-menu"
       v-if="expanded"
@@ -41,12 +46,22 @@
               class="menu-btn"
               @click="push(button.path)"
             >
-              <span class="menu-btn__text">{{ button.title }}</span>
+              <span
+                class="global_text menu-btn__text"
+                v-if="!button.requireAuth"
+              >
+                {{ button.title }}
+              </span>
+              <span
+                class="global_text menu-btn__text"
+                v-if="button.requireAuth && isLoggedIn"
+                >{{ button.title }}</span
+              >
             </button>
           </div>
           <div class="expand-menu__footer" @click="showExpandedMenu">
             <button class="menu-btn">
-              <span class="menu-btn__text">Закрыть</span>
+              <span class="global_text menu-btn__text">Закрыть</span>
             </button>
           </div>
         </div>
@@ -78,10 +93,10 @@ export default {
   data() {
     return {
       routes: [
-        { title: "Главная", path: "/" },
+        { title: "Главная", path: "/main" },
         { title: "Правила", path: "/rules" },
         { title: "О нас", path: "/about" },
-        { title: "Настройки", path: "/settings" },
+        { title: "Настройки", path: "/settings", requireAuth: true },
       ],
       expanded: false,
     }
@@ -94,9 +109,6 @@ export default {
       if (!path) return
       this.expanded = false
       this.$router.push(path)
-    },
-    logout() {
-      this.$store.dispatch("logout")
     },
   },
 }
@@ -138,7 +150,6 @@ export default {
   height: 81px;
   width: 81px;
   margin-left: 12px;
-  /* border: 3px solid linear-gradient(180deg,#B07B15 0%, #FACF5D 45%,#B48328 98.96%);  box-shadow: 5px solid #1a1d24; */
 }
 
 .avatar__btn {
@@ -156,18 +167,14 @@ export default {
     rgba(0, 0, 0, 0.13) 56.36%,
     #282d33 129.82%
   );
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px -4px 10px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25), 0 -4px 10px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(2px);
   margin: 0;
   height: 53px;
 }
 
-/* .wrapper__avatar-resources::before {
-  background-image: url("../../../assets/icons/VectorDown.svg");
-} */
-
 .expand-menu__wrapper {
-  background-image: url("../../../assets/header-menu-background.png");
+  background-image: url("~@/assets/header-menu-background.png");
   width: 207px;
   height: 271px;
   border-radius: 8px;
@@ -224,7 +231,7 @@ export default {
 }
 
 .expand-menu__footer button {
-  margin: 15px 0px 21px 22px;
+  margin: 15px 0 21px 22px;
 }
 
 .expand-menu {
@@ -245,23 +252,9 @@ export default {
 }
 
 .menu-btn__text {
-  font-family: "Philosopher";
-  font-style: normal;
-  font-weight: 700;
   font-size: 20px;
-  line-height: 22px;
-  /* identical to box height, or 110% */
-  letter-spacing: -0.02em;
-  /* текст градиент */
   background: var(--primary-gold-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
-}
-
-.bordered {
-  border-top: 1px solid rgba(38, 50, 56, 0.16);
-  padding-top: 11px;
 }
 </style>
