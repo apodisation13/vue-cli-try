@@ -17,7 +17,7 @@
     <div class="header" v-else-if="!formLogin">
       <div class="global_text header__welcome">Создать аккаунт</div>
       <div class="header__login">
-        Введите данные своей учетной записи ниже или
+        Создайте учетную запись ниже<br />или
         <a @click.prevent="choseFormLogin">войдите в систему</a>
       </div>
     </div>
@@ -90,16 +90,22 @@
         </div>
 
         <!-- Поле с дополнительными функциями -->
-        <div class="form__additional" v-if="formLogin">
+        <div class="form__additional" v-if="formLogin && !input_enabled">
           <div class="form__login-with">
-            <a class="login-with__btn login-with__google">
+            <a
+              class="login-with__btn login-with__google"
+              @click="toast.info('Пока не реализовано')"
+            >
               <img src="@/assets/icons/buttons/login_google.svg" alt="" />
             </a>
-            <a class="login-with__btn login-with__vk">
+            <a
+              class="login-with__btn login-with__vk"
+              @click="toast.info('Пока не реализовано')"
+            >
               <img src="@/assets/icons/buttons/login_vk.svg" alt="" />
             </a>
           </div>
-          <div class="form__forgot">
+          <div class="form__forgot" @click="toast.info('Пока не реализовано')">
             <a class="forgot__text">Забыли пароль?</a>
           </div>
         </div>
@@ -169,10 +175,15 @@
 </template>
 
 <script>
+import { useToast } from "vue-toastification"
 import AgreementModal from "@/components/ModalWindows/AgreementModal"
 import PolicyModal from "@/components/ModalWindows/PolicyModal"
 export default {
   components: { AgreementModal, PolicyModal },
+  setup() {
+    const toast = useToast()
+    return { toast }
+  },
   data() {
     return {
       username: "",
@@ -218,7 +229,7 @@ export default {
         await this.$router.push("/loading")
         await this.$store.dispatch("get_user_database")
         await this.$store.dispatch("render_all_images")
-        await this.$router.push("/")
+        await this.$router.push("/main")
       } catch (err) {
         this.error = err.message
         document.getElementById("email").classList.toggle("form__data_error")
@@ -337,7 +348,7 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 15vh;
+  /*height: 10vh;*/
   margin: 1% auto 0 auto;
   border-radius: 1%;
   font-size: 14pt;
