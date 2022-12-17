@@ -9,8 +9,8 @@
       <!--собственно рендер самого приложения через роутер, формат {путь(роут): компонент}-->
       <router-view />
 
-      <!--нижняя часть меню, в футере-->
-      <menu-footer />
+      <!--нижняя часть меню, в футере, показываем только авторизованному-->
+      <menu-footer v-if="isLoggedIn" />
     </div>
   </div>
 </template>
@@ -29,21 +29,21 @@ export default {
     //устанавливаем корректное значение вьюпорта переменную css для работы c var(--vh)
     let vh = window.innerHeight * 0.01
     document.documentElement.style.setProperty("--vh", `${vh}px`)
-    // СРАБАТЫВАЕТ ПО ОТКРЫТИЮ САЙТА: вначале прыгаем на загрузку,
-    // Далее проверяем логин из локалсторадж, если успешно, грузим базу данных и рендерим ВСЕ картинки
-    // в любом случае идем на главную потом
-    await this.$router.push("/loading")
+
+    // вот здесь мы просто добавим setTimeOut и переход дальше через 2сек
+    await this.$router.push("/")
     try {
-      await this.$store.dispatch("fetchNews")
       await this.$store.dispatch("check_auth") // пытаемся послать запрос на логин с данными из локалсторадж
-      await this.$store.dispatch("get_user_database")
-      await this.$store.dispatch("render_all_images") // принудительный рендер всех картинок
+      await this.$store.dispatch("fetchNews")
     } catch (err) {
       console.log(err)
       throw err
-    } finally {
-      await this.$router.push("/")
     }
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters["isLoggedIn"]
+    },
   },
 }
 </script>
@@ -69,10 +69,6 @@ export default {
 html,
 body {
   overscroll-behavior-y: contain;
-}
-
-.body {
-  height: 100%;
 }
 
 .app {

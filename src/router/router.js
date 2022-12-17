@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router"
 import store from "@/store"
 
+import EmblemPage from "@/pages/EmblemPage.vue"
 import MainPage from "@/pages/MainPage"
 import GamePage from "@/pages/GamePage"
 import AboutPage from "@/pages/AboutPage"
@@ -20,6 +21,14 @@ import { images } from "@/router/const/images"
 const routes = [
   {
     path: "/",
+    component: EmblemPage,
+    meta: {
+      requireAuth: false,
+      notRequireMenu: true,
+    },
+  },
+  {
+    path: "/main",
     component: MainPage,
     meta: {
       requireAuth: false,
@@ -135,13 +144,21 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  // Если требуется АУФ, и мы залогинены, все ок. Если не залогинены, идем на главную. Если не требуется АУФ - все ок
+  // это чтобы стрелкой назад не попасть на страницу загрузки и не зависнуть там
+  // ведь мы на неё можем попасть ИЛИ с Эмблемы, ИЛИ с логина
+  if (to.path === "/loading" && from.path === "/main") {
+    next(false)
+    return
+  }
+
+  // Если требуется АУФ, и мы залогинены, все ок. Если не залогинены, идем на главную.
+  // Если не требуется АУФ - все ок
   if (to.matched.some(record => record.meta.requireAuth)) {
     if (store.getters.isLoggedIn) next()
     else next("/")
   } else next()
 
-  // если мы уже играли и оттуда вышли, переустановим колоду
+  // если мы уже играли и оттуда вышли, переустановим колоду на ту, которой играли
   if (from.path === "/game") store.dispatch("re_set_deck")
 })
 
