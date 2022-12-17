@@ -9,6 +9,7 @@ export default {
       show_pick_a_card_selection: false, // показать ли окно
       show_picked_card: false, // показать ли выбранную карту из абилок play_from_
       special_case_value: null, // сохраняем какое-то особое значения для абилок
+      enemyView: false, // показать окно с картами или с картами, или с врагами
     }
   },
   methods: {
@@ -60,11 +61,11 @@ export default {
           card => card.id !== this.selected_card.id
         )
       } else if (ability === "play-enemy-from-grave") {
-        // играем бронзового ВРАГА из их кладбища (нужен костыль чтобы абилку им прописать)
+        // играем бронзового ВРАГА из их кладбища (+костыль на врагов)
         this.cards_pool = this.gameObj.enemies_grave.filter(
           e => e.color === "Bronze"
         )
-        this.forEnemy()
+        this.enemyView = true
       } else if (ability === "play-special-from-deck") {
         // играем любую специальную карту из колоды
         this.cards_pool = this.gameObj.deck.filter(
@@ -78,7 +79,7 @@ export default {
       } else if (ability === "move-enemy-from-deck-to-grave") {
         // выбираем врага из их колоды и перемещаем его в их сброс (+костыль на врагов)
         this.cards_pool = this.gameObj.enemies
-        this.forEnemy()
+        this.enemyView = true
       } else if (ability === "decr-dmg-to-hand-incr-to-random-hand") {
         // выбираем карту, уменьшаем ее урон на value, прибавляем value урона рандомной карте в руке
         this.special_case_value = this.selected_card.value // сохранили значение урона
@@ -188,22 +189,13 @@ export default {
         this.gameObj.hand.push(card)
       }
 
+      this.enemyView = false
       this.show_pick_a_card_selection = false
       this.ability = ""
       this.cards_pool = []
       this.special_case_value = null
     },
 
-    // если мы играем ВРАГА, у него нет абилки никакой, эта функция добавит ему базовую абилку на урон одному
-    forEnemy() {
-      this.cards_pool.forEach(card => {
-        card["ability"] = {
-          name: "damage-one",
-          description: "Нанести {damage} урона одному врагу",
-        }
-        card["charges"] = 1
-      })
-    },
     // чтобы показать фиолетовую рамку для этой карты
     incrDmg(card) {
       card.incr_dmg = true

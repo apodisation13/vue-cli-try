@@ -66,6 +66,7 @@
       :show_pick_a_card_selection="show_pick_a_card_selection"
       :cards_pool="cards_pool"
       :show_picked_card="show_picked_card"
+      :enemyView="enemyView"
       @confirm_selection="confirm_selection"
     />
 
