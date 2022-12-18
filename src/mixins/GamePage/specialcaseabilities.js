@@ -1,5 +1,6 @@
 import { choice_element } from "@/lib/utils"
 import { sound_passive_increase_damage } from "@/logic/play_sounds"
+import { timeoutAnimationFlag } from "@/logic/game_logic/timers"
 
 export default {
   data() {
@@ -198,11 +199,7 @@ export default {
 
     // чтобы показать фиолетовую рамку для этой карты
     incrDmg(card) {
-      card.incr_dmg = true
-      sound_passive_increase_damage()
-      setTimeout(() => {
-        card.incr_dmg = false
-      }, 500)
+      timeoutAnimationFlag(card, "incr_dmg", sound_passive_increase_damage)
     },
   },
 }

@@ -21,7 +21,7 @@ export function timeoutAnimationFlag(
   obj,
   key,
   soundFunction = null,
-  timeout = 750
+  timeout = 500
 ) {
   if (soundFunction) soundFunction()
   obj[key] = true
@@ -37,7 +37,7 @@ export function timeoutAnimationValue(
   diffString,
   value,
   soundFunction = null,
-  timeout = 750
+  timeout = 500
 ) {
   if (soundFunction) soundFunction()
   const prevValue = obj[key]

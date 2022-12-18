@@ -1,18 +1,21 @@
 import { sound_passive_increase_damage } from "@/logic/play_sounds"
+import {
+  timeoutAnimationFlag,
+  timeoutAnimationValue,
+  timer,
+} from "@/logic/game_logic/timers"
 
 function increase_self_damage(card) {
-  let temp = card.damage
+  if (card.default_timer && (card.timer === 0 || !timer(card))) return
 
-  card.damage = `${card.damage}+${card.value}`
-  card.incr_dmg = true
-
-  setTimeout(() => {
-    card.damage = temp
-    card.damage += card.value
-    card.incr_dmg = false
-  }, 750)
-
-  sound_passive_increase_damage()
+  timeoutAnimationValue(
+    card,
+    "damage",
+    `${card.damage}+${card.value}`,
+    card.value,
+    sound_passive_increase_damage
+  )
+  timeoutAnimationFlag(card, "incr_dmg")
 }
 
 export { increase_self_damage }
