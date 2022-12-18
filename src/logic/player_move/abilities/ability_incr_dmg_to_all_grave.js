@@ -1,4 +1,4 @@
-import { trigger_passive_grave } from "@/logic/player_move/passive_abilities/passives_graves"
+import { timeoutAnimationFlag } from "@/logic/game_logic/timers"
 
 export function incr_dmg_to_all_grave(card, gameObj) {
   const { grave } = gameObj
@@ -7,5 +7,5 @@ export function incr_dmg_to_all_grave(card, gameObj) {
   grave.forEach(c => {
     c.damage += card.value
   })
-  trigger_passive_grave(grave[0])
+  timeoutAnimationFlag(grave[0], "trigger_passive_grave")
 }
