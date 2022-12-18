@@ -1,18 +1,20 @@
 import { sound_passive_increase_damage } from "@/logic/play_sounds"
+import { choice } from "@/lib/utils"
+import { timeoutAnimation } from "@/logic/game_logic/timers"
 
 function increase_damage_in_hand(card, hand) {
-  let random = Math.floor(Math.random() * hand.length)
+  let random = choice(hand)
 
-  let temp = hand[random].damage
-
-  hand[random].damage = `${hand[random].damage}+${card.value}`
-
-  setTimeout(() => {
-    hand[random].damage = temp
-    hand[random].damage += card.value
-  }, 750)
-
-  sound_passive_increase_damage()
+  timeoutAnimation(
+    hand[random],
+    "damage",
+    sound_passive_increase_damage,
+    `${hand[random].damage}+${card.value}`,
+    card.value,
+    false,
+    750
+  )
+  timeoutAnimation(hand[random], "incr_dmg", null, null, null, true, 750)
 }
 
 export { increase_damage_in_hand }
