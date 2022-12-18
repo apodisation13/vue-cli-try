@@ -1,13 +1,21 @@
 <template>
   <div class="emblem_page">
     <div class="logo"></div>
-    <button class="start" @click="goFullScreen" :disabled="authInProcess">
+    <button class="start" @click="toggleApi" :disabled="authInProcess">
       НАЧАТЬ
+      {{ value }}
     </button>
   </div>
 </template>
 
 <script>
+import {
+  ref,
+  // defineComponent,
+  toRefs,
+  reactive,
+} from "vue"
+
 export default {
   name: "EmblemPage",
   computed: {
@@ -15,7 +23,27 @@ export default {
       return this.$store.getters["getAuthState"]
     },
   },
+  setup() {
+    const root = ref()
+    const state = reactive({
+      fullscreen: false,
+    })
+    function toggle() {
+      state.fullscreen = !state.fullscreen
+    }
+    return {
+      root,
+      ...toRefs(state),
+      toggle,
+    }
+  },
   methods: {
+    toggleApi() {
+      // Пока только включение
+      this.$fullscreen.toggle()
+      this.goFullScreen()
+      //устанавливаем корректное значение вьюпорта переменную css для работы c var(--vh)
+    },
     async goFullScreen() {
       // если в локалсторадже нет данных входа, или вход не прошел, по кнопке начать пойдем на главную страницу
       if (!this.$store.getters["isLoggedIn"]) {

@@ -1,4 +1,5 @@
 <template>
+  <!-- <fullscreen v-model="fullscreen"> -->
   <div class="wrapper__bg">
     <div class="app">
       <!--картинка страницы по параметрам из роутера-->
@@ -13,22 +14,54 @@
       <menu-footer v-if="isLoggedIn" />
     </div>
   </div>
+  <!-- </fullscreen> -->
 </template>
 
 <script>
 import MenuFooter from "@/components/UI/Menu/MenuFooter"
 import MenuHeader from "@/components/UI/Menu/MenuHeader"
 import PageImage from "@/components/PageImage"
+// import {
+//     ref,
+//     toRefs,
+//     reactive
+//   } from 'vue'
+
 export default {
   components: {
     PageImage,
     MenuHeader,
     MenuFooter,
   },
+  // methods: {
+  //     toggleApi () {
+  //       this.$fullscreen.toggle()
+  //     }
+  //   },
+  //   setup () {
+  //     const root = ref()
+  //     const state = reactive({
+  //       fullscreen: false,
+  //     })
+  //     function toggle () {
+  //       state.fullscreen = !state.fullscreen
+  //     }
+  //     return {
+  //       root,
+  //       ...toRefs(state),
+  //       toggle
+  //     }
+  //   },
   async created() {
-    //устанавливаем корректное значение вьюпорта переменную css для работы c var(--vh)
-    let vh = window.innerHeight * 0.01
-    document.documentElement.style.setProperty("--vh", `${vh}px`)
+    const appHeight = () => {
+      document.documentElement.style.setProperty(
+        "--vh",
+        `${window.innerHeight * 0.01}px`
+      )
+    }
+    window.addEventListener("resize", appHeight)
+    window.addEventListener("fullscreenchange", appHeight)
+    appHeight()
 
     // вот здесь мы просто добавим setTimeOut и переход дальше через 2сек
     await this.$router.push("/")
@@ -44,6 +77,14 @@ export default {
     isLoggedIn() {
       return this.$store.getters["isLoggedIn"]
     },
+  },
+
+  mounted() {
+    // const appHeight = () => {
+    //   document.documentElement.style.setProperty("--vh", `${window.innerHeight * 0.01}px`)
+    // }
+    // window.addEventListener('resize', appHeight);
+    // appHeight();
   },
 }
 </script>
