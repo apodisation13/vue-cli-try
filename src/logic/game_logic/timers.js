@@ -16,30 +16,33 @@ export function timer(card) {
   return true
 }
 
-// obj, key - что менять в объекте
-// diffValue - что написать на время timeout, value - какое значение прибавить потом
-// soundFaction - какую функцию звука вызвать
-// isBool - менять ли флаг булев или уже какое-то значение
-export function timeoutAnimation(
+// Поставит выбранному key в объекте тру, а через таймут фолс, и звук воспроизведет
+export function timeoutAnimationFlag(
   obj,
   key,
   soundFunction = null,
-  diffString = null,
-  value = null,
-  isBool = false,
-  timeout = 500
+  timeout = 750
 ) {
   if (soundFunction) soundFunction()
-  if (isBool) {
-    obj[key] = true
-    setTimeout(() => {
-      obj[key] = false
-    }, timeout)
-  } else {
-    const prevValue = obj[key]
-    obj[key] = diffString
-    setTimeout(() => {
-      obj[key] = prevValue + value
-    }, timeout)
-  }
+  obj[key] = true
+  setTimeout(() => {
+    obj[key] = false
+  }, timeout)
+}
+
+// напишет на время таймаута строку diffString, а потом изменит значение на value
+export function timeoutAnimationValue(
+  obj,
+  key,
+  diffString,
+  value,
+  soundFunction = null,
+  timeout = 750
+) {
+  if (soundFunction) soundFunction()
+  const prevValue = obj[key]
+  obj[key] = diffString
+  setTimeout(() => {
+    obj[key] = prevValue + value
+  }, timeout)
 }

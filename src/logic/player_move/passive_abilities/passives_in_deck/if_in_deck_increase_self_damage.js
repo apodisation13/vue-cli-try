@@ -1,8 +1,8 @@
-import { trigger_passive_deck } from "@/logic/player_move/passive_abilities/passives_deck"
+import { timeoutAnimationFlag } from "@/logic/game_logic/timers"
 
 function if_in_deck_increase_self_damage(card) {
   card.damage += card.value
-  trigger_passive_deck(card)
+  timeoutAnimationFlag(card, "trigger_passive_deck")
 }
 
 export { if_in_deck_increase_self_damage }
