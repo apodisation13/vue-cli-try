@@ -5,6 +5,7 @@ import { increase_self_damage } from "@/logic/player_move/passive_abilities/pass
 import { destroy_2_enemies } from "@/logic/player_move/passive_abilities/passives_in_hand/destroy_2_enemies"
 import { add_charges_if_playing_d_all } from "@/logic/player_move/passive_abilities/passives_leader/add-charges-if-playing-d-all"
 import { set_dmg_as_random_enemy_grave } from "@/logic/player_move/passive_abilities/passives_in_hand/set_dmg_as_random_enemy_grave"
+import { incr_dmg_by_n_enemies_grave } from "@/logic/player_move/passive_abilities/passives_in_hand/incr_dmg_by_n_enemies_grave"
 
 export function hand_passives(card, gameObj, hand) {
   // ДИСПЕТЧЕР ПАССИВНЫХ АБИЛОК В РУКЕ!
@@ -23,5 +24,7 @@ export function hand_passives(card, gameObj, hand) {
     add_charges_if_playing_d_all(card, gameObj.leader, false)
   } else if (pa === "set-dmg-as-random-enemy-grave") {
     set_dmg_as_random_enemy_grave(card, gameObj)
+  } else if (pa === "incr-dmg-by-n-enemies-grave") {
+    incr_dmg_by_n_enemies_grave(card, gameObj)
   }
 }
