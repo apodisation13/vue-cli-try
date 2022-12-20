@@ -3,12 +3,9 @@ import { choice } from "@/lib/utils"
 import {
   timeoutAnimationFlag,
   timeoutAnimationValue,
-  timer,
 } from "@/logic/game_logic/timers"
 
 function increase_damage_in_hand(card, hand) {
-  if (card.default_timer && (card.timer === 0 || !timer(card))) return
-
   let random = choice(hand)
 
   timeoutAnimationValue(
