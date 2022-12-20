@@ -5,7 +5,7 @@
     <div v-if="openModal && gameStarted">
       <base-modal class="priority">
         <div class="request-modal">
-          <base-title-text> Перейдите в полножэкранный режим </base-title-text>
+          <base-title-text> Перейдите в полноэкранный режим </base-title-text>
           <button-to-fullscreen text="Перейти" @click="toggleApi" />
         </div>
       </base-modal>
@@ -54,6 +54,18 @@ export default {
     window.addEventListener("resize", appHeight)
     window.addEventListener("fullscreenchange", () => {
       this.openModal = this.$fullscreen.isFullscreen ? false : true
+      if (this.$fullscreen.isFullscreen) {
+
+        screen.orientation
+          .lock("portrait")
+          .then(() => {
+            console.log(`Locked to ${"portrait"}\n`)
+          })
+          .catch(error => {
+            console.log(`${error}\n`)
+          })
+      }
+
       appHeight()
     })
     appHeight()
