@@ -1,68 +1,38 @@
 <template>
-  <!-- <fullscreen v-model="fullscreen"> -->
-  <div class="wrapper__bg">
-    <div class="app">
-      <!--картинка страницы по параметрам из роутера-->
-      <page-image />
-      <!--верхняя часть меню, хэдер-->
-      <menu-header />
+  <!-- обертка включение полноэкранного режима -->
+  <app-wrapper-fullscreen>
+    <div class="wrapper__bg">
+      <div class="app">
+        <!--картинка страницы по параметрам из роутера-->
+        <page-image />
+        <!--верхняя часть меню, хэдер-->
+        <menu-header />
 
-      <!--собственно рендер самого приложения через роутер, формат {путь(роут): компонент}-->
-      <router-view />
+        <!--собственно рендер самого приложения через роутер, формат {путь(роут): компонент}-->
+        <router-view />
 
-      <!--нижняя часть меню, в футере, показываем только авторизованному-->
-      <menu-footer v-if="isLoggedIn" />
+        <!--нижняя часть меню, в футере, показываем только авторизованному-->
+        <menu-footer v-if="isLoggedIn" />
+      </div>
     </div>
-  </div>
-  <!-- </fullscreen> -->
+  </app-wrapper-fullscreen>
 </template>
 
 <script>
 import MenuFooter from "@/components/UI/Menu/MenuFooter"
 import MenuHeader from "@/components/UI/Menu/MenuHeader"
 import PageImage from "@/components/PageImage"
-// import {
-//     ref,
-//     toRefs,
-//     reactive
-//   } from 'vue'
+import AppWrapperFullscreen from '@/components/Pages/AppWrapperFullscreen/AppWrapperFullscreen'
 
 export default {
   components: {
     PageImage,
     MenuHeader,
     MenuFooter,
+    AppWrapperFullscreen,
   },
-  // methods: {
-  //     toggleApi () {
-  //       this.$fullscreen.toggle()
-  //     }
-  //   },
-  //   setup () {
-  //     const root = ref()
-  //     const state = reactive({
-  //       fullscreen: false,
-  //     })
-  //     function toggle () {
-  //       state.fullscreen = !state.fullscreen
-  //     }
-  //     return {
-  //       root,
-  //       ...toRefs(state),
-  //       toggle
-  //     }
-  //   },
-  async created() {
-    const appHeight = () => {
-      document.documentElement.style.setProperty(
-        "--vh",
-        `${window.innerHeight * 0.01}px`
-      )
-    }
-    window.addEventListener("resize", appHeight)
-    window.addEventListener("fullscreenchange", appHeight)
-    appHeight()
 
+  async created() {
     // вот здесь мы просто добавим setTimeOut и переход дальше через 2сек
     await this.$router.push("/")
     try {
@@ -73,18 +43,11 @@ export default {
       throw err
     }
   },
+
   computed: {
     isLoggedIn() {
       return this.$store.getters["isLoggedIn"]
     },
-  },
-
-  mounted() {
-    // const appHeight = () => {
-    //   document.documentElement.style.setProperty("--vh", `${window.innerHeight * 0.01}px`)
-    // }
-    // window.addEventListener('resize', appHeight);
-    // appHeight();
   },
 }
 </script>

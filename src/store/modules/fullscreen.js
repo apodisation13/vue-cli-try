@@ -1,22 +1,14 @@
 const state = {
-  fullscreen: false,
-}
-
-const getters = {
-  selectedFullScreen: state => state.fullscreen,
+  isStarted: false,
 }
 
 const mutations = {
-  set_fullscreen(state, payload) {
-    state.fullscreen = payload
+  gameStarting(state) {
+    state.isStarted = true;
   },
 }
 
-const actions = {}
-
 export default {
   state,
-  getters,
-  mutations,
-  actions,
+  mutations
 }

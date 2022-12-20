@@ -3,47 +3,37 @@
     <div class="logo"></div>
     <button class="start" @click="toggleApi" :disabled="authInProcess">
       НАЧАТЬ
-      {{ value }}
     </button>
   </div>
 </template>
 
 <script>
-import {
-  ref,
-  // defineComponent,
-  toRefs,
-  reactive,
-} from "vue"
 
 export default {
   name: "EmblemPage",
+  data() {
+    return {
+      fullscreen: false,
+    }
+  },
   computed: {
     authInProcess() {
       return this.$store.getters["getAuthState"]
     },
   },
-  setup() {
-    const root = ref()
-    const state = reactive({
-      fullscreen: false,
-    })
-    function toggle() {
-      state.fullscreen = !state.fullscreen
-    }
-    return {
-      root,
-      ...toRefs(state),
-      toggle,
-    }
-  },
   methods: {
-    toggleApi() {
-      // Пока только включение
-      this.$fullscreen.toggle()
-      this.goFullScreen()
-      //устанавливаем корректное значение вьюпорта переменную css для работы c var(--vh)
+    toggle() {
+      this.fullscreen = true
     },
+
+    toggleApi() {
+      // окно перехода в полноэкранный режим при первичной загрузке
+      this.$fullscreen.toggle()
+      // выставляем триггер для включения модального окна с запросом перехода в полноэкранный режим
+      this.$store.commit('gameStarting')
+      this.goFullScreen()
+    },
+    
     async goFullScreen() {
       // если в локалсторадже нет данных входа, или вход не прошел, по кнопке начать пойдем на главную страницу
       if (!this.$store.getters["isLoggedIn"]) {
