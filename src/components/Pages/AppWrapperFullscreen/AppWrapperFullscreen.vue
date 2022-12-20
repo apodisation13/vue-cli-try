@@ -37,22 +37,13 @@ export default {
     toggleApi() {
       this.$fullscreen.toggle()
     },
-  },
-  computed: {
-    gameStarted() {
-      return this.$store.state.fullscreen.isStarted
-    },
-  },
-
-  created() {
-    const appHeight = () => {
+    appHeight() {
       document.documentElement.style.setProperty(
         "--vh",
         `${window.innerHeight * 0.01}px`
       )
-    }
-    window.addEventListener("resize", appHeight)
-    window.addEventListener("fullscreenchange", () => {
+    },
+    setOrientation() {
       this.openModal = this.$fullscreen.isFullscreen ? false : true
       if (this.$fullscreen.isFullscreen) {
         screen.orientation
@@ -65,9 +56,23 @@ export default {
           })
       }
 
-      appHeight()
-    })
-    appHeight()
+      this.appHeight()
+    },
+  },
+  computed: {
+    gameStarted() {
+      return this.$store.state.fullscreen.isStarted
+    },
+  },
+
+  created() {
+    window.addEventListener("resize", this.appHeight)
+    window.addEventListener("fullscreenchange", this.setOrientation)
+    this.appHeight()
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.appHeight)
+    window.removeEventListener("fullscreenchange", this.setOrientation)
   },
 }
 </script>
