@@ -55,7 +55,6 @@ export default {
     window.addEventListener("fullscreenchange", () => {
       this.openModal = this.$fullscreen.isFullscreen ? false : true
       if (this.$fullscreen.isFullscreen) {
-
         screen.orientation
           .lock("portrait")
           .then(() => {
