@@ -1,13 +1,11 @@
 <template>
   <!-- <fullscreen v-model="fullscreen"> -->
-    <div>
+  <div>
     <slot></slot>
     <div v-if="openModal && gameStarted">
       <base-modal class="priority">
         <div class="request-modal">
-          <base-title-text>
-            Перейдите в полножэкранный режим
-          </base-title-text>
+          <base-title-text> Перейдите в полножэкранный режим </base-title-text>
           <button-to-fullscreen text="Перейти" @click="toggleApi" />
         </div>
       </base-modal>
@@ -17,50 +15,50 @@
 </template>
 
 <script>
-import BaseModal from '@/components/ModalWindows/BaseModal'
-import BaseTitleText from '@/components/UI/BaseTitleText'
-import ButtonToFullscreen from '@/components/UI/Buttons/ButtonToFullscreen'
-  export default {
-  components: { 
-    BaseModal, 
+import BaseModal from "@/components/ModalWindows/BaseModal"
+import BaseTitleText from "@/components/UI/BaseTitleText"
+import ButtonToFullscreen from "@/components/UI/Buttons/ButtonToFullscreen"
+export default {
+  components: {
+    BaseModal,
     BaseTitleText,
-    ButtonToFullscreen 
+    ButtonToFullscreen,
   },
-    data() {
-      return {
-        fullscreen: false,
-        openModal: false,
-      }
+  data() {
+    return {
+      fullscreen: false,
+      openModal: false,
+    }
+  },
+  methods: {
+    toggle() {
+      this.fullscreen = true
     },
-    methods: {
-      toggle() {
-        this.fullscreen = true
-      },
-      toggleApi() {
-        this.$fullscreen.toggle()
-      },
-    }, 
-    computed: {
-      gameStarted() {
-        return this.$store.state.fullscreen.isStarted
-      },
+    toggleApi() {
+      this.$fullscreen.toggle()
     },
+  },
+  computed: {
+    gameStarted() {
+      return this.$store.state.fullscreen.isStarted
+    },
+  },
 
-    created() {
-      const appHeight = () => {
+  created() {
+    const appHeight = () => {
       document.documentElement.style.setProperty(
         "--vh",
         `${window.innerHeight * 0.01}px`
-        )
-      }
-      window.addEventListener("resize", appHeight)
-      window.addEventListener("fullscreenchange", () => {
-        this.openModal = this.$fullscreen.isFullscreen ? false : true
-        appHeight()
-      })
+      )
+    }
+    window.addEventListener("resize", appHeight)
+    window.addEventListener("fullscreenchange", () => {
+      this.openModal = this.$fullscreen.isFullscreen ? false : true
       appHeight()
-    },
-  }
+    })
+    appHeight()
+  },
+}
 </script>
 
 <style scoped>
@@ -71,5 +69,4 @@ import ButtonToFullscreen from '@/components/UI/Buttons/ButtonToFullscreen'
   padding: 10px;
   text-align: center;
 }
-
 </style>

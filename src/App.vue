@@ -22,7 +22,7 @@
 import MenuFooter from "@/components/UI/Menu/MenuFooter"
 import MenuHeader from "@/components/UI/Menu/MenuHeader"
 import PageImage from "@/components/PageImage"
-import AppWrapperFullscreen from '@/components/Pages/AppWrapperFullscreen/AppWrapperFullscreen'
+import AppWrapperFullscreen from "@/components/Pages/AppWrapperFullscreen/AppWrapperFullscreen"
 
 export default {
   components: {

@@ -8,7 +8,6 @@
 </template>
 
 <script>
-
 export default {
   name: "EmblemPage",
   data() {
@@ -30,10 +29,10 @@ export default {
       // окно перехода в полноэкранный режим при первичной загрузке
       this.$fullscreen.toggle()
       // выставляем триггер для включения модального окна с запросом перехода в полноэкранный режим
-      this.$store.commit('gameStarting')
+      this.$store.commit("gameStarting")
       this.goFullScreen()
     },
-    
+
     async goFullScreen() {
       // если в локалсторадже нет данных входа, или вход не прошел, по кнопке начать пойдем на главную страницу
       if (!this.$store.getters["isLoggedIn"]) {
@@ -73,5 +72,4 @@ export default {
   top: 212px;
   background: url("~@/assets/icons/logo.png");
 }
-
 </style>

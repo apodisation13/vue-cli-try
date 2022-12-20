@@ -5,14 +5,14 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      text: {
-        type: String,
-        default: 'Кнопка'
-      }
-    }
-  }
+export default {
+  props: {
+    text: {
+      type: String,
+      default: "Кнопка",
+    },
+  },
+}
 </script>
 
 <style scoped>

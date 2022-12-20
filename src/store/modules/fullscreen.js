@@ -4,11 +4,11 @@ const state = {
 
 const mutations = {
   gameStarting(state) {
-    state.isStarted = true;
+    state.isStarted = true
   },
 }
 
 export default {
   state,
-  mutations
+  mutations,
 }

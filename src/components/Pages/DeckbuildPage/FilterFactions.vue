@@ -14,12 +14,12 @@
 
 <script>
 import FactionItem from "@/components/Pages/DeckbuildPage/FactionItem"
-import BaseTitleText from '@/components/UI/BaseTitleText'
+import BaseTitleText from "@/components/UI/BaseTitleText"
 
 export default {
-  components: { 
+  components: {
     FactionItem,
-    BaseTitleText 
+    BaseTitleText,
   },
   name: "filter-factions",
   props: {
