@@ -6,8 +6,11 @@ import { destroy_2_enemies } from "@/logic/player_move/passive_abilities/passive
 import { add_charges_if_playing_d_all } from "@/logic/player_move/passive_abilities/passives_leader/add-charges-if-playing-d-all"
 import { set_dmg_as_random_enemy_grave } from "@/logic/player_move/passive_abilities/passives_in_hand/set_dmg_as_random_enemy_grave"
 import { incr_dmg_by_n_enemies_grave } from "@/logic/player_move/passive_abilities/passives_in_hand/incr_dmg_by_n_enemies_grave"
+import { allowActionTimer } from "@/logic/game_logic/timers"
 
 export function hand_passives(card, gameObj, hand) {
+  if (!allowActionTimer(card)) return
+
   // ДИСПЕТЧЕР ПАССИВНЫХ АБИЛОК В РУКЕ!
   const pa = card.passive_ability.name
   if (pa === "damage-random-enemy") {
