@@ -73,16 +73,5 @@ export default {
   top: 212px;
   background: url("~@/assets/icons/logo.png");
 }
-.start {
-  position: absolute;
-  bottom: 48px;
-  justify-content: center;
-  align-items: center;
-  width: 328px;
-  height: 48px;
-  border-radius: 2px;
-  border: 2px solid #facf5d;
-  color: #facf5d;
-  background: var(--secondary-dark-gradient);
-}
+
 </style>

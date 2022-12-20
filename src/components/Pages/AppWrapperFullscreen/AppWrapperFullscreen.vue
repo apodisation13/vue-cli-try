@@ -3,13 +3,29 @@
     <div>
     <slot></slot>
     <div v-if="openModal && gameStarted">
+      <base-modal class="priority">
+        <div class="request-modal">
+          <base-title-text>
+            Перейдите в полножэкранный режим
+          </base-title-text>
+          <button-to-fullscreen text="Перейти" @click="toggleApi" />
+        </div>
+      </base-modal>
     </div>
   </div>
   <!-- </fullscreen > -->
 </template>
 
 <script>
+import BaseModal from '@/components/ModalWindows/BaseModal'
+import BaseTitleText from '@/components/UI/BaseTitleText'
+import ButtonToFullscreen from '@/components/UI/Buttons/ButtonToFullscreen'
   export default {
+  components: { 
+    BaseModal, 
+    BaseTitleText,
+    ButtonToFullscreen 
+  },
     data() {
       return {
         fullscreen: false,
@@ -48,5 +64,12 @@
 </script>
 
 <style scoped>
+.priority {
+  z-index: 9999999999;
+}
+.request-modal {
+  padding: 10px;
+  text-align: center;
+}
 
 </style>
