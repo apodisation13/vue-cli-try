@@ -18,7 +18,7 @@ function player_passive_abilities_end_turn(gameObj) {
       deck
         .filter(c => c.has_passive)
         .forEach(card => {
-          deck_passives(card)
+          deck_passives(card, gameObj)
         })
       // здесь мы выполняем пассивки в КЛАДБИЩЕ
       grave

@@ -10,7 +10,7 @@ import { timer } from "@/logic/game_logic/timers"
 function destroy_2_enemies(card, gameObj) {
   if (!timer(card)) return
 
-  const { field, enemy_leader, hand, grave } = gameObj
+  const { field, enemy_leader, hand, grave, deck } = gameObj
 
   let all_enemies = get_all_enemies(field, enemy_leader)
   const target_1 = choice_pop(all_enemies) || null
@@ -22,7 +22,7 @@ function destroy_2_enemies(card, gameObj) {
     if (e) enemy_takes_damage(e, { damage: e.hp }, gameObj, 500)
     card.charges = 0
   })
-  remove_dead_card(card, grave, hand, undefined)
+  remove_dead_card(card, grave, hand, deck)
 }
 
 export { destroy_2_enemies }
