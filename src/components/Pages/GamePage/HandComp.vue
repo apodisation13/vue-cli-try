@@ -15,7 +15,7 @@
           :style="{
             '--custom-z-index': 10 - index,
             border: element.damages_enemy
-              ? 'outset 3px lime'
+              ? 'outset 4px orange'
               : element.incr_dmg
               ? 'outset 4px purple'
               : '',
