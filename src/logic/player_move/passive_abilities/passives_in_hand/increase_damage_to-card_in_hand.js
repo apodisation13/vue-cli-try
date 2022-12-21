@@ -5,7 +5,8 @@ import {
   timeoutAnimationValue,
 } from "@/logic/game_logic/timers"
 
-function increase_damage_in_hand(card, hand) {
+function increase_damage_in_hand(card, gameObj) {
+  const { hand } = gameObj
   let random = choice(hand)
 
   timeoutAnimationValue(

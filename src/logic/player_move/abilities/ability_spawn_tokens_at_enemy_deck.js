@@ -19,6 +19,6 @@ export function spawn_tokens_at_enemy_deck(card, enemy, gameObj) {
 
   // card.value раз положили этот токен врага в его колоду
   for (let i = 0; i < card.value; i++) {
-    enemies.push(token)
+    enemies.push(copyObj(token))
   }
 }

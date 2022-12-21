@@ -8,7 +8,7 @@ import { set_dmg_as_random_enemy_grave } from "@/logic/player_move/passive_abili
 import { incr_dmg_by_n_enemies_grave } from "@/logic/player_move/passive_abilities/passives_in_hand/incr_dmg_by_n_enemies_grave"
 import { allowActionTimer } from "@/logic/game_logic/timers"
 
-export function hand_passives(card, gameObj, hand) {
+export function hand_passives(card, gameObj) {
   if (!allowActionTimer(card)) return
 
   // ДИСПЕТЧЕР ПАССИВНЫХ АБИЛОК В РУКЕ!
@@ -16,7 +16,7 @@ export function hand_passives(card, gameObj, hand) {
   if (pa === "damage-random-enemy") {
     damage_random_enemy(card, gameObj)
   } else if (pa === "increase-damage-to-card-in-hand") {
-    increase_damage_in_hand(card, hand)
+    increase_damage_in_hand(card, gameObj)
   } else if (pa === "heal-leader") {
     heal_leader(card)
   } else if (pa === "increase-self-damage") {
