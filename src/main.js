@@ -7,6 +7,7 @@ import Toast from "vue-toastification"
 import "vue-toastification/dist/index.css"
 import Vue3TouchEvents from "vue3-touch-events"
 import VueKonva from "vue-konva"
+import VueFullscreen from "vue-fullscreen"
 import * as Sentry from "@sentry/vue"
 import { BrowserTracing } from "@sentry/tracing"
 
@@ -36,4 +37,5 @@ app
   .use(Toast, toastOptions)
   .use(Vue3TouchEvents)
   .use(VueKonva)
+  .use(VueFullscreen)
   .mount("#app")
