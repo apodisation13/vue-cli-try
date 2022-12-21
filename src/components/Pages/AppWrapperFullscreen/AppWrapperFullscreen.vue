@@ -1,5 +1,4 @@
 <template>
-  <!-- <fullscreen v-model="fullscreen"> -->
   <div>
     <slot></slot>
     <div v-if="openModal && gameStarted">
@@ -11,7 +10,6 @@
       </base-modal>
     </div>
   </div>
-  <!-- </fullscreen > -->
 </template>
 
 <script>
@@ -26,7 +24,9 @@ export default {
   },
   data() {
     return {
+      // поле состояния режима полного экрана
       fullscreen: false,
+      // поле для открытия модального окна с запросом на преход в полноэкранный режим
       openModal: false,
     }
   },
@@ -34,15 +34,21 @@ export default {
     toggle() {
       this.fullscreen = true
     },
+
     toggleApi() {
       this.$fullscreen.toggle()
     },
+
+    // функция пересчета значения переменной vh при изменении размера экрана( при переходе в полноэкранный режим,
+    // решение проблемы кроссбраузерности мобильных браузеров ), значение vh активно используется на DeckbuildPage
     appHeight() {
       document.documentElement.style.setProperty(
         "--vh",
         `${window.innerHeight * 0.01}px`
       )
     },
+
+    // функция установки положения в режим "portrait" в полноэкранном режиме
     setOrientation() {
       this.openModal = this.$fullscreen.isFullscreen ? false : true
       if (this.$fullscreen.isFullscreen) {
@@ -60,17 +66,25 @@ export default {
     },
   },
   computed: {
+
+    // поле указывающее что пользователь зашел в игру, устанавливается в true и втечение игры не меняется
+    // по заначению этого поля открывается модальное окно с запросом перехода в полноэкранный режим
+
     gameStarted() {
       return this.$store.state.fullscreen.isStarted
     },
   },
 
   created() {
+    // прослушиваетель на изменение размеров экрана, вызывает функцию пересчета css переменной --vh
     window.addEventListener("resize", this.appHeight)
+    // прослушиваетель изменения полноэкранного режима, в полноэкранном режиме устанавливается ориентрация экрана "portrait"
     window.addEventListener("fullscreenchange", this.setOrientation)
     this.appHeight()
   },
+
   destroyed() {
+    // удаление прослушателей при демонтрировании компонента
     window.removeEventListener("resize", this.appHeight)
     window.removeEventListener("fullscreenchange", this.setOrientation)
   },
