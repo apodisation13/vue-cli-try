@@ -80,7 +80,7 @@ body {
   z-index: -2;
   background: #fff;
   width: 100%;
-  height: 100%;
+  height: 100vh;
 }
 
 .wrapper__bg {
