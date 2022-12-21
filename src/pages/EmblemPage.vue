@@ -1,7 +1,7 @@
 <template>
   <div class="emblem_page">
     <div class="logo"></div>
-    <button class="start" @click="goFullScreen" :disabled="authInProcess">
+    <button class="start" @click="toggleApi" :disabled="authInProcess">
       НАЧАТЬ
     </button>
   </div>
@@ -10,12 +10,32 @@
 <script>
 export default {
   name: "EmblemPage",
+  data() {
+    return {
+      // это поле присутствует по рекоммендации доки, после тестирования можно удалить
+      fullscreen: false,
+    }
+  },
   computed: {
     authInProcess() {
       return this.$store.getters["getAuthState"]
     },
   },
   methods: {
+    // эта функциональность присутствует по рекоммендации доки, после тестирования можно удалить
+    toggle() {
+      this.fullscreen = true
+    },
+
+    toggleApi() {
+      // окно перехода в полноэкранный режим, запрашивается 1 раз при первичной загрузке приложения,
+      // дальнейшая логика взаимодействия с полноэкранным режимом реализована в AppWrapperFullscreen
+      this.$fullscreen.toggle()
+      // выставляем триггер в строр для разрешения открытия модального окна с запросом перехода в полноэкранный режим
+      this.$store.commit("gameStarting")
+      this.goFullScreen()
+    },
+
     async goFullScreen() {
       // если в локалсторадже нет данных входа, или вход не прошел, по кнопке начать пойдем на главную страницу
       if (!this.$store.getters["isLoggedIn"]) {
@@ -55,6 +75,7 @@ export default {
   top: 212px;
   background: url("~@/assets/icons/logo.png");
 }
+
 .start {
   position: absolute;
   bottom: 48px;

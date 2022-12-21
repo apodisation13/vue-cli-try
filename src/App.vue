@@ -1,35 +1,38 @@
 <template>
-  <div class="wrapper__bg">
-    <div class="app">
-      <!--картинка страницы по параметрам из роутера-->
-      <page-image />
-      <!--верхняя часть меню, хэдер-->
-      <menu-header />
+  <!-- обертка включение полноэкранного режима -->
+  <app-wrapper-fullscreen>
+    <div class="wrapper__bg">
+      <div class="app">
+        <!--картинка страницы по параметрам из роутера-->
+        <page-image />
+        <!--верхняя часть меню, хэдер-->
+        <menu-header />
 
-      <!--собственно рендер самого приложения через роутер, формат {путь(роут): компонент}-->
-      <router-view />
+        <!--собственно рендер самого приложения через роутер, формат {путь(роут): компонент}-->
+        <router-view />
 
-      <!--нижняя часть меню, в футере, показываем только авторизованному-->
-      <menu-footer v-if="isLoggedIn" />
+        <!--нижняя часть меню, в футере, показываем только авторизованному-->
+        <menu-footer v-if="isLoggedIn" />
+      </div>
     </div>
-  </div>
+  </app-wrapper-fullscreen>
 </template>
 
 <script>
 import MenuFooter from "@/components/UI/Menu/MenuFooter"
 import MenuHeader from "@/components/UI/Menu/MenuHeader"
 import PageImage from "@/components/PageImage"
+import AppWrapperFullscreen from "@/components/Pages/AppWrapperFullscreen/AppWrapperFullscreen"
+
 export default {
   components: {
     PageImage,
     MenuHeader,
     MenuFooter,
+    AppWrapperFullscreen,
   },
-  async created() {
-    //устанавливаем корректное значение вьюпорта переменную css для работы c var(--vh)
-    let vh = window.innerHeight * 0.01
-    document.documentElement.style.setProperty("--vh", `${vh}px`)
 
+  async created() {
     // вот здесь мы просто добавим setTimeOut и переход дальше через 2сек
     await this.$router.push("/")
     try {
@@ -40,6 +43,7 @@ export default {
       throw err
     }
   },
+
   computed: {
     isLoggedIn() {
       return this.$store.getters["isLoggedIn"]

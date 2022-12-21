@@ -1,6 +1,6 @@
 <template>
   <div class="filter_factions">
-    <div class="global_text filter_title">{{ title }}</div>
+    <base-title-text>{{ title }}</base-title-text>
     <div class="factions">
       <faction-item
         v-for="faction in factions"
@@ -14,9 +14,13 @@
 
 <script>
 import FactionItem from "@/components/Pages/DeckbuildPage/FactionItem"
+import BaseTitleText from "@/components/UI/BaseTitleText"
 
 export default {
-  components: { FactionItem },
+  components: {
+    FactionItem,
+    BaseTitleText,
+  },
   name: "filter-factions",
   props: {
     // покажем или Фракции, или "Выберите фракцию" для новой колоды
@@ -45,14 +49,6 @@ export default {
 <style scoped>
 .filter_factions {
   margin-bottom: 20px;
-}
-
-.filter_title {
-  font-size: 25px;
-  margin-bottom: 15px;
-  background: var(--primary-gold-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 .factions {
