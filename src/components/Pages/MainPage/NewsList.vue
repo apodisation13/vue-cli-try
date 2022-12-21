@@ -1,5 +1,5 @@
 <template>
-  <div class="news">
+  <div class="news" v-if="news">
     <button class="news__prev" @click="prev">
       <img :src="require('@/assets/icons/' + 'arrow.svg')" />
     </button>

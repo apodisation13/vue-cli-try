@@ -8,7 +8,7 @@
     </div>
     <div class="not_logged_in" v-if="isLoggedIn">
       <div class="global_text not_logged_in__text">
-        Добро пожаловать, {{ this.$store.state.login.user.username }}
+        Добро пожаловать, {{ $store.state.login.user.username }}
       </div>
     </div>
     <div class="news">

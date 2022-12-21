@@ -34,10 +34,10 @@ export default {
 
   async created() {
     // вот здесь мы просто добавим setTimeOut и переход дальше через 2сек
+    this.$store.dispatch("fetchNews")
     await this.$router.push("/")
     try {
       await this.$store.dispatch("check_auth") // пытаемся послать запрос на логин с данными из локалсторадж
-      await this.$store.dispatch("fetchNews")
     } catch (err) {
       console.log(err)
       throw err

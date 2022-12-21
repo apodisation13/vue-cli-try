@@ -39,6 +39,7 @@ export default {
     async goFullScreen() {
       // если в локалсторадже нет данных входа, или вход не прошел, по кнопке начать пойдем на главную страницу
       if (!this.$store.getters["isLoggedIn"]) {
+        console.log("Мы не залогинены, идем на главную страницу")
         this.$router.push("/main")
         return
       }
