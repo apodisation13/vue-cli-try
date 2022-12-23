@@ -43,6 +43,7 @@ export default {
         this.cards_pool = this.gameObj.grave.filter(
           card =>
             (card.color === "Bronze" || card.color === "Silver") &&
+            card.type === "Unit" &&
             card.id !== this.selected_card.id
         )
       } else if (ability === "discard-draw-2") {
