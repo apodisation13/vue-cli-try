@@ -7,6 +7,7 @@ import { add_charges_if_playing_d_all } from "@/logic/player_move/passive_abilit
 import { set_dmg_as_random_enemy_grave } from "@/logic/player_move/passive_abilities/passives_in_hand/set_dmg_as_random_enemy_grave"
 import { incr_dmg_by_n_enemies_grave } from "@/logic/player_move/passive_abilities/passives_in_hand/incr_dmg_by_n_enemies_grave"
 import { allowActionTimer } from "@/logic/game_logic/timers"
+import { incr_dmg_by_len_deck } from "@/logic/player_move/passive_abilities/passives_in_hand/incr_dmg_by_len_deck"
 
 export function hand_passives(card, gameObj) {
   if (!allowActionTimer(card)) return
@@ -29,5 +30,7 @@ export function hand_passives(card, gameObj) {
     set_dmg_as_random_enemy_grave(card, gameObj)
   } else if (pa === "incr-dmg-by-n-enemies-grave") {
     incr_dmg_by_n_enemies_grave(card, gameObj)
+  } else if (pa === "incr-dmg-by-len-deck") {
+    incr_dmg_by_len_deck(card, gameObj)
   }
 }
