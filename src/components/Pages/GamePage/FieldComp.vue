@@ -46,7 +46,7 @@ export default {
 
 <style scoped>
 .field {
-  width: 72%;
+  width: 73%;
   overflow: hidden;
 }
 
@@ -58,7 +58,7 @@ export default {
 table tr,
 td {
   /* width: 50%; */
-  height: 18vh;
+  height: 20vh;
   /*border: dashed 0.5px black;*/
   overflow: hidden;
   padding: 3px;
