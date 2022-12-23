@@ -9,6 +9,7 @@ import { incr_dmg_by_n_enemies_grave } from "@/logic/player_move/passive_abiliti
 import { allowActionTimer } from "@/logic/game_logic/timers"
 import { incr_dmg_by_len_deck } from "@/logic/player_move/passive_abilities/passives_in_hand/incr_dmg_by_len_deck"
 import { spawn_random_in_hand } from "@/logic/player_move/passive_abilities/passives_in_hand/spawn_random_in_hand"
+import { inc_dmg_by_len_grave } from "@/logic/player_move/passive_abilities/passives_in_hand/incr-dmg-by-len-grave"
 
 export function hand_passives(card, gameObj) {
   if (!allowActionTimer(card)) return
@@ -35,5 +36,7 @@ export function hand_passives(card, gameObj) {
     incr_dmg_by_len_deck(card, gameObj)
   } else if (pa === "spawn-random-in-hand") {
     spawn_random_in_hand(gameObj)
+  } else if (pa === "incr-dmg-by-n-grave") {
+    inc_dmg_by_len_grave(card, gameObj)
   }
 }
