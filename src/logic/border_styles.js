@@ -23,6 +23,9 @@ function border_for_card(card) {
 
 function card_margin(card) {
   if (card.damages_player) return { border: "outset 4px red" }
+  if (card.damages_enemy) return { border: "outset 4px orange" }
+  if (card.incr_dmg) return { border: "outset 4px purple" }
+  if (card.healing) return { border: "outset 4px lime" }
   else {
     if (card.color === "Bronze") {
       return {

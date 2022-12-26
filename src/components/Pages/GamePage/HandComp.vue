@@ -12,16 +12,7 @@
           :card="element"
           :index="index"
           class="card_in_hand"
-          :style="{
-            '--custom-z-index': 10 - index,
-            border: element.damages_enemy
-              ? 'outset 4px orange'
-              : element.incr_dmg
-              ? 'outset 4px purple'
-              : element.healing
-              ? 'outset 4px lime'
-              : '',
-          }"
+          :style="{ '--custom-z-index': 10 - index }"
         />
       </template>
     </draggable>
