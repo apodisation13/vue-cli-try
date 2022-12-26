@@ -27,7 +27,6 @@ export function enemy_takes_damage(enemy, card, gameObj, timeout) {
       }
     }
 
-    card.damages_enemy = false
     check_win(field, enemies, enemy_leader)
   }, timeout)
 }
