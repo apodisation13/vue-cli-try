@@ -38,11 +38,7 @@ export default {
                 if (!this.$store.state.game.leader_ai_move) {
                   console.log("закончили лидер врагов, теперь пассивки врагов")
                   clearInterval(await_leader_ai_passive_move)
-                  enemy_passive_abilities_end_turn(
-                    this.gameObj.field,
-                    this.gameObj.enemy_leader,
-                    this.gameObj.hand
-                  )
+                  enemy_passive_abilities_end_turn(this.gameObj)
 
                   let await_epa_end_turn = setInterval(() => {
                     if (!this.$store.state.game.epa_end_turn) {
