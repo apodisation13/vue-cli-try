@@ -26,8 +26,10 @@
         <button class="global_text btn btn-mill" @click="mill">
           Уничтожить
         </button>
-        <card-count-triangle :count="count" card-color="gold" />
-        <!-- <button class="count">{{ count }}</button> -->
+        <card-count-triangle
+          :count="count"
+          :card-color="background_color_triangle(card.color)"
+        />
         <button class="global_text btn btn-craft" @click="craft">
           Создать
         </button>
@@ -57,6 +59,8 @@ import {
   border_for_card,
   background_color,
   border_leader,
+  background_color_leader,
+  background_color_hp,
 } from "@/logic/border_styles"
 import CardCountTriangle from "@/components/UI/CardsUI/Cards/CardCountTriangle"
 import ButtonClose from "@/components/UI/Buttons/ButtonClose"
@@ -142,6 +146,11 @@ export default {
     background_color(e) {
       return background_color(e)
     },
+    background_color_triangle(color) {
+      return this.is_leader
+        ? background_color_leader(this.card.faction)
+        : background_color_hp(color)
+    },
     cancel() {
       this.show_yesno_mill = false
       this.show_yesno_craft = false
@@ -206,6 +215,9 @@ div {
 .divb {
   display: flex;
   justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 .btn {
   width: 48%;
@@ -230,11 +242,6 @@ div {
 .btn-craft {
   border-width: 1px 0 0 1px;
   color: hsl(112, 81%, 53%);
-}
-
-.count {
-  width: 13%;
-  height: 100%;
 }
 
 .bonus_count {
