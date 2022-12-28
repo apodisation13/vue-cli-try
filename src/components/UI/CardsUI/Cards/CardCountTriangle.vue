@@ -26,8 +26,7 @@ export default {
 .triangle {
   position: absolute;
   bottom: 0;
-  right: 50%;
-  transform: translate(50%, 0);
+  right: 33%;
   width: 0;
   height: 0;
   border-left: 15px solid transparent;

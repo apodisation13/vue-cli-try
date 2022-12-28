@@ -81,7 +81,6 @@ import BlockAssemblingTheDeck from "@/components/Pages/DeckbuildPage/BlockAssemb
 import DeckbuilderFilters from "@/components/Pages/DeckbuildPage/DeckbuilderFilters"
 import CardListComponent from "@/components/Cards/CardListComponent"
 import ButtonDecks from "@/components/Pages/DeckbuildPage/Buttons/ButtonDecks"
-import { useToast } from "vue-toastification"
 
 export default {
   components: {
@@ -91,10 +90,6 @@ export default {
     DeckbuilderFilters,
     CardListComponent,
     ButtonDecks,
-  },
-  setup() {
-    const toast = useToast()
-    return { toast }
   },
   data() {
     return {
@@ -185,7 +180,7 @@ export default {
         this.deck.health += card.card.hp
         return
       }
-      this.toast.warning(
+      alert(
         "нельзя карту добавить закрытую карту, или карту ещё раз или карт больше 12"
       )
     },
@@ -206,11 +201,11 @@ export default {
     // выбираем лидера для деки
     chose_leader(leader) {
       if (!this.deckBuilding) {
-        this.toast.warning("выберете фракцию!")
+        alert("выберете фракцию!")
         return
       }
       if (leader.count === 0) {
-        this.toast.warning("нельзя выбрать закрытого лидера")
+        alert("нельзя выбрать закрытого лидера")
         return
       }
       this.deck.leader = leader.card
@@ -222,14 +217,14 @@ export default {
 
     async save_deck() {
       if (!this.deck.leader) {
-        return this.toast.warning("Необходимо выбрать лидера")
+        return alert("Необходимо выбрать лидера")
       }
       // карт ровно 12 и лидер выбран
       if (this.cant_save_deck) {
-        return this.toast.warning("Соберите колоду из 12 карт")
+        return alert("Соберите колоду из 12 карт")
       }
       if (this.deck.deck_name.trim() === "") {
-        return this.toast.warning("Введите имя колоды")
+        return alert("Введите имя колоды")
       }
       this.send_data_to_store("post_deck", {
         name: this.deck.deck_name,
@@ -367,7 +362,7 @@ export default {
 .database_of_cards {
   width: 100%;
   background: #3c4d60;
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.7);
+  box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.7);
   padding-top: 5px;
   padding-bottom: 5px;
   overflow-y: scroll;
