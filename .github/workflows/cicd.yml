@@ -47,13 +47,13 @@ jobs:
           password: ${{ github.token }}
       
       - name: Build and push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}:${{ env.MODE }}
+          build-args: VUE_APP_API_URL=${{ secrets.VUE_APP_API_URL }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          build-args: VUE_APP_API_URL=${{ secrets.VUE_APP_API_URL }}
 
       - name: Send docker-compose
         uses: appleboy/scp-action@master
