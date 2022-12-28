@@ -63,12 +63,6 @@ export default {
   user-select: none;
   font-family: "Roboto", "Inter", "Philosopher", sans-serif;
   /* font-family: Arial, Helvetica, sans-serif; единый на всё */
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-*::-webkit-scrollbar {
-  display: none;
 }
 
 .app {

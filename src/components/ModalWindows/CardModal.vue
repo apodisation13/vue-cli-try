@@ -23,16 +23,9 @@
     <!--Блок кнопок милл, крафт (ТОЛЬКО ДЛЯ ДЕКБИЛДЕРА!!!-->
     <div class="mill_craft_block" v-if="deckbuilder">
       <div class="divb" v-if="!bonus">
-        <button class="global_text btn btn-mill" @click="mill">
-          Уничтожить
-        </button>
-        <card-count-triangle
-          :count="count"
-          :card-color="background_color_triangle(card.color)"
-        />
-        <button class="global_text btn btn-craft" @click="craft">
-          Создать
-        </button>
+        <button class="b" @click="mill">Уничтожить</button>
+        <button class="count">{{ count }}</button>
+        <button class="b" @click="craft">Создать</button>
       </div>
       <div class="divb" v-if="bonus">
         <button class="bonus_count">У вас {{ count }}</button>
@@ -59,10 +52,7 @@ import {
   border_for_card,
   background_color,
   border_leader,
-  background_color_leader,
-  background_color_hp,
 } from "@/logic/border_styles"
-import CardCountTriangle from "@/components/UI/CardsUI/Cards/CardCountTriangle"
 import ButtonClose from "@/components/UI/Buttons/ButtonClose"
 import ModalWindow from "@/components/ModalWindows/ModalWindow"
 import YesnoModal from "@/components/ModalWindows/YesnoModal"
@@ -72,7 +62,6 @@ import CardDescriptions from "@/components/Cards/CardDescriptions"
 export default {
   name: "card-modal",
   components: {
-    CardCountTriangle,
     CardDescriptions,
     EnemyUi,
     CardUi,
@@ -146,11 +135,6 @@ export default {
     background_color(e) {
       return background_color(e)
     },
-    background_color_triangle(color) {
-      return this.is_leader
-        ? background_color_leader(this.card.faction)
-        : background_color_hp(color)
-    },
     cancel() {
       this.show_yesno_mill = false
       this.show_yesno_craft = false
@@ -201,7 +185,7 @@ div {
 }
 .card-ui {
   position: relative;
-  margin: 0 auto;
+  margin: auto;
   width: 85%;
   box-shadow: -4px 0 4px rgb(0 0 0 / 50%);
 }
@@ -213,35 +197,20 @@ div {
 }
 
 .divb {
-  display: flex;
-  justify-content: space-between;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
-.btn {
-  width: 48%;
-  height: 3rem;
-  background: linear-gradient(
-    180deg,
-    #1d252d -21.82%,
-    rgba(0, 0, 0, 0.13) 44.55%,
-    #282d33 109.53%
-  );
-  font-size: 16px;
-  border-style: solid;
-  border-color: hsl(44, 94%, 67%);
-  border-radius: 6px;
+  width: 98%;
+  height: 3vh;
+  margin-left: 0.5%;
+  margin-top: 0.2%;
 }
 
-.btn-mill {
-  border-width: 1px 1px 0 0;
-  color: hsl(0, 76%, 47%);
+.b {
+  width: 42%;
+  height: 100%;
 }
 
-.btn-craft {
-  border-width: 1px 0 0 1px;
-  color: hsl(112, 81%, 53%);
+.count {
+  width: 13%;
+  height: 100%;
 }
 
 .bonus_count {
