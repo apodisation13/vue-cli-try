@@ -13,6 +13,9 @@ export default {
 
 <style scoped>
 .modal_window {
+  /*display: flex;*/
+  /*flex-direction: column;*/
+  /*justify-content: space-between;*/
   background: linear-gradient(180deg, #1e2834 0%, #0a0b0c 100%);
   text-align: center;
   position: absolute;
@@ -22,5 +25,6 @@ export default {
   left: 0;
   z-index: 9999;
   font-size: 12pt;
+  overflow: scroll;
 }
 </style>
