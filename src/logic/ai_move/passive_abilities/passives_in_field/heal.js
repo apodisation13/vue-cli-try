@@ -1,56 +1,87 @@
 import { sound_heal } from "@/logic/play_sounds"
 import { get_all_enemies } from "@/logic/player_move/service/service_for_player_move"
+import {
+  timeoutAnimationFlag,
+  timeoutAnimationValue,
+} from "@/logic/game_logic/timers"
+import { choice_element } from "@/lib/utils"
 
 // ЛИДЕР ВРАГОВ лечит пассивно в конце хода сам себя на VALUE
 function enemy_leader_heal_self(enemy_leader) {
-  let temp = enemy_leader.hp
-  enemy_leader.hp = `${temp}+${enemy_leader.heal_self_per_turn}`
-  sound_heal()
-  setTimeout(() => {
-    enemy_leader.hp = temp
-    enemy_leader.hp += enemy_leader.heal_self_per_turn
-  }, 750)
+  timeoutAnimationValue(
+    enemy_leader,
+    "hp",
+    `${enemy_leader.hp}+${enemy_leader.heal_self_per_turn}`,
+    enemy_leader.heal_self_per_turn,
+    sound_heal,
+    750
+  )
+  timeoutAnimationFlag(enemy_leader, "healing")
 }
 
 // ВРАГ лечит пассивно в конце хода сам себя на VALUE
 function heal_self(enemy) {
-  let temp = enemy.hp
-  enemy.hp = `${temp}+${enemy.value}`
-  sound_heal()
-  setTimeout(() => {
-    enemy.hp = temp
-    enemy.hp += enemy.value
-  }, 750)
+  timeoutAnimationValue(
+    enemy,
+    "hp",
+    `${enemy.hp}+${enemy.value}`,
+    enemy.value,
+    sound_heal,
+    750
+  )
+  timeoutAnimationFlag(enemy, "healing")
 }
 
 // враг лечит пассивно в конце хода лидера врагов на VALUE
 function heal_enemy_leader(enemy, enemy_leader) {
-  let temp = enemy_leader.hp
-  enemy_leader.hp = `${temp}+${enemy.value}`
-  sound_heal()
-  setTimeout(() => {
-    enemy_leader.hp = temp
-    enemy_leader.hp += enemy.value
-  }, 750)
+  timeoutAnimationValue(
+    enemy_leader,
+    "hp",
+    `${enemy_leader.hp}+${enemy.value}`,
+    enemy.value,
+    sound_heal,
+    750
+  )
+  timeoutAnimationFlag(enemy, "healing")
 }
 
 // враг лечит пассивно в конце хода всех врагов на VALUE
 function heal_all(enemy, field, enemy_leader) {
   let all_enemies = get_all_enemies(field, enemy_leader)
 
-  let e_hps = []
-
-  all_enemies.forEach(e => {
-    e_hps.push(e.hp) // запомнили жизни врага
-    e.hp = `${e.hp}+${enemy.value}` // просто отобразили всем +value
-  })
   sound_heal()
-
-  setTimeout(() => {
-    for (let i = 0; i < all_enemies.length; i++) {
-      all_enemies[i].hp = e_hps[i] + enemy.value
-    }
-  }, 750)
+  all_enemies.forEach(e => {
+    timeoutAnimationValue(
+      e,
+      "hp",
+      `${e.hp}+${enemy.value}`,
+      enemy.value,
+      undefined,
+      750
+    )
+  })
+  timeoutAnimationFlag(enemy, "healing")
 }
 
-export { heal_self, enemy_leader_heal_self, heal_enemy_leader, heal_all }
+function heal_random(enemy, field, enemy_leader) {
+  let all_enemies = get_all_enemies(field, enemy_leader)
+  const random_enemy = choice_element(all_enemies)
+
+  timeoutAnimationValue(
+    random_enemy,
+    "hp",
+    `${random_enemy.hp}+${enemy.value}`,
+    enemy.value,
+    sound_heal,
+    750
+  )
+  timeoutAnimationFlag(enemy, "healing")
+}
+
+export {
+  heal_self,
+  enemy_leader_heal_self,
+  heal_enemy_leader,
+  heal_all,
+  heal_random,
+}
