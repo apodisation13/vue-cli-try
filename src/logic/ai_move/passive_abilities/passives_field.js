@@ -7,6 +7,7 @@ import {
   heal_enemy_leader,
   heal_random,
   heal_self,
+  heal_self_by_highest_hp,
 } from "@/logic/ai_move/passive_abilities/passives_in_field/heal"
 import { regain_shield } from "@/logic/ai_move/passive_abilities/passives_in_field/regain_shield"
 import { decrease_player_damage } from "@/logic/ai_move/passive_abilities/passives_in_field/decrease_player_damage"
@@ -43,5 +44,7 @@ export function field_passives(enemy, gameObj) {
     set_dmg_as_highest_hand(enemy, gameObj)
   } else if (pea === "set-dmg-random-grave") {
     set_dmg_random_grave(enemy, gameObj)
+  } else if (pea === "heal-self-by-highest-hp") {
+    heal_self_by_highest_hp(enemy, field, enemy_leader)
   }
 }

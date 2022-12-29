@@ -78,10 +78,30 @@ function heal_random(enemy, field, enemy_leader) {
   timeoutAnimationFlag(enemy, "healing")
 }
 
+function heal_self_by_highest_hp(enemy, field, enemy_leader) {
+  let all_enemies = get_all_enemies(field, enemy_leader)
+  all_enemies.splice(all_enemies.indexOf(enemy), 1) // EXCLUDE self)
+  if (!all_enemies.length) return
+
+  all_enemies.sort((a, b) => b.hp - a.hp)
+  const target = all_enemies[0]
+
+  timeoutAnimationValue(
+    enemy,
+    "hp",
+    `${enemy.hp}+${target.hp}`,
+    target.hp,
+    sound_heal,
+    750
+  )
+  timeoutAnimationFlag(enemy, "healing")
+}
+
 export {
   heal_self,
   enemy_leader_heal_self,
   heal_enemy_leader,
   heal_all,
   heal_random,
+  heal_self_by_highest_hp,
 }
