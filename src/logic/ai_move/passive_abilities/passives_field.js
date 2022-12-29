@@ -11,6 +11,9 @@ import {
 import { regain_shield } from "@/logic/ai_move/passive_abilities/passives_in_field/regain_shield"
 import { decrease_player_damage } from "@/logic/ai_move/passive_abilities/passives_in_field/decrease_player_damage"
 import { allowActionTimer } from "@/logic/game_logic/timers"
+import { set_hp_random_grave } from "@/logic/ai_move/passive_abilities/passives_in_field/set_hp_random_grave"
+import { set_dmg_as_highest_hand } from "@/logic/ai_move/passive_abilities/passives_in_field/set_dmg_as_highest_hand"
+import { set_dmg_random_grave } from "@/logic/ai_move/passive_abilities/passives_in_field/set_dmg_random_grave"
 
 export function field_passives(enemy, gameObj) {
   if (!allowActionTimer(enemy)) return
@@ -34,5 +37,11 @@ export function field_passives(enemy, gameObj) {
     incr_random_dmg(enemy, field)
   } else if (pea === "decrease-player-damage") {
     decrease_player_damage(enemy, hand)
+  } else if (pea === "set-hp-random-grave") {
+    set_hp_random_grave(enemy, gameObj)
+  } else if (pea === "set-dmg-as-highest-hand") {
+    set_dmg_as_highest_hand(enemy, gameObj)
+  } else if (pea === "set-dmg-random-grave") {
+    set_dmg_random_grave(enemy, gameObj)
   }
 }
