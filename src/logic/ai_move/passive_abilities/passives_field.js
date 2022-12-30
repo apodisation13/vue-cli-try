@@ -1,11 +1,15 @@
 import {
+  incr_dmg_column,
+  incr_dmg_row,
   incr_random_dmg,
   incr_self_dmg,
 } from "@/logic/ai_move/passive_abilities/passives_in_field/increase_damage"
 import {
   heal_all,
+  heal_column,
   heal_enemy_leader,
   heal_random,
+  heal_row,
   heal_self,
   heal_self_by_highest_hp,
 } from "@/logic/ai_move/passive_abilities/passives_in_field/heal"
@@ -46,5 +50,13 @@ export function field_passives(enemy, gameObj) {
     set_dmg_random_grave(enemy, gameObj)
   } else if (pea === "heal-self-by-highest-hp") {
     heal_self_by_highest_hp(enemy, field, enemy_leader)
+  } else if (pea === "heal-row") {
+    heal_row(enemy, field)
+  } else if (pea === "heal-column") {
+    heal_column(enemy, field)
+  } else if (pea === "incr-dmg-row") {
+    incr_dmg_row(enemy, field)
+  } else if (pea === "incr-dmg-column") {
+    incr_dmg_column(enemy, field)
   }
 }

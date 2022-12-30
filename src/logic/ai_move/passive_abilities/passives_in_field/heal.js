@@ -97,6 +97,45 @@ function heal_self_by_highest_hp(enemy, field, enemy_leader) {
   timeoutAnimationFlag(enemy, "healing")
 }
 
+function heal_row(enemy, field) {
+  let index = field.indexOf(enemy)
+  let min = Math.floor(index / 3) * 3
+  let max = min + 3
+  sound_heal()
+  timeoutAnimationFlag(enemy, "healing")
+  field.slice(min, max).forEach(e => {
+    if (e) {
+      timeoutAnimationValue(
+        e,
+        "hp",
+        `${e.hp}+${enemy.value}`,
+        enemy.value,
+        undefined,
+        750
+      )
+    }
+  })
+}
+
+function heal_column(enemy, field) {
+  let index = field.indexOf(enemy) % 3
+  let indexes = [index, index + 3, index + 6, index + 9]
+  sound_heal()
+  timeoutAnimationFlag(enemy, "healing")
+  indexes.forEach(i => {
+    if (field[i]) {
+      timeoutAnimationValue(
+        field[i],
+        "hp",
+        `${field[i].hp}+${enemy.value}`,
+        enemy.value,
+        undefined,
+        750
+      )
+    }
+  })
+}
+
 export {
   heal_self,
   enemy_leader_heal_self,
@@ -104,4 +143,6 @@ export {
   heal_all,
   heal_random,
   heal_self_by_highest_hp,
+  heal_row,
+  heal_column,
 }
