@@ -1,6 +1,10 @@
 <template>
   <div>
-    <button class="remaining-enemies-btn" @click="visible = true">
+    <button
+      class="remaining-enemies-btn"
+      @click="visible = true"
+      :style="{ backgroundColor: trigger_passive ? 'yellow' : '' }"
+    >
       Враги {{ enemies_len }}
     </button>
     <modal-window v-if="visible" v-touch:swipe.left="close_self">
@@ -31,6 +35,12 @@ export default {
   computed: {
     enemies_len() {
       return this.enemies.length
+    },
+    trigger_passive() {
+      for (const e of this.enemies) {
+        if (e.trigger_deck_passive) return true
+      }
+      return false
     },
   },
   methods: {

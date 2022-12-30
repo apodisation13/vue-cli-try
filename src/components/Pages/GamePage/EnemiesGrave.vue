@@ -1,6 +1,10 @@
 <template>
   <div>
-    <button class="enemies_grave_btn" @click="visible = true">
+    <button
+      class="enemies_grave_btn"
+      @click="visible = true"
+      :style="{ backgroundColor: trigger_passive ? 'red' : '' }"
+    >
       Сброс {{ enemies_len }}
     </button>
     <modal-window v-if="visible" v-touch:swipe.left="close_self">
@@ -32,6 +36,12 @@ export default {
   computed: {
     enemies_len() {
       return this.enemies_grave.length
+    },
+    trigger_passive() {
+      for (const e of this.enemies_grave) {
+        if (e.trigger_grave_passive) return true
+      }
+      return false
     },
   },
   methods: {

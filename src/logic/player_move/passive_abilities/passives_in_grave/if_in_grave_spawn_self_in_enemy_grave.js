@@ -14,4 +14,5 @@ export function if_in_grave_spawn_self_in_enemy_grave(card, gameObj) {
   }
   enemies_grave.push(self)
   timeoutAnimationFlag(card, "trigger_grave_passive")
+  timeoutAnimationFlag(enemies_grave[0], "trigger_grave_passive")
 }
