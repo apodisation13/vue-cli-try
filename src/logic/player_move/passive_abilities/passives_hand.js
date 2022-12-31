@@ -35,7 +35,7 @@ export function hand_passives(card, gameObj) {
   } else if (pa === "incr-dmg-by-len-deck") {
     incr_dmg_by_len_deck(card, gameObj)
   } else if (pa === "spawn-random-in-hand") {
-    spawn_random_in_hand(gameObj)
+    spawn_random_in_hand(card, gameObj)
   } else if (pa === "incr-dmg-by-n-grave") {
     inc_dmg_by_len_grave(card, gameObj)
   }

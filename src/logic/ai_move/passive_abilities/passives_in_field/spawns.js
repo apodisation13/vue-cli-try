@@ -8,7 +8,7 @@ import {
 } from "@/logic/ai_move/service/service_for_ai_move"
 import { sound_appear_new_enemy } from "@/logic/play_sounds"
 
-export function spawn_self_in_deck(enemy, gameObj) {
+export function spawns(enemy, gameObj) {
   const { enemies } = gameObj
   const self = copyObj(enemy)
   self.passive_ability = null
@@ -35,10 +35,11 @@ export function spawn_token(enemy, field) {
   const randomIndex = choice(emptyField)
   field[emptyField[randomIndex]] = copyObj(token)
   sound_appear_new_enemy()
+  timeoutAnimationFlag(enemy, "spawning")
 }
 
 // создает токен РАНДОМНОЙ КАРТЫ ЭТОЙ ФРАКЦИИ и помещает его на случайную свободную клетку
-export function spawn_random_token(gameObj) {
+export function spawn_random_token(enemy, gameObj) {
   const { field, enemy_leader } = gameObj
   const random_enemy = choice_element(
     store.getters.all_enemies.filter(e => e.faction === enemy_leader.faction)
@@ -48,4 +49,17 @@ export function spawn_random_token(gameObj) {
   const randomIndex = choice(emptyField)
   field[emptyField[randomIndex]] = copyObj(token)
   sound_appear_new_enemy()
+  timeoutAnimationFlag(enemy, "spawning")
+}
+
+export function spawn_faction_unit(enemy, gameObj) {
+  const { field, enemy_leader } = gameObj
+  const random_enemy = choice_element(
+    store.getters.all_enemies.filter(e => e.faction === enemy_leader.faction)
+  )
+  const emptyField = get_empty_field_indexes(field)
+  const randomIndex = choice(emptyField)
+  field[emptyField[randomIndex]] = copyObj(random_enemy)
+  sound_appear_new_enemy()
+  timeoutAnimationFlag(enemy, "spawning")
 }

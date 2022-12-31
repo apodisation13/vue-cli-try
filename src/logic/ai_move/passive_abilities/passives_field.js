@@ -13,7 +13,10 @@ import {
   heal_self,
   heal_self_by_highest_hp,
 } from "@/logic/ai_move/passive_abilities/passives_in_field/heal"
-import { regain_shield } from "@/logic/ai_move/passive_abilities/passives_in_field/regain_shield"
+import {
+  give_shield,
+  regain_shield,
+} from "@/logic/ai_move/passive_abilities/passives_in_field/regain_shield"
 import { decrease_player_damage } from "@/logic/ai_move/passive_abilities/passives_in_field/decrease_player_damage"
 import { allowActionTimer } from "@/logic/game_logic/timers"
 import { set_hp_random_grave } from "@/logic/ai_move/passive_abilities/passives_in_field/set_hp_random_grave"
@@ -21,10 +24,11 @@ import { set_dmg_as_highest_hand } from "@/logic/ai_move/passive_abilities/passi
 import { set_dmg_random_grave } from "@/logic/ai_move/passive_abilities/passives_in_field/set_dmg_random_grave"
 import {
   spawn_random_token,
-  spawn_self_in_deck,
+  spawns,
   spawn_token,
   spawn_tokens_in_deck,
-} from "@/logic/ai_move/passive_abilities/passives_in_field/spawn_self_in_deck"
+  spawn_faction_unit,
+} from "@/logic/ai_move/passive_abilities/passives_in_field/spawns"
 
 export function field_passives(enemy, gameObj) {
   if (!allowActionTimer(enemy)) return
@@ -65,12 +69,16 @@ export function field_passives(enemy, gameObj) {
   } else if (pea === "incr-dmg-column") {
     incr_dmg_column(enemy, field)
   } else if (pea === "spawn-self-in-deck") {
-    spawn_self_in_deck(enemy, gameObj)
+    spawns(enemy, gameObj)
   } else if (pea === "spawn-tokens-in-deck") {
     spawn_tokens_in_deck(enemy, gameObj)
   } else if (pea === "spawn-token") {
     spawn_token(enemy, field)
   } else if (pea === "spawn-random-token") {
-    spawn_random_token(gameObj)
+    spawn_random_token(enemy, gameObj)
+  } else if (pea === "give-shield") {
+    give_shield(field, enemy_leader)
+  } else if (pea === "spawn-faction-unit") {
+    spawn_faction_unit(enemy, gameObj)
   }
 }
