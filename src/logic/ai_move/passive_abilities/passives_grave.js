@@ -11,7 +11,7 @@ export function grave_passives(enemy, gameObj) {
 
   const pea = enemy.passive_ability.name
 
-  if (pea === "if-in-grave-heal-random") {
+  if (pea === "heal-random") {
     heal_random(enemy, field, enemy_leader)
     timeoutAnimationFlag(enemies_grave[0], "trigger_grave_passive")
   }
