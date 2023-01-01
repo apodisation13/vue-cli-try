@@ -1,4 +1,4 @@
-import { choice_element } from "@/lib/utils"
+import { choice_element, copyObj } from "@/lib/utils"
 import { sound_passive_increase_damage } from "@/logic/play_sounds"
 import { timeoutAnimationFlag } from "@/logic/game_logic/timers"
 
@@ -93,35 +93,35 @@ export default {
         this.cards_pool = this.gameObj.hand
       } else if (ability === "create-special") {
         // вот это сложно... выбираем 3 случайные бронзовые спец карты НЕ из фракции
+        const pool = this.$store.getters["all_cards"].filter(
+          c =>
+            c.card.faction !== this.gameObj.leader.faction &&
+            c.card.type === "Special" &&
+            c.card.color === "Bronze"
+        )
         for (let i = 0; i < 3; i++) {
-          const pool = this.$store.getters["all_cards"].filter(
-            c =>
-              c.card.faction !== this.gameObj.leader.faction &&
-              c.card.type === "Special" &&
-              c.card.color === "Bronze"
-          )
           const r = choice_element(pool)
-          this.cards_pool.push(r.card)
+          this.cards_pool.push(copyObj(r.card))
         }
       } else if (ability === "create-any-unit") {
         // выбираем 3 случайных ЮНИТА из всех карт этой фракции
+        const pool = this.$store.getters["all_cards"].filter(
+          c =>
+            c.card.faction === this.gameObj.leader.faction &&
+            c.card.type === "Unit"
+        )
         for (let i = 0; i < 3; i++) {
-          const pool = this.$store.getters["all_cards"].filter(
-            c =>
-              c.card.faction === this.gameObj.leader.faction &&
-              c.card.type === "Unit"
-          )
           const r = choice_element(pool)
-          this.cards_pool.push(r.card)
+          this.cards_pool.push(copyObj(r.card))
         }
       } else if (ability === "create-and-put-to-deck") {
         // выбираем 3 случайных ЮНИТА из всех карт вообще и кладем его в КОЛОДУ
+        const pool = this.$store.getters["all_cards"].filter(
+          c => c.card.type === "Unit"
+        )
         for (let i = 0; i < 3; i++) {
-          const pool = this.$store.getters["all_cards"].filter(
-            c => c.card.type === "Unit"
-          )
           const r = choice_element(pool)
-          this.cards_pool.push(r.card)
+          this.cards_pool.push(copyObj(r.card))
         }
       } else if (ability === "draw-exact") {
         // берем из колоды ЛЮБУЮ КАРТУ!
