@@ -8,7 +8,8 @@ import {
 } from "@/logic/ai_move/service/service_for_ai_move"
 import { sound_appear_new_enemy } from "@/logic/play_sounds"
 
-export function spawns(enemy, gameObj) {
+// создает свою копию без пассивной способности в колоде врагов
+export function spawn_self_at_deck(enemy, gameObj) {
   const { enemies } = gameObj
   const self = copyObj(enemy)
   self.passive_ability = null
@@ -52,14 +53,33 @@ export function spawn_random_token(enemy, gameObj) {
   timeoutAnimationFlag(enemy, "spawning")
 }
 
-export function spawn_faction_unit(enemy, gameObj) {
+// создает в случайной свободной клетке на поле случайного врага, если faction тру, то этой фракции, или любого
+export function spawn_faction_unit(enemy, gameObj, faction = true) {
   const { field, enemy_leader } = gameObj
-  const random_enemy = choice_element(
-    store.getters.all_enemies.filter(e => e.faction === enemy_leader.faction)
-  )
+
+  let random_enemy
+  if (faction) {
+    random_enemy = choice_element(
+      store.getters.all_enemies.filter(e => e.faction === enemy_leader.faction)
+    )
+  } else {
+    random_enemy = choice_element(store.getters.all_enemies)
+  }
+
   const emptyField = get_empty_field_indexes(field)
   const randomIndex = choice(emptyField)
   field[emptyField[randomIndex]] = copyObj(random_enemy)
   sound_appear_new_enemy()
+  timeoutAnimationFlag(enemy, "spawning")
+}
+
+// добавляет в колоду врагов случайного врага из этой фракции!
+export function spawn_faction_unit_at_deck(enemy, gameObj) {
+  const { enemy_leader, enemies } = gameObj
+  const random_enemy = choice_element(
+    store.getters.all_enemies.filter(e => e.faction === enemy_leader.faction)
+  )
+  enemies.push(copyObj(random_enemy))
+  timeoutAnimationFlag(enemies[0], "trigger_deck_passive")
   timeoutAnimationFlag(enemy, "spawning")
 }

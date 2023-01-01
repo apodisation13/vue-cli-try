@@ -24,7 +24,7 @@ import { set_dmg_as_highest_hand } from "@/logic/ai_move/passive_abilities/passi
 import { set_dmg_random_grave } from "@/logic/ai_move/passive_abilities/passives_in_field/set_dmg_random_grave"
 import {
   spawn_random_token,
-  spawns,
+  spawn_self_at_deck,
   spawn_token,
   spawn_tokens_in_deck,
   spawn_faction_unit,
@@ -69,7 +69,7 @@ export function field_passives(enemy, gameObj) {
   } else if (pea === "incr-dmg-column") {
     incr_dmg_column(enemy, field)
   } else if (pea === "spawn-self-in-deck") {
-    spawns(enemy, gameObj)
+    spawn_self_at_deck(enemy, gameObj)
   } else if (pea === "spawn-tokens-in-deck") {
     spawn_tokens_in_deck(enemy, gameObj)
   } else if (pea === "spawn-token") {
