@@ -2,6 +2,7 @@ import { choice, copyObj } from "@/lib/utils"
 import { get_empty_field_indexes } from "@/logic/player_move/service/service_for_player_move"
 import { sound_deathwish } from "@/logic/play_sounds"
 import { get_default_enemy } from "@/logic/ai_move/service/service_for_ai_move"
+import { timeoutAnimationFlag } from "@/logic/game_logic/timers"
 
 // создает на поле deathwish_value копий убитого врага без deathwish в случайных свободных клетках
 export function spawn_self(enemy, gameObj) {
@@ -29,4 +30,5 @@ export function spawn_self_at_deck(enemy, gameObj) {
   for (let i = 0; i < enemy.deathwish_value; i++) {
     enemies.push(copyObj(defaultEnemy))
   }
+  timeoutAnimationFlag(enemies[0], "trigger_deck_passive")
 }
