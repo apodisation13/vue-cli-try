@@ -3,6 +3,7 @@ import { sound_passive_increase_damage } from "@/logic/play_sounds"
 
 export function incr_dmg_to_value_cards_by_1(enemy, gameObj) {
   const { hand } = gameObj
+  if (!hand.length) return
 
   sound_passive_increase_damage()
   // для deathwish_value количества карт в руке игрока увеличим их урон на 1
