@@ -11,6 +11,8 @@ export default {
       show_picked_card: false, // показать ли выбранную карту из абилок play_from_
       special_case_value: null, // сохраняем какое-то особое значения для абилок
       enemyView: false, // показать окно с картами или с картами, или с врагами
+
+      sca: false, // КОСТЫЛЬ: играем ли мы доп карту! (чтобы не заблокировать руку когда доп карта играется из лидера!)
     }
   },
   methods: {
@@ -128,7 +130,10 @@ export default {
         if (this.calc_can_draw()) this.cards_pool = this.gameObj.deck
       }
       this.ability = this.selected_card.ability.name
-      if (this.cards_pool.length) this.show_pick_a_card_selection = true
+      if (this.cards_pool.length) {
+        this.sca = true
+        this.show_pick_a_card_selection = true
+      }
     },
 
     // А ЭТО МЕНЕДЖЕР абилок той карты, которую мы выбрали из открывшегося окна!
@@ -164,7 +169,7 @@ export default {
         // Показать эту выбранную для игры карту. А снимаем этот ФЛАГ уже в самом GamePage!
         this.show_picked_card = true
         this.selected_card = card // ВОТ ЗДЕСЬ МЫ ЗАПОМНИЛИ ЭТУ КАРТУ НА КОТОРУЮ ТКНУЛИ ИЗ ОКНА
-        this.isActive.player_cards = true
+        // this.isActive.player_cards = true // ТЕПЕРЬ РУКУ здесь не активируем, работаем через sca
         this.isActive.player_leader = false // а лидер теперь неактивен
         this.setActive() // поле и лидер врагов теперь активны
       } else if (this.ability === "incr-dmg-to-hand-by-self-dmg") {
