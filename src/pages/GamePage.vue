@@ -66,6 +66,7 @@
       :show_pick_a_card_selection="show_pick_a_card_selection"
       :cards_pool="cards_pool"
       :show_picked_card="show_picked_card"
+      :enemyView="enemyView"
       @confirm_selection="confirm_selection"
     />
 
@@ -117,7 +118,7 @@ export default {
   mixins: [draw, specialcaseabilities, execaimove, startgame],
 
   async created() {
-    // если мы перешли на эту страницу НЕ со страницы начала игры где стоит этот флаг, нас отсюда перекинет
+    // если мы перешли на эту страницу НЕ со страницы начала игры, где стоит этот флаг, нас отсюда перекинет
     if (!this.$store.state.game.start_game_redirect) {
       this.$router.push("/start_game")
     }
@@ -135,23 +136,24 @@ export default {
         grave: [], // кладбище карт у которых 0 зарядов
         field: ["", "", "", "", "", "", "", "", "", "", "", ""],
         enemy_leader: null,
-        enemies: [], // враги, копия из стора, приходит из start_game
+        enemies: [], // колода врагов, приходит из start_game
         enemies_grave: [], // кладбище врагов
       },
       // объект активны ли разные карты, то есть можно ли на них тыкать
       isActive: {
-        player_cards: true, // карты в руке всегда активны в начале хода, но после хода не активны до след.хода
+        player_cards: true, // карты в руке всегда активны в начале хода, но после хода не активны до след хода
         player_leader: false,
         enemy_cards: false,
         enemy_leader: false,
       },
       selected_card: null, // объект выбранной карты путём дважды ЛКМ на карте в руке
-      selected_enemy: null, // объёкт выбранного врага, по которому ткнули дважды ЛКМ, из field-comp
+      selected_enemy: null, // объект выбранного врага, по которому ткнули дважды ЛКМ, из field-comp
     }
   },
   methods: {
     // по нажатию на карту игрока, из hand-comp, card - вся карта целиком
     chose_player_card(card) {
+      this.sca = false // как только потянули за карту из руки сразу скинули этот признак игры доп карты
       if (!this.isActive.player_cards) return
       this.selected_card = card // ВОТ ЗДЕСЬ МЫ ЗАПОМНИЛИ КАРТУ ИЗ РУКИ НА КОТОРУЮ ТКНУЛИ
       this.isActive.player_leader = false // лидер игрока теперь неактивен
@@ -160,7 +162,9 @@ export default {
 
     // по нажатию на лидера игрока
     chose_leader() {
+      this.sca = false // или если потянули за лидера сразу скинули этот признак игры доп карты
       if (this.gameObj.leader.charges <= 0) return
+      this.selected_card = this.gameObj.leader // ВОТ ЗДЕСЬ МЫ ЗАПОМНИЛИ ЛИДЕРА ДЛЯ special_case
       this.isActive.player_leader = true
       this.setActive()
     },
@@ -173,6 +177,15 @@ export default {
     setNotActive() {
       this.isActive.enemy_cards = false
       this.isActive.enemy_leader = false
+    },
+
+    // после хода картой или лидером, открываем sp-case-abilities, обнуляем карту которой изначально играли
+    afterDamage() {
+      // особие абилки, которые требуют открытия окон
+      this.special_case_abilities()
+      this.selected_card = null // обнуляем карту, за которую изначально тянули
+      this.show_picked_card = false // из specialcaseabilities.js!!!
+      this.setNotActive()
     },
 
     // если ткнули ранее на карту игрока или лидера, а потом на поле, ходим // enemy - объект врага (field[i])
@@ -194,26 +207,24 @@ export default {
         true,
         this.gameObj
       )
-      // особие абилки, которые требуют открытия окон
-      this.special_case_abilities()
-
-      this.selected_card = null
-      this.show_picked_card = false // из specialcaseabilities.js!!!
       // снимаем флаг активности карт игрока, ОДНА КАРТА ЗА ХОД! станет ТРУ только после окончания хода компа!
-      this.isActive.player_cards = false
-      this.setNotActive()
+      // если мы играли первый раз картой из руки, то всё равно заблокируем руку, так как sca ЕЩЁ не было на тот момент
+      // если мы играем доп картой из лидера, то sca будет ТРУ на момент игры доп карты, и рука не будет заблокирована
+      if (!this.sca) this.isActive.player_cards = false
+      this.afterDamage()
     },
     // если ранее ткнули на лидера, а потом на поле
     damageEnemyByLeader() {
       if (!this.targetEnemyByLeader) return
+
       damage_ai_card(
         this.gameObj.leader,
         this.selected_enemy,
         false,
         this.gameObj
       )
+      this.afterDamage()
       this.isActive.player_leader = false // лидер снова неактивен, чтобы ходить им снова - надо опять на него тыкать
-      this.setNotActive()
     },
 
     // если ранее ткнули на карту игрока или лидера игрока, а потом на лидера врагов!
@@ -233,14 +244,8 @@ export default {
         true,
         this.gameObj
       )
-      // особие абилки, которые требуют открытия окон
-      this.special_case_abilities()
-
-      this.selected_card = null
-      this.show_picked_card = false // из specialcaseabilities.js!!!
-      // снимаем флаг активности карт игрока, ОДНА КАРТА ЗА ХОД! станет ТРУ только после окончания хода компа!
-      this.isActive.player_cards = false
-      this.setNotActive()
+      if (!this.sca) this.isActive.player_cards = false
+      this.afterDamage()
     },
     // ткнули на лидера игрока, а потом на лидера врагов
     damageEnemyLeaderByLeader() {
@@ -252,19 +257,22 @@ export default {
         false,
         this.gameObj
       )
+      this.afterDamage()
       this.isActive.player_leader = false // лидер снова неактивен, чтобы ходить им снова - надо опять на него тыкать
-      this.setNotActive()
     },
   },
   computed: {
+    // можем ли мы сыграть КАРТОЙ в ПОЛЕ: карты активны, лидер неактивен ИЛИ мы играем карту из sca
     targetEnemyByCard() {
       return (
-        this.isActive.player_cards &&
-        !this.isActive.player_leader &&
-        this.isActive.enemy_cards &&
-        this.selected_enemy
+        (this.isActive.player_cards &&
+          !this.isActive.player_leader &&
+          this.isActive.enemy_cards &&
+          this.selected_enemy) ||
+        this.sca
       )
     },
+    // можем ли мы сыграть ЛИДЕРОМ в ПОЛЕ: лидер активны, у него больше нуля зарядов
     targetEnemyByLeader() {
       return (
         this.isActive.player_leader &&
@@ -273,14 +281,17 @@ export default {
         this.selected_enemy
       )
     },
+    // можем ли мы сыграть КАРТОЙ в ЛИДЕРА ВРАГОВ: карты активны, лидер неактивен ИЛИ мы играем карту из sca
     targetEnemyLeaderByCard() {
       return (
-        this.isActive.player_cards &&
-        !this.isActive.player_leader &&
-        this.isActive.enemy_leader &&
-        this.gameObj.enemy_leader.hp > 0
+        (this.isActive.player_cards &&
+          !this.isActive.player_leader &&
+          this.isActive.enemy_leader &&
+          this.gameObj.enemy_leader.hp > 0) ||
+        this.sca
       )
     },
+    // можем ли мы сыграть ЛИДЕРОМ в ЛИДЕРА ВРАГОВ: лидеры активны, у них больше нуля зарядов и нуля жизней
     targetEnemyLeaderByLeader() {
       return (
         this.isActive.player_leader &&

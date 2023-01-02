@@ -81,6 +81,7 @@ import BlockAssemblingTheDeck from "@/components/Pages/DeckbuildPage/BlockAssemb
 import DeckbuilderFilters from "@/components/Pages/DeckbuildPage/DeckbuilderFilters"
 import CardListComponent from "@/components/Cards/CardListComponent"
 import ButtonDecks from "@/components/Pages/DeckbuildPage/Buttons/ButtonDecks"
+import { useToast } from "vue-toastification"
 
 export default {
   components: {
@@ -90,6 +91,10 @@ export default {
     DeckbuilderFilters,
     CardListComponent,
     ButtonDecks,
+  },
+  setup() {
+    const toast = useToast()
+    return { toast }
   },
   data() {
     return {
@@ -180,7 +185,7 @@ export default {
         this.deck.health += card.card.hp
         return
       }
-      alert(
+      this.toast.warning(
         "нельзя карту добавить закрытую карту, или карту ещё раз или карт больше 12"
       )
     },
@@ -201,11 +206,11 @@ export default {
     // выбираем лидера для деки
     chose_leader(leader) {
       if (!this.deckBuilding) {
-        alert("выберете фракцию!")
+        this.toast.warning("выберете фракцию!")
         return
       }
       if (leader.count === 0) {
-        alert("нельзя выбрать закрытого лидера")
+        this.toast.warning("нельзя выбрать закрытого лидера")
         return
       }
       this.deck.leader = leader.card
@@ -217,14 +222,14 @@ export default {
 
     async save_deck() {
       if (!this.deck.leader) {
-        return alert("Необходимо выбрать лидера")
+        return this.toast.warning("Необходимо выбрать лидера")
       }
       // карт ровно 12 и лидер выбран
       if (this.cant_save_deck) {
-        return alert("Соберите колоду из 12 карт")
+        return this.toast.warning("Соберите колоду из 12 карт")
       }
       if (this.deck.deck_name.trim() === "") {
-        return alert("Введите имя колоды")
+        return this.toast.warning("Введите имя колоды")
       }
       this.send_data_to_store("post_deck", {
         name: this.deck.deck_name,

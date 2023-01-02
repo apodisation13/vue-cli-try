@@ -14,6 +14,15 @@ import { move_enemy } from "@/logic/player_move/abilities/ability_move_enemy"
 import { remove_dead_card } from "@/logic/player_move/service/service_for_player_move"
 import { check_win } from "@/logic/player_move/service/check_win"
 import { player_passive_abilities_upon_playing_a_card } from "@/logic/player_move/player_passive_abilities_upon_playing_a_card"
+import { set_enemy_as_token } from "@/logic/player_move/abilities/ability_set_enemy_as_token"
+import { spawn_self_at_deck } from "@/logic/player_move/abilities/ability_spawn_self_at_deck"
+import { spawn_self_at_grave } from "@/logic/player_move/abilities/ability_spawn_self_at_grave"
+import { destroy_random_enemy_in_deck } from "@/logic/player_move/abilities/ability_destroy_random_enemy_in_deck"
+import { place_self_in_field } from "@/logic/player_move/abilities/ability_place_self_in_field"
+import { set_lowest_dmg_to_as_highest } from "@/logic/player_move/abilities/ability_set_lowest_dmg_to_as_highest"
+import { spawn_tokens_at_enemy_deck } from "@/logic/player_move/abilities/ability_spawn_tokens_at_enemy_deck"
+import { incr_dmg_to_all_hand } from "@/logic/player_move/abilities/ability_incr_dmg_to_all_hand"
+import { incr_dmg_to_all_grave } from "@/logic/player_move/abilities/ability_incr_dmg_to_all_grave"
 
 // Сюда заходим если там есть враг
 // card - карта, которую мы играем (или из руки, или лидер).
@@ -49,6 +58,31 @@ function damage_ai_card(card, enemy, isCard, gameObj) {
   } else if (card.ability.name === "move-enemy") {
     damage_one(enemy, card, gameObj)
     move_enemy(enemy, gameObj)
+  } else if (card.ability.name === "set-enemy-as-token") {
+    set_enemy_as_token(enemy)
+  } else if (card.ability.name === "spawn-self-at-deck") {
+    spawn_self_at_deck(card, gameObj)
+    damage_one(enemy, card, gameObj)
+  } else if (card.ability.name === "spawn-self-at-grave") {
+    spawn_self_at_grave(card, gameObj)
+    damage_one(enemy, card, gameObj)
+  } else if (card.ability.name === "destroy-random-enemy-in-deck") {
+    destroy_random_enemy_in_deck(gameObj)
+    damage_one(enemy, card, gameObj)
+  } else if (card.ability.name === "place-self-in-field") {
+    place_self_in_field(card, enemy, gameObj)
+  } else if (card.ability.name === "set-lowest-dmg-to-as-highest") {
+    set_lowest_dmg_to_as_highest(gameObj)
+    damage_one(enemy, card, gameObj)
+  } else if (card.ability.name === "spawn-tokens-at-enemy-deck") {
+    spawn_tokens_at_enemy_deck(card, enemy, gameObj)
+    damage_one(enemy, card, gameObj)
+  } else if (card.ability.name === "incr-dmg-to-all-hand") {
+    damage_one(enemy, card, gameObj)
+    incr_dmg_to_all_hand(card, gameObj)
+  } else if (card.ability.name === "incr-dmg-to-all-grave") {
+    damage_one(enemy, card, gameObj)
+    incr_dmg_to_all_grave(card, gameObj)
   } else damage_one(enemy, card, gameObj)
 
   // убираем карту игрока, если в ней не осталось зарядов, из руки и из колоды, если играли оттуда

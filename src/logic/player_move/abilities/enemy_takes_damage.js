@@ -17,17 +17,16 @@ export function enemy_takes_damage(enemy, card, gameObj, timeout) {
       if (enemy?.damage_once >= 0) {
         enemy_leader.hp = 0
         console.log("умер лидер врагов")
-        if (enemy_leader.has_deathwish) deathwish([enemy_leader], field)
+        if (enemy_leader.has_deathwish) deathwish(enemy_leader, gameObj)
       } else {
         field[field.indexOf(enemy)] = ""
         console.log("враг умер")
         enemy.hp = enemy.base_hp
         enemies_grave.push(enemy)
-        if (enemy.has_deathwish) deathwish([enemy], field)
+        if (enemy.has_deathwish) deathwish(enemy, gameObj)
       }
     }
 
-    card.damages_enemy = false
     check_win(field, enemies, enemy_leader)
   }, timeout)
 }

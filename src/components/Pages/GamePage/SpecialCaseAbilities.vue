@@ -3,8 +3,14 @@
     <!--отркывается по любой абилке где нужно окно, там отфильтрованные карты cards_pool-->
     <modal-window v-if="show_pick_a_card_selection">
       <card-list-component
+        v-if="!enemyView"
         :cards="cards_pool"
         @chose_player_card="confirm_selection"
+      />
+      <enemy-list
+        v-else
+        :enemies="cards_pool"
+        @chose-enemy="confirm_selection"
       />
     </modal-window>
 
@@ -19,13 +25,20 @@
 import ModalWindow from "@/components/ModalWindows/ModalWindow"
 import CardListComponent from "@/components/Cards/CardListComponent"
 import CardItem from "@/components/Cards/CardItem"
+import EnemyList from "@/components/Cards/EnemyList.vue"
 export default {
   name: "special-case-abilities",
-  components: { CardItem, CardListComponent, ModalWindow },
+  components: { EnemyList, CardItem, CardListComponent, ModalWindow },
   props: {
     cards_pool: {
       required: true,
       type: Array,
+    },
+    // если мы играем как-то врагов, то пришлем этот флаг
+    enemyView: {
+      required: false,
+      default: false,
+      type: Boolean,
     },
     show_pick_a_card_selection: {
       required: true,
@@ -46,8 +59,18 @@ export default {
 
   methods: {
     confirm_selection(card) {
+      // добавим врагу костыль, если мы его играем!
+      if (this.enemyView) this.forEnemy(card)
       this.$emit("confirm_selection", card)
       this.picked_card = card
+    },
+    // если мы играем ВРАГА, у него нет абилки никакой, эта функция добавит ему базовую абилку на урон одному
+    forEnemy(card) {
+      card["ability"] = {
+        name: "damage-one",
+        description: "Нанести {damage} урона одному врагу",
+      }
+      card["charges"] = 1
     },
   },
   emits: ["confirm_selection"],

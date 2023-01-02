@@ -62,7 +62,20 @@
     <div class="text" v-if="show_passive">
       {{ card?.passive_ability?.description || card.ability.description }}
       <br />
-      value = {{ card.value }}
+      <span v-if="card.value">value = {{ card.value }}</span>
+      <br />
+      <span v-if="card.has_passive_in_field">
+        Срабатывает когда карта НА ПОЛЕ
+      </span>
+      <span v-else-if="card.has_passive_in_hand">
+        Срабатывает когда карта В РУКЕ
+      </span>
+      <span v-else-if="card.has_passive_in_deck">
+        Срабатывает когда карта В КОЛОДЕ
+      </span>
+      <span v-else-if="card.has_passive_in_grave">
+        Срабатывает когда карта В СБРОСЕ
+      </span>
     </div>
     <!--Описание абилки deathwish, только для врага-->
     <div class="text" v-if="show_deathwish && forEnemy">

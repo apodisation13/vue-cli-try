@@ -60,12 +60,15 @@ export default {
 
 <style scoped>
 .enemy-leader {
-  height: 18vh;
-  width: 98%;
-  border: solid 2px black;
-  border-radius: 2%;
-  margin-bottom: 2px;
-  margin-top: 2px;
   position: relative;
+  margin-top: 15px;
+  width: 100%;
+  box-shadow: -4px 0 4px rgb(0 0 0 / 50%);
+}
+
+.enemy-leader::before {
+  content: "";
+  display: block;
+  padding-top: 143%;
 }
 </style>

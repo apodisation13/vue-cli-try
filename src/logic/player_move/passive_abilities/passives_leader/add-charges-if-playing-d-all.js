@@ -1,17 +1,12 @@
-import { sound_timer_down } from "@/logic/play_sounds"
+import { timer } from "@/logic/game_logic/timers"
 
 export function add_charges_if_playing_d_all(card, leader, upon_playing_card) {
-  // если не играем карту, то есть каждый ход ИЛИ если играли карту и это был дамаг-всем (кроме самого лидера!)
-  if (
-    !upon_playing_card ||
-    (upon_playing_card && card.ability.name === "damage-all" && card.color)
-  ) {
-    leader.timer -= 1
-    sound_timer_down()
-  }
-
-  if (leader.timer === 0) {
+  // сюда заходим по пассивке самого лидера каждый ход (тогда upon = false)
+  // ИЛИ если играем карту damage-all (кроме самого лидера!) (тогда upon = true и смотрим саму карту)
+  if (!upon_playing_card && leader.timer === leader.default_timer)
     leader.charges += 1
-    leader.timer = leader.default_timer
+  if (upon_playing_card && card.ability.name === "damage-all" && card.color) {
+    if (!timer(leader)) return
+    leader.charges += 1
   }
 }
