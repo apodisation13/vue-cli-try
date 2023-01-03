@@ -66,16 +66,24 @@
       <span v-if="card.value">value = {{ card.value }}</span>
       <br />
       <span v-if="card.has_passive_in_field">
-        Срабатывает когда карта НА ПОЛЕ
+        Срабатывает когда карта <b>НА ПОЛЕ</b>
       </span>
       <span v-else-if="card.has_passive_in_hand">
-        Срабатывает когда карта В РУКЕ
+        Срабатывает когда карта <b>В РУКЕ</b>
       </span>
       <span v-else-if="card.has_passive_in_deck">
-        Срабатывает когда карта В КОЛОДЕ
+        Срабатывает когда карта <b>В КОЛОДЕ</b>
       </span>
       <span v-else-if="card.has_passive_in_grave">
-        Срабатывает когда карта В СБРОСЕ
+        Срабатывает когда карта <b>В СБРОСЕ</b>
+      </span>
+      <br />
+      <span v-if="card.each_tick">
+        <b>Срабатывает каждый ход пока таймер не равен 0</b>
+      </span>
+      <br />
+      <span v-if="card.reset_timer">
+        Восстанавливает таймер. Значение таймера {{ card.default_timer }}
       </span>
     </div>
     <!--Описание абилки deathwish, только для врага-->
