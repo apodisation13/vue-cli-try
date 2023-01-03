@@ -13,7 +13,6 @@ const state = {
 
   ppa_end_turn: false, // true - значит они сейчас в процессе
   ai_move: false, // true - значит они сейчас ходят
-  leader_ai_move: false,
   epa_end_turn: false,
   player_turn: true,
 
@@ -71,9 +70,6 @@ const mutations = {
   },
   set_ai_move(state, payload) {
     state.ai_move = payload
-  },
-  set_leader_ai_move(state, payload) {
-    state.leader_ai_move = payload
   },
   set_epa_end_turn(state, payload) {
     state.epa_end_turn = payload
