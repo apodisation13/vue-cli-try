@@ -14,6 +14,7 @@
     <card-modal
       :card="enemy_leader"
       :for-enemy-leader="true"
+      hp_needed
       :is_leader="true"
       v-if="show_enemy_leader_modal"
       @close_card_modal="show_enemy_leader_modal = false"
