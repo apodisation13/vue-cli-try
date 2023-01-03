@@ -51,7 +51,8 @@
     <!--Описание абилки для карты игрока и для лидера врагов у которого она есть вообще-->
     <div class="text" v-if="show_ability && !forEnemy && card.ability">
       {{ card.ability.description }} <br />
-      damage = {{ card.damage }}
+      <span v-if="'damage' in card">damage = {{ card.damage }}</span>
+      <span v-else>value = {{ card.value }}</span>
     </div>
     <!--Описание абилки для карты врага-->
     <div class="text" v-if="show_ability && forEnemy">
