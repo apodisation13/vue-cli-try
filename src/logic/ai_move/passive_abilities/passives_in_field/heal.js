@@ -6,19 +6,6 @@ import {
 } from "@/logic/game_logic/timers"
 import { choice_element } from "@/lib/utils"
 
-// ЛИДЕР ВРАГОВ лечит пассивно в конце хода сам себя на VALUE
-function enemy_leader_heal_self(enemy_leader) {
-  timeoutAnimationValue(
-    enemy_leader,
-    "hp",
-    `${enemy_leader.hp}+${enemy_leader.heal_self_per_turn}`,
-    enemy_leader.heal_self_per_turn,
-    sound_heal,
-    750
-  )
-  timeoutAnimationFlag(enemy_leader, "healing")
-}
-
 // ВРАГ лечит пассивно в конце хода сам себя на VALUE
 function heal_self(enemy) {
   timeoutAnimationValue(
@@ -138,7 +125,6 @@ function heal_column(enemy, field) {
 
 export {
   heal_self,
-  enemy_leader_heal_self,
   heal_enemy_leader,
   heal_all,
   heal_random,
