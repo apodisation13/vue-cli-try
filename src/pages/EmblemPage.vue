@@ -78,7 +78,7 @@ export default {
 
 .start {
   position: absolute;
-  bottom: 48px;
+  bottom: 100px;
   justify-content: center;
   align-items: center;
   width: 328px;
