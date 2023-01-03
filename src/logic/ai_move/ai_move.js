@@ -46,6 +46,7 @@ function ai_move(field) {
 function enemy_leader_ai_move_once(gameObj) {
   const { enemy_leader, deck } = gameObj
   const ela = enemy_leader.ability?.name
+  console.log(ela)
   if (!ela) return // есть лидеры у кого абилки нет
   if (ela === "damage-once") {
     store.commit("change_health", -enemy_leader.value)
