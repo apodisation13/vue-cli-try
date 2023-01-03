@@ -52,8 +52,6 @@ jobs:
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}:${{ env.MODE }}
           build-args: VUE_APP_API_URL=${{ secrets.VUE_APP_API_URL }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
 
       - name: Send docker-compose
         uses: appleboy/scp-action@master
