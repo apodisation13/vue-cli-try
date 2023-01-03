@@ -13,8 +13,8 @@ export function enemy_takes_damage(enemy, card, gameObj, timeout) {
     enemy.hp -= card.damage // вот теперь отняли урон
 
     if (enemy.hp <= 0) {
-      // это поле признак именно лидера врагов
-      if (enemy?.damage_once >= 0) {
+      // у лидера врагов нет поля color!
+      if (!enemy.color) {
         enemy_leader.hp = 0
         console.log("умер лидер врагов")
         if (enemy_leader.has_deathwish) deathwish(enemy_leader, gameObj)

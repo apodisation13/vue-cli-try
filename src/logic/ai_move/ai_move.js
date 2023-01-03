@@ -1,10 +1,8 @@
-import store from "@/store" // stote.state OR store.commit
+import store from "@/store"
 import { useToast } from "vue-toastification"
-
 import { down_move } from "@/logic/ai_move/moves/move_down"
 import { random_move } from "@/logic/ai_move/moves/move_random"
 import { stand_still } from "@/logic/ai_move/moves/move_stand_still"
-
 import { check_lose } from "@/logic/ai_move/service/check_lose"
 import { set_already_jumped } from "@/logic/ai_move/service/service_for_ai_move"
 import { get_all_enemies } from "@/logic/player_move/service/service_for_player_move"
@@ -45,16 +43,23 @@ function ai_move(field) {
 }
 
 // эта функция срабатывает для лидера врагов только в начале игры 1 раз
-function enemy_leader_ai_move_once(leader, deck) {
-  if (leader.ability.name === "damage-once") {
-    store.commit("change_health", -leader.damage_once)
-    toast.error(`лидер ослабил вас на ${leader.damage_once}`)
+function enemy_leader_ai_move_once(gameObj) {
+  const { enemy_leader, deck } = gameObj
+  const ela = enemy_leader.ability?.name
+  console.log(ela)
+  if (!ela) return // есть лидеры у кого абилки нет
+  if (ela === "damage-once") {
+    store.commit("change_health", -enemy_leader.value)
+    toast.warning(`лидер ослабил вас на ${enemy_leader.value}`)
     check_lose()
-  } else if (leader.ability.name === "decrease-all-player-damage") {
+  } else if (ela === "decrease-all-player-damage") {
     deck.forEach(card => {
-      if (card.damage > 0) card.damage -= leader.value
+      card.damage -= enemy_leader.value
+      if (card.damage < 0) card.damage = 0
     })
-    toast.error(`лидер врага уменьшил урон ВСЕХ ваших карт на ${leader.value}`)
+    toast.warning(
+      `лидер врага уменьшил урон ВСЕХ ваших карт на ${enemy_leader.value}`
+    )
   }
 }
 

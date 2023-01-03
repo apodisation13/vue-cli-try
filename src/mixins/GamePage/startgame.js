@@ -24,7 +24,7 @@ export default {
       // рандомно расставит врагов по полю, изменяет поле и врагов
       place_enemies(this.gameObj.field, this.gameObj.enemies)
       // АБИЛКИ ЛИДЕРА врага в самом начале
-      enemy_leader_ai_move_once(this.gameObj.enemy_leader, this.gameObj.deck)
+      enemy_leader_ai_move_once(this.gameObj)
       // вытянет руку, остальное оставит в деке, изменяет руку и деку
       draw_hand(this.gameObj.hand, this.gameObj.deck)
 
