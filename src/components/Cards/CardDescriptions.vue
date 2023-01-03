@@ -1,9 +1,9 @@
 <template>
   <div>
     <div>
-      <!--Описание абилки - для карты игрока только-->
+      <!--Описание абилки - для карты игрока и лидера врагов тоже-->
       <div
-        v-if="!forEnemy"
+        v-if="!forEnemy && card.ability"
         @click="showMainAbility"
         class="inlines"
         :style="{ 'background-image': icon }"
@@ -48,10 +48,10 @@
     </div>
 
     <!--А дальше сами описания!!!-->
-    <!--Описание абилки для карты игрока-->
-    <div class="text" v-if="show_ability && !forEnemy">
+    <!--Описание абилки для карты игрока и для лидера врагов у которого она есть вообще-->
+    <div class="text" v-if="show_ability && !forEnemy && card.ability">
       {{ card.ability.description }} <br />
-      damage = {{ card.damage || card.damage_per_turn }}
+      damage = {{ card.damage }}
     </div>
     <!--Описание абилки для карты врага-->
     <div class="text" v-if="show_ability && forEnemy">
@@ -60,7 +60,7 @@
     </div>
     <!--Описание пассивной абилки, разделение для карты или для лидера врагов-->
     <div class="text" v-if="show_passive">
-      {{ card?.passive_ability?.description || card.ability.description }}
+      {{ card.passive_ability?.description }}
       <br />
       <span v-if="card.value">value = {{ card.value }}</span>
       <br />
@@ -101,6 +101,13 @@ export default {
       default: false,
     },
   },
+  created() {
+    // костыль для лидера врагов, у которого нет основной абилки
+    if (!this.card.ability && !this.card.move) {
+      this.show_ability = false
+      this.show_passive = true
+    }
+  },
   data() {
     return {
       show_ability: true,
@@ -111,7 +118,7 @@ export default {
   },
   computed: {
     icon() {
-      return ability_icon(this.card.ability.name)
+      return ability_icon(this.card?.ability?.name)
     },
   },
   methods: {
