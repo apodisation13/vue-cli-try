@@ -11,15 +11,9 @@
 
       <!--Иконка урона, для всех врагов или если у лидера врага есть урон-->
       <card-damage-icon
-        v-if="enemy.damage || enemy.damage_per_turn"
+        v-if="enemy.damage"
         :style="background_color(enemy)"
-        :damage="enemy.damage_per_turn ? enemy.damage_per_turn : enemy.damage"
-      />
-
-      <!--У лидера врагов есть абилка на самолечение-->
-      <heal-ability
-        v-if="enemy.heal_self_per_turn"
-        :heal="enemy.heal_self_per_turn"
+        :damage="enemy.damage"
       />
 
       <card-passive v-if="enemy.has_passive" :card="enemy" />
@@ -47,7 +41,6 @@ import EnemyLocked from "@/components/UI/CardsUI/Enemies/EnemyLocked"
 import AbilityCircleEnemy from "@/components/UI/CardsUI/Enemies/AbilityCircleEnemy"
 import EnemyShield from "@/components/UI/CardsUI/Enemies/EnemyShield"
 import CardPassive from "@/components/UI/CardsUI/CardPassive"
-import HealAbility from "@/components/UI/CardsUI/HealAbility"
 
 export default {
   name: "EnemyUi",
@@ -59,7 +52,6 @@ export default {
     AbilityCircleEnemy,
     EnemyShield,
     CardPassive,
-    HealAbility,
   },
   props: {
     enemy: {
