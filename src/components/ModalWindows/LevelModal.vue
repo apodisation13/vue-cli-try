@@ -4,7 +4,7 @@
 
     {{ level.name }} - {{ level.difficulty }} <br />
 
-    Лидер - {{ level.enemy_leader.ability.name }}
+    Лидер - {{ level.enemy_leader.name }}
     <div class="enemy_leader">
       <enemy-leader :enemy_leader="level.enemy_leader" />
     </div>
