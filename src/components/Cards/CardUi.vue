@@ -11,13 +11,15 @@
         v-if="card.type === 'Special'"
       />
 
-      <!--Здесь мы показываем все уроны, включая лидера врагов, отсюда и условие-->
+      <!--Здесь мы показываем все уроны, условие чтобы не показывать лидера врагов-->
       <card-damage-icon
+        v-if="'damage' in card"
         :style="background_color(card)"
-        :damage="'damage_per_turn' in card ? card.damage_per_turn : card.damage"
+        :damage="card.damage"
       />
 
-      <card-ability-circle :card="card" />
+      <!--Вот так исключаются лидеры врагов, которые тоже сюда приходят (те у которых нет абилок)-->
+      <card-ability-circle :card="card" v-if="card.ability" />
       <card-passive :card="card" v-if="card.has_passive" />
 
       <!--Условие для лидера врагов, который тоже приходит сюда, у него нет зарядов-->
