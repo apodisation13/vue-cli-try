@@ -1,9 +1,9 @@
 <template>
   <div>
     <div>
-      <!--Описание абилки - для карты игрока только-->
+      <!--Описание абилки - для карты игрока и лидера врагов тоже-->
       <div
-        v-if="!forEnemy"
+        v-if="!forEnemy && card.ability"
         @click="showMainAbility"
         class="inlines"
         :style="{ 'background-image': icon }"
@@ -48,10 +48,11 @@
     </div>
 
     <!--А дальше сами описания!!!-->
-    <!--Описание абилки для карты игрока-->
-    <div class="text" v-if="show_ability && !forEnemy">
+    <!--Описание абилки для карты игрока и для лидера врагов у которого она есть вообще-->
+    <div class="text" v-if="show_ability && !forEnemy && card.ability">
       {{ card.ability.description }} <br />
-      damage = {{ card.damage || card.damage_per_turn }}
+      <span v-if="'damage' in card">damage = {{ card.damage }}</span>
+      <span v-else>value = {{ card.value }}</span>
     </div>
     <!--Описание абилки для карты врага-->
     <div class="text" v-if="show_ability && forEnemy">
@@ -60,9 +61,30 @@
     </div>
     <!--Описание пассивной абилки, разделение для карты или для лидера врагов-->
     <div class="text" v-if="show_passive">
-      {{ card?.passive_ability?.description || card.ability.description }}
+      {{ card.passive_ability?.description }}
       <br />
-      value = {{ card.value }}
+      <span v-if="card.value">value = {{ card.value }}</span>
+      <br />
+      <span v-if="card.has_passive_in_field">
+        Срабатывает когда карта <b>НА ПОЛЕ</b>
+      </span>
+      <span v-else-if="card.has_passive_in_hand">
+        Срабатывает когда карта <b>В РУКЕ</b>
+      </span>
+      <span v-else-if="card.has_passive_in_deck">
+        Срабатывает когда карта <b>В КОЛОДЕ</b>
+      </span>
+      <span v-else-if="card.has_passive_in_grave">
+        Срабатывает когда карта <b>В СБРОСЕ</b>
+      </span>
+      <br />
+      <span v-if="card.each_tick">
+        <b>Срабатывает каждый ход пока таймер не равен 0</b>
+      </span>
+      <br />
+      <span v-if="card.reset_timer">
+        Восстанавливает таймер. Значение таймера {{ card.default_timer }}
+      </span>
     </div>
     <!--Описание абилки deathwish, только для врага-->
     <div class="text" v-if="show_deathwish && forEnemy">
@@ -88,6 +110,13 @@ export default {
       default: false,
     },
   },
+  created() {
+    // костыль для лидера врагов, у которого нет основной абилки
+    if (!this.card.ability && !this.card.move) {
+      this.show_ability = false
+      this.show_passive = true
+    }
+  },
   data() {
     return {
       show_ability: true,
@@ -98,7 +127,7 @@ export default {
   },
   computed: {
     icon() {
-      return ability_icon(this.card.ability.name)
+      return ability_icon(this.card?.ability?.name)
     },
   },
   methods: {

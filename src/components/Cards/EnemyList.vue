@@ -1,7 +1,7 @@
 <template>
   <div class="enemies">
     <div class="enemy" v-for="enemy in enemies" :key="enemy">
-      <enemy-comp :enemy="enemy" />
+      <enemy-comp :enemy="enemy" @dblclick="choseEnemy(enemy)" />
     </div>
   </div>
 </template>
@@ -17,6 +17,12 @@ export default {
       required: true,
     },
   },
+  methods: {
+    choseEnemy(enemy) {
+      this.$emit("chose-enemy", enemy)
+    },
+  },
+  emits: ["chose-enemy"],
 }
 </script>
 

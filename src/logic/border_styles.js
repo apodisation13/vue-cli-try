@@ -22,7 +22,12 @@ function border_for_card(card) {
 }
 
 function card_margin(card) {
-  if (card.damages_player) return { border: "outset 4px red" }
+  if (card.damages_player) return { border: "outset 4px red" } // враг наносит урон игроку
+  if (card.damages_enemy) return { border: "outset 4px orange" } // карта игрока наносит урон врагу
+  if (card.incr_dmg) return { border: "outset 4px purple" } // карта игрока или враг увеличивают свой урон
+  if (card.healing) return { border: "outset 4px lime" } // карта игрока или враг увеличивают свои жизни
+  // карта игрока или враг кого-то создают (карту или токен)
+  if (card.spawning) return { border: "outset 4px yellow" }
   else {
     if (card.color === "Bronze") {
       return {

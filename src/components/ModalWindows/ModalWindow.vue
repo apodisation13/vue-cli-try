@@ -22,5 +22,6 @@ export default {
   left: 0;
   z-index: 9999;
   font-size: 12pt;
+  overflow: scroll;
 }
 </style>

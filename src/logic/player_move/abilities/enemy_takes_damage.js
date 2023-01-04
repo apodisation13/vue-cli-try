@@ -13,21 +13,20 @@ export function enemy_takes_damage(enemy, card, gameObj, timeout) {
     enemy.hp -= card.damage // вот теперь отняли урон
 
     if (enemy.hp <= 0) {
-      // это поле признак именно лидера врагов
-      if (enemy?.damage_once >= 0) {
+      // у лидера врагов нет поля color!
+      if (!enemy.color) {
         enemy_leader.hp = 0
         console.log("умер лидер врагов")
-        if (enemy_leader.has_deathwish) deathwish([enemy_leader], field)
+        if (enemy_leader.has_deathwish) deathwish(enemy_leader, gameObj)
       } else {
         field[field.indexOf(enemy)] = ""
         console.log("враг умер")
         enemy.hp = enemy.base_hp
         enemies_grave.push(enemy)
-        if (enemy.has_deathwish) deathwish([enemy], field)
+        if (enemy.has_deathwish) deathwish(enemy, gameObj)
       }
     }
 
-    card.damages_enemy = false
     check_win(field, enemies, enemy_leader)
   }, timeout)
 }

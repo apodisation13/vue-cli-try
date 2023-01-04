@@ -51,8 +51,6 @@ jobs:
         with:
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}:${{ env.MODE }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
           build-args: VUE_APP_API_URL=${{ secrets.VUE_APP_API_URL }}
 
       - name: Send docker-compose

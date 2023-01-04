@@ -11,6 +11,11 @@ export function choice_pop(list) {
   return elem
 }
 
+// берет случайный элемент из списка и возвращает его
+export function choice_element(list) {
+  return list[choice(list)]
+}
+
 // рандомное число от min до max включительно оба
 export function randInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
