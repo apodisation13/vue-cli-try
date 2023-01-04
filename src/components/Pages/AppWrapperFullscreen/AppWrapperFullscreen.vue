@@ -4,7 +4,9 @@
     <div v-if="openModal && gameStarted">
       <base-modal class="priority">
         <div class="request-modal">
-          <base-title-text size="25"> Перейдите в полноэкранный режим </base-title-text>
+          <base-title-text size="25" :style="{ 'margin-bottom': 15 + 'px' }">
+            Перейдите в полноэкранный режим
+          </base-title-text>
           <button-to-fullscreen text="Перейти" @click="toggleApi" />
         </div>
       </base-modal>
