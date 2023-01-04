@@ -1,6 +1,6 @@
 <template>
   <div class="filter_factions">
-    <base-title-text>{{ title }}</base-title-text>
+    <base-title-text :size="25">{{ title }}</base-title-text>
     <div class="factions">
       <faction-item
         v-for="faction in factions"
@@ -52,6 +52,7 @@ export default {
 }
 
 .factions {
+  margin-top: 15px;
   display: flex;
   justify-content: space-around;
   align-items: center;

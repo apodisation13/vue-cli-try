@@ -1,16 +1,20 @@
 <template>
   <div class="filter_types">
-    <div class="global_text filter_title" @click="reset_filter_types">Тип</div>
-    <div class="types" v-for="type in types" :key="type">
-      <button class="type" @click="filtering(type)">
-        {{ type[0] }}
-      </button>
+    <base-title-text @click="reset_filter_types">Тип</base-title-text>
+    <div class="types-block">
+      <div class="types" v-for="type in types" :key="type">
+        <button class="type" @click="filtering(type)">
+          {{ type[0] }}
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import BaseTitleText from '@/components/UI/BaseTitleText'
 export default {
+  components: { BaseTitleText },
   name: "filter-types",
   data() {
     return {
@@ -31,14 +35,10 @@ export default {
 
 <style scoped>
 .filter_types {
-  margin-bottom: 12%;
+  margin-top: 35px;
 }
-.filter_title {
-  font-size: 25px;
-  margin-bottom: 15px;
-  background: var(--primary-gold-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.types-block {
+  margin-top: 7px;
 }
 .types {
   display: inline;
