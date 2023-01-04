@@ -4,7 +4,7 @@
     <div v-if="openModal && gameStarted">
       <base-modal class="priority">
         <div class="request-modal">
-          <base-title-text> Перейдите в полноэкранный режим </base-title-text>
+          <base-title-text size="25"> Перейдите в полноэкранный режим </base-title-text>
           <button-to-fullscreen text="Перейти" @click="toggleApi" />
         </div>
       </base-modal>
@@ -50,7 +50,7 @@ export default {
 
     // функция установки положения в режим "portrait" в полноэкранном режиме
     setOrientation() {
-      // this.openModal = this.$fullscreen.isFullscreen ? false : true
+      this.openModal = this.$fullscreen.isFullscreen ? false : true
       if (this.$fullscreen.isFullscreen) {
         screen.orientation
           .lock("portrait")
