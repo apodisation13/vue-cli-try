@@ -2,19 +2,21 @@
   <div class="filter_passives">
     <base-title-text @click="reset_filter_passives">Пассив</base-title-text>
     <div class="passive-block">
-      <div class="passives" v-for="passive in passives" :key="passive">
-        <button class="passive" @click="filtering(passive)">
-          {{ passive }}
-        </button>
-      </div>
+      <button-filters-without-bg 
+        v-for="passive in passives" 
+        :key="passive"
+        @click="filtering(passive)">
+        {{ passive }}
+      </button-filters-without-bg>
     </div>
   </div>
 </template>
 
 <script>
-import BaseTitleText from '@/components/UI/BaseTitleText.vue'
+import BaseTitleText from '@/components/UI/BaseTitleText'
+import ButtonFiltersWithoutBg from '@/components/Pages/DeckbuildPage/Buttons/ButtonFiltersWithoutBg'
 export default {
-  components: { BaseTitleText },
+  components: { BaseTitleText, ButtonFiltersWithoutBg },
   name: "filter-passives",
   data() {
     return {
@@ -39,13 +41,7 @@ export default {
 }
 .passive-block {
   margin-top: 7px;
-}
-.passives {
-  display: inline;
-}
-.passive {
-  height: 4vh;
-  width: 45%;
-  margin: 1%;
+  display: flex;
+  align-items: center;
 }
 </style>

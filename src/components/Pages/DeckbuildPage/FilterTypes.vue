@@ -2,19 +2,21 @@
   <div class="filter_types">
     <base-title-text @click="reset_filter_types">Тип</base-title-text>
     <div class="types-block">
-      <div class="types" v-for="type in types" :key="type">
-        <button class="type" @click="filtering(type)">
-          {{ type[0] }}
-        </button>
-      </div>
+        <button-filters-without-bg 
+          v-for="item in types" 
+          :key="item"
+          @click="filtering(item)">
+            {{ item }}
+        </button-filters-without-bg>
     </div>
   </div>
 </template>
 
 <script>
 import BaseTitleText from '@/components/UI/BaseTitleText'
+import ButtonFiltersWithoutBg from '@/components/Pages/DeckbuildPage/Buttons/ButtonFiltersWithoutBg'
 export default {
-  components: { BaseTitleText },
+  components: { BaseTitleText, ButtonFiltersWithoutBg },
   name: "filter-types",
   data() {
     return {
@@ -39,13 +41,7 @@ export default {
 }
 .types-block {
   margin-top: 7px;
-}
-.types {
-  display: inline;
-}
-.type {
-  height: 4vh;
-  width: 45%;
-  margin: 1%;
+  display: flex;
+  align-items: center;
 }
 </style>

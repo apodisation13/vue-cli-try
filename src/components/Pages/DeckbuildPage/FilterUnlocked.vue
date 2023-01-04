@@ -2,19 +2,23 @@
   <div class="filter_unlocked">
     <base-title-text @click="reset_filter_types">Наличие</base-title-text>
     <div class="unlocked-block">
-      <div class="types" v-for="count in [1, 2, 0]" :key="count">
-        <button class="type" @click="filtering(count)">
-          {{ count }}
-        </button>
-      </div>
+
+
+      <button-filters-without-bg 
+        v-for="count in [1, 2, 0]"
+        :key="count"
+        @click="filtering(count)">
+        {{ (count === 2) ? '>2' : count}}
+      </button-filters-without-bg>
     </div>
   </div>
 </template>
 
 <script>
 import BaseTitleText from '@/components/UI/BaseTitleText'
+import ButtonFiltersWithoutBg from '@/components/Pages/DeckbuildPage/Buttons/ButtonFiltersWithoutBg'
 export default {
-  components: { BaseTitleText },
+  components: { BaseTitleText, ButtonFiltersWithoutBg },
   name: "filter-unlocked",
   methods: {
     filtering(count) {
@@ -35,13 +39,7 @@ export default {
 }
 .unlocked-block {
   margin-top: 7px;
-}
-.types {
-  display: inline;
-}
-.type {
-  height: 4vh;
-  width: 31%;
-  margin: 1%;
+  display: flex;
+  align-items: center;
 }
 </style>
