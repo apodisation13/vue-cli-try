@@ -1,7 +1,5 @@
 <template>
-  <div class="global_text filter_title"
-    :style="{ fontSize: size + 'px' }"
-  >
+  <div class="global_text filter_title" :style="{ fontSize: size + 'px' }">
     <slot></slot>
   </div>
 </template>
@@ -12,8 +10,8 @@ export default {
     size: {
       type: Number,
       default: 16,
-    }
-  }
+    },
+  },
 }
 </script>
 

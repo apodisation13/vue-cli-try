@@ -7,19 +7,18 @@
 </template>
 
 <script>
-import BaseTitleText from '@/components/UI/BaseTitleText'
-  export default {
+import BaseTitleText from "@/components/UI/BaseTitleText"
+export default {
   components: { BaseTitleText },
-    
-  }
+}
 </script>
 
 <style scoped>
 .filter-button {
   width: 100%;
-  border: 1px solid #FACF5D;
+  border: 1px solid #facf5d;
   border-radius: 5px;
-  padding: 6px;
+  padding: 10px;
   margin-right: 5px;
   margin-left: 5px;
 }
@@ -29,6 +28,4 @@ import BaseTitleText from '@/components/UI/BaseTitleText'
 .filter-button:last-child {
   margin-right: 0;
 }
-
-
 </style>

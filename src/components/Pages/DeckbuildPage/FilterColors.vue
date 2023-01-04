@@ -1,7 +1,7 @@
 <template>
   <div class="filter_colors">
     <base-title-text @click="reset_filter_colors">Цвет</base-title-text>
-  
+
     <div class="colors-block">
       <div class="colors" v-for="color in colors" :key="color">
         <button
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import BaseTitleText from '@/components/UI/BaseTitleText'
+import BaseTitleText from "@/components/UI/BaseTitleText"
 export default {
   components: { BaseTitleText },
   name: "filter-colors",
