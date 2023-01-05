@@ -28,7 +28,9 @@
       v-if="showNewDeckFactionSelect"
       @close-modal="showNewDeckFactionSelect = false"
     >
-      <filter-factions title="Выберите фракцию" @set-filter="setFilter" />
+      <div class="modal-filter">
+        <filter-factions title="Выберите фракцию" @set-filter="setFilter" />
+      </div>
     </base-modal>
   </div>
 </template>
@@ -119,5 +121,8 @@ export default {
 
 .is-cancel {
   transform: rotate(45deg);
+}
+.modal-filter {
+  padding: 20px;
 }
 </style>
