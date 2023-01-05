@@ -55,7 +55,7 @@ export default {
       if (window.location.hostname !== "localhost") {
         this.openModal = this.$fullscreen.isFullscreen ? false : true
       }
-      
+
       if (this.$fullscreen.isFullscreen) {
         screen.orientation
           .lock("portrait")

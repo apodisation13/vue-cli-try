@@ -5,7 +5,7 @@
     <div class="colors-block">
       <div
         class="color_button"
-        v-for="color in colors" 
+        v-for="color in colors"
         :key="color"
         :class="color[0].toLocaleLowerCase()"
         @click="filtering(color)"
@@ -55,7 +55,7 @@ export default {
 .color_button {
   width: 100%;
   border-radius: 5px;
-  font-family: 'Philosopher';
+  font-family: "Philosopher";
   font-weight: 700;
   font-size: 16px;
   margin-right: 5px;
@@ -72,24 +72,38 @@ export default {
 }
 
 .gold {
-  background: linear-gradient(99.66deg, #B07B15 0%, #FACF5D 49.65%, #B48328 98.61%);
-  box-shadow: 4.8628px 8.75304px 19.4512px rgba(0, 0, 0, 0.25), 
-  inset -4.8628px -4.8628px 4.8628px rgba(0, 0, 0, 0.25), 
-  inset 4.8628px 4.8628px 4.8628px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(
+    99.66deg,
+    #b07b15 0%,
+    #facf5d 49.65%,
+    #b48328 98.61%
+  );
+  box-shadow: 4.8628px 8.75304px 19.4512px rgba(0, 0, 0, 0.25),
+    inset -4.8628px -4.8628px 4.8628px rgba(0, 0, 0, 0.25),
+    inset 4.8628px 4.8628px 4.8628px rgba(0, 0, 0, 0.25);
 }
 
 .silver {
-  background: linear-gradient(100.03deg, #1B2024 5.24%, #585F67 48.35%, #202428 97.53%);
-box-shadow: 4.8628px 8.75304px 19.4512px rgba(0, 0, 0, 0.25), 
-inset -4.8628px -4.8628px 4.8628px rgba(0, 0, 0, 0.25), 
-inset 4.8628px 4.8628px 4.8628px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(
+    100.03deg,
+    #1b2024 5.24%,
+    #585f67 48.35%,
+    #202428 97.53%
+  );
+  box-shadow: 4.8628px 8.75304px 19.4512px rgba(0, 0, 0, 0.25),
+    inset -4.8628px -4.8628px 4.8628px rgba(0, 0, 0, 0.25),
+    inset 4.8628px 4.8628px 4.8628px rgba(0, 0, 0, 0.25);
 }
 
 .bronze {
-  background: linear-gradient(100.29deg, #4A4237 0%, #C5A87E 47.36%, #4A4237 93.72%);
-box-shadow: 4.8628px 8.75304px 19.4512px rgba(0, 0, 0, 0.25), 
-inset -4.8628px -4.8628px 4.8628px rgba(0, 0, 0, 0.25), 
-inset 4.8628px 4.8628px 4.8628px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(
+    100.29deg,
+    #4a4237 0%,
+    #c5a87e 47.36%,
+    #4a4237 93.72%
+  );
+  box-shadow: 4.8628px 8.75304px 19.4512px rgba(0, 0, 0, 0.25),
+    inset -4.8628px -4.8628px 4.8628px rgba(0, 0, 0, 0.25),
+    inset 4.8628px 4.8628px 4.8628px rgba(0, 0, 0, 0.25);
 }
-
 </style>
