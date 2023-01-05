@@ -7,7 +7,9 @@
       <filter-colors @set-filter="setFilter" />
       <filter-passives @set-filter="setFilter" />
       <filter-unlocked @set-filter="setFilter" />
-      <button class="cancel" @click="resetFilters">Сброс фильтров</button>
+      <div class="cancel" @click="resetFilters">
+        <base-title-text> Сбросить </base-title-text>
+      </div>
     </div>
   </base-modal>
 </template>
@@ -20,6 +22,7 @@ import FilterPassives from "@/components/Pages/DeckbuildPage/FilterPassives"
 import FilterUnlocked from "@/components/Pages/DeckbuildPage/FilterUnlocked"
 import BaseModal from "@/components/ModalWindows/BaseModal"
 import ButtonCloseImg from "@/components/UI/Buttons/ButtonCloseImg"
+import BaseTitleText from "@/components/UI/BaseTitleText"
 
 export default {
   components: {
@@ -30,6 +33,7 @@ export default {
     FilterUnlocked,
     BaseModal,
     ButtonCloseImg,
+    BaseTitleText,
   },
   props: {
     deckBuilding: {
@@ -54,11 +58,16 @@ export default {
 <style scoped>
 .deck_builder_filters {
   position: relative;
-  padding: 55px 40px 40px;
+  padding: 40px;
 }
 .cancel {
-  margin: auto;
-  width: 98%;
-  height: 30px;
+  width: 100%;
+  padding: 13px;
+  margin-top: 80px;
+  background-color: #0e4582;
+  box-shadow: 5px 9px 20px rgba(0, 0, 0, 0.25),
+    inset -5px -5px 5px rgba(0, 0, 0, 0.25),
+    inset 5px 5px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
 }
 </style>

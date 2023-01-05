@@ -1,22 +1,25 @@
 <template>
   <div class="filter_colors">
-    <div class="global_text filter_title" @click="reset_filter_colors">
-      Цвет
-    </div>
-    <div class="colors" v-for="color in colors" :key="color">
-      <button
-        class="color"
-        :style="{ backgroundColor: color[1] }"
+    <base-title-text @click="reset_filter_colors">Цвет</base-title-text>
+
+    <div class="colors-block">
+      <div
+        class="color_button"
+        v-for="color in colors"
+        :key="color"
+        :class="color[0].toLocaleLowerCase()"
         @click="filtering(color)"
       >
-        {{ color[0][0] }}
-      </button>
+        {{ color[0] }}
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import BaseTitleText from "@/components/UI/BaseTitleText"
 export default {
+  components: { BaseTitleText },
   name: "filter-colors",
   data() {
     return {
@@ -41,21 +44,66 @@ export default {
 
 <style scoped>
 .filter_colors {
-  margin-bottom: 12%;
+  margin-top: 20px;
 }
-.filter_title {
-  font-size: 25px;
-  margin-bottom: 15px;
-  background: var(--primary-gold-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.colors-block {
+  margin-top: 7px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
-.colors {
-  display: inline;
+.color_button {
+  width: 100%;
+  border-radius: 5px;
+  font-family: "Philosopher";
+  font-weight: 700;
+  font-size: 16px;
+  margin-right: 5px;
+  margin-left: 5px;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
 }
-.color {
-  height: 4vh;
-  width: 31%;
-  margin: 1%;
+.color_button:first-child {
+  margin-left: 0;
+}
+.color_button:last-child {
+  margin-right: 0;
+}
+
+.gold {
+  background: linear-gradient(
+    99.66deg,
+    #b07b15 0%,
+    #facf5d 49.65%,
+    #b48328 98.61%
+  );
+  box-shadow: 4.8628px 8.75304px 19.4512px rgba(0, 0, 0, 0.25),
+    inset -4.8628px -4.8628px 4.8628px rgba(0, 0, 0, 0.25),
+    inset 4.8628px 4.8628px 4.8628px rgba(0, 0, 0, 0.25);
+}
+
+.silver {
+  background: linear-gradient(
+    100.03deg,
+    #1b2024 5.24%,
+    #585f67 48.35%,
+    #202428 97.53%
+  );
+  box-shadow: 4.8628px 8.75304px 19.4512px rgba(0, 0, 0, 0.25),
+    inset -4.8628px -4.8628px 4.8628px rgba(0, 0, 0, 0.25),
+    inset 4.8628px 4.8628px 4.8628px rgba(0, 0, 0, 0.25);
+}
+
+.bronze {
+  background: linear-gradient(
+    100.29deg,
+    #4a4237 0%,
+    #c5a87e 47.36%,
+    #4a4237 93.72%
+  );
+  box-shadow: 4.8628px 8.75304px 19.4512px rgba(0, 0, 0, 0.25),
+    inset -4.8628px -4.8628px 4.8628px rgba(0, 0, 0, 0.25),
+    inset 4.8628px 4.8628px 4.8628px rgba(0, 0, 0, 0.25);
 }
 </style>
