@@ -52,7 +52,10 @@ export default {
 
     // функция установки положения в режим "portrait" в полноэкранном режиме
     setOrientation() {
-      this.openModal = this.$fullscreen.isFullscreen ? false : true
+      if (window.location.hostname !== "localhost") {
+        this.openModal = this.$fullscreen.isFullscreen ? false : true
+      }
+      
       if (this.$fullscreen.isFullscreen) {
         screen.orientation
           .lock("portrait")
